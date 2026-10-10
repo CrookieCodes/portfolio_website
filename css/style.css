@@ -1,0 +1,13 @@
+body {
+    font-family: "Helvetica Neue", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #b8b8b8;
+    color: #141414;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
