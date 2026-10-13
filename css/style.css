@@ -1,29 +1,60 @@
+:root {
+    --accent: #9A3745;
+}
+
 body {
     font-family: "Helvetica Neue", sans-serif;
+    margin: 0;
     display: flex;
     flex-direction: column;
 }
 
 .header {
-    background-color: #b8b8b8;
     color: #141414;
+    background-color: #F6F6F4;
     display: flex;
     justify-content: space-between;
     padding: 16px;
 }
 
-ul {
+.site-logo-mark {
+    height: 60px;
+    margin-left: 16px;
+    fill: var(--accent);
+    animation: logo-spin 10s ease-in-out 3;
+}
+
+@keyframes logo-spin {
+    0%   { transform: rotate(0deg); }
+    10%  { transform: rotate(360deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-logo-mark {
+        animation: none;
+    }
+}
+
+.navigation {
     display: flex;
-    margin: 16px;
-    gap: 24px;
+    margin-right: 24px;
+    align-items: center;
+    gap: 32px;
     list-style-type: none;
 }
 
-.hero {
+.hero-section {
     display: flex;
     background-color: #c2a98d;
-    padding: 32px;
+    padding: 40px;
     gap: 84px;    
+}
+
+.hero-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: px;
 }
 
 button {
