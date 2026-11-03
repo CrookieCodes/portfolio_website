@@ -66,9 +66,10 @@ a {
   white-space: nowrap;
 }
 
-/* Skip link: off-screen until focused. */
+/* Skip link: off-screen until focused. Fixed, so focusing it never scrolls
+   the page back to the splash. */
 .skip-link {
-  position: absolute;
+  position: fixed;
   top: 1rem;
   left: 1rem;
   z-index: 10;
