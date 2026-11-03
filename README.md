@@ -23,10 +23,13 @@ Then open http://localhost:8000. The layout is built for a 1920px-wide desktop w
 | `css/*.css` | One file per screen (`splash`, `header`, `hero`, `scene`, `works`, `about`, `contact`) plus `base` and `fonts` |
 | `js/main.js` | JavaScript entry point (empty until the splash and interaction phases) |
 | `assets/fonts/` | IBM Plex Sans, self-hosted (Open Font License) |
-| `assets/placeholders/` | Grey stand-ins for images not yet exported; delete once real assets are in |
+| `assets/icons/` | Logo crosses (one per screen colour), splash graphic, link arrow (SVG) |
+| `assets/images/` | Illustrations (SVG) and photos (WebP, 2x layout size) |
+| `assets/logos/` | IIT Delhi and Department of Design logos (transparent WebP) |
 | `design/` | Reference only: `tokens.md`, `copy.md`, and the screen PNGs (kept out of git) |
 
-## Swapping in a real asset
+## Updating an asset
 
-Export the file to the path named in its `PLACEHOLDER` comment in `index.html`
-(for example `assets/images/eye.svg`), then change that `<img>`'s `src` to the new path.
+Assets come from the Figma file "WEBSITE-DEV-to-CLAUDE" (node ids in `design/tokens.md`).
+SVGs are exported without the frame background so they stay transparent. Photos are
+exported at 2x and converted to WebP. Keep the same filename and the page picks it up.
