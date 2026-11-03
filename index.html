@@ -60,9 +60,16 @@
           <span class="hero__line-2">I design <span class="hero__highlight">products.</span></span>
         </h1>
         <div class="hero__eyes">
-          <!-- One eye graphic (Figma 1:248), used twice. -->
-          <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
-          <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
+          <!-- One eye graphic (Figma 1:248), used twice. Each eye is a shortcut
+               button (js/eye-buttons.js): left to screen 3, right to screen 4. -->
+          <button class="hero__eye-button" type="button" data-js="eye-button" data-target="touchpoints">
+            <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
+            <span class="visually-hidden">View touchpoints</span>
+          </button>
+          <button class="hero__eye-button" type="button" data-js="eye-button" data-target="experiences">
+            <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
+            <span class="visually-hidden">View experiences</span>
+          </button>
         </div>
       </div>
     </section>
@@ -74,7 +81,7 @@
         <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445">
 
         <div class="scene__text scene__text--touchpoints">
-          <h2 id="touchpoints-title">
+          <h2 id="touchpoints-title" tabindex="-1" data-js="screen-heading">
             <span class="scene__line-1">From assembling</span>
             <span class="scene__line-2">touchpoints,</span>
           </h2>
@@ -97,7 +104,7 @@
 
       <div class="container scene__inner">
         <div class="scene__text scene__text--experiences">
-          <h2 id="experiences-title">
+          <h2 id="experiences-title" tabindex="-1" data-js="screen-heading">
             <span class="scene__line-1">To crafting stories,</span>
             <span class="scene__line-2">experiences.</span>
           </h2>

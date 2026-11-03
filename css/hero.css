@@ -57,6 +57,19 @@
   padding-right: 0.25rem;  /* right eye ends at x 1796 */
 }
 
+/* Each eye is a plain button: no box, just the graphic. */
+.hero__eye-button {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.hero__eye-button:focus-visible {
+  outline-offset: 0.5rem;
+}
+
 .hero__eye {
   width: 23.1875rem;       /* 371px */
   height: 14.9375rem;      /* 239px */
