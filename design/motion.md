@@ -37,7 +37,7 @@ ASCII on squares: each square shows an ASCII effect (see "ASCII effect" below), 
 
 ## 4. Experiences (1:302)
 Entered by right-eye click or scroll from screen 3.
-CAROL: the same ASCII effect runs across the people silhouettes only: pink (1:311), blue (1:313), brown (1:314). Forget the gradients: the silhouettes are flat shapes filled by the effect. Glyphs travel outward along the same direction as the Touchpoints flow.
+CAROL: the same ASCII effect runs across the people silhouettes only: pink (1:311), blue (1:313), brown (1:314). Forget the gradients: the silhouettes are flat shapes filled by the effect (CAROL: on a flat deep-teal ground). The sweep runs top to bottom: one shared front moves straight down from just above the highest figure to below the lowest, so the figures light up in order of their height; then it starts again at the top.
 ASSUMPTION to confirm by eye: pink figure glyphs in burgundy, brown figure in bronze, blue figure in deep-teal lightened is not available in the palette, so use deep-teal glyphs on a dim bronze-tinted ground and check contrast against the photo. If unreadable, fall back to pale teal #A5C4C7 for the blue figure only.
 
 ## ASCII effect (shared, from inspo.mp4)
@@ -45,7 +45,7 @@ ASSUMPTION to confirm by eye: pink figure glyphs in burgundy, brown figure in br
 - Glyph set: filled circle, diamond, small 4-point star, empty outline circle (for "off" cells). Draw on a `<canvas>` clipped to the target shape (SVG mask or canvas clip path), not as DOM text.
 - Colours: burgundy #993746, deep-teal #0B2F32, bronze #9F723C. Pick per cell randomly from the palette, weighted so the fill reads as the shape's own hue. Keep contrast against each background; tune by eye.
 - Motion: a band sweeps across the shape. Ahead of the band cells are empty outlines, inside the band cells are dense filled circles, behind the band cells thin out into diamonds then stars, then empty again. Reference cycle about 5 s per pass (PROPOSED 5 s).
-- Direction: outward from the central square along the dot paths (Touchpoints) and outward from the same origin across the figures (Experiences).
+- Direction (CAROL): Touchpoints sweeps outward from the base square, the same way as the dots. Experiences sweeps top to bottom: one straight front across all three figures. The band stages and the pass duration are the same for both.
 - Frame rate: cap at 30 fps; pause when off-screen (IntersectionObserver) and when the tab is hidden. Reduced motion: draw one static frame.
 
 ## 5. Selected Works (1:318)

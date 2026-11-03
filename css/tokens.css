@@ -26,7 +26,15 @@
   --color-eye-outline: #9fa5a6;  /* hero eyes (Figma 1:248) */
   --color-eye-pupil: #514b44;    /* hero eyes (Figma 1:248) */
   --color-black: #000000;
-  --color-scrim-photo: rgb(0 0 0 / 0.7); /* header scrim over the street photo: black at 70% */
+  /* Touchpoint diagram (Figma 1:270): lines, dots and the squares' gradient stops */
+  --color-diagram-line: #8c8c8c;
+  --color-diagram-dot: #acacac;
+  --color-square-brown-dark: #705432;
+  --color-square-brown-light: #c9ab87;
+  --color-square-teal-light: #acc5c7;
+  --color-square-teal-dark: #3e8288;
+  --color-square-pink-light: #d49ea6;
+  --color-square-pink-dark: #783942;
 
   /* Font families */
   --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -53,13 +61,13 @@
   --lh-hero-2: 1.031;
   --ls-hero-2: -0.03em;
 
-  --fs-scene-1: 3rem;            /* 48px */
+  --fs-scene-1: calc(48 * var(--u));    /* 48px at 1920, fluid */
   --lh-scene-1: 1.25;
   --ls-scene-1: -0.02em;
-  --fs-scene-2: 4rem;            /* 64px */
+  --fs-scene-2: calc(64 * var(--u));    /* 64px at 1920, fluid */
   --lh-scene-2: 0.9375;
   --ls-scene-2: -0.015em;
-  --fs-scene-list: 1.775rem;     /* 28.4px */
+  --fs-scene-list: calc(28.4 * var(--u)); /* 28.4px at 1920, fluid */
   --lh-scene-list: 1.768;
   --ls-scene-list: -0.02em;
 

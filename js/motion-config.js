@@ -37,6 +37,26 @@ export const EYES = {
   labelFontSize: 12,         // PROPOSED: design px at 1920 wide
 };
 
+// 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
+export const DOTS = {
+  speed: 120,                // STARTER: design px per second along the lines
+                             //          (a full route takes about 6-9 s)
+};
+
+// ASCII effect (motion.md "ASCII effect"), shared by screens 3 and 4.
+// Distances are design px (the 1920 x 1080 frame).
+export const ASCII = {
+  passDuration: 5000,        // PROPOSED: one sweep of the band across all shapes, then it loops
+                             //          (outward on screen 3, top to bottom on screen 4)
+  fps: 30,                   // motion.md: frame-rate cap
+  columns: 28,               // motion.md reference: about 28 cells across a shape
+  minCell: 6,                // STARTER: smallest cell, so small squares stay legible
+  bandWidth: 60,             // STARTER: depth of each zone: dense circles, then diamonds, then stars
+  thinning: 0.7,             // STARTER: share of cells already empty by the end of the trail (0-1)
+  staticAt: 0.45,            // STARTER: reduced motion draws the pass frozen at this point (0-1),
+                             //          so every glyph stage is visible
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
 export function applyMotionVariables() {
