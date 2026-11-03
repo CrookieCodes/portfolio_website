@@ -13,6 +13,7 @@ import { initDotFlow } from './dot-flow.js';
 import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
 import { initCarousel } from './carousel.js';
+import { initReveal } from './reveal.js';
 
 applyMotionVariables();
 initHeaderTheme();
@@ -24,5 +25,6 @@ initDotFlow();
 initScenes();
 initPlaceholderLinks();
 initCarousel();
+initReveal();
 // The headline starts cycling once the splash has revealed the hero.
 initSplash().then(initHeadline);

@@ -64,6 +64,15 @@ export const CARDS = {
   liftEasing: 'ease-out',    // PROPOSED
 };
 
+// 5 and 6. Loading animation for Selected Works and About (motion.md, CAROL: "simple").
+export const REVEAL = {
+  distance: 16,              // motion.md: design px the items rise as they fade in
+  stagger: 80,               // motion.md: delay between one item and the next
+  duration: 400,             // motion.md
+  easing: 'ease-out',        // motion.md
+  threshold: 0.15,           // STARTER: share of the screen in view before it plays
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
 export function applyMotionVariables() {
@@ -78,4 +87,8 @@ export function applyMotionVariables() {
   root.setProperty('--card-lift', String(CARDS.liftDistance));
   root.setProperty('--motion-card-lift-duration', `${CARDS.liftDuration}ms`);
   root.setProperty('--motion-card-lift-easing', CARDS.liftEasing);
+  root.setProperty('--reveal-distance', String(REVEAL.distance));
+  root.setProperty('--motion-reveal-duration', `${REVEAL.duration}ms`);
+  root.setProperty('--motion-reveal-stagger', `${REVEAL.stagger}ms`);
+  root.setProperty('--motion-reveal-easing', REVEAL.easing);
 }
