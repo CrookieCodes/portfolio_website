@@ -47,6 +47,7 @@ export const DOTS = {
 // Distances are design px (the 1920 x 1080 frame).
 export const ASCII = {
   passDuration: 5000,        // PROPOSED: one sweep of the band across all shapes, then it loops
+                             //          (outward on screen 3, top to bottom on screen 4)
   fps: 30,                   // motion.md: frame-rate cap
   columns: 28,               // motion.md reference: about 28 cells across a shape
   minCell: 6,                // STARTER: smallest cell, so small squares stay legible

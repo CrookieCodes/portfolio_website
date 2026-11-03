@@ -5,9 +5,12 @@
 //   in the band         dense filled circles
 //   behind the band     thinning out: diamonds, then small four-point stars, then empty again
 //
-// The band is a front that grows outward from `origin`, so the glyphs travel away
-// from it. One pass covers the farthest cell and the trail behind it in
-// ASCII.passDuration, then loops. Frame rate is capped at ASCII.fps. It runs only
+// The band is a front that moves in one of two directions:
+//   direction: 'radial'  grows outward from `origin`, so the glyphs travel away from it
+//   direction: 'down'    one straight front moving down across all the shapes together,
+//                        from just above the highest to below the lowest
+// One pass takes the front past the last cell and the trail behind it in
+// ASCII.passDuration, then the sweep starts again. Frame rate is capped at ASCII.fps. It runs only
 // while `screen` is on screen and the tab is visible; with reduced motion it draws
 // one still frame.
 //
@@ -16,7 +19,7 @@
 //
 // Usage:
 //   createAsciiEffect({
-//     canvas, screen, width, height, origin: { x, y },
+//     canvas, screen, width, height, direction: 'radial', origin: { x, y },   // or direction: 'down' (no origin)
 //     shapes: [{ path: Path2D, box: { x, y, w, h }, colours: [['--color-teal', 0.7], ...], ground }],
 //   });
 // Colours are CSS custom property names (tokens) with weights; each cell picks one at random.
@@ -95,18 +98,17 @@ function addGlyph(path, type, x, y, s) {
   }
 }
 
-export function createAsciiEffect({ canvas, screen, width, height, origin, shapes }) {
+export function createAsciiEffect({ canvas, screen, width, height, direction = 'radial', origin, shapes }) {
   const ctx = canvas.getContext('2d');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const tokens = getComputedStyle(document.documentElement);
   const rand = random(1337);
 
   // Build the cells once: a grid over each shape's box, keeping the cells whose
-  // centre is inside the shape. Each gets a colour, a threshold and its distance
-  // from the origin.
+  // centre is inside the shape. Each gets a colour and a threshold; its distance
+  // along the sweep is worked out below, once all the cells are known.
   const probe = document.createElement('canvas').getContext('2d');
   const colours = new Set();
-  let farthest = 0;
   const layers = shapes.map((shape) => {
     const size = Math.max(ASCII.minCell, shape.box.w / ASCII.columns);
     const columns = Math.floor(shape.box.w / size);
@@ -124,13 +126,22 @@ export function createAsciiEffect({ canvas, screen, width, height, origin, shape
         let pick = rand() * totalWeight;
         const colour = palette.find(([, w]) => (pick -= w) < 0)?.[0] ?? palette[0][0];
         colours.add(colour);
-        const distance = Math.hypot(x - origin.x, y - origin.y);
-        farthest = Math.max(farthest, distance);
-        cells.push({ x, y, colour, threshold: rand(), distance });
+        cells.push({ x, y, colour, threshold: rand(), distance: 0 });
       }
     }
     const ground = shape.ground ? tokens.getPropertyValue(shape.ground).trim() : null;
     return { path: shape.path, size, cells, ground };
+  });
+  // Distance of each cell along the sweep: from the origin ('radial'), or down from
+  // the top edge of the highest cell ('down'), so the front starts just above it.
+  const allCells = layers.flatMap((layer) => layer.cells.map((cell) => ({ cell, size: layer.size })));
+  const top = Math.min(...allCells.map(({ cell, size }) => cell.y - size / 2));
+  let farthest = 0;
+  allCells.forEach(({ cell }) => {
+    cell.distance = direction === 'down'
+      ? cell.y - top
+      : Math.hypot(cell.x - origin.x, cell.y - origin.y);
+    farthest = Math.max(farthest, cell.distance);
   });
   const travel = farthest + ASCII.bandWidth * 3; // the front must clear the whole trail
 
@@ -145,7 +156,7 @@ export function createAsciiEffect({ canvas, screen, width, height, origin, shape
     scale = box.width / width;
   }
 
-  // Draws the effect with the front at `front` design px from the origin.
+  // Draws the effect with the front `front` design px along the sweep.
   function draw(front) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);

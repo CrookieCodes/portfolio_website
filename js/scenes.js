@@ -2,15 +2,15 @@
 //
 // Screen 3: the six touchpoint squares. Glyph colours are the palette colours that
 // contrast best with each square's gradient (contrast ratios against the light and
-// dark ends noted below). The band starts at the base square's centre, so it moves
-// outward the same way as the dots.
+// dark ends noted below). The band spreads outward from the base square's centre
+// (direction 'radial'), the same way as the dots.
 //
 // Screen 4: the three figures on the street photo, flat deep-teal shapes (a ground
 // under the glyphs, so the people in the photo do not show through) filled by the
 // effect. Each figure's main colour is its own hue; the blue figure uses pale teal
 // (Carol's fallback: deep-teal is about 1.2:1 on the photo, and invisible on the
-// deep-teal ground). The band starts from the same frame point as on screen 3
-// (the base square's centre).
+// deep-teal ground). The band sweeps straight down (direction 'down'): one front
+// across all three figures, so they light up in order of height.
 
 import { createAsciiEffect } from './ascii-effect.js';
 
@@ -29,9 +29,8 @@ const FIGURE_COLOURS = {
   blue: [['--color-pale-teal', 0.8], ['--color-bronze', 0.2]],   // 7.7, 3.4
 };
 
-// The base square's centre in the 1920 x 1080 frame (diagram at x 280, y 168;
-// square at 527.6, 504.2, 222.2 wide).
-const ORIGIN_IN_FRAME = { x: 280 + 638.68, y: 168 + 615.26 };
+// The base square's centre in diagram units (square at 527.6, 504.2, 222.2 wide).
+const BASE_SQUARE_CENTRE = { x: 638.68, y: 615.26 };
 
 // A shape's box after its SVG transform (the left pink square is rotated 90deg).
 function boxOf(element) {
@@ -59,7 +58,8 @@ function initTouchpoints() {
     screen: canvas.closest('[data-js="screen"]'),
     width: 1340,
     height: 727,
-    origin: { x: ORIGIN_IN_FRAME.x - 280, y: ORIGIN_IN_FRAME.y - 168 }, // diagram units
+    direction: 'radial',
+    origin: BASE_SQUARE_CENTRE,
     shapes,
   });
 }
@@ -79,7 +79,7 @@ function initExperiences() {
     screen: canvas.closest('[data-js="screen"]'),
     width: 1920,
     height: 1080,
-    origin: ORIGIN_IN_FRAME,
+    direction: 'down',
     shapes,
   });
 }
