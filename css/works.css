@@ -21,7 +21,9 @@
 }
 
 .works__title {
-  margin-top: 0.375rem;  /* title box starts at y 272 */
+  /* Figma puts the title box at y 272; browsers draw Helvetica ~5px lower
+     inside its line box than Figma does, so the box starts 5px higher. */
+  margin-top: 0.0625rem;
   font-weight: var(--weight-medium);
   font-size: var(--fs-section-title);
   line-height: var(--lh-section-title);
@@ -31,7 +33,7 @@
 /* Thin rule under the title, y 347. */
 .works__divider {
   height: 1px;
-  margin: 0.9375rem 0 0; /* 15px below the title */
+  margin: 1.25rem 0 0;   /* divider at y 347 */
   border: 0;
   background-color: var(--color-teal); /* TODO: PNG shows #5C7375; confirm token with Carol */
 }

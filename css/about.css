@@ -1,0 +1,74 @@
+/* Screen 6, top part: About (1920 x 1080 of the 1920 x 1549 frame).
+   Weave image on the left, heading, two paragraphs and a button on the right.
+   The Contact footer (contact.css) follows directly to complete the frame. */
+
+.about {
+  background-color: var(--color-burgundy);
+  color: var(--color-tan);
+}
+
+.about__inner {
+  display: grid;
+  grid-template-columns: 25.25rem 58.1875rem; /* weave 404px | text 931px */
+  column-gap: 6.125rem;                       /* 98px */
+  align-items: start;
+  padding-top: 19.625rem;                     /* y 314 */
+  padding-left: 7.6875rem;                    /* x 243 (120 + 123) */
+}
+
+.about__weave {
+  width: 25.25rem;    /* 404px */
+  height: 35.0625rem; /* 561px */
+}
+
+.about__heading {
+  /* Lifted 11.5px: browsers draw Helvetica lower in its line box than Figma. */
+  margin-top: -0.71875rem;
+  color: var(--color-off-white);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-about-heading);
+  line-height: var(--lh-about-heading);
+  letter-spacing: var(--ls-about-heading);
+}
+
+.about__name {
+  color: var(--color-mint);
+}
+
+.about__text {
+  font-family: var(--font-plex);
+  font-size: var(--fs-about-body);
+  line-height: var(--lh-about-body);
+  letter-spacing: var(--ls-about-body);
+}
+
+.about__text--first {
+  margin-top: 4.0625rem;  /* 53px below the heading's design box */
+}
+
+.about__text--second {
+  margin-top: 3rem;       /* 48px */
+}
+
+.about__strong {
+  color: var(--color-white);
+  font-weight: var(--weight-bold);
+}
+
+/* "Learn More >": a link styled as a button. */
+.about__button {
+  display: inline-flex;
+  align-items: center;
+  height: 4.25rem;        /* 68px */
+  margin-top: 3.3125rem;  /* 53px */
+  padding-inline: 1.3125rem; /* 207px wide with the Plex label */
+  border-radius: var(--radius-button);
+  background-color: var(--color-mint);
+  color: var(--color-button-text);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-semibold);
+  font-size: var(--fs-button);
+  line-height: var(--lh-button);
+  letter-spacing: var(--ls-button);
+  text-decoration: none;
+}
