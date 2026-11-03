@@ -95,6 +95,15 @@
   overflow: visible;
 }
 
+/* The ASCII effect canvas: exactly over the diagram, in the same design units. */
+.scene__diagram-effect {
+  left: calc(280 * var(--u));
+  top: calc(168 * var(--u));
+  width: calc(1340 * var(--u));
+  height: calc(727 * var(--u));
+  pointer-events: none;
+}
+
 /* Diagram parts (inline SVG). Colours from Figma 1:270, as tokens. */
 .scene__line {
   fill: none;
@@ -136,15 +145,15 @@
   width: calc(263.1 * var(--u));
 }
 
-/* Screen 4: experiences. The street photograph covers the screen; three coloured
-   silhouettes sit over the people in it; text block bottom-right. */
+/* Screen 4: experiences. The street photograph covers the screen; the ASCII effect
+   draws three figures over the people in it; text block bottom-right. */
 .scene--experiences {
   background-color: var(--color-bronze);
 }
 
 /* The photo's 16:9 frame, scaled to cover the screen (like object-fit: cover) and
-   centred. The section clips what overflows. Figures are placed in percentages of
-   this frame (design px / 1920 or / 1080), so they move and scale with the photo. */
+   centred. The section clips what overflows. The effect canvas fills this frame, so
+   the figures (in 1920 x 1080 design px) move and scale with the photo. */
 .scene__cover {
   position: absolute;
   top: 50%;
@@ -162,30 +171,22 @@
   height: 100%;
 }
 
-.scene__silhouette {
+/* The figures' outlines: only read by the script, never shown. They keep their
+   geometry (so the script can measure them) but take no space. */
+.scene__shapes {
   position: absolute;
-  height: auto;
+  width: 0;
+  height: 0;
+  visibility: hidden;
 }
 
-/* 1: pink walker (node 1:311): x 1063, y 350, 143px wide */
-.scene__silhouette--1 {
-  left: calc(1063 / 1920 * 100%);
-  top: calc(350 / 1080 * 100%);
-  width: calc(143 / 1920 * 100%);
-}
-
-/* 2: blue walker (node 1:313): x 730, y 362.5, 160px wide */
-.scene__silhouette--2 {
-  left: calc(730 / 1920 * 100%);
-  top: calc(362.5 / 1080 * 100%);
-  width: calc(160 / 1920 * 100%);
-}
-
-/* 3: brown pair (node 1:314): x 670.5, y 609.5, 252px wide */
-.scene__silhouette--3 {
-  left: calc(670.5 / 1920 * 100%);
-  top: calc(609.5 / 1080 * 100%);
-  width: calc(252 / 1920 * 100%);
+/* The ASCII effect canvas covers the photo's frame, so figure positions match it. */
+.scene__effect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 /* Anchored to the bottom-right: ends 125px inside the right page margin (x 1675
