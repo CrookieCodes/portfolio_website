@@ -37,6 +37,12 @@ export const EYES = {
   labelFontSize: 12,         // PROPOSED: design px at 1920 wide
 };
 
+// 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
+export const DOTS = {
+  speed: 120,                // STARTER: design px per second along the lines
+                             //          (a full route takes about 6-9 s)
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
 export function applyMotionVariables() {
