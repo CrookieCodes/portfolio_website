@@ -26,6 +26,15 @@
   --color-eye-outline: #9fa5a6;  /* hero eyes (Figma 1:248) */
   --color-eye-pupil: #514b44;    /* hero eyes (Figma 1:248) */
   --color-black: #000000;
+  /* Touchpoint diagram (Figma 1:270): lines, dots and the squares' gradient stops */
+  --color-diagram-line: #8c8c8c;
+  --color-diagram-dot: #acacac;
+  --color-square-brown-dark: #705432;
+  --color-square-brown-light: #c9ab87;
+  --color-square-teal-light: #acc5c7;
+  --color-square-teal-dark: #3e8288;
+  --color-square-pink-light: #d49ea6;
+  --color-square-pink-dark: #783942;
 
   /* Font families */
   --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;

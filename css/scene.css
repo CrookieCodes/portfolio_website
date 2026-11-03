@@ -91,6 +91,43 @@
   left: calc(280 * var(--u));
   top: calc(168 * var(--u));
   width: calc(1340 * var(--u));
+  height: calc(727 * var(--u));
+  overflow: visible;
+}
+
+/* Diagram parts (inline SVG). Colours from Figma 1:270, as tokens. */
+.scene__line {
+  fill: none;
+  stroke: var(--color-diagram-line);
+  stroke-width: 1.89099;
+}
+
+.scene__dot {
+  fill: var(--color-diagram-dot);
+}
+
+.scene__stop--brown-dark {
+  stop-color: var(--color-square-brown-dark);
+}
+
+.scene__stop--brown-light {
+  stop-color: var(--color-square-brown-light);
+}
+
+.scene__stop--teal-light {
+  stop-color: var(--color-square-teal-light);
+}
+
+.scene__stop--teal-dark {
+  stop-color: var(--color-square-teal-dark);
+}
+
+.scene__stop--pink-light {
+  stop-color: var(--color-square-pink-light);
+}
+
+.scene__stop--pink-dark {
+  stop-color: var(--color-square-pink-dark);
 }
 
 .scene__hand {
