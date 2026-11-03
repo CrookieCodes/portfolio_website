@@ -1,14 +1,61 @@
-/* Screen 1: splash. A full teal frame with the logo graphic centred.
-   Static for now: timing, skip and handoff to the hero come in Phase 3. */
+/* Screen 1: splash. A full-window teal overlay above the header and the hero.
+   js/splash.js plays the logo sequence once, then removes the overlay.
+   The rules below are the sequence's starting frame: one visible cross,
+   because the three copies sit exactly on top of the bottom-left cross. */
 
 .splash {
+  position: fixed;
+  inset: 0;
+  z-index: 20;          /* above the fixed header (5) and the skip link (10) */
   display: grid;
   place-items: center;
-  height: var(--frame-height);
+  overflow: hidden;     /* the spinning logo never causes scrollbars */
   background-color: var(--color-teal);
 }
 
 .splash__logo {
-  width: 12.4375rem;   /* 199px (Figma node is 199 x 198.5; the SVG exports as 199 square) */
-  height: 12.4375rem;
+  width: calc(199 * var(--u));   /* 199px at 1920 (Figma node is 199 x 198.5) */
+  height: calc(199 * var(--u));
+  overflow: visible;
+}
+
+/* The pale-teal centre of the logo: hidden until it is "created". */
+.splash__centre {
+  fill: var(--color-pale-teal);
+  opacity: 0;
+}
+
+.splash__cross {
+  fill: var(--color-burgundy);
+}
+
+/* Start positions, in SVG units (the logo is 199 units wide).
+   Bottom-right starts on the bottom-left cross (130 units to its left).
+   The top row starts on the bottom row (130 units below its final place);
+   top-right also starts on the bottom-left cross, so it can ride along
+   with the first sweep. */
+.splash__cross--bottom-right {
+  transform: translate(-130px, 0);
+}
+
+.splash__cross--top-left {
+  transform: translate(-1px, 130px);
+}
+
+.splash__cross--top-right {
+  transform: translate(-130px, 130px);
+}
+
+/* No sequence for visitors who prefer reduced motion, or without JavaScript
+   (nothing would remove the overlay): the hero shows straight away. */
+@media (prefers-reduced-motion: reduce) {
+  .splash {
+    display: none;
+  }
+}
+
+@media (scripting: none) {
+  .splash {
+    display: none;
+  }
 }

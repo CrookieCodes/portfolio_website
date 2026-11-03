@@ -23,15 +23,32 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Screen 1: splash. Decorative intro, so the logo has empty alt. -->
-  <div class="splash" data-js="screen" data-screen-theme="splash">
-    <img class="splash__logo" src="assets/icons/logo-splash.svg" alt="" width="199" height="199">
+  <!-- Screen 1: splash. A full-window overlay above everything (js/splash.js plays it once,
+       then removes it to reveal the hero underneath). Decorative, so hidden from screen readers.
+       Logo: Figma Component 6 (11:660). Each copy cross starts on top of the bottom-left cross
+       (see splash.css), then sweeps to its corner: bottom-right first, then the top row. -->
+  <div class="splash" data-js="splash" aria-hidden="true">
+    <svg class="splash__logo" data-js="splash-logo" viewBox="0 0 199 199" focusable="false">
+      <g class="splash__centre" data-js="splash-centre">
+        <path d="M36 129.139V47.6306L68.2085 52.5777L52.7097 131.731L36 129.139Z"/>
+        <path d="M163.938 69.7012L163.938 152.308L131.73 147.533L147.229 67.3137L163.938 69.7012Z"/>
+        <path d="M70.5715 36.0001L152.309 36.0001L147.584 67.3139L68.2091 52.3581L70.5715 36.0001Z"/>
+        <path d="M150.213 113.797L82.5229 114.732L87.3237 83.4178L151.413 95.8031L150.213 113.797Z"/>
+        <path d="M129.369 163.939L47.6313 163.939L52.3561 131.731L131.731 147.114L129.369 163.939Z"/>
+      </g>
+      <path class="splash__cross" d="M2.5 148L0 165H23L18 196L34.5 198.5V176.5L66.5 181.5L69 165H46.5L51.5 132.5L34.5 130V153L2.5 148Z"/>
+      <path class="splash__cross splash__cross--bottom-right" data-js="splash-cross-bottom-right" d="M132.5 148L130 165H153L148 196L164.5 198.5V176.5L196.5 181.5L199 165H176.5L181.5 132.5L164.5 130V153L132.5 148Z"/>
+      <path class="splash__cross splash__cross--top-left" data-js="splash-cross-top-left" d="M3.5 18L1 35H24L19 66L35.5 68.5V46.5L67.5 51.5L70 35H47.5L52.5 2.5L35.5 0V23L3.5 18Z"/>
+      <path class="splash__cross splash__cross--top-right" data-js="splash-cross-top-right" d="M132.5 18L130 35H153L148 66L164.5 68.5V46.5L196.5 51.5L199 35H176.5L181.5 2.5L164.5 0V23L132.5 18Z"/>
+    </svg>
   </div>
 
-  <!-- One fixed header for screens 2-6. data-theme is set by js/header-theme.js;
-       it starts as "splash" so the header is hidden until the splash scrolls away. -->
-  <header class="site-header" data-js="site-header" data-theme="splash">
-    <div class="container site-header__inner">
+  <!-- One fixed header for screens 2-6. data-theme is set by js/header-theme.js.
+       The splash overlay covers it while it plays. -->
+  <header class="site-header" data-js="site-header" data-theme="hero">
+    <!-- Scrim: a fading band in the screen's colour, behind the logo and nav. -->
+    <div class="site-header__scrim" aria-hidden="true"></div>
+    <div class="site-header__inner">
       <a class="site-header__logo" href="#hero">
         <span class="visually-hidden">Carol Elizabeth, home</span>
         <!-- Logo cross (Figma 1:239), filled with currentColor so CSS sets its colour per screen. -->
@@ -54,24 +71,64 @@
   <main id="main">
     <!-- Screen 2: hero -->
     <section class="frame frame--snap hero" id="hero" aria-labelledby="hero-title" data-js="screen" data-screen-theme="hero">
-      <div class="container hero__inner">
+      <div class="hero__inner">
+        <!-- Screen readers get the whole sentence once; the animated lines are hidden from them.
+             js/headline.js cycles the highlighted word: products. -> services. -> experiences. -->
         <h1 class="hero__title" id="hero-title">
-          <span class="hero__line-1">Hey, I’m Carol Elizabeth.</span>
-          <span class="hero__line-2">I design <span class="hero__highlight">products.</span></span>
+          <span class="visually-hidden">Hey, I’m Carol Elizabeth. I design products, services and experiences.</span>
+          <span class="hero__line-1" aria-hidden="true">Hey, I’m Carol Elizabeth.</span>
+          <span class="hero__line-2" aria-hidden="true">I design <span class="hero__highlight" data-js="headline-highlight"><span class="hero__word hero__word--current" data-js="headline-word">products.</span><span class="hero__word" data-js="headline-word">services.</span><span class="hero__word" data-js="headline-word">experiences.</span></span></span>
         </h1>
         <div class="hero__eyes">
-          <!-- One eye graphic (Figma 1:248), used twice. Each eye is a shortcut
-               button (js/eye-buttons.js): left to screen 3, right to screen 4. -->
+          <!-- The eye (Figma 1:248), inline twice so its parts can move and change.
+               Each eye is a shortcut button (js/eye-buttons.js): left to screen 3, right to screen 4. -->
           <button class="hero__eye-button" type="button" data-js="eye-button" data-target="touchpoints">
-            <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
-            <span class="visually-hidden">View touchpoints</span>
+            <svg class="hero__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
+              <clipPath id="eye-white-left">
+                <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+              </clipPath>
+              <path class="hero__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
+              <path class="hero__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+              <g clip-path="url(#eye-white-left)">
+                <!-- Moves with the cursor (js/eye-tracking.js). -->
+                <g class="hero__look" data-js="eye-look">
+                  <g class="hero__iris" data-js="eye-iris">
+                    <circle class="hero__iris-ring" cx="161.5" cy="97.5" r="60.5"/>
+                    <circle class="hero__pupil" cx="151" cy="89" r="35"/>
+                  </g>
+                  <!-- Hover/focus state: the logo cross at the iris's size (121), centred on it. -->
+                  <path class="hero__eye-cross" data-js="eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+                </g>
+              </g>
+            </svg>
+            <span class="visually-hidden">Explore touchpoints</span>
           </button>
           <button class="hero__eye-button" type="button" data-js="eye-button" data-target="experiences">
-            <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
-            <span class="visually-hidden">View experiences</span>
+            <svg class="hero__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
+              <clipPath id="eye-white-right">
+                <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+              </clipPath>
+              <path class="hero__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
+              <path class="hero__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+              <g clip-path="url(#eye-white-right)">
+                <!-- Moves with the cursor (js/eye-tracking.js). -->
+                <g class="hero__look" data-js="eye-look">
+                  <g class="hero__iris" data-js="eye-iris">
+                    <circle class="hero__iris-ring" cx="161.5" cy="97.5" r="60.5"/>
+                    <circle class="hero__pupil" cx="151" cy="89" r="35"/>
+                  </g>
+                  <!-- Hover/focus state: the logo cross at the iris's size (121), centred on it. -->
+                  <path class="hero__eye-cross" data-js="eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+                </g>
+              </g>
+            </svg>
+            <span class="visually-hidden">Explore experiences</span>
           </button>
         </div>
       </div>
+      <!-- Follows the mouse while it is over an eye (js/eye-label.js). Screen readers
+           use the buttons' names instead, so this is hidden from them. -->
+      <div class="eye-label" data-js="eye-label" aria-hidden="true">Click to Explore</div>
     </section>
 
     <!-- Screen 3: touchpoints scene -->
@@ -201,7 +258,7 @@
   </main>
 
   <!-- The footer is the bottom of screen 6, so it keeps the About theme and active link. -->
-  <footer class="contact" id="contact" aria-labelledby="contact-title" data-js="screen" data-screen-theme="about" data-screen-nav="about">
+  <footer class="contact" id="contact" aria-labelledby="contact-title" data-js="screen" data-screen-theme="contact" data-screen-nav="about">
     <img class="contact__cross" src="assets/images/footer-cross.svg" alt="" width="576" height="537" loading="lazy">
     <div class="container contact__inner">
       <ul class="contact__tags contact__small" aria-label="Disciplines">

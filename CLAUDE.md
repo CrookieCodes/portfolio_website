@@ -36,10 +36,15 @@ After each phase, add a short plain-language note explaining the main choices so
 - JS: ES modules in js/. Select elements with data-js attributes, never styling classes. Toggle state with classes. Read colours and timings from CSS variables where possible. Keep each file small and commented.
 - Do not invent copy, colours, images or links. If something is missing or unclear, list the question and wait for Carol.
 
-## Responsive
-- Desktop only for now. Build to the 1920x1080 reference frames (About is 1920x1549). Do NOT build tablet or mobile layouts yet.
-- Even so, use rem units, flexbox and grid instead of absolute pixel positions where practical, so responsive work can be added later without a rewrite. No horizontal scrolling at 1920px width.
-- Responsive and mobile layouts will be a separate phase, started only when Carol asks.
+## Sizing (replaces "desktop only at 1920px")
+- Every screen must fit any desktop browser window without overflow. Frames are 1920x1080 as a reference only.
+- Use `100svh` (fallback `100vh`) for full-screen scenes, `clamp()`, `rem` and `vw` for sizes, max-width containers, and SVG `viewBox` scaling for illustrations.
+- No horizontal page scroll at any width from 1024 to 2560. Test at 1280, 1440, 1536, 1920. Phones are still deferred.
+- The header is fixed on screens 2 to 6 and always on top (z-index above all scenes).
+
+## Motion
+- All motion values come from design/motion.md. PROPOSED values go into CSS custom properties or js/motion-config.js, never hard-coded. Do not invent any timing that is not in motion.md.
+- Honour prefers-reduced-motion everywhere. Pause animation when off-screen or tab hidden.
 
 ## Accessibility and performance
 - Every animation respects prefers-reduced-motion (show the end state instead).
@@ -50,7 +55,7 @@ After each phase, add a short plain-language note explaining the main choices so
 - Add unique <title>, meta description, favicon, Open Graph tags, lang="en" and the viewport meta tag.
 
 ## Git rules
-- Never work on main. One branch per phase: phase-1-static, phase-2-navigation, phase-3-splash, phase-4-eyes, phase-5-transitions, phase-6-polish.
+- Never work on main. One branch per phase: phase-1-static, phase-2-navigation, phase-3-splash-hero, phase-4-eyes, phase-5-transitions, phase-6-polish.
 - Small commits with clear messages. Commit after every working section.
 - Push branches to origin only. Open a pull request per phase describing what changed and what is untested. Carol merges.
 - The repo has existing history from an earlier version. Keep it. Overwrite files by committing new versions on a branch. Never force push, rebase pushed commits, or run reset --hard.
@@ -63,12 +68,12 @@ Netlify deploys automatically from the production branch when Carol merges. Neve
 The folder may still contain the old index.html, style.css and javascript.js. Replace index.html, move styling into css/ and scripts into js/, then remove the old files with git rm once nothing references them.
 
 ## Phases
-0-1. Setup and static desktop build (done on phase-1-static), then the Phase 1 follow-up: real assets from Figma, fixes, photo credit, alt text.
-2. Header and navigation: one fixed header, per-screen colour theming, active link states, linear scroll order, anchors, smooth scrolling (no animation timing yet).
-3. Splash dissolve into hero.
-4. Hero eyes: pupils follow the cursor, clicks go to screens 3 and 4.
-5. Scene transitions, from motion.md.
-6. Polish: accessibility, performance, meta tags, favicon, 404, then responsive/mobile.
+0-1 setup and static pages (done)
+2 header and navigation (done)
+3 splash and hero: splash sequence, headline cycle, pupil tracking, hover cross, Click to Explore label, eye navigation
+4 touchpoints and experiences: dot flow, shared ASCII canvas effect on squares and silhouettes
+5 selected works carousel (6 cards, snap, flipping arrow) and About (loading animation, weave hover reveal, placeholder Learn More), footer cross spin
+6 fit-to-browser pass, polish, cross-browser, accessibility; merge to main only after Carol approves
 
 ## Navigation and scroll
 - Screen order is linear: 1 Splash, 2 Hero, 3 Touchpoints, 4 Experiences, 5 Selected Works, 6 About + footer. Scrolling down goes 2 -> 3 -> 4 -> 5 -> 6; scrolling up goes back.

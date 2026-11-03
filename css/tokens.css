@@ -23,6 +23,10 @@
   --color-list: #b5bcbd;
   --color-divider: #5c7375;
   --color-pale-teal: #a5c4c7;    /* logo cross on the touchpoints screen, footer cross */
+  --color-eye-outline: #9fa5a6;  /* hero eyes (Figma 1:248) */
+  --color-eye-pupil: #514b44;    /* hero eyes (Figma 1:248) */
+  --color-black: #000000;
+  --color-scrim-photo: rgb(0 0 0 / 0.7); /* header scrim over the street photo: black at 70% */
 
   /* Font families */
   --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -38,14 +42,14 @@
   --weight-heavy: 800;
 
   /* Type scale: one size / line-height / letter-spacing set per text role */
-  --fs-nav: 1.625rem;            /* 26px */
+  --fs-nav: calc(26 * var(--u));        /* 26px at 1920, fluid */
   --lh-nav: 1.142;
   --ls-nav: -0.01em;
 
-  --fs-hero-1: 3.481rem;         /* 55.7px */
+  --fs-hero-1: calc(55.7 * var(--u));   /* 55.7px at 1920, fluid */
   --lh-hero-1: 0.912;
   --ls-hero-1: -0.03em;
-  --fs-hero-2: 5.569rem;         /* 89.1px */
+  --fs-hero-2: calc(89.1 * var(--u));   /* 89.1px at 1920, fluid */
   --lh-hero-2: 1.031;
   --ls-hero-2: -0.03em;
 
@@ -95,6 +99,20 @@
   --fs-contact-link: 1.5rem;     /* 24px */
   --lh-contact-link: 1;
 
+  /* Fluid design pixel: 1 design px of the 1920x1080 frames, scaled to the window.
+     It follows whichever is tighter, width or height, so a whole screen always fits.
+     Clamped: it stops shrinking below 1024 wide (1/1920 * 1024 = 0.533px = 0.0333rem)
+     and stops growing above 2560 wide (1.333px = 0.0833rem).
+     Exactly 1px at 1920x1080. Used by the splash, hero and header (Phase 3);
+     the other screens move to it in Phase 6. */
+  --u: clamp(0.0333rem, min(100vw / 1920, 100vh / 1080), 0.0833rem);
+
+  /* Page margin: the left and right margins of Figma's 3-column grid (120px margin,
+     40px gutter). 120px at 1920 and wider, scaling with the window below that, never
+     under 32px. Content spans the full window between the margins. Use this on every
+     screen (screens 3-6 move to it in Phase 6); never hard-code the 120. */
+  --page-margin: clamp(2rem, 6.25vw, 7.5rem);
+
   /* Layout */
   --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
   --footer-height: 29.3125rem;   /* 469px: Contact part of screen 6 (1080 + 469 = 1549) */
@@ -105,4 +123,13 @@
   --radius-card: 1.5rem;         /* 24px */
   --radius-tag: 0.23125rem;      /* 3.7px */
   --radius-button: 0.5rem;       /* 8px */
+}
+
+/* Small viewport height (svh) ignores mobile browser bars. Custom properties are not
+   checked when parsed, so a second --u line would not act as a fallback: @supports
+   swaps it in only where svh works, and 100vh above stays the fallback. */
+@supports (height: 100svh) {
+  :root {
+    --u: clamp(0.0333rem, min(100vw / 1920, 100svh / 1080), 0.0833rem);
+  }
 }
