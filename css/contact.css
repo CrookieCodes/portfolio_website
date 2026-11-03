@@ -66,14 +66,14 @@
 
 .contact__links {
   display: flex;
-  gap: 5.5rem;       /* 88px */
+  gap: 5.5625rem;    /* 89px: links start at x 1000, 1219, 1436 as in Figma */
   margin-top: 0.75rem;
 }
 
 .contact__link {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.5rem;       /* 8px from text to arrow */
   color: var(--color-link);
   font-family: var(--font-plex);
   font-weight: var(--weight-semibold);
