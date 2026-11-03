@@ -25,6 +25,8 @@
   --color-pale-teal: #a5c4c7;    /* logo cross on the touchpoints screen, footer cross */
   --color-eye-outline: #9fa5a6;  /* hero eyes (Figma 1:248) */
   --color-eye-pupil: #514b44;    /* hero eyes (Figma 1:248) */
+  --color-black: #000000;
+  --color-scrim-photo: rgb(0 0 0 / 0.7); /* header scrim over the street photo: black at 70% */
 
   /* Font families */
   --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;

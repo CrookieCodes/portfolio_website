@@ -2,7 +2,9 @@
    Sizes use the fluid design pixel --u (tokens.css), so it fits any window.
    One fixed header for screens 2-6. js/header-theme.js sets data-theme to the
    screen behind the header; each theme below sets the cross and nav colours.
-   The cross is inline SVG filled with currentColor, so its colour comes from CSS. */
+   The cross is inline SVG filled with currentColor, so its colour comes from CSS.
+   A scrim behind the header (in the screen's own colour) keeps content that
+   scrolls underneath from clashing with the logo and nav. */
 
 .site-header {
   position: fixed;
@@ -13,38 +15,63 @@
   /* Default (no theme yet): the hero's colours. */
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
+  --header-scrim: var(--color-teal);
 }
 
 /* Themes, one per screen. Attribute selectors keep these to one simple selector each. */
 [data-theme="hero"] {
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
+  --header-scrim: var(--color-teal);
 }
 
 [data-theme="touchpoints"] {
   --header-cross: var(--color-pale-teal);
   --header-nav: var(--color-white);
+  --header-scrim: var(--color-teal);
 }
 
 [data-theme="experiences"] {
   --header-cross: var(--color-bronze);
   --header-nav: var(--color-white);
+  --header-scrim: var(--color-scrim-photo);
 }
 
 [data-theme="work"] {
   --header-cross: var(--color-teal);
   --header-nav: var(--color-ink);
+  --header-scrim: var(--color-paper);
 }
 
 [data-theme="about"] {
   --header-cross: var(--color-tan);
   --header-nav: var(--color-white);
+  --header-scrim: var(--color-burgundy);
 }
 
 /* Contact footer: same header colours as About (and About stays the active link). */
 [data-theme="contact"] {
   --header-cross: var(--color-tan);
   --header-nav: var(--color-white);
+  --header-scrim: var(--color-teal);
+}
+
+/* Scrim: a band across the top of the window, behind the logo and nav but above
+   every screen (the header is its own stacking layer at z-index 5). Solid for the
+   top 35%, then fading to transparent. The fade is a mask, so the colour stays a
+   plain background-color that changes with the theme (instantly for now; a
+   transition can be added once there is a header-theme duration in motion.md). */
+.site-header__scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: max(6rem, calc(170 * var(--u)));
+  background-color: var(--header-scrim);
+  -webkit-mask-image: linear-gradient(to bottom, var(--color-black) 35%, transparent);
+  mask-image: linear-gradient(to bottom, var(--color-black) 35%, transparent);
+  pointer-events: none;
 }
 
 /* Full window width between the page margins: logo on the left margin,
