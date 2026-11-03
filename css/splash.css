@@ -1,0 +1,14 @@
+/* Screen 1: splash. A full teal frame with the logo graphic centred.
+   Static for now: timing, skip and handoff to the hero come in Phase 3. */
+
+.splash {
+  display: grid;
+  place-items: center;
+  height: var(--frame-height);
+  background-color: var(--color-teal);
+}
+
+.splash__logo {
+  width: 12.4375rem;   /* 199px */
+  height: 12.40625rem; /* 198.5px */
+}
