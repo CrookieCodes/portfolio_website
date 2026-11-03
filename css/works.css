@@ -1,0 +1,139 @@
+/* Screen 5: Selected Works. Overline, title and divider, then three project
+   cards in a grid. Each card is one click target: the title link stretches
+   over the whole card with ::after, so screen readers hear a short link name. */
+
+.works {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.works__inner {
+  padding-top: 12.875rem; /* overline box starts at y 206 */
+}
+
+.works__overline {
+  font-family: var(--font-plex);
+  font-weight: var(--weight-light);
+  font-style: italic;
+  font-size: var(--fs-overline);
+  line-height: var(--lh-overline);
+  letter-spacing: var(--ls-overline);
+}
+
+.works__title {
+  margin-top: 0.375rem;  /* title box starts at y 272 */
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-section-title);
+  line-height: var(--lh-section-title);
+  letter-spacing: var(--ls-section-title);
+}
+
+/* Thin rule under the title, y 347. */
+.works__divider {
+  height: 1px;
+  margin: 0.9375rem 0 0; /* 15px below the title */
+  border: 0;
+  background-color: var(--color-teal); /* TODO: PNG shows #5C7375; confirm token with Carol */
+}
+
+.works__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5625rem;        /* 41px */
+  margin-top: 2.4375rem; /* cards start at y 387 */
+}
+
+/* Project card: 533 x 489, image on top, details below. */
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background-color: var(--color-card);
+  color: var(--color-ink-card);
+}
+
+.card__image {
+  width: 100%;
+  height: 18.75rem;      /* 300px */
+  object-fit: cover;
+}
+
+.card__body {
+  padding: 1.1875rem 2.5625rem 1.875rem; /* 19px top, 41px sides, 30px bottom */
+}
+
+.card__title {
+  font-weight: var(--weight-bold);
+  font-size: var(--fs-card-title);
+  line-height: var(--lh-card-title);
+  letter-spacing: var(--ls-card-title);
+}
+
+.card__link {
+  text-decoration: none;
+}
+
+/* Keyboard focus rings the whole card, since the whole card is the link. */
+.card__link:focus-visible {
+  outline: none;
+}
+
+.card:has(.card__link:focus-visible) {
+  outline: 0.1875rem solid var(--color-teal);
+  outline-offset: 0.25rem;
+}
+
+/* Stretch the link over the whole card. */
+.card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+.card__subtitle {
+  font-weight: var(--weight-light);
+  font-size: var(--fs-card-subtitle);
+  line-height: var(--lh-card-subtitle);
+  letter-spacing: var(--ls-card-subtitle);
+}
+
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.3125rem; /* 21px below the subtitle */
+}
+
+.card__logos {
+  display: flex;
+  gap: 0.6875rem;        /* 11px */
+  opacity: 0.62;
+}
+
+.card__logo {
+  height: 3.4375rem;     /* 55px */
+  width: auto;
+}
+
+.card__tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.card__tag {
+  display: flex;
+  align-items: center;
+  height: 2rem;          /* 32px */
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-tag);
+  background-color: var(--color-burgundy);
+  color: var(--color-white);
+  font-size: var(--fs-tag);
+  line-height: var(--lh-tag);
+  letter-spacing: var(--ls-tag);
+}
+
+.card__tag--teal {
+  background-color: var(--color-teal);
+}
