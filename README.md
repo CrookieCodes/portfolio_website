@@ -32,7 +32,7 @@ the page opens at an address (e.g. `#work`) or when the system asks for reduced 
 | `js/eye-tracking.js`, `js/eye-cross.js`, `js/eye-label.js` | Hero eyes: pupils follow the mouse, cross on hover/focus, "Click to Explore" label |
 | `js/eye-buttons.js`, `js/header-theme.js` | Eye shortcuts to screens 3 and 4; header colours per screen |
 | `assets/fonts/` | IBM Plex Sans, self-hosted (Open Font License) |
-| `assets/icons/` | Logo crosses (one per screen colour), splash graphic, link arrow (SVG) |
+| `assets/icons/` | Logo crosses (one per screen colour), link arrow (SVG). The splash logo and the eyes are inline SVG in `index.html` |
 | `assets/images/` | Illustrations (SVG) and photos (WebP, 2x layout size) |
 | `assets/logos/` | IIT Delhi and Department of Design logos (transparent WebP) |
 | `design/` | Reference only: `tokens.md`, `copy.md`, `motion.md`, and the screen PNGs (kept out of git) |
