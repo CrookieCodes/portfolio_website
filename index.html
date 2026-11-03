@@ -1,115 +1,218 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Carol Elizabeth</title>
-    <link rel="icon" type="image/png" href="images/FinalLogo.png" />
-    <link rel="apple-touch-icon" href="images/FinalLogo.png"  />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carol Elizabeth · Service and UX Designer</title>
+  <meta name="description" content="Portfolio of Carol Elizabeth, a Service and UX Designer pursuing a Masters in Design at IIT Delhi.">
+
+  <!-- Order matters: tokens first, then fonts and base, then one file per section. -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/scene.css">
+  <link rel="stylesheet" href="css/works.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/contact.css">
+
+  <script type="module" src="js/main.js"></script>
 </head>
-
 <body>
-    <div class="header">
-        <div class="site-logo">
-            <a href="index.html">
-                <img src="assets/logo.svg" alt="Personal Monogram" height="80"></a>
-        </div>
-        <ul class="navigation-links">
-            <li><a href="pages/About/">About</a></li>
-            <li><a href="pages/Work/">Work</a></li>
-            <li><a href="pages/Contact/">Contact</a></li>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Screen 1: splash. Decorative intro, so the logo has empty alt. -->
+  <div class="splash">
+    <img class="splash__logo" src="assets/icons/logo-splash.svg" alt="" width="199" height="199">
+  </div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="site-header__logo" href="/">
+        <img class="site-header__logo-image" src="assets/icons/logo-cross-burgundy.svg" alt="Carol Elizabeth, home" width="61" height="61">
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="#about">About</a></li>
+          <li><a class="site-nav__link" href="#work">Work</a></li>
+          <!-- TODO: Resume destination (PDF?) -->
+          <li><a class="site-nav__link" href="#">Resume</a></li>
+          <li><a class="site-nav__link" href="#contact">Contact</a></li>
         </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="hero-section">
-        <div class="left-hero">
-            <p>Hello! This is <b>Carol Elizabeth,</b><br>a systems-centered service designer who operates across multiple scales to generate holistic user experiences.</p>
-            <button>View Projects</button>
+  <main id="main">
+    <!-- Screen 2: hero -->
+    <section class="frame hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__line-1">Hey, I’m Carol Elizabeth.</span>
+          <span class="hero__line-2">I design <span class="hero__highlight">products.</span></span>
+        </h1>
+        <div class="hero__eyes">
+          <!-- One eye graphic (Figma 1:248), used twice. -->
+          <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
+          <img class="hero__eye" src="assets/images/eye.svg" alt="" width="371" height="239">
         </div>
-    </div>
+      </div>
+    </section>
 
-    <div class="achievements">
-        <h2>Latest Achievements</h2>
-        <ul class="scholastic">
-            <li>Ranked 1st in Department of Design for two consecutive semesters</li>
-            <li>Shortlisted in Top 10 of the ServDes Student Service Design Competition</li>
-            <li>Shortlisted in Top 10 of the UX India Design Pitch</li>
-            <li>Winning Concept and Design at the Havells x GDD Product Ideation and Conceptualization Workshop</li>
-            <li>Awarded 3rd prize in the NewForm Community Webpage Design Challenge (May)</li>
-            <li>Awarded Silver Medal for PMM Pavilion Design Competition organized by IIA Kerala</li>
-        </ul>
-    </div>
-    
-    <div class="projects">
-        <h2>Selected Projects</h2>
-        <div class="selection">
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/DiCE 1.jpg" alt="Emergency Department Entry of a Hospital" height="200">
-                </div>
-                <div class="text">
-                    <h3>Capturing Complexity</h3>
-                    <p>Digital Interface Design, Systems Design</p></div>
-            </div>
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/Aangan Deck Cover.jpg" alt="Top view of traditional Kerala house" height="200">
-                </div>
-                <div class="text">
-                    <h3>Aangan: Digital Literacy for mothers facing ENS</h3>
-                    <p>Service Design, User Experience Design</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/Nest 30.jpg" alt="Electronic waste accumulated in a dumpyard" height="200">
-                </div>
-                <div class="text">
-                    <h3>Nest: AC-as-a-Service for Urban India</h3>
-                    <p>Service Design, Behavioural Design</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/Nest 31.jpg" alt="Petting Zoo Probe cards render" height="200">
-                </div>
-                <div class="text">
-                    <h3>Petting Zoo: Can ownership be primed?</h3>
-                    <p>Design Research, Experiment Design</p>
-                </div>
-            </div>
+    <!-- Screen 3: touchpoints scene -->
+    <section class="frame scene" aria-labelledby="touchpoints-title">
+      <div class="container scene__inner">
+        <img class="scene__art scene__diagram" src="assets/images/touchpoint-diagram.svg" alt="Diagram of coloured squares joined by thin lines, with a hand holding the central square" width="1340" height="727">
+        <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445">
+
+        <div class="scene__text scene__text--touchpoints">
+          <h2 id="touchpoints-title">
+            <span class="scene__line-1">From assembling</span>
+            <span class="scene__line-2">touchpoints,</span>
+          </h2>
+          <ul class="scene__list scene__list--touchpoints">
+            <li class="scene__item">UX Research</li>
+            <li class="scene__item">Service Design</li>
+            <li class="scene__item">Systems Design</li>
+          </ul>
         </div>
-    </div>
+      </div>
+    </section>
 
-<div class="expertise">
-    <h2>Focus and Expertise</h2>
+    <!-- Screen 4: experiences scene -->
+    <section class="frame scene scene--experiences" aria-labelledby="experiences-title">
+      <img class="scene__photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
+      <!-- Silhouettes: Figma nodes 1:311, 1:313, 1:314 -->
+      <img class="scene__silhouette scene__silhouette--1" src="assets/images/silhouette-1.svg" alt="" width="143" height="405">
+      <img class="scene__silhouette scene__silhouette--2" src="assets/images/silhouette-2.svg" alt="" width="160" height="338">
+      <img class="scene__silhouette scene__silhouette--3" src="assets/images/silhouette-3.svg" alt="" width="252" height="441">
 
-</div>
+      <div class="container scene__inner">
+        <div class="scene__text scene__text--experiences">
+          <h2 id="experiences-title">
+            <span class="scene__line-1">To crafting stories,</span>
+            <span class="scene__line-2">experiences.</span>
+          </h2>
+          <ul class="scene__list scene__list--experiences">
+            <li class="scene__item">UX Strategy</li>
+            <li class="scene__item">Experience Design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-    <div class="footer">
-        <div class="site-details">
-            <div class="monogram">
-                <img src="assets/logo.svg" alt="Personal Monogram" height="160">
-                <p>carol.iitd.mdes.2025@gmail.com</p>
-            </div>
-            <div class="site-map">
-                <ul class="navigation">Navigation
-                    <li><a href="pages/About/">About</a></li>
-                    <li><a href="pages/Work/">Work</a></li>
-                    <li><a href="pages/Contact/">Contact</a></li>
+    <!-- Screen 5: Selected Works -->
+    <section class="frame works" id="work" aria-labelledby="works-title">
+      <div class="container works__inner">
+        <p class="works__overline">2024 - 2026</p>
+        <h2 class="works__title" id="works-title">Selected Works</h2>
+        <hr class="works__divider">
+
+        <div class="works__grid">
+          <article class="card">
+            <img class="card__image" src="assets/images/card-aangan.webp" alt="Aangan project cover" width="533" height="300" loading="lazy">
+            <div class="card__body">
+              <!-- TODO: Aangan project link -->
+              <h3 class="card__title"><a class="card__link" href="#">Aangan</a></h3>
+              <p class="card__subtitle">Digital Literacy Service for Indian Mothers</p>
+              <div class="card__footer">
+                <div class="card__logos">
+                  <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                  <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                </div>
+                <ul class="card__tags" aria-label="Disciplines">
+                  <li class="card__tag">Service Design</li>
+                  <li class="card__tag">UI/UX Design</li>
                 </ul>
-                <ul class="navigation">Socials
-                    <li><a href="pages/About/">Behance</a></li>
-                    <li><a href="pages/Work/">LinkedIn</a></li>
-                    <li><a href="pages/Contact/">Instagram</a></li>
-                </ul>
+              </div>
             </div>
+          </article>
+
+          <article class="card">
+            <img class="card__image" src="assets/images/card-nest.webp" alt="Nest project cover" width="533" height="300" loading="lazy">
+            <div class="card__body">
+              <!-- TODO: Nest project link -->
+              <h3 class="card__title"><a class="card__link" href="#">Nest</a></h3>
+              <p class="card__subtitle">AC-as-a-Service for Urban India</p>
+              <div class="card__footer">
+                <div class="card__logos">
+                  <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                  <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                </div>
+                <ul class="card__tags" aria-label="Disciplines">
+                  <li class="card__tag card__tag--teal">Service Design</li>
+                  <li class="card__tag card__tag--teal">Behaviour Design</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <img class="card__image" src="assets/images/card-petting-zoo.webp" alt="Petting Zoo project cover" width="533" height="300" loading="lazy">
+            <div class="card__body">
+              <!-- TODO: Petting Zoo project link -->
+              <h3 class="card__title"><a class="card__link" href="#">Petting Zoo</a></h3>
+              <p class="card__subtitle">Cultural Probe Design</p>
+              <div class="card__footer">
+                <div class="card__logos">
+                  <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                  <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                </div>
+                <ul class="card__tags" aria-label="Disciplines">
+                  <li class="card__tag">Design Experiment</li>
+                  <li class="card__tag">Graphic Design</li>
+                </ul>
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="rights">
-            <p>Designed and Developed by Carol Elizabeth © 2026</p>
+      </div>
+    </section>
+
+    <!-- Screen 6 (1920 x 1549): About is the top 1080px; the Contact footer
+         below completes the frame. They are siblings so About stays in <main>. -->
+    <section class="frame about" id="about" aria-labelledby="about-title">
+      <div class="container about__inner">
+        <img class="about__weave" src="assets/images/weave-pattern.svg" alt="" width="404" height="561" loading="lazy">
+        <div>
+          <h2 class="about__heading" id="about-title">Hi, I’m <span class="about__name">Carol,</span></h2>
+          <p class="about__text about__text--first">I’m a <strong class="about__strong">Service and UX Designer</strong> who builds cohesive experiences that users navigate intuitively across touchpoints.</p>
+          <p class="about__text about__text--second"><strong class="about__strong">Grounded in user research and systems thinking,</strong> I treat problems as part of a larger ecosystem and design at scales and context, rather than in siloes. Currently pursuing <strong class="about__strong">Masters in Design from IIT Delhi.</strong></p>
+          <!-- TODO: Learn More destination (About page or Resume?) -->
+          <a class="about__button" href="#">Learn More &gt;</a>
         </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="contact" id="contact" aria-labelledby="contact-title">
+    <img class="contact__cross" src="assets/images/footer-cross.svg" alt="" width="576" height="537" loading="lazy">
+    <div class="container contact__inner">
+      <ul class="contact__tags contact__small" aria-label="Disciplines">
+        <li class="contact__tag">Service Design</li>
+        <li class="contact__tag">UX Design</li>
+        <li class="contact__tag">Systems Design</li>
+        <li class="contact__tag">UX Strategy</li>
+        <li class="contact__tag">UX Research</li>
+      </ul>
+      <h2 class="contact__heading" id="contact-title">Let’s Build something good.</h2>
+      <ul class="contact__links">
+        <li><a class="contact__link" href="mailto:beth.carol00@gmail.com"><span class="contact__link-text">beth.carol00@gmail.com</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+        <!-- TODO: LinkedIn URL -->
+        <li><a class="contact__link" href="#"><span class="contact__link-text">LinkedIn</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+        <!-- TODO: Behance URL -->
+        <li><a class="contact__link" href="#"><span class="contact__link-text">Behance</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+        <!-- TODO: Instagram URL -->
+        <li><a class="contact__link" href="#"><span class="contact__link-text">Instagram</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+      </ul>
+      <div class="contact__bottom contact__small">
+        <p>All Rights Reserved by Carol Elizabeth © 2026</p>
+        <p class="contact__credit">Photo by <a href="https://unsplash.com/@victorrosario?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Victor Rosario</a> on <a href="https://unsplash.com/photos/people-walking-on-a-sunlit-street-with-long-shadows-wxT0530pcZU?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+        <p class="contact__location">Delhi, IN</p>
+      </div>
     </div>
+  </footer>
 </body>
 </html>

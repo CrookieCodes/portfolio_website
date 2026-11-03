@@ -1,0 +1,107 @@
+/* Design tokens: every colour, size and spacing value from design/tokens.md.
+   Sizes are design px at 1920 wide, converted to rem (px / 16).
+   Letter-spacing is in em (design px / font size) so it follows the font size.
+   Line heights are unitless (design line height / font size). */
+
+:root {
+  /* Colours */
+  --color-teal: #0b2f32;
+  --color-burgundy: #993746;
+  --color-bronze: #9f723c;
+  --color-mint: #a9daaf;
+  --color-paper: #e4e4e4;
+  --color-card: #d0ceca;
+  --color-ink: #1a1a1a;
+  --color-ink-card: #24292b;
+  --color-button-text: #1c1c1c;
+  --color-white: #ffffff;
+  --color-off-white: #efefef;
+  --color-tan: #dbbe9b;
+  --color-link: #d7d7d7;
+  --color-gold-muted: #af997e;
+  --color-footer-text: #9bafb1;
+  --color-list: #b5bcbd;
+  --color-divider: #5c7375;
+
+  /* Font families */
+  --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-plex: "IBM Plex Sans", var(--font-helvetica);
+
+  /* Font weights (Helvetica Neue names → CSS numbers) */
+  --weight-thin: 200;
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-heavy: 800;
+
+  /* Type scale: one size / line-height / letter-spacing set per text role */
+  --fs-nav: 1.625rem;            /* 26px */
+  --lh-nav: 1.142;
+  --ls-nav: -0.01em;
+
+  --fs-hero-1: 3.481rem;         /* 55.7px */
+  --lh-hero-1: 0.912;
+  --ls-hero-1: -0.03em;
+  --fs-hero-2: 5.569rem;         /* 89.1px */
+  --lh-hero-2: 1.031;
+  --ls-hero-2: -0.03em;
+
+  --fs-scene-1: 3rem;            /* 48px */
+  --lh-scene-1: 1.25;
+  --ls-scene-1: -0.02em;
+  --fs-scene-2: 4rem;            /* 64px */
+  --lh-scene-2: 0.9375;
+  --ls-scene-2: -0.015em;
+  --fs-scene-list: 1.775rem;     /* 28.4px */
+  --lh-scene-list: 1.768;
+  --ls-scene-list: -0.02em;
+
+  --fs-overline: 2.5rem;         /* 40px */
+  --lh-overline: 1.5;
+  --ls-overline: -0.02em;
+  --fs-section-title: 3.375rem;  /* 54px */
+  --lh-section-title: 1.111;
+  --ls-section-title: -0.02em;
+
+  --fs-card-title: 1.875rem;     /* 30px */
+  --lh-card-title: 1.2;
+  --ls-card-title: -0.02em;
+  --fs-card-subtitle: 1.4375rem; /* 23px */
+  --lh-card-subtitle: 1.217;
+  --ls-card-subtitle: -0.01em;
+  --fs-tag: 0.925rem;            /* 14.8px */
+  --lh-tag: 1.25;
+  --ls-tag: -0.02em;
+
+  --fs-about-heading: 6rem;      /* 96px */
+  --lh-about-heading: 1.031;
+  --ls-about-heading: -0.02em;
+  --fs-about-body: 1.875rem;     /* 30px */
+  --lh-about-body: 1.6;
+  --ls-about-body: -0.01em;
+  --fs-button: 1.75rem;          /* 28px */
+  --lh-button: 1.179;
+  --ls-button: -0.01em;
+
+  --fs-footer-small: 1.25rem;    /* 20px: tag line, copyright, location */
+  --lh-footer-small: 1.2;
+  --ls-footer-small: -0.01em;
+  --fs-footer-heading: 5.625rem; /* 90px */
+  --lh-footer-heading: 1.044;
+  --ls-footer-heading: -0.02em;
+  --fs-contact-link: 1.5rem;     /* 24px */
+  --lh-contact-link: 1;
+
+  /* Layout */
+  --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
+  --footer-height: 29.3125rem;   /* 469px: Contact part of screen 6 (1080 + 469 = 1549) */
+  --content-width: 105rem;       /* 1680px */
+  --gutter: 7.5rem;              /* 120px side margins */
+
+  /* Radii */
+  --radius-card: 1.5rem;         /* 24px */
+  --radius-tag: 0.23125rem;      /* 3.7px */
+  --radius-button: 0.5rem;       /* 8px */
+}

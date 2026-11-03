@@ -1,0 +1,145 @@
+/* Screens 3 and 4: the "From assembling touchpoints, / To crafting stories,
+   experiences." scenes. Shared heading and list styles, plus one modifier per scene.
+   Text is laid out in normal flow. The layered artwork (diagram, hand, photo,
+   silhouettes) is absolutely positioned at its design coordinates because it
+   overlaps itself and the frame edges. */
+
+.scene {
+  background-color: var(--color-teal);
+}
+
+.scene__inner {
+  position: relative;
+  height: var(--frame-height);
+}
+
+.scene__text {
+  position: relative;
+  z-index: 1;
+}
+
+.scene__line-1 {
+  display: block;
+  font-weight: var(--weight-light);
+  font-size: var(--fs-scene-1);
+  line-height: var(--lh-scene-1);
+  letter-spacing: var(--ls-scene-1);
+}
+
+.scene__line-2 {
+  display: block;
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-scene-2);
+  line-height: var(--lh-scene-2);
+  letter-spacing: var(--ls-scene-2);
+}
+
+.scene__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.347rem; /* items are 55.75px apart: 50.2px line + 5.55px */
+  color: var(--color-list);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-scene-list);
+  line-height: var(--lh-scene-list);
+  letter-spacing: var(--ls-scene-list);
+}
+
+.scene__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scene__item::before {
+  content: "";
+  flex: none;
+  width: 0.75rem;  /* 12px dot */
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.scene__art {
+  position: absolute;
+}
+
+/* Screen 3: touchpoints. Diagram across the left, hand rising from the
+   bottom edge, text block on the right. */
+.scene__text--touchpoints {
+  margin-left: 71.5rem;   /* x 1264 (120 + 1144) */
+  padding-top: 37.5625rem; /* heading box starts at y 601 */
+}
+
+.scene__list--touchpoints {
+  margin-top: 1.1875rem;  /* list starts at y 740 */
+  padding-left: 0.25rem;
+}
+
+.scene__diagram {
+  left: 10rem;            /* x 280 */
+  top: 10.5rem;           /* y 168 */
+  width: 83.75rem;        /* 1340px */
+}
+
+.scene__hand {
+  left: 51.3125rem;       /* x 941 */
+  top: 44.375rem;         /* y 710; 445px tall, so the frame clips its bottom */
+  width: 16.4445rem;      /* 263.1px */
+}
+
+/* Screen 4: experiences. Street photograph fills the frame, three coloured
+   silhouettes sit over the people in it, text block bottom-right. */
+.scene--experiences {
+  background-color: var(--color-bronze);
+}
+
+.scene__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Silhouettes are placed from the frame's centre line, so they stay over
+   the people in the photo even when a scrollbar narrows the page. */
+.scene__silhouette {
+  position: absolute;
+}
+
+/* 1: pink walker (node 1:311) */
+.scene__silhouette--1 {
+  left: calc(50% + 6.4375rem);   /* x 1063 */
+  top: 21.875rem;                /* y 350 */
+  width: 8.9375rem;              /* 143px */
+}
+
+/* 2: blue walker (node 1:313) */
+.scene__silhouette--2 {
+  left: calc(50% - 14.375rem);   /* x 730 */
+  top: 22.65625rem;              /* y 362.5 */
+  width: 10rem;                  /* 160px */
+}
+
+/* 3: brown pair (node 1:314) */
+.scene__silhouette--3 {
+  left: calc(50% - 18.09375rem); /* x 670.5 */
+  top: 38.09375rem;              /* y 609.5 */
+  width: 15.75rem;               /* 252px */
+}
+
+.scene__text--experiences {
+  width: fit-content;
+  margin-left: auto;
+  padding-top: 49.75rem;  /* heading box starts at y 796 */
+  padding-right: 7.8125rem; /* text ends at x 1675 */
+  text-align: right;
+}
+
+.scene__list--experiences {
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 1.75rem;
+  margin-top: 0.8125rem;  /* list line starts at y 929 */
+}
