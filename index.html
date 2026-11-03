@@ -133,7 +133,9 @@
 
     <!-- Screen 3: touchpoints scene -->
     <section class="frame frame--snap scene" id="touchpoints" aria-labelledby="touchpoints-title" data-js="screen" data-screen-theme="touchpoints">
-      <div class="container scene__inner">
+      <!-- One composition, scaled as a stage (1920 x 1080 design px, sized with --u):
+           the hand must stay on the base square. -->
+      <div class="scene__stage">
         <img class="scene__art scene__diagram" src="assets/images/touchpoint-diagram.svg" alt="Diagram of coloured squares joined by thin lines, with a hand holding the central square" width="1340" height="727">
         <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445">
 
@@ -153,23 +155,25 @@
 
     <!-- Screen 4: experiences scene -->
     <section class="frame frame--snap scene scene--experiences" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences">
-      <img class="scene__photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
-      <!-- Silhouettes: Figma nodes 1:311, 1:313, 1:314 -->
-      <img class="scene__silhouette scene__silhouette--1" src="assets/images/silhouette-1.svg" alt="" width="143" height="405">
-      <img class="scene__silhouette scene__silhouette--2" src="assets/images/silhouette-2.svg" alt="" width="160" height="338">
-      <img class="scene__silhouette scene__silhouette--3" src="assets/images/silhouette-3.svg" alt="" width="252" height="441">
+      <!-- Photo and figures share a "cover" stage: it fills the screen like object-fit: cover,
+           so the figures stay on the people in the photo at any window shape. -->
+      <div class="scene__cover">
+        <img class="scene__photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
+        <!-- Silhouettes: Figma nodes 1:311, 1:313, 1:314 -->
+        <img class="scene__silhouette scene__silhouette--1" src="assets/images/silhouette-1.svg" alt="" width="143" height="405">
+        <img class="scene__silhouette scene__silhouette--2" src="assets/images/silhouette-2.svg" alt="" width="160" height="338">
+        <img class="scene__silhouette scene__silhouette--3" src="assets/images/silhouette-3.svg" alt="" width="252" height="441">
+      </div>
 
-      <div class="container scene__inner">
-        <div class="scene__text scene__text--experiences">
-          <h2 id="experiences-title" tabindex="-1" data-js="screen-heading">
-            <span class="scene__line-1">To crafting stories,</span>
-            <span class="scene__line-2">experiences.</span>
-          </h2>
-          <ul class="scene__list scene__list--experiences">
-            <li class="scene__item">UX Strategy</li>
-            <li class="scene__item">Experience Design</li>
-          </ul>
-        </div>
+      <div class="scene__text scene__text--experiences">
+        <h2 id="experiences-title" tabindex="-1" data-js="screen-heading">
+          <span class="scene__line-1">To crafting stories,</span>
+          <span class="scene__line-2">experiences.</span>
+        </h2>
+        <ul class="scene__list scene__list--experiences">
+          <li class="scene__item">UX Strategy</li>
+          <li class="scene__item">Experience Design</li>
+        </ul>
       </div>
     </section>
 

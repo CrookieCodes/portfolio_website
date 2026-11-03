@@ -1,16 +1,13 @@
 /* Screens 3 and 4: the "From assembling touchpoints, / To crafting stories,
    experiences." scenes. Shared heading and list styles, plus one modifier per scene.
-   Text is laid out in normal flow. The layered artwork (diagram, hand, photo,
-   silhouettes) is absolutely positioned at its design coordinates because it
-   overlaps itself and the frame edges. */
+   Both fill the window (100svh) and size everything with the fluid design pixel
+   --u (tokens.css), like the hero. */
 
 .scene {
+  min-height: 0;           /* replaces the fixed 1080px frame height */
+  height: 100vh;           /* fallback */
+  height: 100svh;
   background-color: var(--color-teal);
-}
-
-.scene__inner {
-  position: relative;
-  height: var(--frame-height);
 }
 
 .scene__text {
@@ -37,7 +34,7 @@
 .scene__list {
   display: flex;
   flex-direction: column;
-  gap: 0.347rem; /* items are 55.75px apart: 50.2px line + 5.55px */
+  gap: calc(5.55 * var(--u)); /* items are 55.75px apart: 50.2px line + 5.55px */
   color: var(--color-list);
   font-weight: var(--weight-light);
   font-size: var(--fs-scene-list);
@@ -48,50 +45,77 @@
 .scene__item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: calc(16 * var(--u));
 }
 
 .scene__item::before {
   content: "";
   flex: none;
-  width: 0.75rem;  /* 12px dot */
-  height: 0.75rem;
+  width: calc(12 * var(--u));  /* 12px dot */
+  height: calc(12 * var(--u));
   border-radius: 50%;
   background-color: currentColor;
 }
 
 .scene__art {
   position: absolute;
+  height: auto;  /* keep the aspect ratio when the width scales (the HTML height attribute is the design size) */
 }
 
-/* Screen 3: touchpoints. Diagram across the left, hand rising from the
-   bottom edge, text block on the right. */
+/* Screen 3: touchpoints. One composition (diagram, hand, text) on a stage the
+   size of the 1920 x 1080 design frame, scaled with --u. Centred, and sitting on
+   the bottom edge so the frame still cuts off the hand; on windows taller than
+   16:9 the extra space goes above the diagram. Everything inside is placed at
+   its Figma coordinates. */
+.scene__stage {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+  transform: translateX(-50%);
+}
+
 .scene__text--touchpoints {
-  margin-left: 71.5rem;   /* x 1264 (120 + 1144) */
-  padding-top: 37.5625rem; /* heading box starts at y 601 */
+  position: absolute;
+  left: calc(1264 * var(--u));   /* x 1264 */
+  top: calc(601 * var(--u));     /* heading box starts at y 601 */
 }
 
 .scene__list--touchpoints {
-  margin-top: 1.1875rem;  /* list starts at y 740 */
-  padding-left: 0.25rem;
+  margin-top: calc(19 * var(--u));  /* list starts at y 740 */
+  padding-left: calc(4 * var(--u));
 }
 
 .scene__diagram {
-  left: 10rem;            /* x 280 */
-  top: 10.5rem;           /* y 168 */
-  width: 83.75rem;        /* 1340px */
+  left: calc(280 * var(--u));
+  top: calc(168 * var(--u));
+  width: calc(1340 * var(--u));
 }
 
 .scene__hand {
-  left: 51.3125rem;       /* x 941 */
-  top: 44.375rem;         /* y 710; 445px tall, so the frame clips its bottom */
-  width: 16.4445rem;      /* 263.1px */
+  left: calc(941 * var(--u));
+  top: calc(710 * var(--u));     /* 445px tall, so the frame clips its bottom */
+  width: calc(263.1 * var(--u));
 }
 
-/* Screen 4: experiences. Street photograph fills the frame, three coloured
-   silhouettes sit over the people in it, text block bottom-right. */
+/* Screen 4: experiences. The street photograph covers the screen; three coloured
+   silhouettes sit over the people in it; text block bottom-right. */
 .scene--experiences {
   background-color: var(--color-bronze);
+}
+
+/* The photo's 16:9 frame, scaled to cover the screen (like object-fit: cover) and
+   centred. The section clips what overflows. Figures are placed in percentages of
+   this frame (design px / 1920 or / 1080), so they move and scale with the photo. */
+.scene__cover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, calc(100vh * 16 / 9));
+  width: max(100%, calc(100svh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  transform: translate(-50%, -50%);
 }
 
 .scene__photo {
@@ -99,47 +123,47 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
-/* Silhouettes are placed from the frame's centre line, so they stay over
-   the people in the photo even when a scrollbar narrows the page. */
 .scene__silhouette {
   position: absolute;
+  height: auto;
 }
 
-/* 1: pink walker (node 1:311) */
+/* 1: pink walker (node 1:311): x 1063, y 350, 143px wide */
 .scene__silhouette--1 {
-  left: calc(50% + 6.4375rem);   /* x 1063 */
-  top: 21.875rem;                /* y 350 */
-  width: 8.9375rem;              /* 143px */
+  left: calc(1063 / 1920 * 100%);
+  top: calc(350 / 1080 * 100%);
+  width: calc(143 / 1920 * 100%);
 }
 
-/* 2: blue walker (node 1:313) */
+/* 2: blue walker (node 1:313): x 730, y 362.5, 160px wide */
 .scene__silhouette--2 {
-  left: calc(50% - 14.375rem);   /* x 730 */
-  top: 22.65625rem;              /* y 362.5 */
-  width: 10rem;                  /* 160px */
+  left: calc(730 / 1920 * 100%);
+  top: calc(362.5 / 1080 * 100%);
+  width: calc(160 / 1920 * 100%);
 }
 
-/* 3: brown pair (node 1:314) */
+/* 3: brown pair (node 1:314): x 670.5, y 609.5, 252px wide */
 .scene__silhouette--3 {
-  left: calc(50% - 18.09375rem); /* x 670.5 */
-  top: 38.09375rem;              /* y 609.5 */
-  width: 15.75rem;               /* 252px */
+  left: calc(670.5 / 1920 * 100%);
+  top: calc(609.5 / 1080 * 100%);
+  width: calc(252 / 1920 * 100%);
 }
 
+/* Anchored to the bottom-right: ends 125px inside the right page margin (x 1675
+   at 1920) and starts at y 796, measured from the bottom so it stays near the
+   bottom edge on taller windows. */
 .scene__text--experiences {
-  width: fit-content;
-  margin-left: auto;
-  padding-top: 49.75rem;  /* heading box starts at y 796 */
-  padding-right: 7.8125rem; /* text ends at x 1675 */
+  position: absolute;
+  right: calc(var(--page-margin) + 125 * var(--u));
+  bottom: calc(100.8 * var(--u));
   text-align: right;
 }
 
 .scene__list--experiences {
   flex-direction: row;
   justify-content: flex-end;
-  gap: 1.75rem;
-  margin-top: 0.8125rem;  /* list line starts at y 929 */
+  gap: calc(28 * var(--u));
+  margin-top: calc(13 * var(--u));  /* list line starts at y 929 */
 }

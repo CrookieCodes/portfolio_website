@@ -52,13 +52,13 @@
   --lh-hero-2: 1.031;
   --ls-hero-2: -0.03em;
 
-  --fs-scene-1: 3rem;            /* 48px */
+  --fs-scene-1: calc(48 * var(--u));    /* 48px at 1920, fluid */
   --lh-scene-1: 1.25;
   --ls-scene-1: -0.02em;
-  --fs-scene-2: 4rem;            /* 64px */
+  --fs-scene-2: calc(64 * var(--u));    /* 64px at 1920, fluid */
   --lh-scene-2: 0.9375;
   --ls-scene-2: -0.015em;
-  --fs-scene-list: 1.775rem;     /* 28.4px */
+  --fs-scene-list: calc(28.4 * var(--u)); /* 28.4px at 1920, fluid */
   --lh-scene-list: 1.768;
   --ls-scene-list: -0.02em;
 
