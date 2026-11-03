@@ -1,4 +1,4 @@
-/* Site header: logo cross (left) and main nav (right) on the 1680px column.
+/* Site header: logo cross (left) and main nav (right), between the page margins.
    Sizes use the fluid design pixel --u (tokens.css), so it fits any window.
    One fixed header for screens 2-6. js/header-theme.js sets data-theme to the
    screen behind the header; each theme below sets the cross and nav colours.
@@ -41,10 +41,10 @@
   --header-nav: var(--color-white);
 }
 
-/* Fluid version of the 1680px column, centred. */
+/* Full window width between the page margins: logo on the left margin,
+   nav ending on the right margin. */
 .site-header__inner {
-  width: calc(1680 * var(--u));
-  margin-inline: auto;
+  padding-inline: var(--page-margin);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

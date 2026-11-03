@@ -9,21 +9,21 @@
   background-color: var(--color-teal);
 }
 
-/* The 1680px column, fluid. The heading is placed from the top and the eyes from
-   the bottom; on taller windows the extra space opens up between them. */
+/* Full window width between the page margins. The heading is placed from the top
+   and the eyes from the bottom; on taller windows the extra space opens up between them. */
 .hero__inner {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: calc(1680 * var(--u));
   height: 100%;
-  margin-inline: auto;
   padding-top: calc(360 * var(--u));     /* heading box starts 360px down the frame */
   padding-bottom: calc(164 * var(--u));  /* eyes end at y 916 of 1080 */
-  padding-left: calc(30.5 * var(--u));   /* heading starts at x 150.5 (120 + 30.5) */
+  padding-inline: var(--page-margin);
 }
 
+/* Figma offset from the left margin: the heading starts at x 151 (margin 120 + 31). */
 .hero__title {
+  padding-left: calc(31 * var(--u));
   font-weight: var(--weight-regular);
 }
 
@@ -94,7 +94,7 @@
   display: flex;
   justify-content: flex-end;
   gap: calc(100 * var(--u));         /* 100px between the eyes */
-  padding-right: calc(4 * var(--u)); /* right eye ends at x 1796 */
+  padding-right: calc(4 * var(--u)); /* Figma offset from the right margin: right eye ends at x 1796 (1800 - 4) */
 }
 
 /* Each eye is a plain button: no box, just the graphic. */

@@ -105,6 +105,12 @@
      the other screens move to it in Phase 6. */
   --u: clamp(0.0333rem, min(100vw / 1920, 100vh / 1080), 0.0833rem);
 
+  /* Page margin: the left and right margins of Figma's 3-column grid (120px margin,
+     40px gutter). 120px at 1920 and wider, scaling with the window below that, never
+     under 32px. Content spans the full window between the margins. Use this on every
+     screen (screens 3-6 move to it in Phase 6); never hard-code the 120. */
+  --page-margin: clamp(2rem, 6.25vw, 7.5rem);
+
   /* Layout */
   --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
   --footer-height: 29.3125rem;   /* 469px: Contact part of screen 6 (1080 + 469 = 1549) */
