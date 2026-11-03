@@ -9,6 +9,6 @@
 }
 
 .splash__logo {
-  width: 12.4375rem;   /* 199px (Figma node is 199 x 198.5; the SVG exports as 199 square) */
-  height: 12.4375rem;
+  width: calc(199 * var(--u));   /* 199px at 1920 (Figma node is 199 x 198.5) */
+  height: calc(199 * var(--u));
 }

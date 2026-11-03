@@ -1,11 +1,12 @@
 /* Site header: logo cross (left) and main nav (right) on the 1680px column.
+   Sizes use the fluid design pixel --u (tokens.css), so it fits any window.
    One fixed header for screens 2-6. js/header-theme.js sets data-theme to the
    screen behind the header; each theme below sets the cross and nav colours.
    The cross is inline SVG filled with currentColor, so its colour comes from CSS. */
 
 .site-header {
   position: fixed;
-  top: 4.1875rem; /* 67px */
+  top: calc(67 * var(--u));
   left: 0;
   right: 0;
   z-index: 5;
@@ -52,7 +53,10 @@
   }
 }
 
+/* Fluid version of the 1680px column, centred. */
 .site-header__inner {
+  width: calc(1680 * var(--u));
+  margin-inline: auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -60,8 +64,8 @@
 
 .site-header__logo {
   display: block;
-  width: 3.8125rem;  /* 61px */
-  height: 3.8125rem;
+  width: calc(61 * var(--u));
+  height: calc(61 * var(--u));
   color: var(--header-cross);
 }
 
@@ -72,13 +76,13 @@
 }
 
 .site-nav {
-  margin-top: 0.8125rem; /* nav text sits 13px below the logo's top edge */
+  margin-top: calc(13 * var(--u)); /* nav text sits 13px below the logo's top edge */
   color: var(--header-nav);
 }
 
 .site-nav__list {
   display: flex;
-  gap: 4.75rem; /* 76px between items */
+  gap: calc(76 * var(--u)); /* 76px between items */
 }
 
 .site-nav__link {
@@ -103,9 +107,9 @@
 
 .site-nav__link--active::before {
   content: "";
-  width: 0.625rem;  /* 10px dot */
-  height: 0.625rem;
-  margin-right: 0.75rem;
+  width: calc(10 * var(--u));  /* 10px dot */
+  height: calc(10 * var(--u));
+  margin-right: calc(12 * var(--u));
   border-radius: 50%;
   background-color: currentColor;
 }
