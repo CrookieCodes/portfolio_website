@@ -50,7 +50,7 @@ After each phase, add a short plain-language note explaining the main choices so
 - Add unique <title>, meta description, favicon, Open Graph tags, lang="en" and the viewport meta tag.
 
 ## Git rules
-- Never work on main. One branch per phase: phase-1-static, phase-2-responsive, phase-3-splash, phase-4-interactions, phase-5-polish.
+- Never work on main. One branch per phase: phase-1-static, phase-2-navigation, phase-3-splash, phase-4-eyes, phase-5-transitions, phase-6-polish.
 - Small commits with clear messages. Commit after every working section.
 - Push branches to origin only. Open a pull request per phase describing what changed and what is untested. Carol merges.
 - The repo has existing history from an earlier version. Keep it. Overwrite files by committing new versions on a branch. Never force push, rebase pushed commits, or run reset --hard.
