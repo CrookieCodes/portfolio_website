@@ -5,11 +5,12 @@
 // dark ends noted below). The band starts at the base square's centre, so it moves
 // outward the same way as the dots.
 //
-// Screen 4: the three figures on the street photo, flat shapes filled by the effect.
-// Their main colour is the figure's own hue. Deep-teal is unreadable on this photo
-// (about 1.2:1), so the blue figure uses pale teal; the pink figure mixes in bronze
-// because burgundy alone is dim there (about 1.3:1). The band starts from the same
-// frame point as on screen 3 (the base square's centre).
+// Screen 4: the three figures on the street photo, flat deep-teal shapes (a ground
+// under the glyphs, so the people in the photo do not show through) filled by the
+// effect. Each figure's main colour is its own hue; the blue figure uses pale teal
+// (Carol's fallback: deep-teal is about 1.2:1 on the photo, and invisible on the
+// deep-teal ground). The band starts from the same frame point as on screen 3
+// (the base square's centre).
 
 import { createAsciiEffect } from './ascii-effect.js';
 
@@ -20,11 +21,12 @@ const SQUARE_COLOURS = {
   brown: [['--color-teal', 0.8], ['--color-burgundy', 0.2]],     // 6.6 / 2.1, 3.2 / 1.0
 };
 
-// Figure colours.                                   contrast vs the photo under it (median)
+// Figure colours.                                   contrast vs the deep-teal ground
+const FIGURE_GROUND = '--color-teal';
 const FIGURE_COLOURS = {
-  pink: [['--color-burgundy', 0.7], ['--color-bronze', 0.3]],    // 1.3, 2.2
-  brown: [['--color-bronze', 0.8], ['--color-burgundy', 0.2]],   // 4.2, 2.5
-  blue: [['--color-pale-teal', 0.8], ['--color-teal', 0.2]],     // 6.2, 1.2
+  pink: [['--color-burgundy', 0.7], ['--color-bronze', 0.3]],    // 2.0, 3.4
+  brown: [['--color-bronze', 0.8], ['--color-burgundy', 0.2]],   // 3.4, 2.0
+  blue: [['--color-pale-teal', 0.8], ['--color-bronze', 0.2]],   // 7.7, 3.4
 };
 
 // The base square's centre in the 1920 x 1080 frame (diagram at x 280, y 168;
@@ -70,7 +72,7 @@ function initExperiences() {
     const m = figure.transform.baseVal.consolidate()?.matrix ?? new DOMMatrix();
     const path = new Path2D();
     path.addPath(new Path2D(figure.getAttribute('d')), m);
-    return { path, box: boxOf(figure), colours: FIGURE_COLOURS[figure.dataset.figure] };
+    return { path, box: boxOf(figure), colours: FIGURE_COLOURS[figure.dataset.figure], ground: FIGURE_GROUND };
   });
   return createAsciiEffect({
     canvas,

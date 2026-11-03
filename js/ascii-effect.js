@@ -17,9 +17,11 @@
 // Usage:
 //   createAsciiEffect({
 //     canvas, screen, width, height, origin: { x, y },
-//     shapes: [{ path: Path2D, box: { x, y, w, h }, colours: [['--color-teal', 0.7], ...] }],
+//     shapes: [{ path: Path2D, box: { x, y, w, h }, colours: [['--color-teal', 0.7], ...], ground }],
 //   });
 // Colours are CSS custom property names (tokens) with weights; each cell picks one at random.
+// `ground` (optional, a token) fills the shape flat under the glyphs, so the shape reads as
+// a solid figure even where nothing is drawn.
 
 import { ASCII } from './motion-config.js';
 
@@ -127,7 +129,8 @@ export function createAsciiEffect({ canvas, screen, width, height, origin, shape
         cells.push({ x, y, colour, threshold: rand(), distance });
       }
     }
-    return { path: shape.path, size, cells };
+    const ground = shape.ground ? tokens.getPropertyValue(shape.ground).trim() : null;
+    return { path: shape.path, size, cells, ground };
   });
   const travel = farthest + ASCII.bandWidth * 3; // the front must clear the whole trail
 
@@ -156,6 +159,10 @@ export function createAsciiEffect({ canvas, screen, width, height, origin, shape
         const type = glyphFor((front - cell.distance) / ASCII.bandWidth, cell.threshold);
         addGlyph(type === OUTLINE ? rings.get(cell.colour) : fills.get(cell.colour), type, cell.x, cell.y, layer.size);
       });
+      if (layer.ground) {
+        ctx.fillStyle = layer.ground;
+        ctx.fill(layer.path);
+      }
       ctx.save();
       ctx.clip(layer.path);
       ctx.lineWidth = Math.max(layer.size * 0.08, 1 / scale); // never thinner than one screen pixel
