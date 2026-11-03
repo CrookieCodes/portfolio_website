@@ -24,19 +24,25 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Screen 1: splash. Decorative intro, so the logo has empty alt. -->
-  <div class="splash">
+  <div class="splash" data-js="screen" data-screen-theme="splash">
     <img class="splash__logo" src="assets/icons/logo-splash.svg" alt="" width="199" height="199">
   </div>
 
-  <header class="site-header">
+  <!-- One fixed header for screens 2-6. data-theme is set by js/header-theme.js;
+       it starts as "splash" so the header is hidden until the splash scrolls away. -->
+  <header class="site-header" data-js="site-header" data-theme="splash">
     <div class="container site-header__inner">
-      <a class="site-header__logo" href="/">
-        <img class="site-header__logo-image" src="assets/icons/logo-cross-burgundy.svg" alt="Carol Elizabeth, home" width="61" height="61">
+      <a class="site-header__logo" href="#hero">
+        <span class="visually-hidden">Carol Elizabeth, home</span>
+        <!-- Logo cross (Figma 1:239), filled with currentColor so CSS sets its colour per screen. -->
+        <svg class="site-header__cross" viewBox="0 0 61 61" aria-hidden="true" focusable="false">
+          <path d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z" fill="currentColor"/>
+        </svg>
       </a>
       <nav class="site-nav" aria-label="Main">
         <ul class="site-nav__list">
-          <li><a class="site-nav__link" href="#about">About</a></li>
-          <li><a class="site-nav__link" href="#work">Work</a></li>
+          <li><a class="site-nav__link" href="#about" data-js="nav-link" data-nav="about">About</a></li>
+          <li><a class="site-nav__link" href="#work" data-js="nav-link" data-nav="work">Work</a></li>
           <!-- TODO: Resume destination (PDF?) -->
           <li><a class="site-nav__link" href="#">Resume</a></li>
           <li><a class="site-nav__link" href="#contact">Contact</a></li>
@@ -47,7 +53,7 @@
 
   <main id="main">
     <!-- Screen 2: hero -->
-    <section class="frame hero" aria-labelledby="hero-title">
+    <section class="frame hero" id="hero" aria-labelledby="hero-title" data-js="screen" data-screen-theme="hero">
       <div class="container hero__inner">
         <h1 class="hero__title" id="hero-title">
           <span class="hero__line-1">Hey, I’m Carol Elizabeth.</span>
@@ -62,7 +68,7 @@
     </section>
 
     <!-- Screen 3: touchpoints scene -->
-    <section class="frame scene" aria-labelledby="touchpoints-title">
+    <section class="frame scene" id="touchpoints" aria-labelledby="touchpoints-title" data-js="screen" data-screen-theme="touchpoints">
       <div class="container scene__inner">
         <img class="scene__art scene__diagram" src="assets/images/touchpoint-diagram.svg" alt="Diagram of coloured squares joined by thin lines, with a hand holding the central square" width="1340" height="727">
         <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445">
@@ -82,7 +88,7 @@
     </section>
 
     <!-- Screen 4: experiences scene -->
-    <section class="frame scene scene--experiences" aria-labelledby="experiences-title">
+    <section class="frame scene scene--experiences" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences">
       <img class="scene__photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
       <!-- Silhouettes: Figma nodes 1:311, 1:313, 1:314 -->
       <img class="scene__silhouette scene__silhouette--1" src="assets/images/silhouette-1.svg" alt="" width="143" height="405">
@@ -104,7 +110,7 @@
     </section>
 
     <!-- Screen 5: Selected Works -->
-    <section class="frame works" id="work" aria-labelledby="works-title">
+    <section class="frame works" id="work" aria-labelledby="works-title" data-js="screen" data-screen-theme="work" data-screen-nav="work">
       <div class="container works__inner">
         <p class="works__overline">2024 - 2026</p>
         <h2 class="works__title" id="works-title">Selected Works</h2>
@@ -173,7 +179,7 @@
 
     <!-- Screen 6 (1920 x 1549): About is the top 1080px; the Contact footer
          below completes the frame. They are siblings so About stays in <main>. -->
-    <section class="frame about" id="about" aria-labelledby="about-title">
+    <section class="frame about" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about">
       <div class="container about__inner">
         <img class="about__weave" src="assets/images/weave-pattern.svg" alt="" width="404" height="561" loading="lazy">
         <div>
@@ -187,7 +193,8 @@
     </section>
   </main>
 
-  <footer class="contact" id="contact" aria-labelledby="contact-title">
+  <!-- The footer is the bottom of screen 6, so it keeps the About theme and active link. -->
+  <footer class="contact" id="contact" aria-labelledby="contact-title" data-js="screen" data-screen-theme="about" data-screen-nav="about">
     <img class="contact__cross" src="assets/images/footer-cross.svg" alt="" width="576" height="537" loading="lazy">
     <div class="container contact__inner">
       <ul class="contact__tags contact__small" aria-label="Disciplines">

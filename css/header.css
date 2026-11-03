@@ -1,20 +1,55 @@
 /* Site header: logo cross (left) and main nav (right) on the 1680px column.
-   Phase 1: sits over the top of the hero and scrolls away with it.
-   Phase 4 makes it fixed and swaps colour, logo and active item per section,
-   using the modifier classes below. */
+   One fixed header for screens 2-6. js/header-theme.js sets data-theme to the
+   screen behind the header; each theme below sets the cross and nav colours.
+   The cross is inline SVG filled with currentColor, so its colour comes from CSS. */
 
 .site-header {
-  position: absolute;
-  top: calc(var(--frame-height) + 4.1875rem); /* below the splash, 67px into the hero */
+  position: fixed;
+  top: 4.1875rem; /* 67px */
   left: 0;
   right: 0;
   z-index: 5;
-  color: var(--color-white);
+  /* Default (no theme yet): the hero's colours. */
+  --header-cross: var(--color-burgundy);
+  --header-nav: var(--color-white);
 }
 
-/* On light sections (Selected Works) the nav text turns ink. */
-.site-header--light {
-  color: var(--color-ink);
+/* Themes, one per screen. Attribute selectors keep these to one simple selector each. */
+[data-theme="hero"] {
+  --header-cross: var(--color-burgundy);
+  --header-nav: var(--color-white);
+}
+
+[data-theme="touchpoints"] {
+  --header-cross: var(--color-pale-teal);
+  --header-nav: var(--color-white);
+}
+
+[data-theme="experiences"] {
+  --header-cross: var(--color-bronze);
+  --header-nav: var(--color-white);
+}
+
+[data-theme="work"] {
+  --header-cross: var(--color-teal);
+  --header-nav: var(--color-ink);
+}
+
+[data-theme="about"] {
+  --header-cross: var(--color-tan);
+  --header-nav: var(--color-white);
+}
+
+/* Over the splash the header is fully hidden: invisible and out of the tab order.
+   Without JavaScript nothing can un-hide it, so it stays visible in that case. */
+[data-theme="splash"] {
+  visibility: hidden;
+}
+
+@media (scripting: none) {
+  [data-theme="splash"] {
+    visibility: visible;
+  }
 }
 
 .site-header__inner {
@@ -27,15 +62,18 @@
   display: block;
   width: 3.8125rem;  /* 61px */
   height: 3.8125rem;
+  color: var(--header-cross);
 }
 
-.site-header__logo-image {
+.site-header__cross {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
 .site-nav {
   margin-top: 0.8125rem; /* nav text sits 13px below the logo's top edge */
+  color: var(--header-nav);
 }
 
 .site-nav__list {
@@ -52,7 +90,13 @@
   text-decoration: none;
 }
 
-/* Active page: heavier weight and a leading dot. */
+/* Focus rings use the nav colour so they show on dark and light screens. */
+.site-header__logo:focus-visible,
+.site-nav__link:focus-visible {
+  outline-color: var(--header-nav);
+}
+
+/* Active screen: heavier weight and a leading dot. */
 .site-nav__link--active {
   font-weight: var(--weight-heavy);
 }

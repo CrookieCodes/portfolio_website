@@ -22,6 +22,7 @@
   --color-footer-text: #9bafb1;
   --color-list: #b5bcbd;
   --color-divider: #5c7375;
+  --color-pale-teal: #a5c4c7;    /* logo cross on the touchpoints screen, footer cross */
 
   /* Font families */
   --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
