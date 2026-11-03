@@ -41,6 +41,12 @@
   --header-nav: var(--color-white);
 }
 
+/* Contact footer: same header colours as About (and About stays the active link). */
+[data-theme="contact"] {
+  --header-cross: var(--color-tan);
+  --header-nav: var(--color-white);
+}
+
 /* Full window width between the page margins: logo on the left margin,
    nav ending on the right margin. */
 .site-header__inner {
