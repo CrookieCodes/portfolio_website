@@ -115,3 +115,31 @@
   width: calc(371 * var(--u));
   height: calc(239 * var(--u));
 }
+
+/* Eye parts (inline SVG). Colours from the Figma eye component. */
+.hero__eye-outline {
+  fill: var(--color-eye-outline);
+}
+
+.hero__eye-white {
+  fill: var(--color-white);
+}
+
+.hero__iris-ring {
+  fill: var(--color-bronze);
+}
+
+.hero__pupil {
+  fill: var(--color-eye-pupil);
+}
+
+/* The iris (or the cross) follows the cursor with a short lag. */
+.hero__look {
+  transition: transform var(--motion-pupil-lag) var(--motion-pupil-easing);
+}
+
+/* Hidden until the eye is hovered or focused. */
+.hero__eye-cross {
+  fill: var(--color-burgundy);
+  visibility: hidden;
+}

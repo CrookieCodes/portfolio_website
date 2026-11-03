@@ -6,9 +6,11 @@ import { initSplash } from './splash.js';
 import { initHeaderTheme } from './header-theme.js';
 import { initEyeButtons } from './eye-buttons.js';
 import { initHeadline } from './headline.js';
+import { initEyeTracking } from './eye-tracking.js';
 
 applyMotionVariables();
 initHeaderTheme();
 initEyeButtons();
+initEyeTracking();
 // The headline starts cycling once the splash has revealed the hero.
 initSplash().then(initHeadline);

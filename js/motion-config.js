@@ -29,6 +29,9 @@ export const HEADLINE = {
 // 2. Hero eyes (motion.md section 2).
 export const EYES = {
   pupilLag: 120,             // PROPOSED: smooth follow behind the cursor
+  pupilEasing: 'ease-out',   // STARTER: motion.md gives no easing for the follow
+  pupilReach: 371,           // STARTER: design px from the eye's centre at which the
+                             //          pupil reaches the edge of its range (one eye width)
   labelFade: 150,            // PROPOSED: "Click to Explore" fades in
   labelOffset: 16,           // STARTER: design px from the cursor ("slight offset")
   labelFontSize: 12,         // PROPOSED: design px at 1920 wide
@@ -41,6 +44,7 @@ export function applyMotionVariables() {
   root.setProperty('--motion-headline-duration', `${HEADLINE.duration}ms`);
   root.setProperty('--motion-headline-easing', HEADLINE.easing);
   root.setProperty('--motion-pupil-lag', `${EYES.pupilLag}ms`);
+  root.setProperty('--motion-pupil-easing', EYES.pupilEasing);
   root.setProperty('--motion-label-fade', `${EYES.labelFade}ms`);
   root.setProperty('--eye-label-offset', String(EYES.labelOffset));
   root.setProperty('--eye-label-font-size', String(EYES.labelFontSize));
