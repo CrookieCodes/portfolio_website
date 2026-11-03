@@ -33,6 +33,7 @@ export const EYES = {
   pupilReach: 371,           // STARTER: design px from the eye's centre at which the
                              //          pupil reaches the edge of its range (one eye width)
   labelFade: 150,            // PROPOSED: "Click to Explore" fades in
+  labelEasing: 'ease-out',   // STARTER: motion.md gives no easing for the fade
   labelOffset: 16,           // STARTER: design px from the cursor ("slight offset")
   labelFontSize: 12,         // PROPOSED: design px at 1920 wide
 };
@@ -46,6 +47,6 @@ export function applyMotionVariables() {
   root.setProperty('--motion-pupil-lag', `${EYES.pupilLag}ms`);
   root.setProperty('--motion-pupil-easing', EYES.pupilEasing);
   root.setProperty('--motion-label-fade', `${EYES.labelFade}ms`);
-  root.setProperty('--eye-label-offset', String(EYES.labelOffset));
+  root.setProperty('--motion-label-easing', EYES.labelEasing);
   root.setProperty('--eye-label-font-size', String(EYES.labelFontSize));
 }

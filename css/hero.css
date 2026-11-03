@@ -138,8 +138,42 @@
   transition: transform var(--motion-pupil-lag) var(--motion-pupil-easing);
 }
 
-/* Hidden until the eye is hovered or focused. */
+/* Hover or keyboard focus: the iris is replaced by the burgundy cross
+   (classes toggled by js/eye-cross.js). */
+.hero__iris--hidden {
+  visibility: hidden;
+}
+
 .hero__eye-cross {
   fill: var(--color-burgundy);
   visibility: hidden;
+}
+
+.hero__eye-cross--visible {
+  visibility: visible;
+}
+
+/* "Click to Explore": a small black label next to the cursor while it is over an eye.
+   12px at 1920 wide (--eye-label-font-size, from js/motion-config.js), never
+   smaller than 12px so it stays readable, up to 16px on very large windows.
+   Padding 4px 8px at that size. Positioned by js/eye-label.js. */
+.eye-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;  /* above the header */
+  padding: 0.3333em 0.6667em;
+  background-color: var(--color-ink);
+  color: var(--color-white);
+  font-family: var(--font-plex);
+  font-size: clamp(0.75rem, calc(var(--eye-label-font-size) * var(--u)), 1rem);
+  line-height: 1.25;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-label-fade) var(--motion-label-easing);
+}
+
+.eye-label--visible {
+  opacity: 1;
 }

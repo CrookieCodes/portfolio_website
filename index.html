@@ -90,12 +90,12 @@
               <g clip-path="url(#eye-white-left)">
                 <!-- Moves with the cursor (js/eye-tracking.js). -->
                 <g class="hero__look" data-js="eye-look">
-                  <g class="hero__iris">
+                  <g class="hero__iris" data-js="eye-iris">
                     <circle class="hero__iris-ring" cx="161.5" cy="97.5" r="60.5"/>
                     <circle class="hero__pupil" cx="151" cy="89" r="35"/>
                   </g>
                   <!-- Hover/focus state: the logo cross at the iris's size (121), centred on it. -->
-                  <path class="hero__eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+                  <path class="hero__eye-cross" data-js="eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
                 </g>
               </g>
             </svg>
@@ -111,12 +111,12 @@
               <g clip-path="url(#eye-white-right)">
                 <!-- Moves with the cursor (js/eye-tracking.js). -->
                 <g class="hero__look" data-js="eye-look">
-                  <g class="hero__iris">
+                  <g class="hero__iris" data-js="eye-iris">
                     <circle class="hero__iris-ring" cx="161.5" cy="97.5" r="60.5"/>
                     <circle class="hero__pupil" cx="151" cy="89" r="35"/>
                   </g>
                   <!-- Hover/focus state: the logo cross at the iris's size (121), centred on it. -->
-                  <path class="hero__eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+                  <path class="hero__eye-cross" data-js="eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
                 </g>
               </g>
             </svg>
@@ -124,6 +124,9 @@
           </button>
         </div>
       </div>
+      <!-- Follows the mouse while it is over an eye (js/eye-label.js). Screen readers
+           use the buttons' names instead, so this is hidden from them. -->
+      <div class="eye-label" data-js="eye-label" aria-hidden="true">Click to Explore</div>
     </section>
 
     <!-- Screen 3: touchpoints scene -->
