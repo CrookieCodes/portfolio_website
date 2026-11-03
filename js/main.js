@@ -12,6 +12,7 @@ import { initEyeLabel } from './eye-label.js';
 import { initDotFlow } from './dot-flow.js';
 import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
+import { initCarousel } from './carousel.js';
 
 applyMotionVariables();
 initHeaderTheme();
@@ -22,5 +23,6 @@ initEyeLabel();
 initDotFlow();
 initScenes();
 initPlaceholderLinks();
+initCarousel();
 // The headline starts cycling once the splash has revealed the hero.
 initSplash().then(initHeadline);

@@ -57,6 +57,13 @@ export const ASCII = {
                              //          so every glyph stage is visible
 };
 
+// 5. Selected Works cards (motion.md section 5).
+export const CARDS = {
+  liftDistance: 4,           // PROPOSED: design px the card rises on hover
+  liftDuration: 200,         // PROPOSED
+  liftEasing: 'ease-out',    // PROPOSED
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
 export function applyMotionVariables() {
@@ -68,4 +75,7 @@ export function applyMotionVariables() {
   root.setProperty('--motion-label-fade', `${EYES.labelFade}ms`);
   root.setProperty('--motion-label-easing', EYES.labelEasing);
   root.setProperty('--eye-label-font-size', String(EYES.labelFontSize));
+  root.setProperty('--card-lift', String(CARDS.liftDistance));
+  root.setProperty('--motion-card-lift-duration', `${CARDS.liftDuration}ms`);
+  root.setProperty('--motion-card-lift-easing', CARDS.liftEasing);
 }

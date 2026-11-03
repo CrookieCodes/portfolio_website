@@ -270,63 +270,126 @@
         <h2 class="works__title" id="works-title">Selected Works</h2>
         <hr class="works__divider">
 
-        <div class="works__grid">
-          <article class="card">
-            <img class="card__image" src="assets/images/card-aangan.webp" alt="Aangan project cover" width="533" height="300" loading="lazy">
-            <div class="card__body">
-              <!-- Placeholder until the Aangan project page exists. -->
-              <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Aangan</a></h3>
-              <p class="card__subtitle">Digital Literacy Service for Indian Mothers</p>
-              <div class="card__footer">
-                <div class="card__logos">
-                  <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                  <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+        <!-- Carousel (js/carousel.js): a horizontal strip that snaps to card starts. The arrow
+             button scrolls one set; trackpad, Shift+wheel and the arrow keys (strip focused) work too.
+             The second set repeats the first until more projects exist: those cards are marked
+             data-placeholder-duplicate, hidden from screen readers and skipped by Tab. -->
+        <div class="works__strip">
+          <div class="works__carousel" data-js="carousel" tabindex="0" role="region" aria-label="Projects">
+            <div class="works__track">
+              <article class="card">
+                <img class="card__image" src="assets/images/card-aangan.webp" alt="Aangan project cover" width="533" height="300" loading="lazy">
+                <div class="card__body">
+                  <!-- Placeholder until the Aangan project page exists. -->
+                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Aangan</a></h3>
+                  <p class="card__subtitle">Digital Literacy Service for Indian Mothers</p>
+                  <div class="card__footer">
+                    <div class="card__logos">
+                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                    </div>
+                    <ul class="card__tags" aria-label="Disciplines">
+                      <li class="card__tag">Service Design</li>
+                      <li class="card__tag">UI/UX Design</li>
+                    </ul>
+                  </div>
                 </div>
-                <ul class="card__tags" aria-label="Disciplines">
-                  <li class="card__tag">Service Design</li>
-                  <li class="card__tag">UI/UX Design</li>
-                </ul>
-              </div>
-            </div>
-          </article>
+              </article>
+              <article class="card">
+                <img class="card__image" src="assets/images/card-nest.webp" alt="Nest project cover" width="533" height="300" loading="lazy">
+                <div class="card__body">
+                  <!-- Placeholder until the Nest project page exists. -->
+                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Nest</a></h3>
+                  <p class="card__subtitle">AC-as-a-Service for Urban India</p>
+                  <div class="card__footer">
+                    <div class="card__logos">
+                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                    </div>
+                    <ul class="card__tags" aria-label="Disciplines">
+                      <li class="card__tag card__tag--teal">Service Design</li>
+                      <li class="card__tag card__tag--teal">Behaviour Design</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+              <article class="card">
+                <img class="card__image" src="assets/images/card-petting-zoo.webp" alt="Petting Zoo project cover" width="533" height="300" loading="lazy">
+                <div class="card__body">
+                  <!-- Placeholder until the Petting Zoo project page exists. -->
+                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Petting Zoo</a></h3>
+                  <p class="card__subtitle">Cultural Probe Design</p>
+                  <div class="card__footer">
+                    <div class="card__logos">
+                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                    </div>
+                    <ul class="card__tags" aria-label="Disciplines">
+                      <li class="card__tag">Design Experiment</li>
+                      <li class="card__tag">Graphic Design</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
 
-          <article class="card">
-            <img class="card__image" src="assets/images/card-nest.webp" alt="Nest project cover" width="533" height="300" loading="lazy">
-            <div class="card__body">
-              <!-- Placeholder until the Nest project page exists. -->
-              <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Nest</a></h3>
-              <p class="card__subtitle">AC-as-a-Service for Urban India</p>
-              <div class="card__footer">
-                <div class="card__logos">
-                  <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                  <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+              <article class="card" aria-hidden="true" data-placeholder-duplicate>
+                <img class="card__image" src="assets/images/card-aangan.webp" alt="Aangan project cover" width="533" height="300" loading="lazy">
+                <div class="card__body">
+                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true" tabindex="-1">Aangan</a></h3>
+                  <p class="card__subtitle">Digital Literacy Service for Indian Mothers</p>
+                  <div class="card__footer">
+                    <div class="card__logos">
+                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                    </div>
+                    <ul class="card__tags" aria-label="Disciplines">
+                      <li class="card__tag">Service Design</li>
+                      <li class="card__tag">UI/UX Design</li>
+                    </ul>
+                  </div>
                 </div>
-                <ul class="card__tags" aria-label="Disciplines">
-                  <li class="card__tag card__tag--teal">Service Design</li>
-                  <li class="card__tag card__tag--teal">Behaviour Design</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <img class="card__image" src="assets/images/card-petting-zoo.webp" alt="Petting Zoo project cover" width="533" height="300" loading="lazy">
-            <div class="card__body">
-              <!-- Placeholder until the Petting Zoo project page exists. -->
-              <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Petting Zoo</a></h3>
-              <p class="card__subtitle">Cultural Probe Design</p>
-              <div class="card__footer">
-                <div class="card__logos">
-                  <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                  <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+              </article>
+              <article class="card" aria-hidden="true" data-placeholder-duplicate>
+                <img class="card__image" src="assets/images/card-nest.webp" alt="Nest project cover" width="533" height="300" loading="lazy">
+                <div class="card__body">
+                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true" tabindex="-1">Nest</a></h3>
+                  <p class="card__subtitle">AC-as-a-Service for Urban India</p>
+                  <div class="card__footer">
+                    <div class="card__logos">
+                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                    </div>
+                    <ul class="card__tags" aria-label="Disciplines">
+                      <li class="card__tag card__tag--teal">Service Design</li>
+                      <li class="card__tag card__tag--teal">Behaviour Design</li>
+                    </ul>
+                  </div>
                 </div>
-                <ul class="card__tags" aria-label="Disciplines">
-                  <li class="card__tag">Design Experiment</li>
-                  <li class="card__tag">Graphic Design</li>
-                </ul>
-              </div>
+              </article>
+              <article class="card" aria-hidden="true" data-placeholder-duplicate>
+                <img class="card__image" src="assets/images/card-petting-zoo.webp" alt="Petting Zoo project cover" width="533" height="300" loading="lazy">
+                <div class="card__body">
+                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true" tabindex="-1">Petting Zoo</a></h3>
+                  <p class="card__subtitle">Cultural Probe Design</p>
+                  <div class="card__footer">
+                    <div class="card__logos">
+                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
+                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
+                    </div>
+                    <ul class="card__tags" aria-label="Disciplines">
+                      <li class="card__tag">Design Experiment</li>
+                      <li class="card__tag">Graphic Design</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
             </div>
-          </article>
+          </div>
+          <button class="works__arrow" type="button" data-js="carousel-arrow" aria-label="Next projects">
+            <svg class="works__arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9.5 5.5 16 12l-6.5 6.5"/>
+            </svg>
+          </button>
         </div>
       </div>
     </section>

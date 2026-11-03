@@ -1,5 +1,5 @@
 /* Screen 5: Selected Works. Overline, title and divider, then the project
-   cards. Fills the window (100svh) and sizes everything with --u; content runs
+   cards in a horizontal carousel. Fills the window (100svh) and sizes everything with --u; content runs
    between the page margins. Each card is one click target: the title link stretches
    over the whole card with ::after, so screen readers hear a short link name. */
 
@@ -43,20 +43,101 @@
   background-color: var(--color-divider);
 }
 
-.works__grid {
-  display: grid;
-  grid-template-columns: repeat(3, calc(533 * var(--u)));
-  gap: calc(41 * var(--u));
+/* Carousel. The strip reaches a little past each page margin (--strip-room),
+   with the same padding inside, so card focus rings and the hover lift are not
+   clipped; the cards themselves still start on the left margin. */
+.works__strip {
+  --strip-room: max(calc(8 * var(--u)), 0.5rem);
+  position: relative;
   margin-top: calc(39 * var(--u)); /* cards start at y 387 */
+}
+
+.works__carousel {
+  margin: calc(-1 * var(--strip-room));
+  padding-block: var(--strip-room);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--strip-room);
+  scrollbar-width: none;  /* the arrow button and swipes do the scrolling */
+}
+
+.works__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.works__carousel:focus-visible {
+  outline-color: var(--color-teal);
+  outline-offset: 0;
+}
+
+/* The side padding lives on the track (not the strip) so it counts in the
+   scroll width: at the far end the last set lines up with the margin too. */
+.works__track {
+  display: flex;
+  gap: calc(41 * var(--u));
+  width: max-content;
+  padding-inline: var(--strip-room);
+}
+
+/* Arrow button: a deep-teal circle centred in the right page margin and on the
+   cards. When the strip is past its first set it turns to point left. */
+.works__arrow {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--page-margin) / -2);
+  display: grid;
+  place-items: center;
+  width: calc(64 * var(--u));
+  height: calc(64 * var(--u));
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--color-teal);
+  color: var(--color-white);
+  cursor: pointer;
+  translate: 50% -50%;
+}
+
+.works__arrow:focus-visible {
+  outline-color: var(--color-teal);
+}
+
+.works__arrow--back {
+  rotate: 180deg;
+}
+
+.works__arrow-icon {
+  width: 45%;
+  height: 45%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* Project card: 533 x 489, image on top, details below. */
 .card {
+  flex: 0 0 calc(533 * var(--u));
+  scroll-snap-align: start;
+  transition: transform var(--motion-card-lift-duration) var(--motion-card-lift-easing);
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-card);
   background-color: var(--color-card);
   color: var(--color-ink-card);
+}
+
+/* Hover: the card lifts slightly (values in js/motion-config.js). */
+.card:hover {
+  transform: translateY(calc(var(--card-lift) * -1 * var(--u)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
 }
 
 .card__image {
