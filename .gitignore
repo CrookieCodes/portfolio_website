@@ -3,3 +3,6 @@ design/screens/*.png
 
 # Local MCP server config: may hold credentials
 .mcp.json
+
+# Local review screenshots: for checking only, never shipped
+review/
