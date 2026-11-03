@@ -58,8 +58,8 @@
 
 /* Scrim: a band across the top of the window, behind the logo and nav but above
    every screen (the header is its own stacking layer at z-index 5). Solid for the
-   top 35%, then fading to transparent. The fade is a mask, so the colour stays a
-   plain background-color that changes with the theme (instantly for now; a
+   top 78% (past the bottom of the logo and nav, y 128 of 170), then fading to
+   transparent. The fade is a mask, so the colour stays a plain background-color that changes with the theme (instantly for now; a
    transition can be added once there is a header-theme duration in motion.md). */
 .site-header__scrim {
   position: fixed;
@@ -69,8 +69,8 @@
   z-index: -1;
   height: max(6rem, calc(170 * var(--u)));
   background-color: var(--header-scrim);
-  -webkit-mask-image: linear-gradient(to bottom, var(--color-black) 35%, transparent);
-  mask-image: linear-gradient(to bottom, var(--color-black) 35%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, var(--color-black) 78%, transparent);
+  mask-image: linear-gradient(to bottom, var(--color-black) 78%, transparent);
   pointer-events: none;
 }
 
