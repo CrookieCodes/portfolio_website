@@ -6,8 +6,14 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: auto;
+/* Smooth scrolling for anchor jumps, and gentle (proximity) snapping to the
+   full-screen scenes. Only when the visitor has not asked for reduced motion:
+   otherwise jumps are instant and there is no snapping. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+  }
 }
 
 body {
@@ -85,6 +91,11 @@ a {
   position: relative;
   min-height: var(--frame-height);
   overflow: hidden;
+}
+
+/* Snap point: screens 2-5 (the taller About + footer screen is left out). */
+.frame--snap {
+  scroll-snap-align: start;
 }
 
 .container {
