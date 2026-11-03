@@ -112,8 +112,10 @@ export function initDotFlow() {
     update();
   });
   document.addEventListener('visibilitychange', update);
+  // The 1px inset stops the screen counting as visible when it only touches the
+  // window edge (e.g. while the experiences screen fills the window).
   new IntersectionObserver(([entry]) => {
     inView = entry.isIntersecting;
     update();
-  }).observe(screen);
+  }, { rootMargin: '-1px 0px' }).observe(screen);
 }

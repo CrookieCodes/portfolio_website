@@ -234,10 +234,12 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
   }).observe(canvas);
   reduceMotion.addEventListener('change', update);
   document.addEventListener('visibilitychange', update);
+  // The 1px inset stops a neighbouring screen that only touches the window edge
+  // from counting as on screen (it would run a second effect for nothing).
   new IntersectionObserver(([entry]) => {
     inView = entry.isIntersecting;
     update();
-  }).observe(screen);
+  }, { rootMargin: '-1px 0px' }).observe(screen);
 
   // For tests and tuning: how many cells each shape has.
   return { cellCounts: layers.map((layer) => layer.cells.length) };
