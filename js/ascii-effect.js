@@ -211,10 +211,14 @@ export function createAsciiEffect({ canvas, screen, width, height, origin, shape
     if (reduceMotion.matches) drawStill();
   }
 
+  // Resizing a canvas clears it, so redraw straight away (no blank frame while
+  // the window is being resized).
   new ResizeObserver(() => {
     resize();
-    if (reduceMotion.matches || !frame) {
-      reduceMotion.matches ? drawStill() : draw(frontAt(elapsed));
+    if (reduceMotion.matches) {
+      drawStill();
+    } else {
+      draw(frontAt(elapsed));
     }
   }).observe(canvas);
   reduceMotion.addEventListener('change', update);
