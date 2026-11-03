@@ -35,7 +35,7 @@
   height: 1px;
   margin: 1.25rem 0 0;   /* divider at y 347 */
   border: 0;
-  background-color: var(--color-teal); /* TODO: PNG shows #5C7375; confirm token with Carol */
+  background-color: var(--color-divider);
 }
 
 .works__grid {
@@ -109,7 +109,7 @@
 
 .card__logos {
   display: flex;
-  gap: 0.6875rem;        /* 11px */
+  gap: 0.91625rem;       /* 14.66px between the two logos */
   opacity: 0.62;
 }
 
