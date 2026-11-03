@@ -37,7 +37,9 @@ After each phase, add a short plain-language note explaining the main choices so
 - Do not invent copy, colours, images or links. If something is missing or unclear, list the question and wait for Carol.
 
 ## Responsive
-Only desktop (1440px) is designed. Before building mobile, write /design/mobile-rules.md proposing the mobile layout (stacking order, what hides, tap alternatives to hover) and wait for Carol's approval.
+- Desktop only for now. Build to the 1920x1080 reference frames (About is 1920x1549). Do NOT build tablet or mobile layouts yet.
+- Even so, use rem units, flexbox and grid instead of absolute pixel positions where practical, so responsive work can be added later without a rewrite. No horizontal scrolling at 1920px width.
+- Responsive and mobile layouts will be a separate phase, started only when Carol asks.
 
 ## Accessibility and performance
 - Every animation respects prefers-reduced-motion (show the end state instead).
@@ -70,7 +72,7 @@ The folder may still contain the old index.html, style.css and javascript.js. Re
 
 ## Definition of done (every phase)
 1. Opens locally with no console errors.
-2. Matches the PNGs at 1440px (and 390px once mobile exists).
+2. Matches the PNGs (design/screens/01-splash.png to 06-about-contacts.png, 4x exports) at 1920px.
 3. Keyboard and reduced-motion checks pass.
 4. A short note listing what was built, any differences from the design and why, and open questions.
 
