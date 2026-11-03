@@ -34,7 +34,7 @@
 [data-theme="experiences"] {
   --header-cross: var(--color-bronze);
   --header-nav: var(--color-white);
-  --header-scrim: var(--color-scrim-photo);
+  --header-scrim: var(--color-black); /* opaque, so nothing on the photo shows under the nav */
 }
 
 [data-theme="work"] {
