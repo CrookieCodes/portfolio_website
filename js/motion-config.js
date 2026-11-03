@@ -6,17 +6,16 @@
 //   STARTER  = not in motion.md at all; a starting value Claude chose. Review in the browser.
 // Durations are in milliseconds. Easings are CSS easing keywords.
 
-// 1. Splash (motion.md section 1). Total: 600 + 600 + 500 + 800 + 700 = 3200 ms.
+// 1. Splash (motion.md section 1). Total: 600 + 600 + 500 + 1400 + 700 = 3800 ms.
 export const SPLASH = {
   sweepDuration: 600,        // PROPOSED: each duplicate-and-sweep (there are two)
   sweepEasing: 'ease-out',   // PROPOSED
   createDuration: 500,       // PROPOSED: the central logo is created
   createEasing: 'ease-out',  // STARTER: motion.md gives no easing for this step
-  spinDuration: 800,         // PROPOSED: one full turn
+  spinDuration: 1400,        // PROPOSED (CAROL tweak): one full turn, slower
   spinEasing: 'ease-in-out', // PROPOSED
-  dissolveDuration: 700,     // PROPOSED: expand + dissolve into the hero
-  dissolveEasing: 'ease-out',// STARTER: motion.md gives no easing for this step
-  expandScale: 3,            // STARTER: how far the logo grows while it dissolves
+  dissolveDuration: 700,     // PROPOSED: logo and teal ground fade into the hero (no growing)
+  dissolveEasing: 'ease-out',// CAROL
 };
 
 // 2. Hero headline cycle (motion.md section 2).

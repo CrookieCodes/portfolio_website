@@ -4,7 +4,7 @@
 //   2. The pair duplicates and sweeps up                          -> 4 crosses
 //   3. The pale-teal centre of the logo is created (fades in)
 //   4. The whole logo spins once
-//   5. It expands while the overlay dissolves into the hero underneath
+//   5. The logo and the teal ground dissolve into the hero underneath (no growing)
 //
 // Uses the Web Animations API: each step is an animation with a delay, so the
 // whole sequence is one timeline that can be finished at once when skipped.
@@ -79,17 +79,12 @@ export function initSplash() {
       [{ opacity: 0 }, { opacity: 1 }],
       timing(createAt, SPLASH.createDuration, SPLASH.createEasing),
     ),
-    // Step 4: one full spin. (rotate and scale are separate properties, so the
-    // spin and the expansion below do not overwrite each other.)
+    // Step 4: one full spin.
     logo.animate(
       [{ rotate: '0deg' }, { rotate: '360deg' }],
       timing(spinAt, SPLASH.spinDuration, SPLASH.spinEasing),
     ),
-    // Step 5: expand and dissolve.
-    logo.animate(
-      [{ scale: 1 }, { scale: SPLASH.expandScale }],
-      timing(dissolveAt, SPLASH.dissolveDuration, SPLASH.dissolveEasing),
-    ),
+    // Step 5: the whole overlay (logo and teal ground) fades out. No transform.
     splash.animate(
       [{ opacity: 1 }, { opacity: 0 }],
       timing(dissolveAt, SPLASH.dissolveDuration, SPLASH.dissolveEasing),

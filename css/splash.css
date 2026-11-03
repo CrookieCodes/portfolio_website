@@ -9,7 +9,7 @@
   z-index: 20;          /* above the fixed header (5) and the skip link (10) */
   display: grid;
   place-items: center;
-  overflow: hidden;     /* the expanding logo never causes scrollbars */
+  overflow: hidden;     /* the spinning logo never causes scrollbars */
   background-color: var(--color-teal);
 }
 
