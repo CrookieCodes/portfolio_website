@@ -136,6 +136,9 @@
       <!-- One composition, scaled as a stage (1920 x 1080 design px, sized with --u):
            the hand must stay on the base square. -->
       <div class="scene__stage">
+        <!-- The hand's thumb (Figma 1:253 "Vector 462") sits behind the base square; the rest of
+             the hand is in front of it (after the canvas below). Same box and position as the hand. -->
+        <img class="scene__art scene__hand" src="assets/images/hand-thumb.svg" alt="" width="263" height="445">
         <!-- Touchpoint diagram (Figma 1:270), inline so the dots can travel along the lines.
              Layers: lines, then dots, then squares, so each dot slides under the square it reaches.
              Each route is one path from the base square (held by the hand) out to its square;
