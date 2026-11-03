@@ -1,12 +1,12 @@
 // Loading animation (motion.md sections 5 and 6): when Selected Works or About
-// comes into view, its items (data-js="reveal") fade up into place, one after
+// comes into view, its items (data-js containing "reveal") fade up into place, one after
 // another, once. With reduced motion, nothing is hidden and nothing moves.
 
 import { REVEAL } from './motion-config.js';
 
 export function initReveal() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const items = document.querySelectorAll('[data-js="reveal"]');
+  const items = document.querySelectorAll('[data-js~="reveal"]');
   if (items.length === 0) return;
 
   // Group the items by screen and number them in order, for the stagger.

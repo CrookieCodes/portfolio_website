@@ -73,6 +73,13 @@ export const REVEAL = {
   threshold: 0.15,           // STARTER: share of the screen in view before it plays
 };
 
+// 6. About photo reveal (motion.md section 6).
+export const PHOTO = {
+  showDuration: 300,         // FIGMA: Dissolve on mouse enter
+  showEasing: 'ease-out',    // FIGMA
+                             // FIGMA: mouse leave changes back instantly (no value needed)
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
 export function applyMotionVariables() {
@@ -91,4 +98,6 @@ export function applyMotionVariables() {
   root.setProperty('--motion-reveal-duration', `${REVEAL.duration}ms`);
   root.setProperty('--motion-reveal-stagger', `${REVEAL.stagger}ms`);
   root.setProperty('--motion-reveal-easing', REVEAL.easing);
+  root.setProperty('--motion-photo-duration', `${PHOTO.showDuration}ms`);
+  root.setProperty('--motion-photo-easing', PHOTO.showEasing);
 }

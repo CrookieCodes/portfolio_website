@@ -399,7 +399,12 @@
          below completes the frame. They are siblings so About stays in <main>. -->
     <section class="frame about" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about">
       <div class="about__inner">
-        <img class="about__weave" data-js="reveal" src="assets/images/weave-pattern.svg" alt="" width="404" height="561" loading="lazy">
+        <!-- Portrait: the weave (Figma 1:379) hides the photo (Pic4 1, 1:370). Hover, keyboard
+             focus, a tap or Enter/Space shows it (js/photo-reveal.js). -->
+        <div class="about__portrait" data-js="portrait reveal" role="button" tabindex="0" aria-label="Show portrait photo" aria-pressed="false">
+          <img class="about__weave" src="assets/images/weave-pattern.svg" alt="" width="404" height="561" loading="lazy">
+          <img class="about__photo" src="assets/images/about-photo.webp" alt="Carol Elizabeth smiling, standing on a street at night with string lights and a yellow truck behind her" width="404" height="561" loading="lazy" data-js="portrait-photo">
+        </div>
         <div>
           <h2 class="about__heading" id="about-title" data-js="reveal">Hi, I’m <span class="about__name">Carol,</span></h2>
           <p class="about__text about__text--first" data-js="reveal">I’m a <strong class="about__strong">Service and UX Designer</strong> who builds cohesive experiences that users navigate intuitively across touchpoints.</p>

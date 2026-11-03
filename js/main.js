@@ -14,6 +14,7 @@ import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
 import { initCarousel } from './carousel.js';
 import { initReveal } from './reveal.js';
+import { initPhotoReveal } from './photo-reveal.js';
 
 applyMotionVariables();
 initHeaderTheme();
@@ -26,5 +27,6 @@ initScenes();
 initPlaceholderLinks();
 initCarousel();
 initReveal();
+initPhotoReveal();
 // The headline starts cycling once the splash has revealed the hero.
 initSplash().then(initHeadline);

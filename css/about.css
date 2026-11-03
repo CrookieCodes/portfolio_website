@@ -17,9 +17,39 @@
   padding-left: calc(var(--page-margin) + 123 * var(--u)); /* x 243 at 1920 */
 }
 
-.about__weave {
+/* Portrait: the weave sits over the photo; the photo dissolves in on hover,
+   focus, tap or Enter/Space (js/photo-reveal.js), and goes back instantly. */
+.about__portrait {
+  position: relative;
   width: calc(404 * var(--u));
   height: calc(561 * var(--u));
+  cursor: pointer;
+}
+
+.about__weave {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.about__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;   /* no transition here, so hiding is instant */
+}
+
+.about__photo--shown {
+  opacity: 1;
+  transition: opacity var(--motion-photo-duration) var(--motion-photo-easing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about__photo--shown {
+    transition: none;
+  }
 }
 
 .about__heading {
