@@ -1,14 +1,19 @@
-/* Screen 5: Selected Works. Overline, title and divider, then three project
-   cards in a grid. Each card is one click target: the title link stretches
+/* Screen 5: Selected Works. Overline, title and divider, then the project
+   cards. Fills the window (100svh) and sizes everything with --u; content runs
+   between the page margins. Each card is one click target: the title link stretches
    over the whole card with ::after, so screen readers hear a short link name. */
 
 .works {
+  min-height: 0;           /* replaces the fixed 1080px frame height */
+  height: 100vh;           /* fallback */
+  height: 100svh;
   background-color: var(--color-paper);
   color: var(--color-ink);
 }
 
 .works__inner {
-  padding-top: 12.875rem; /* overline box starts at y 206 */
+  padding-top: calc(206 * var(--u)); /* overline box starts at y 206 */
+  padding-inline: var(--page-margin);
 }
 
 .works__overline {
@@ -23,7 +28,7 @@
 .works__title {
   /* Figma puts the title box at y 272; browsers draw Helvetica ~5px lower
      inside its line box than Figma does, so the box starts 5px higher. */
-  margin-top: 0.0625rem;
+  margin-top: calc(1 * var(--u));
   font-weight: var(--weight-medium);
   font-size: var(--fs-section-title);
   line-height: var(--lh-section-title);
@@ -33,16 +38,16 @@
 /* Thin rule under the title, y 347. */
 .works__divider {
   height: 1px;
-  margin: 1.25rem 0 0;   /* divider at y 347 */
+  margin: calc(20 * var(--u)) 0 0;   /* divider at y 347 */
   border: 0;
   background-color: var(--color-divider);
 }
 
 .works__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5625rem;        /* 41px */
-  margin-top: 2.4375rem; /* cards start at y 387 */
+  grid-template-columns: repeat(3, calc(533 * var(--u)));
+  gap: calc(41 * var(--u));
+  margin-top: calc(39 * var(--u)); /* cards start at y 387 */
 }
 
 /* Project card: 533 x 489, image on top, details below. */
@@ -56,12 +61,12 @@
 
 .card__image {
   width: 100%;
-  height: 18.75rem;      /* 300px */
+  height: calc(300 * var(--u));
   object-fit: cover;
 }
 
 .card__body {
-  padding: 1.1875rem 2.5625rem 1.875rem; /* 19px top, 41px sides, 30px bottom */
+  padding: calc(19 * var(--u)) calc(41 * var(--u)) calc(30 * var(--u)); /* 19px top, 41px sides, 30px bottom */
 }
 
 .card__title {
@@ -104,30 +109,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.3125rem; /* 21px below the subtitle */
+  margin-top: calc(21 * var(--u)); /* 21px below the subtitle */
 }
 
 .card__logos {
   display: flex;
-  gap: 0.91625rem;       /* 14.66px between the two logos */
+  gap: calc(14.66 * var(--u)); /* between the two logos */
   opacity: 0.62;
 }
 
 .card__logo {
-  height: 3.4375rem;     /* 55px */
+  height: calc(55 * var(--u));
   width: auto;
 }
 
 .card__tags {
   display: flex;
-  gap: 0.5rem;
+  gap: calc(8 * var(--u));
 }
 
 .card__tag {
   display: flex;
   align-items: center;
-  height: 2rem;          /* 32px */
-  padding-inline: 0.75rem;
+  height: calc(32 * var(--u));
+  padding-inline: calc(12 * var(--u));
   border-radius: var(--radius-tag);
   background-color: var(--color-burgundy);
   color: var(--color-white);

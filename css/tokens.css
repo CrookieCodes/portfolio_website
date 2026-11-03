@@ -71,20 +71,20 @@
   --lh-scene-list: 1.768;
   --ls-scene-list: -0.02em;
 
-  --fs-overline: 2.5rem;         /* 40px */
+  --fs-overline: calc(40 * var(--u));    /* 40px at 1920, fluid */
   --lh-overline: 1.5;
   --ls-overline: -0.02em;
-  --fs-section-title: 3.375rem;  /* 54px */
+  --fs-section-title: calc(54 * var(--u)); /* 54px at 1920, fluid */
   --lh-section-title: 1.111;
   --ls-section-title: -0.02em;
 
-  --fs-card-title: 1.875rem;     /* 30px */
+  --fs-card-title: calc(30 * var(--u));  /* 30px at 1920, fluid */
   --lh-card-title: 1.2;
   --ls-card-title: -0.02em;
-  --fs-card-subtitle: 1.4375rem; /* 23px */
+  --fs-card-subtitle: calc(23 * var(--u)); /* 23px at 1920, fluid */
   --lh-card-subtitle: 1.217;
   --ls-card-subtitle: -0.01em;
-  --fs-tag: 0.925rem;            /* 14.8px */
+  --fs-tag: calc(14.8 * var(--u));       /* 14.8px at 1920, fluid */
   --lh-tag: 1.25;
   --ls-tag: -0.02em;
 
@@ -128,8 +128,8 @@
   --gutter: 7.5rem;              /* 120px side margins */
 
   /* Radii */
-  --radius-card: 1.5rem;         /* 24px */
-  --radius-tag: 0.23125rem;      /* 3.7px */
+  --radius-card: calc(24 * var(--u));    /* 24px at 1920, fluid */
+  --radius-tag: calc(3.7 * var(--u));    /* 3.7px at 1920, fluid */
   --radius-button: 0.5rem;       /* 8px */
 }
 
