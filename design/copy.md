@@ -34,18 +34,22 @@ Transcribed from the Figma file (page "Landing Page"). Lines marked CONFIRM need
 ## 6. About
 - Heading: "Hi, I'm Carol," ("Carol," in mint)
 - Para 1: "I'm a **Service and UX Designer** who builds cohesive experiences that users navigate intuitively across touchpoints."
-- Para 2: "**Grounded in user research and systems thinking,** I treat problems as part of a larger ecosystem and design at scales and context, rather than in siloes. Currently pursuing **Masters in Design from IIT Delhi.**"
-  - CONFIRM: "siloes" is usually spelled "silos", and "design at scales and context" may be intended as "design at multiple scales and in context".
-- Button: "Learn More >" (link: TODO, probably the About page or Resume)
+- Para 2: "**Grounded in user research and systems thinking,** I treat problems as part of a larger ecosystem and design at multiple scales and in context, rather than in silos. Currently pursuing **Masters in Design from IIT Delhi.**"
+  - Confirmed by Carol (Phase 5): "silos", and "design at multiple scales and in context" (Figma says "siloes" and "design at scales and context").
+- Button: "Learn More >" (placeholder link until the About page exists)
 
 ## Contact footer
 - Tag line (uppercase): SERVICE DESIGN ● UX DESIGN ● SYSTEMS DESIGN ● UX STRATEGY ● UX RESEARCH
-  - Figma has a typo here: "UX StrategY" (capital Y). Use "UX Strategy".
+  - Figma has a typo here: "UX StrategY" (capital Y). Use "UX Strategy" (confirmed by Carol).
 - Heading: "Let's Build something good." (CONFIRM capitalisation of "Build")
-- Links: beth.carol00@gmail.com (mailto), LinkedIn (URL: TODO), Behance (URL: TODO), Instagram (URL: TODO), each followed by an arrow icon
+- Links: beth.carol00@gmail.com (mailto), each followed by an arrow icon:
+  - LinkedIn: https://www.linkedin.com/in/carol-elizabeth-351367281/
+  - Behance: https://www.behance.net/carolethomas3
+  - Instagram: https://www.instagram.com/caroling_13/
+  - External links open in a new tab and carry "(opens in a new tab)" for screen readers.
 - Footer: "All Rights Reserved by Carol Elizabeth © 2026" and "● DELHI, IN"
 
 ## Not in the design yet
-- "Resume" destination (PDF link?) and "Contact" destination (scroll to footer?). TODO
+- Resume: https://drive.google.com/file/d/1KPKVvLeBTkISWypirfQdeoJSyhkveIig/view?usp=sharing (header link, new tab). Contact scrolls to the footer (#contact).
 - Alt text for the eyes illustration, the touchpoint diagram, the street photograph, each card image and the weave pattern. TODO
 - The street photograph in frame 4 is credited by its Figma layer name to Unsplash (Victor Rosario). Check the licence and credit it if required.
