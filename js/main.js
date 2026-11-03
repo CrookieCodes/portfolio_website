@@ -5,8 +5,10 @@ import { applyMotionVariables } from './motion-config.js';
 import { initSplash } from './splash.js';
 import { initHeaderTheme } from './header-theme.js';
 import { initEyeButtons } from './eye-buttons.js';
+import { initHeadline } from './headline.js';
 
 applyMotionVariables();
 initHeaderTheme();
 initEyeButtons();
-initSplash();
+// The headline starts cycling once the splash has revealed the hero.
+initSplash().then(initHeadline);

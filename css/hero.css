@@ -45,21 +45,48 @@
   letter-spacing: var(--ls-hero-2);
 }
 
-/* The highlighted word sits on a bronze block that hangs slightly below the text. */
+/* The highlighted word sits on a bronze block that hangs slightly below the text.
+   It holds the three words of the headline cycle stacked on top of each other: the
+   current word takes up space, the others sit over it, transparent. js/headline.js
+   sets the width when the word changes, and CSS animates it (and the bronze block,
+   which follows the highlight's box). */
 .hero__highlight {
   position: relative;
   z-index: 0;
+  display: inline-block;
+  white-space: nowrap;
+  transition: width var(--motion-headline-duration) var(--motion-headline-easing);
 }
 
 .hero__highlight::before {
   content: "";
   position: absolute;
   z-index: -1;
-  top: calc(19 * var(--u));
-  bottom: 0;
+  top: calc(14 * var(--u));    /* matches 02-hero.png: block from y 431 to 513 */
+  bottom: calc(-5 * var(--u));
   left: calc(-12 * var(--u));
   right: calc(-4 * var(--u));
   background-color: var(--color-bronze);
+}
+
+.hero__word {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity var(--motion-headline-duration) var(--motion-headline-easing);
+}
+
+.hero__word--current {
+  position: static;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__highlight,
+  .hero__word {
+    transition: none;
+  }
 }
 
 /* The two eyes, right-aligned to the content column. */
