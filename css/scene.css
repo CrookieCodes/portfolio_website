@@ -83,9 +83,9 @@
 }
 
 .scene__hand {
-  left: 51.75rem;         /* x 948 */
-  top: 44.4375rem;        /* y 711, runs to the bottom edge */
-  width: 16rem;           /* 256px */
+  left: 51.3125rem;       /* x 941 */
+  top: 44.375rem;         /* y 710; 445px tall, so the frame clips its bottom */
+  width: 16.4445rem;      /* 263.1px */
 }
 
 /* Screen 4: experiences. Street photograph fills the frame, three coloured
@@ -108,22 +108,25 @@
   position: absolute;
 }
 
+/* 1: pink walker (node 1:311) */
 .scene__silhouette--1 {
-  left: calc(50% - 14.375rem); /* x 730 */
-  top: 22.6875rem;             /* y 363 */
-  width: 9.875rem;             /* 158px */
+  left: calc(50% + 6.4375rem);   /* x 1063 */
+  top: 21.875rem;                /* y 350 */
+  width: 8.9375rem;              /* 143px */
 }
 
+/* 2: blue walker (node 1:313) */
 .scene__silhouette--2 {
-  left: calc(50% + 6.5rem);    /* x 1064 */
-  top: 21.875rem;              /* y 350 */
-  width: 8.8125rem;            /* 141px */
+  left: calc(50% - 14.375rem);   /* x 730 */
+  top: 22.65625rem;              /* y 362.5 */
+  width: 10rem;                  /* 160px */
 }
 
+/* 3: brown pair (node 1:314) */
 .scene__silhouette--3 {
-  left: calc(50% - 18.1875rem); /* x 669 */
-  top: 38.125rem;               /* y 610 */
-  width: 15.8125rem;            /* 253px */
+  left: calc(50% - 18.09375rem); /* x 670.5 */
+  top: 38.09375rem;              /* y 609.5 */
+  width: 15.75rem;               /* 252px */
 }
 
 .scene__text--experiences {
