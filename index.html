@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/hero.css">
 
   <script type="module" src="js/main.js"></script>
 </head>
@@ -23,7 +25,40 @@
     <img class="splash__logo" src="assets/placeholders/logo-splash.svg" alt="" width="199" height="199">
   </div>
 
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="site-header__logo" href="/">
+        <!-- PLACEHOLDER: export the burgundy logo cross as assets/icons/logo-cross-burgundy.svg
+             (Phase 4 swaps colours per section: pale-teal, bronze, teal, tan) -->
+        <img class="site-header__logo-image" src="assets/placeholders/logo-cross-burgundy.svg" alt="Carol Elizabeth, home" width="61" height="61">
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="#about">About</a></li>
+          <li><a class="site-nav__link" href="#work">Work</a></li>
+          <!-- TODO: Resume destination (PDF?) -->
+          <li><a class="site-nav__link" href="#">Resume</a></li>
+          <li><a class="site-nav__link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
   <main id="main">
+    <!-- Screen 2: hero -->
+    <section class="frame hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__line-1">Hey, I’m Carol Elizabeth.</span>
+          <span class="hero__line-2">I design <span class="hero__highlight">products.</span></span>
+        </h1>
+        <div class="hero__eyes">
+          <!-- PLACEHOLDER: export node 1:248 as assets/images/eye.svg (one file, used twice) -->
+          <img class="hero__eye" src="assets/placeholders/eye.svg" alt="" width="371" height="239">
+          <img class="hero__eye" src="assets/placeholders/eye.svg" alt="" width="371" height="239">
+        </div>
+      </div>
+    </section>
   </main>
 </body>
 </html>

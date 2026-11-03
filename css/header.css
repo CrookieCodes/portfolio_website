@@ -1,0 +1,67 @@
+/* Site header: logo cross (left) and main nav (right) on the 1680px column.
+   Phase 1: sits over the top of the hero and scrolls away with it.
+   Phase 4 makes it fixed and swaps colour, logo and active item per section,
+   using the modifier classes below. */
+
+.site-header {
+  position: absolute;
+  top: calc(var(--frame-height) + 4.1875rem); /* below the splash, 67px into the hero */
+  left: 0;
+  right: 0;
+  z-index: 5;
+  color: var(--color-white);
+}
+
+/* On light sections (Selected Works) the nav text turns ink. */
+.site-header--light {
+  color: var(--color-ink);
+}
+
+.site-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.site-header__logo {
+  display: block;
+  width: 3.8125rem;  /* 61px */
+  height: 3.8125rem;
+}
+
+.site-header__logo-image {
+  width: 100%;
+  height: 100%;
+}
+
+.site-nav {
+  margin-top: 0.8125rem; /* nav text sits 13px below the logo's top edge */
+}
+
+.site-nav__list {
+  display: flex;
+  gap: 4.75rem; /* 76px between items */
+}
+
+.site-nav__link {
+  display: flex;
+  align-items: center;
+  font-size: var(--fs-nav);
+  line-height: var(--lh-nav);
+  letter-spacing: var(--ls-nav);
+  text-decoration: none;
+}
+
+/* Active page: heavier weight and a leading dot. */
+.site-nav__link--active {
+  font-weight: var(--weight-heavy);
+}
+
+.site-nav__link--active::before {
+  content: "";
+  width: 0.625rem;  /* 10px dot */
+  height: 0.625rem;
+  margin-right: 0.75rem;
+  border-radius: 50%;
+  background-color: currentColor;
+}
