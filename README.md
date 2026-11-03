@@ -14,6 +14,8 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000. The designs are 1920x1080 frames; the splash, hero and
 header scale to any desktop window (the other screens follow in Phase 6).
+Side margins come from one token, `--page-margin` in `css/tokens.css` (120px at 1920 and
+wider): use it for every screen instead of a fixed number.
 
 To watch the splash again, reload the page without a `#...` address. It is skipped when
 the page opens at an address (e.g. `#work`) or when the system asks for reduced motion.
