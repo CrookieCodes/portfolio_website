@@ -80,6 +80,13 @@ export const PHOTO = {
                              // FIGMA: mouse leave changes back instantly (no value needed)
 };
 
+// 6. Footer cross (motion.md section 6).
+export const SPIN = {
+  interval: 25000,           // CAROL: one full turn every 25 s of the footer being in view
+  duration: 1200,            // PROPOSED
+  easing: 'ease-in-out',     // PROPOSED
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
 export function applyMotionVariables() {
