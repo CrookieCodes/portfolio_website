@@ -88,23 +88,23 @@
   --lh-tag: 1.25;
   --ls-tag: -0.02em;
 
-  --fs-about-heading: 6rem;      /* 96px */
+  --fs-about-heading: calc(96 * var(--u)); /* 96px at 1920, fluid */
   --lh-about-heading: 1.031;
   --ls-about-heading: -0.02em;
-  --fs-about-body: 1.875rem;     /* 30px */
+  --fs-about-body: calc(30 * var(--u));  /* 30px at 1920, fluid */
   --lh-about-body: 1.6;
   --ls-about-body: -0.01em;
-  --fs-button: 1.75rem;          /* 28px */
+  --fs-button: calc(28 * var(--u));      /* 28px at 1920, fluid */
   --lh-button: 1.179;
   --ls-button: -0.01em;
 
-  --fs-footer-small: 1.25rem;    /* 20px: tag line, copyright, location */
+  --fs-footer-small: calc(20 * var(--u)); /* 20px at 1920, fluid */
   --lh-footer-small: 1.2;
   --ls-footer-small: -0.01em;
-  --fs-footer-heading: 5.625rem; /* 90px */
+  --fs-footer-heading: calc(90 * var(--u)); /* 90px at 1920, fluid */
   --lh-footer-heading: 1.044;
   --ls-footer-heading: -0.02em;
-  --fs-contact-link: 1.5rem;     /* 24px */
+  --fs-contact-link: calc(24 * var(--u)); /* 24px at 1920, fluid */
   --lh-contact-link: 1;
 
   /* Fluid design pixel: 1 design px of the 1920x1080 frames, scaled to the window.
@@ -123,14 +123,13 @@
 
   /* Layout */
   --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
-  --footer-height: 29.3125rem;   /* 469px: Contact part of screen 6 (1080 + 469 = 1549) */
-  --content-width: 105rem;       /* 1680px */
+  --footer-height: calc(469 * var(--u)); /* Contact part of screen 6 (1080 + 469 = 1549 at 1920) */
   --gutter: 7.5rem;              /* 120px side margins */
 
   /* Radii */
   --radius-card: calc(24 * var(--u));    /* 24px at 1920, fluid */
   --radius-tag: calc(3.7 * var(--u));    /* 3.7px at 1920, fluid */
-  --radius-button: 0.5rem;       /* 8px */
+  --radius-button: calc(8 * var(--u));   /* 8px at 1920, fluid */
 }
 
 /* Small viewport height (svh) ignores mobile browser bars. Custom properties are not

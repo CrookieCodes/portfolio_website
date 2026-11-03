@@ -1,29 +1,30 @@
-/* Screen 6, top part: About (1920 x 1080 of the 1920 x 1549 frame).
+/* Screen 6, top part: About (1920 x 1080 of the 1920 x 1549 frame), scaled with --u.
    Weave image on the left, heading, two paragraphs and a button on the right.
    The Contact footer (contact.css) follows directly to complete the frame. */
 
 .about {
+  min-height: calc(1080 * var(--u)); /* replaces the fixed frame height; flows, no snap */
   background-color: var(--color-burgundy);
   color: var(--color-tan);
 }
 
 .about__inner {
   display: grid;
-  grid-template-columns: 25.25rem 58.1875rem; /* weave 404px | text 931px */
-  column-gap: 6.125rem;                       /* 98px */
+  grid-template-columns: calc(404 * var(--u)) calc(931 * var(--u)); /* weave | text */
+  column-gap: calc(98 * var(--u));
   align-items: start;
-  padding-top: 19.625rem;                     /* y 314 */
-  padding-left: 7.6875rem;                    /* x 243 (120 + 123) */
+  padding-top: calc(314 * var(--u));
+  padding-left: calc(var(--page-margin) + 123 * var(--u)); /* x 243 at 1920 */
 }
 
 .about__weave {
-  width: 25.25rem;    /* 404px */
-  height: 35.0625rem; /* 561px */
+  width: calc(404 * var(--u));
+  height: calc(561 * var(--u));
 }
 
 .about__heading {
   /* Lifted 11.5px: browsers draw Helvetica lower in its line box than Figma. */
-  margin-top: -0.71875rem;
+  margin-top: calc(-11.5 * var(--u));
   color: var(--color-off-white);
   font-weight: var(--weight-medium);
   font-size: var(--fs-about-heading);
@@ -43,11 +44,11 @@
 }
 
 .about__text--first {
-  margin-top: 4.0625rem;  /* 53px below the heading's design box */
+  margin-top: calc(65 * var(--u));  /* 53px below the heading's design box */
 }
 
 .about__text--second {
-  margin-top: 3rem;       /* 48px */
+  margin-top: calc(48 * var(--u));
 }
 
 .about__strong {
@@ -59,9 +60,9 @@
 .about__button {
   display: inline-flex;
   align-items: center;
-  height: 4.25rem;        /* 68px */
-  margin-top: 3.3125rem;  /* 53px */
-  padding-inline: 1.3125rem; /* 207px wide with the Plex label */
+  height: calc(68 * var(--u));
+  margin-top: calc(53 * var(--u));
+  padding-inline: calc(21 * var(--u)); /* 207px wide with the Plex label */
   border-radius: var(--radius-button);
   background-color: var(--color-mint);
   color: var(--color-button-text);

@@ -86,8 +86,8 @@ a {
   transform: none;
 }
 
-/* A 1920-wide design frame: full width, fixed design height,
-   with its content laid out on the 1680px column. */
+/* A full-width screen. Each screen sets its own height (100svh, or a height in
+   --u for About); content sits between the page margins. */
 .frame {
   position: relative;
   min-height: var(--frame-height);
@@ -97,9 +97,4 @@ a {
 /* Snap point: screens 2-5 (the taller About + footer screen is left out). */
 .frame--snap {
   scroll-snap-align: start;
-}
-
-.container {
-  width: var(--content-width);
-  margin-inline: auto;
 }
