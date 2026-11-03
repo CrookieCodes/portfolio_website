@@ -1,0 +1,93 @@
+/* Base: a small reset, page defaults and shared helpers. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-teal);
+  color: var(--color-white);
+  font-family: var(--font-helvetica);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  /* Bleeding art (footer cross) must never cause sideways scrolling. */
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+/* Keyboard focus: a clear ring on every interactive element. */
+:focus-visible {
+  outline: 0.1875rem solid var(--color-mint);
+  outline-offset: 0.25rem;
+}
+
+/* Hidden visually, still read by screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Skip link: off-screen until focused. */
+.skip-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-mint);
+  color: var(--color-button-text);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* A 1920-wide design frame: full width, fixed design height,
+   with its content laid out on the 1680px column. */
+.frame {
+  position: relative;
+  min-height: var(--frame-height);
+  overflow: hidden;
+}
+
+.container {
+  width: var(--content-width);
+  margin-inline: auto;
+}
