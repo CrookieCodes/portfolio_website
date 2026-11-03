@@ -63,12 +63,20 @@ Netlify deploys automatically from the production branch when Carol merges. Neve
 The folder may still contain the old index.html, style.css and javascript.js. Replace index.html, move styling into css/ and scripts into js/, then remove the old files with git rm once nothing references them.
 
 ## Phases
-0. Setup: folder structure, tokens as CSS variables, font loading.
-1. Static desktop build of all six screens, no animation.
-2. Responsive mobile and tablet, after Carol approves mobile-rules.md.
-3. Splash timing, skip, and handoff to the hero.
-4. Interactions from motion.md.
-5. Polish: accessibility, performance, meta tags, 404 page.
+0-1. Setup and static desktop build (done on phase-1-static), then the Phase 1 follow-up: real assets from Figma, fixes, photo credit, alt text.
+2. Header and navigation: one fixed header, per-screen colour theming, active link states, linear scroll order, anchors, smooth scrolling (no animation timing yet).
+3. Splash dissolve into hero.
+4. Hero eyes: pupils follow the cursor, clicks go to screens 3 and 4.
+5. Scene transitions, from motion.md.
+6. Polish: accessibility, performance, meta tags, favicon, 404, then responsive/mobile.
+
+## Navigation and scroll
+- Screen order is linear: 1 Splash, 2 Hero, 3 Touchpoints, 4 Experiences, 5 Selected Works, 6 About + footer. Scrolling down goes 2 -> 3 -> 4 -> 5 -> 6; scrolling up goes back.
+- The two hero eyes are shortcuts: left eye -> screen 3, right eye -> screen 4. They are real buttons, keyboard accessible.
+- One fixed header on screens 2-6 (not the splash), the same markup everywhere. Logo colour, nav colour and the active link change with the screen in view. Set with IntersectionObserver as a data-theme on the header.
+- Smooth scrolling (scroll-behavior: smooth) with gentle snapping on the full-screen scenes (scroll-snap-type: y proximity, never mandatory). Never hijack the scroll wheel. With prefers-reduced-motion, use instant scrolling and no snapping.
+- Screens 3 and 4 get addresses (#touchpoints, #experiences) so the Back button works.
+- Do not invent animation timings. Use only values in motion.md. Where it says TODO, build the structure without the animation and list what is missing.
 
 ## Definition of done (every phase)
 1. Opens locally with no console errors.
