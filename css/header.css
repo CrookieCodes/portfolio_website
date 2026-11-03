@@ -41,18 +41,6 @@
   --header-nav: var(--color-white);
 }
 
-/* Over the splash the header is fully hidden: invisible and out of the tab order.
-   Without JavaScript nothing can un-hide it, so it stays visible in that case. */
-[data-theme="splash"] {
-  visibility: hidden;
-}
-
-@media (scripting: none) {
-  [data-theme="splash"] {
-    visibility: visible;
-  }
-}
-
 /* Fluid version of the 1680px column, centred. */
 .site-header__inner {
   width: calc(1680 * var(--u));
