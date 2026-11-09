@@ -27,19 +27,32 @@
   --color-eye-outline: #9fa5a6;  /* Landing eyes (Figma 32:678) */
   --color-eye-pupil: #514b44;    /* Landing eyes (Figma 32:678) */
   --color-black: #000000;
+  /* Glyph effect colours (motion.md v2 "Brighter glyph colours", CAROL; hex PROPOSED) */
+  --color-glyph-pink: #f28b9d;
+  --color-glyph-blue: #4fa8e0;
+  --color-glyph-orange: #f5a04a;
+  /* Experiences silhouettes, flat shapes before the glyphs (Figma 32:368, 32:370, 32:371) */
+  --color-figure-pink-top: #cf5c6d;
+  --color-figure-pink-mid: #612830;
+  --color-figure-pink-bottom: #40171d;
+  --color-figure-blue-top: #67bbda;
+  --color-figure-blue-mid: #285160;
+  --color-figure-blue-bottom: #14303a;
+  --color-figure-brown-top: #825825;
+  --color-figure-brown-bottom: #140804;
   --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
   --color-ground-light: #f7f7f7; /* Touchpoints ground (Figma 32:306) */
   --color-heading-dark: #1c1c1c; /* Touchpoints heading (Figma 32:320) */
   --color-list-dark: #212121;    /* Touchpoints list (Figma 32:321) */
   --color-nav-dark: #181818;     /* header nav on Touchpoints (Figma 32:315) */
-  /* Touchpoint diagram (Figma 1:270): lines, dots and the squares' gradient stops */
-  --color-diagram-line: #8c8c8c;
-  --color-diagram-dot: #acacac;
+  /* Touchpoint diagram (Figma 32:306, FINAL EDITS): lines, dots and the squares' gradient stops */
+  --color-diagram-line: #0e1819;   /* lines (Figma 32:306) */
+  --color-diagram-dot: #323232;    /* dots, the small squares on the lines (Figma 32:306) */
   --color-square-brown-dark: #705432;
-  --color-square-brown-light: #c9ab87;
-  --color-square-teal-light: #acc5c7;
-  --color-square-teal-dark: #3e8288;
-  --color-square-pink-light: #d49ea6;
+  --color-square-brown-light: #ce9c61;
+  --color-square-teal-light: #3e8288;
+  --color-square-teal-dark: #3b4e4f;
+  --color-square-pink-light: #e57f8f;
   --color-square-pink-dark: #783942;
 
   /* Font families */

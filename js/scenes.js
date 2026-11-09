@@ -1,32 +1,28 @@
 // Applies the shared ASCII effect (js/ascii-effect.js) to screens 3 and 4.
 //
-// Screen 3: the six touchpoint squares. Glyph colours are the palette colours that
-// contrast best with each square's gradient (contrast ratios against the light and
-// dark ends noted below). The band spreads outward from the base square's centre
-// (direction 'radial'), the same way as the dots.
-//
-// Screen 4: the three figures on the street photo, flat deep-teal shapes (a ground
-// under the glyphs, so the people in the photo do not show through) filled by the
-// effect. Each figure's main colour is its own hue; the blue figure uses pale teal
-// (Carol's fallback: deep-teal is about 1.2:1 on the photo, and invisible on the
-// deep-teal ground). The band sweeps straight down (direction 'down'): one front
-// across all three figures, so they light up in order of height.
+// Screen 3: the six touchpoint squares. The band spreads outward from the base
+// square's centre (direction 'radial'), the same way as the dots.
+// Screen 4: the three figures on the street photo. The band sweeps straight down
+// (direction 'down'): one front across all three figures.
+// Both draw the brighter glyph colours on a flat deep-teal ground (see below).
+// Cell size: ASCII.cell (8 design px, CAROL).
 
 import { createAsciiEffect } from './ascii-effect.js';
 
-// Square colours by square family.             contrast vs gradient light / dark end
+// Glyph colours: the brighter set (motion.md v2, CAROL), each cell picks one by weight.
+// All glyphs sit on the deep-teal ground (CAROL's prototype): on the squares' own
+// light gradient ends the bright glyphs measured only 1.0 to 2.1 : 1, on deep teal
+// 5.5 to 6.8 : 1 (pink 6.1, blue 5.5, orange 6.8).
+const GROUND = '--color-teal';
 const SQUARE_COLOURS = {
-  teal: [['--color-teal', 0.7], ['--color-burgundy', 0.3]],      // 7.9 / 3.2, 3.9 / 1.6
-  pink: [['--color-teal', 0.7], ['--color-bronze', 0.3]],        // 6.3 / 1.7, 1.9 / 2.0
-  brown: [['--color-teal', 0.8], ['--color-burgundy', 0.2]],     // 6.6 / 2.1, 3.2 / 1.0
+  teal: [['--color-glyph-blue', 0.7], ['--color-glyph-pink', 0.3]],
+  pink: [['--color-glyph-pink', 0.7], ['--color-glyph-orange', 0.3]],
+  brown: [['--color-glyph-orange', 0.7], ['--color-glyph-pink', 0.3]],
 };
-
-// Figure colours.                                   contrast vs the deep-teal ground
-const FIGURE_GROUND = '--color-teal';
 const FIGURE_COLOURS = {
-  pink: [['--color-burgundy', 0.7], ['--color-bronze', 0.3]],    // 2.0, 3.4
-  brown: [['--color-bronze', 0.8], ['--color-burgundy', 0.2]],   // 3.4, 2.0
-  blue: [['--color-pale-teal', 0.8], ['--color-bronze', 0.2]],   // 7.7, 3.4
+  pink: [['--color-glyph-pink', 0.8], ['--color-glyph-orange', 0.2]],
+  blue: [['--color-glyph-blue', 0.8], ['--color-glyph-pink', 0.2]],
+  brown: [['--color-glyph-orange', 0.8], ['--color-glyph-pink', 0.2]],
 };
 
 // The base square's centre in diagram units (square at 527.6, 504.2, 222.2 wide).
@@ -51,7 +47,7 @@ function initTouchpoints() {
     const box = boxOf(rect);
     const path = new Path2D();
     path.rect(box.x, box.y, box.w, box.h);
-    return { path, box, colours: SQUARE_COLOURS[rect.dataset.square.split('-')[0]] };
+    return { path, box, colours: SQUARE_COLOURS[rect.dataset.square.split('-')[0]], ground: GROUND };
   });
   return createAsciiEffect({
     canvas,
@@ -72,7 +68,7 @@ function initExperiences() {
     const m = figure.transform.baseVal.consolidate()?.matrix ?? new DOMMatrix();
     const path = new Path2D();
     path.addPath(new Path2D(figure.getAttribute('d')), m);
-    return { path, box: boxOf(figure), colours: FIGURE_COLOURS[figure.dataset.figure], ground: FIGURE_GROUND };
+    return { path, box: boxOf(figure), colours: FIGURE_COLOURS[figure.dataset.figure], ground: GROUND };
   });
   return createAsciiEffect({
     canvas,

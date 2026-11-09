@@ -110,7 +110,7 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
   const probe = document.createElement('canvas').getContext('2d');
   const colours = new Set();
   const layers = shapes.map((shape) => {
-    const size = Math.max(ASCII.minCell, shape.box.w / ASCII.columns);
+    const size = ASCII.cell; // design px, the same on every shape
     const columns = Math.floor(shape.box.w / size);
     const rows = Math.floor(shape.box.h / size);
     const left = shape.box.x + (shape.box.w - columns * size) / 2 + size / 2;

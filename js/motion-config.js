@@ -53,8 +53,8 @@ export const ASCII = {
   passDuration: 5000,        // PROPOSED: one sweep of the band across all shapes, then it loops
                              //          (outward on screen 3, top to bottom on screen 4)
   fps: 30,                   // motion.md: frame-rate cap
-  columns: 28,               // motion.md reference: about 28 cells across a shape
-  minCell: 6,                // STARTER: smallest cell, so small squares stay legible
+  cell: 8,                   // CAROL: glyph cell size in design px (at 1920 wide; scales with the
+                             //        screen like everything else), on every glyph effect
   bandWidth: 60,             // STARTER: depth of each zone: dense circles, then diamonds, then stars
   thinning: 0.7,             // STARTER: share of cells already empty by the end of the trail (0-1)
   staticAt: 0.45,            // STARTER: reduced motion draws the pass frozen at this point (0-1),

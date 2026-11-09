@@ -31,6 +31,12 @@
   letter-spacing: var(--ls-scene-2);
 }
 
+/* Bold (CAROL). Figma sets this line in Helvetica Neue Medium (500); without
+   Helvetica Neue the fallback font has no 500, so it would show as regular. */
+.scene__line-2--bold {
+  font-weight: var(--weight-bold);
+}
+
 .scene__list {
   display: flex;
   flex-direction: column;
@@ -82,16 +88,17 @@
   transform: translateX(-50%);
 }
 
+/* Text block (Figma 32:320, 32:321): heading from x 1353, y 671; two 60px lines,
+   then the list from y 807. */
 .scene__text--touchpoints {
   position: absolute;
-  left: calc(1264 * var(--u));   /* x 1264 */
-  top: calc(601 * var(--u));     /* heading box starts at y 601 */
+  left: calc(1353 * var(--u));
+  top: calc(671 * var(--u));
 }
 
 .scene__list--touchpoints {
+  margin-top: calc(16 * var(--u));  /* list starts at y 807 (671 + 120 + 16) */
   color: var(--color-list-dark);
-  margin-top: calc(19 * var(--u));  /* list starts at y 740 */
-  padding-left: calc(4 * var(--u));
 }
 
 .scene__diagram {
