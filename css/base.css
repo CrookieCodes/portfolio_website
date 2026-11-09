@@ -94,7 +94,9 @@ a {
   overflow: hidden;
 }
 
-/* Snap point: screens 2-5 (the taller About + footer screen is left out). */
+/* Snap point, for a screen that should snap. None of the main-flow screens use it
+   now: their transitions are scrubbed by the scroll, and snapping pulled slow
+   mouse-wheel scrolling back (phase 6). */
 .frame--snap {
   scroll-snap-align: start;
 }

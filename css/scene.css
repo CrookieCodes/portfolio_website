@@ -129,6 +129,12 @@
   fill: var(--color-diagram-dot);
 }
 
+/* Squares grow from their own centre while the diagram assembles (js/touchpoints-build.js). */
+.scene__square {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .scene__stop--brown-dark {
   stop-color: var(--color-square-brown-dark);
 }
@@ -155,7 +161,7 @@
 
 .scene__hand {
   left: calc(941 * var(--u));
-  top: calc(710 * var(--u));     /* 445px tall, so the frame clips its bottom */
+  top: calc(709 * var(--u));     /* Figma 32:307; 445px tall, so the frame clips its bottom */
   width: calc(263.1 * var(--u));
 }
 
@@ -185,14 +191,26 @@
   height: 100%;
 }
 
-/* The figures' outlines: only read by the script, never shown. They keep their
-   geometry (so the script can measure them) but take no space. */
+/* The figures as flat shapes, over the photo's frame (same 1920 x 1080 units as the
+   canvas). They show while the screen loads, then crossfade into the glyph effect
+   (js/experiences-build.js); at rest (and with reduced motion) only the glyphs show.
+   The script also reads their outlines from here. */
 .scene__shapes {
   position: absolute;
-  width: 0;
-  height: 0;
-  visibility: hidden;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
+
+.scene__stop--figure-pink-top { stop-color: var(--color-figure-pink-top); }
+.scene__stop--figure-pink-mid { stop-color: var(--color-figure-pink-mid); }
+.scene__stop--figure-pink-bottom { stop-color: var(--color-figure-pink-bottom); }
+.scene__stop--figure-blue-top { stop-color: var(--color-figure-blue-top); }
+.scene__stop--figure-blue-mid { stop-color: var(--color-figure-blue-mid); }
+.scene__stop--figure-blue-bottom { stop-color: var(--color-figure-blue-bottom); }
+.scene__stop--figure-brown-top { stop-color: var(--color-figure-brown-top); }
+.scene__stop--figure-brown-bottom { stop-color: var(--color-figure-brown-bottom); }
 
 /* The ASCII effect canvas covers the photo's frame, so figure positions match it. */
 .scene__effect {

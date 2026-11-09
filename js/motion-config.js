@@ -41,6 +41,32 @@ export const WIPE = {
   coveredAt: 0.995,          // PROPOSED: Touchpoints shows and its load animation starts
 };
 
+// 3. Touchpoints diagram assembly (motion.md v2 section 3, CAROL: piece by piece, once,
+// about 2 to 2.5 s in all). The step timings are not in motion.md; these are starting
+// values. Start times are from the moment the heading and bullets have loaded.
+export const BUILD = {
+  baseAt: 0,      baseDuration: 350,   // STARTER: the base square fades and grows in
+  handAt: 200,    handDuration: 500,   // STARTER: the hand rises in behind it
+  handRise: 0.3,                       // STARTER: share of the hand's height it rises through
+  linesAt: 600,   linesDuration: 650,  // STARTER: the lines draw outward from the base square
+  squaresAt: 1150, squareDuration: 300, squareStagger: 70, // STARTER: the squares pop in, one by one
+  squareFrom: 0.6,                     // CAROL: squares scale from 0.6 to 1
+  dotsAt: 1750,   dotsDuration: 350,   // STARTER: the dots appear, then start flowing (ends at 2.1 s)
+  easing: 'ease-out',                  // STARTER
+};
+
+// 4. Experiences load order (motion.md v2 section 4, CAROL Option A): the photo, then the
+// figures as flat shapes, then they crossfade into the glyph effect, then the text.
+// Timings are not in motion.md; these are starting values.
+export const FIGURES = {
+  photoDuration: 600,        // STARTER: the photo fades in (the standard load duration)
+  shapesAt: 500,             // STARTER: the flat figures start to fade in
+  shapesDuration: 500,       // STARTER
+  holdDuration: 400,         // STARTER: the flat figures stay a moment
+  crossfadeDuration: 800,    // STARTER: flat figures -> glyphs
+  easing: 'ease-out',        // STARTER
+};
+
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
 export const DOTS = {
   speed: 120,                // STARTER: design px per second along the lines

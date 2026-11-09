@@ -88,9 +88,9 @@ export function initWipe() {
   let paused = null;
 
   function update() {
+    // The blinds run over the first screen of scrolling through the wrapper.
     const box = wrapper.getBoundingClientRect();
-    const travel = box.height - window.innerHeight; // one screen
-    const progress = travel > 0 ? clamp01(-box.top / travel) : 0;
+    const progress = clamp01(-box.top / window.innerHeight);
     if (progress === lastProgress) return;
     lastProgress = progress;
 

@@ -213,7 +213,8 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
   function update() {
     // data-scene-paused: the screen is in the window but completely covered
     // (Touchpoints pinned under the Landing before the blinds rise, js/wipe.js).
-    const run = inView && !screen.dataset.scenePaused && !document.hidden && !reduceMotion.matches;
+    // data-scene-covered: another screen has slid over it (js/push-in.js).
+    const run = inView && !screen.dataset.scenePaused && !screen.dataset.sceneCovered && !document.hidden && !reduceMotion.matches;
     if (run && !frame) {
       last = 0;
       frame = requestAnimationFrame(tick);
@@ -236,7 +237,7 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
   }).observe(canvas);
   reduceMotion.addEventListener('change', update);
   document.addEventListener('visibilitychange', update);
-  new MutationObserver(update).observe(screen, { attributeFilter: ['data-scene-paused'] });
+  new MutationObserver(update).observe(screen, { attributeFilter: ['data-scene-paused', 'data-scene-covered'] });
   // The 1px inset stops a neighbouring screen that only touches the window edge
   // from counting as on screen (it would run a second effect for nothing).
   new IntersectionObserver(([entry]) => {

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/landing.css">
   <link rel="stylesheet" href="css/wipe.css">
+  <link rel="stylesheet" href="css/push.css">
   <link rel="stylesheet" href="css/scene.css">
   <link rel="stylesheet" href="css/works.css">
   <link rel="stylesheet" href="css/about.css">
@@ -80,9 +81,9 @@
     <!-- Screen 2: Landing (Figma 32:656). Everything sits on a 1920 x 1080 stage scaled
          with --u, centred in the window. data-reveal-order sets the load order (js/reveal.js);
          data-reveal-wait="splash" holds it until the splash has gone. -->
-    <!-- Landing -> Touchpoints "blinds up" (js/wipe.js). The wrapper is two screens tall.
-         The Landing and Touchpoints are both pinned (sticky) in the same place for one
-         screen of scrolling; Touchpoints is on top, shown only through twelve bars that
+    <!-- Landing -> Touchpoints "blinds up" (js/wipe.js). The wrapper is three screens tall.
+         The Landing and Touchpoints are both pinned (sticky) in the same place for the
+         first screen of scrolling; Touchpoints is on top, shown only through twelve bars that
          rise from the bottom, tied to the scroll and reversible. The wrapper carries the
          #landing address and an anchor at its end carries #touchpoints, because the
          pinned screens themselves never move. -->
@@ -156,12 +157,12 @@
       <div class="scene__stage">
         <!-- The hand's thumb (Figma 1:253 "Vector 462") sits behind the base square; the rest of
              the hand is in front of it (after the canvas below). Same box and position as the hand. -->
-        <img class="scene__art scene__hand" src="assets/images/hand-thumb.svg" alt="" width="263" height="445" data-js="reveal" data-reveal-order="5">
+        <img class="scene__art scene__hand" src="assets/images/hand-thumb.svg" alt="" width="263" height="445" data-js="build-hand">
         <!-- Touchpoint diagram (Figma 1:270), inline so the dots can travel along the lines.
              Layers: lines, then dots, then squares, so each dot slides under the square it reaches.
              Each route is one path from the base square (held by the hand) out to its square;
              js/dot-flow.js moves the dots along them. -->
-        <svg class="scene__art scene__diagram" viewBox="0 0 1340 727" role="img" aria-label="Diagram of coloured squares joined by thin lines, with a hand holding the central square" data-js="diagram reveal" data-reveal-order="5">
+        <svg class="scene__art scene__diagram" viewBox="0 0 1340 727" role="img" aria-label="Diagram of coloured squares joined by thin lines, with a hand holding the central square" data-js="diagram">
           <defs>
             <linearGradient id="square-brown" x1="156.952" y1="582.643" x2="0" y2="582.643" gradientUnits="userSpaceOnUse">
               <stop class="scene__stop--brown-dark"/>
@@ -236,16 +237,16 @@
           </g>
         </svg>
         <!-- ASCII effect on the squares (js/scenes.js), above the diagram and under the hand. -->
-        <canvas class="scene__art scene__diagram-effect" data-js="ascii-touchpoints reveal" data-reveal-order="5" aria-hidden="true"></canvas>
-        <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445" data-js="reveal" data-reveal-order="5">
+        <canvas class="scene__art scene__diagram-effect" data-js="ascii-touchpoints" aria-hidden="true"></canvas>
+        <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445" data-js="build-hand">
 
         <div class="scene__text scene__text--touchpoints">
           <h2 id="touchpoints-title" tabindex="-1" data-js="screen-heading reveal" data-reveal-order="1">
             <span class="scene__line-1">From assembling</span>
             <span class="scene__line-2 scene__line-2--bold">touchpoints,</span>
           </h2>
-          <!-- Load order: heading, the bullets one after another, then the diagram (order 5;
-               its piece-by-piece build arrives in checkpoint 5). -->
+          <!-- Load order: heading, then the bullets one after another; then the diagram
+               assembles piece by piece (js/touchpoints-build.js). -->
           <ul class="scene__list scene__list--touchpoints">
             <li class="scene__item" data-js="reveal" data-reveal-order="2">UX Research</li>
             <li class="scene__item" data-js="reveal" data-reveal-order="3">Service Design</li>
@@ -259,37 +260,61 @@
     <span class="wipe__anchor" id="touchpoints" aria-hidden="true"></span>
     </div>
 
+    <!-- Push-in slides (css/push.css, js/push-in.js): Experiences slides up over the pinned
+         Touchpoints, then Selected Works slides up over the pinned Experiences. This
+         container starts one screen early, so it overlaps the end of the wipe wrapper. -->
+    <div class="push" data-js="push">
+
     <!-- Screen 4: experiences scene -->
-    <section class="frame frame--snap scene scene--experiences" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences">
+    <section class="frame scene scene--experiences push__pinned" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences" data-reveal-wait="experiences">
       <!-- Photo and figures share a "cover" stage: it fills the screen like object-fit: cover,
            so the figures stay on the people in the photo at any window shape. -->
       <div class="scene__cover">
-        <img class="scene__photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
-        <!-- The three figures (Figma 1:311 pink, 1:313 blue, 1:314 brown), drawn by the shared
-             ASCII effect (js/scenes.js). Their outlines live in this invisible SVG, at their Figma
-             positions in the 1920 x 1080 frame; the canvas fills them with glyphs. -->
-        <svg class="scene__shapes" viewBox="0 0 1920 1080" aria-hidden="true" focusable="false">
-          <path data-js="figure" data-figure="pink" transform="translate(1063 350)" d="M0 326.5V328.5V334L3 341L13.5 350.5L25 362L33.5 365.5H43L46 362V358L46.5 356V348V340L52 322.5L57 315.5L60.5 306.5L62 295V279L63.5 274L71.5 277H78.5L84 274L87 267L88.5 269.5L91 281.5L95.5 291L100.5 300C101.167 307 102.5 321.1 102.5 321.5C102.5 321.9 106.833 334 109 340L119 364.5L117.5 375.5H114.5L111.5 378L110 382.5L111.5 387L121 398.5L127 405H134L142.5 401.5V398L139.5 394.5L138.5 393.5V382.5L134.5 376V364.5V317L131.5 295.5L122 267L128.5 261L136.5 255.5C134.667 244.667 131 222.7 131 221.5V200L131.5 192L136.5 192.5V190L134 187.5V179.5H136L139 184L141.5 183.5L142 179.5L137.5 175L134 172L131 165L133 160.5L136 149L137 141L138 138.5V132L133 112L136.5 108V105.5L129 89.5L122 77.5L113 68L105.5 62L95.5 57.5H86.5L81 53L77 47L75 47.5L72 41.5L75 40L80 39H83.5V37.5L76.5 29.5L72 23.5L70.5 21L68.5 15.5L64.5 10.5L59 4.5L52 1.5L45.5 0L39 1.5L33 6.5L26.5 17.5V27L28 33L31.5 37.5L33 44.5L39 53.5L45.5 57.5L44.5 63.5L34.5 69.5L26 75L16.5 84L11 97L3 127L13 132.5L11 150.5L7.5 161.5L6.5 176L8 214V230L9.5 241L16.5 251L22 256L24.5 255L20 246L18 238.5L18.5 236.5L20.5 238L22 245L24.5 246L25 243L24.5 230.5L23 225L20.5 219.5L21.5 216L26.5 194.5L27.5 202L24.5 227L27.5 232L30.5 248.5L35 267.5V277L30.5 285.5L29.5 301L30.5 318.5V330.5L12.5 319.5H8L3 322.5L0 326.5Z"/>
-          <path data-js="figure" data-figure="blue" transform="translate(730 362.5)" d="M13.5 201V210L16 213L24.5 216H36.5H44.5V235L48.5 238.5L60 243.5L66 269L68.5 275.5L69.5 295.5L73 315L83 337.5L88 334.5L95.5 327.5L98.5 319V317.5L95.5 315L90.5 309.5L88 301.5V295.5L83 290.5L71.5 280.5L71 275.5L73 272L78.5 267.5L84 262L89.5 258.5L94.5 257L100 249.5L105.5 247L116 249.5L128.5 255L129.5 238.5L131.5 236L134 229L137.5 219.5L140 209L141.5 205.5V208.5H144L145.5 205.5V201L146.5 200L147 205.5L146.5 212L144.5 216L147 217.5L152.5 214L159.5 205.5V198.5L157.5 191L154.5 181.5L152.5 169.5L151.5 155L150 144.5L147.5 135V130.5L150 128.5L154.5 124.5L150 109.5L146.5 90.5L142.5 77.5L136 70L130 67L115.5 64H107.5L104.5 59.5V52L105.5 46L109 33.5L109.5 29.5L107.5 22.5L102.5 14L95 7L91.5 6.5L87.5 5L87 2L84.5 0L83 1.5L81 0L80 1.5L81 3.5L79.5 4H77L74.5 3.5L72.5 5.5L74 9L76.5 10.5L72.5 11.5V16L69.5 18.5L66 23.5L67 32L69 36.5V39V41.5L72.5 50L74.5 52L77 54.5L78 61.5L78.5 66L75 69L64 74L59 73.5L55.5 76L49.5 82.5L44.5 92.5L40.5 105H33L27.5 107.5L24.5 110.5L20 123.5L14.5 129.5L4.5 127L0 144L1 161L7 170L11 171L22 163.5H27.5V165.5L22 170L18 175.5L13.5 201Z"/>
-          <path data-js="figure" data-figure="brown" transform="translate(670.5 609.5)" d="M13.5 99L11.5 105.5V108L13.5 115.5L18 124C20 125.667 24.1 129.1 24.5 129.5C24.9 129.9 28 132 29.5 133L27 138.5L25 144.5V150L28.5 153L25 157L20.5 159L12.5 161L8 164.5L0 180L1 185.5V192.5L3 195L8 199.5L11 204.5L12.5 214L15 229.5V251.5L12.5 255L8 266.5L11 271V276L12.5 284.5V294.5L16.5 298.5L15 305L12.5 314.5L15 324.5L24.5 325.5H29.5C30.5 323 32.5 317.8 32.5 317V310.5L29.5 302.5V300L34 308L55.5 348V356L51 372.5H48H44V381.5L48 391.5L58 393L65 385L68 374.5L69.5 361L75.5 367.5L80.5 370L82.5 374.5L89.5 388L96 407L101 419L96 421.5L92.5 428.5L101 435.5L109.5 441L121 435.5V428.5L116 425L112.5 408.5V393V383C111.5 378.667 109.5 369.5 109.5 367.5C109.5 365.5 105.833 358.333 104 355L105 351.5L107.5 340.5L116 309.5L121.5 292.5C122 283.333 123 264.8 123 264V257L125 261.5L136 271L141 291L138.5 300L133.5 323L136 326V340.5V353.5H133.5L129 356V361V367.5L136 377.5L147.5 374.5L154.5 364.5V358.5L159 348L163 339L167.5 326L171.5 311L174.5 301.5L180 297.5L184 280.5L190 269L195 280.5V294L204 314.5L210.5 336V348L216 374.5V390.5L210.5 399L221 407.5L235.5 400.5V394L239 376V358.5V334L229.5 316.5L228 306.5L231.5 290.5L235.5 280.5V266.5L234.5 250V242L244 238.5L245 235.5L242.5 218.5L241 209L237 197.5V190L234.5 182.5L232.5 179V176L233.5 172L232.5 163L234.5 161.5L237 158.5L246.5 140.5L250.5 138L252 134L250.5 128.5L246.5 117L240 96L235 85.5L230 77.5L222 71L209.5 68L204.5 64.5L200.5 61.5V55L204.5 52L209.5 47L210.5 42L209.5 37L205.5 29.5L199 23.5L195.5 22V18.5L192 12L188 7L178.5 3L168.5 0.5L165 0L159.5 2L156.5 5.5L154 10L149 11L144.5 14L139 19L132 24.5L130 28L131 33.5L134 37L141.5 43.5L147 48V50L148 58L150.5 63L154.5 68.5L158 71L154.5 80.5L147.5 86.5L141.5 90.5L135 95.5L131.5 101L128.5 110L126.5 120L119.5 142L117.5 152.5L114 149.5L107.5 142L99 136.5H94.5L91.5 137.5L88.5 136.5L83.5 135L79 133.5L81 130.5L83.5 124.5V117L80 108.5L77 105V102L75.5 95L71.5 87.5L64 82.5L54.5 78H46.5L39 81L36.5 85L34 89L26 90L21 91.5L17 93.5L13.5 99Z"/>
+        <img class="scene__photo" data-js="photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
+        <!-- The three figures (Figma 32:368 pink, 32:370 blue, 32:371 brown) at their Figma
+             positions in the 1920 x 1080 frame. Shown first as flat shapes with their Figma
+             gradients, then they crossfade into the glyph effect on the canvas below, which
+             reads their outlines from here (js/scenes.js, js/experiences-build.js). -->
+        <svg class="scene__shapes" viewBox="0 0 1920 1080" aria-hidden="true" focusable="false" data-js="figures">
+          <defs>
+            <!-- In each figure's own coordinates (top to bottom of the figure). -->
+            <linearGradient id="figure-pink" x1="71.25" y1="0" x2="71.25" y2="405" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--figure-pink-top"/>
+              <stop class="scene__stop--figure-pink-mid" offset="0.584388"/>
+              <stop class="scene__stop--figure-pink-bottom" offset="1"/>
+            </linearGradient>
+            <linearGradient id="figure-blue" x1="79.75" y1="0" x2="79.75" y2="337.5" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--figure-blue-top"/>
+              <stop class="scene__stop--figure-blue-mid" offset="0.556901"/>
+              <stop class="scene__stop--figure-blue-bottom" offset="1"/>
+            </linearGradient>
+            <linearGradient id="figure-brown" x1="126" y1="0" x2="126" y2="441" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--figure-brown-top"/>
+              <stop class="scene__stop--figure-brown-bottom" offset="1"/>
+            </linearGradient>
+          </defs>
+          <path data-js="figure" data-figure="pink" fill="url(#figure-pink)" transform="translate(1063 350)" d="M0 326.5V328.5V334L3 341L13.5 350.5L25 362L33.5 365.5H43L46 362V358L46.5 356V348V340L52 322.5L57 315.5L60.5 306.5L62 295V279L63.5 274L71.5 277H78.5L84 274L87 267L88.5 269.5L91 281.5L95.5 291L100.5 300C101.167 307 102.5 321.1 102.5 321.5C102.5 321.9 106.833 334 109 340L119 364.5L117.5 375.5H114.5L111.5 378L110 382.5L111.5 387L121 398.5L127 405H134L142.5 401.5V398L139.5 394.5L138.5 393.5V382.5L134.5 376V364.5V317L131.5 295.5L122 267L128.5 261L136.5 255.5C134.667 244.667 131 222.7 131 221.5V200L131.5 192L136.5 192.5V190L134 187.5V179.5H136L139 184L141.5 183.5L142 179.5L137.5 175L134 172L131 165L133 160.5L136 149L137 141L138 138.5V132L133 112L136.5 108V105.5L129 89.5L122 77.5L113 68L105.5 62L95.5 57.5H86.5L81 53L77 47L75 47.5L72 41.5L75 40L80 39H83.5V37.5L76.5 29.5L72 23.5L70.5 21L68.5 15.5L64.5 10.5L59 4.5L52 1.5L45.5 0L39 1.5L33 6.5L26.5 17.5V27L28 33L31.5 37.5L33 44.5L39 53.5L45.5 57.5L44.5 63.5L34.5 69.5L26 75L16.5 84L11 97L3 127L13 132.5L11 150.5L7.5 161.5L6.5 176L8 214V230L9.5 241L16.5 251L22 256L24.5 255L20 246L18 238.5L18.5 236.5L20.5 238L22 245L24.5 246L25 243L24.5 230.5L23 225L20.5 219.5L21.5 216L26.5 194.5L27.5 202L24.5 227L27.5 232L30.5 248.5L35 267.5V277L30.5 285.5L29.5 301L30.5 318.5V330.5L12.5 319.5H8L3 322.5L0 326.5Z"/>
+          <path data-js="figure" data-figure="blue" fill="url(#figure-blue)" transform="translate(730 362.5)" d="M13.5 201V210L16 213L24.5 216H36.5H44.5V235L48.5 238.5L60 243.5L66 269L68.5 275.5L69.5 295.5L73 315L83 337.5L88 334.5L95.5 327.5L98.5 319V317.5L95.5 315L90.5 309.5L88 301.5V295.5L83 290.5L71.5 280.5L71 275.5L73 272L78.5 267.5L84 262L89.5 258.5L94.5 257L100 249.5L105.5 247L116 249.5L128.5 255L129.5 238.5L131.5 236L134 229L137.5 219.5L140 209L141.5 205.5V208.5H144L145.5 205.5V201L146.5 200L147 205.5L146.5 212L144.5 216L147 217.5L152.5 214L159.5 205.5V198.5L157.5 191L154.5 181.5L152.5 169.5L151.5 155L150 144.5L147.5 135V130.5L150 128.5L154.5 124.5L150 109.5L146.5 90.5L142.5 77.5L136 70L130 67L115.5 64H107.5L104.5 59.5V52L105.5 46L109 33.5L109.5 29.5L107.5 22.5L102.5 14L95 7L91.5 6.5L87.5 5L87 2L84.5 0L83 1.5L81 0L80 1.5L81 3.5L79.5 4H77L74.5 3.5L72.5 5.5L74 9L76.5 10.5L72.5 11.5V16L69.5 18.5L66 23.5L67 32L69 36.5V39V41.5L72.5 50L74.5 52L77 54.5L78 61.5L78.5 66L75 69L64 74L59 73.5L55.5 76L49.5 82.5L44.5 92.5L40.5 105H33L27.5 107.5L24.5 110.5L20 123.5L14.5 129.5L4.5 127L0 144L1 161L7 170L11 171L22 163.5H27.5V165.5L22 170L18 175.5L13.5 201Z"/>
+          <path data-js="figure" data-figure="brown" fill="url(#figure-brown)" transform="translate(670.5 609.5)" d="M13.5 99L11.5 105.5V108L13.5 115.5L18 124C20 125.667 24.1 129.1 24.5 129.5C24.9 129.9 28 132 29.5 133L27 138.5L25 144.5V150L28.5 153L25 157L20.5 159L12.5 161L8 164.5L0 180L1 185.5V192.5L3 195L8 199.5L11 204.5L12.5 214L15 229.5V251.5L12.5 255L8 266.5L11 271V276L12.5 284.5V294.5L16.5 298.5L15 305L12.5 314.5L15 324.5L24.5 325.5H29.5C30.5 323 32.5 317.8 32.5 317V310.5L29.5 302.5V300L34 308L55.5 348V356L51 372.5H48H44V381.5L48 391.5L58 393L65 385L68 374.5L69.5 361L75.5 367.5L80.5 370L82.5 374.5L89.5 388L96 407L101 419L96 421.5L92.5 428.5L101 435.5L109.5 441L121 435.5V428.5L116 425L112.5 408.5V393V383C111.5 378.667 109.5 369.5 109.5 367.5C109.5 365.5 105.833 358.333 104 355L105 351.5L107.5 340.5L116 309.5L121.5 292.5C122 283.333 123 264.8 123 264V257L125 261.5L136 271L141 291L138.5 300L133.5 323L136 326V340.5V353.5H133.5L129 356V361V367.5L136 377.5L147.5 374.5L154.5 364.5V358.5L159 348L163 339L167.5 326L171.5 311L174.5 301.5L180 297.5L184 280.5L190 269L195 280.5V294L204 314.5L210.5 336V348L216 374.5V390.5L210.5 399L221 407.5L235.5 400.5V394L239 376V358.5V334L229.5 316.5L228 306.5L231.5 290.5L235.5 280.5V266.5L234.5 250V242L244 238.5L245 235.5L242.5 218.5L241 209L237 197.5V190L234.5 182.5L232.5 179V176L233.5 172L232.5 163L234.5 161.5L237 158.5L246.5 140.5L250.5 138L252 134L250.5 128.5L246.5 117L240 96L235 85.5L230 77.5L222 71L209.5 68L204.5 64.5L200.5 61.5V55L204.5 52L209.5 47L210.5 42L209.5 37L205.5 29.5L199 23.5L195.5 22V18.5L192 12L188 7L178.5 3L168.5 0.5L165 0L159.5 2L156.5 5.5L154 10L149 11L144.5 14L139 19L132 24.5L130 28L131 33.5L134 37L141.5 43.5L147 48V50L148 58L150.5 63L154.5 68.5L158 71L154.5 80.5L147.5 86.5L141.5 90.5L135 95.5L131.5 101L128.5 110L126.5 120L119.5 142L117.5 152.5L114 149.5L107.5 142L99 136.5H94.5L91.5 137.5L88.5 136.5L83.5 135L79 133.5L81 130.5L83.5 124.5V117L80 108.5L77 105V102L75.5 95L71.5 87.5L64 82.5L54.5 78H46.5L39 81L36.5 85L34 89L26 90L21 91.5L17 93.5L13.5 99Z"/>
         </svg>
         <canvas class="scene__effect" data-js="ascii-experiences" aria-hidden="true"></canvas>
       </div>
 
       <div class="scene__text scene__text--experiences">
-        <h2 id="experiences-title" tabindex="-1" data-js="screen-heading">
+        <!-- Loads last, after the figures have turned into glyphs (js/experiences-build.js). -->
+        <h2 id="experiences-title" tabindex="-1" data-js="screen-heading reveal" data-reveal-order="1">
           <span class="scene__line-1">To crafting stories,</span>
           <span class="scene__line-2">experiences.</span>
         </h2>
         <ul class="scene__list scene__list--experiences">
-          <li class="scene__item">UX Strategy</li>
-          <li class="scene__item">Experience Design</li>
+          <li class="scene__item" data-js="reveal" data-reveal-order="2">UX Strategy</li>
+          <li class="scene__item" data-js="reveal" data-reveal-order="3">Experience Design</li>
         </ul>
       </div>
     </section>
 
     <!-- Screen 5: Selected Works -->
-    <section class="frame frame--snap works" id="work" aria-labelledby="works-title" data-js="screen" data-screen-theme="work" data-screen-nav="work">
+    <section class="frame works" id="work" aria-labelledby="works-title" data-js="screen" data-screen-theme="work" data-screen-nav="work">
       <div class="works__inner">
         <p class="works__overline">2024 - 2026</p>
         <h2 class="works__title" id="works-title">Selected Works</h2>
@@ -418,6 +443,7 @@
         </div>
       </div>
     </section>
+    </div>
 
     <!-- Screen 6 (1920 x 1549): About is the top 1080px; the Contact footer
          below completes the frame. They are siblings so About stays in <main>. -->

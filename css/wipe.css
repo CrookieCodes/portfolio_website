@@ -1,6 +1,6 @@
 /* Landing -> Touchpoints "blinds up" (motion.md v2 section 2, CAROL).
-   The wrapper is two screens tall. The Landing and Touchpoints are both sticky, so
-   they stay pinned in the same place for one screen of scrolling (Touchpoints is
+   The Landing and Touchpoints are both sticky, so they stay pinned in the same place
+   for the first screen of scrolling (Touchpoints is
    pulled up one screen with a negative margin). Touchpoints is on top, but masked:
    it shows only through twelve vertical bars that js/wipe.js raises from the bottom
    as the scroll progresses (and lowers again going up). So the white that arrives is
@@ -10,10 +10,12 @@
    and is scrubbed by the scroll, and snapping pulled every gesture back to one end.
    With reduced motion there are no bars: plain screens, one after the other. */
 
+/* Three screens tall: one screen of blinds, then one more with Touchpoints still
+   pinned while Experiences slides over it (css/push.css), then it scrolls away. */
 .wipe {
   position: relative;
-  height: 200vh;           /* fallback */
-  height: 200svh;
+  height: 300vh;           /* fallback */
+  height: 300svh;
 }
 
 /* The pinned Landing, under Touchpoints. */
