@@ -1,47 +1,112 @@
-// Loading animation (motion.md sections 5 and 6): when Selected Works or About
-// comes into view, its items (data-js containing "reveal") fade up into place, one after
-// another, once. With reduced motion, nothing is hidden and nothing moves.
+// Standard loading animation (motion.md v2 "Global"): when a screen comes into view for
+// the first time, its items (data-js containing "reveal") slide up and fade in, one
+// after another, once per page load. With reduced motion, nothing is hidden or moved.
+//
+// Order: items play in DOM order unless they carry data-reveal-order="n" (lower
+// numbers first; items with the same number start together, so a group can share a
+// step). Items without an order come after the ordered ones, in DOM order.
+//
+// When the last item of a screen has finished, the screen fires a "reveal:done"
+// event, so a screen's own build (the Touchpoints diagram, the Experiences figures)
+// can start after its text. With reduced motion it fires straight away.
 
 import { REVEAL } from './motion-config.js';
 
-export function initReveal() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const items = document.querySelectorAll('[data-js~="reveal"]');
-  if (items.length === 0) return;
+export const REVEAL_DONE = 'reveal:done';
 
-  // Group the items by screen and number them in order, for the stagger.
+// Sort key for one item: its data-reveal-order, or after every ordered item.
+function orderOf(item) {
+  const order = Number.parseFloat(item.dataset.revealOrder);
+  return Number.isFinite(order) ? order : Infinity;
+}
+
+// Groups a screen's items into steps: [[items of step 0], [items of step 1], ...].
+function stepsOf(items) {
+  const sorted = items
+    .map((item, domIndex) => ({ item, domIndex, order: orderOf(item) }))
+    .sort((a, b) => (a.order - b.order) || (a.domIndex - b.domIndex));
+  const steps = [];
+  let lastOrder = null;
+  sorted.forEach(({ item, order }) => {
+    // Unordered items each get their own step; ordered items share one per number.
+    if (order === Infinity || order !== lastOrder) steps.push([]);
+    steps[steps.length - 1].push(item);
+    lastOrder = order;
+  });
+  return steps;
+}
+
+function announceDone(screen) {
+  screen.dispatchEvent(new CustomEvent(REVEAL_DONE));
+  screen.dataset.revealed = 'true'; // for modules that start later and need to check
+}
+
+export function initReveal() {
+  const items = [...document.querySelectorAll('[data-js~="reveal"]')];
+
+  // Group the items by screen.
   const groups = new Map();
   items.forEach((item) => {
-    const screen = item.closest('[data-js="screen"]');
+    const screen = item.closest('[data-js~="screen"]');
+    if (!screen) return;
     if (!groups.has(screen)) groups.set(screen, []);
-    const group = groups.get(screen);
-    item.style.setProperty('--reveal-index', group.length);
-    group.push(item);
-    item.classList.add('reveal--pending'); // hidden, ready to rise
+    groups.get(screen).push(item);
   });
 
-  // When an item has finished, drop the classes so its own styles (for example
-  // a card's hover transition) apply again.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Everything is already visible: tell each screen it is done once it is in the page.
+    groups.forEach((group, screen) => queueMicrotask(() => announceDone(screen)));
+    return;
+  }
+
+  // Number each item by its step, for the stagger, and hide it ready to rise.
+  const stepCounts = new Map();
+  groups.forEach((group, screen) => {
+    const steps = stepsOf(group);
+    steps.forEach((step, index) => {
+      step.forEach((item) => {
+        item.style.setProperty('--reveal-index', index);
+        item.classList.add('reveal--pending');
+      });
+    });
+    stepCounts.set(screen, steps.length);
+  });
+
+  // When an item has finished, drop the classes so its own styles (for example a
+  // hover transition) apply again.
   function cleanUp(item) {
-    if (!item.classList.contains('reveal--in')) return;
+    if (!item.classList.contains('reveal--in')) return false;
     item.classList.remove('reveal--in');
     item.style.removeProperty('--reveal-index');
+    return true;
+  }
+
+  function play(screen) {
+    const group = groups.get(screen);
+    let remaining = group.length;
+    const finishOne = (item) => {
+      if (!cleanUp(item)) return;
+      remaining -= 1;
+      if (remaining === 0) announceDone(screen);
+    };
+    // Fallback in case end events never come (e.g. the tab was hidden).
+    const longest = (stepCounts.get(screen) - 1) * REVEAL.stagger + REVEAL.duration;
+    group.forEach((item) => {
+      item.classList.add('reveal--in');
+      item.classList.remove('reveal--pending');
+      item.addEventListener('transitionend', function done(event) {
+        if (event.target !== item || event.propertyName !== 'opacity') return;
+        item.removeEventListener('transitionend', done);
+        finishOne(item);
+      });
+      setTimeout(() => finishOne(item), longest + 500);
+    });
   }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      groups.get(entry.target).forEach((item, index) => {
-        item.classList.add('reveal--in');
-        item.classList.remove('reveal--pending');
-        item.addEventListener('transitionend', function done(event) {
-          if (event.target !== item || event.propertyName !== 'opacity') return;
-          item.removeEventListener('transitionend', done);
-          cleanUp(item);
-        });
-        // Fallback in case the end event never comes (e.g. the tab was hidden).
-        setTimeout(() => cleanUp(item), index * REVEAL.stagger + REVEAL.duration + 2000);
-      });
+      play(entry.target);
       observer.unobserve(entry.target); // once only
     });
   }, { threshold: REVEAL.threshold });

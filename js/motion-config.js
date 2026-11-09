@@ -64,13 +64,28 @@ export const CARDS = {
   liftEasing: 'ease-out',    // PROPOSED
 };
 
-// 5 and 6. Loading animation for Selected Works and About (motion.md, CAROL: "simple").
+// Standard loading animation, every screen (motion.md v2 "Global", CAROL: simple and
+// consistent). Items slide up and fade in, one after another, once per page load.
 export const REVEAL = {
-  distance: 16,              // motion.md: design px the items rise as they fade in
-  stagger: 80,               // motion.md: delay between one item and the next
-  duration: 400,             // motion.md
-  easing: 'ease-out',        // motion.md
+  distance: 24,              // PROPOSED: design px the items rise as they fade in
+  stagger: 90,               // PROPOSED: delay between one item and the next
+  duration: 600,             // CAROL: each item
+  easing: 'ease-out',        // CAROL
   threshold: 0.15,           // STARTER: share of the screen in view before it plays
+};
+
+// Scroll cue "Scroll down for more details" (motion.md v2 "Global", CAROL).
+export const CUE = {
+  lowOpacity: 0.35,          // PROPOSED: the pulse goes from 1 down to this and back
+  period: 1600,              // PROPOSED: one full pulse (1 -> 0.35 -> 1)
+  easing: 'ease-in-out',     // PROPOSED
+};
+
+// Header logo swap, primary (Landing) <-> secondary pinwheel (motion.md v2 "Header", CAROL).
+export const LOGO = {
+  spinAngle: 90,             // CAROL: degrees per swap (clockwise going down, back going up)
+  spinDuration: 500,         // CAROL: the whole spin; the mark changes at the midpoint
+  spinEasing: 'ease-in-out', // STARTER: motion.md gives no easing for the spin
 };
 
 // 6. About photo reveal (motion.md section 6).
@@ -105,6 +120,9 @@ export function applyMotionVariables() {
   root.setProperty('--motion-reveal-duration', `${REVEAL.duration}ms`);
   root.setProperty('--motion-reveal-stagger', `${REVEAL.stagger}ms`);
   root.setProperty('--motion-reveal-easing', REVEAL.easing);
+  root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
+  root.setProperty('--motion-cue-period', `${CUE.period}ms`);
+  root.setProperty('--motion-cue-easing', CUE.easing);
   root.setProperty('--motion-photo-duration', `${PHOTO.showDuration}ms`);
   root.setProperty('--motion-photo-easing', PHOTO.showEasing);
 }
