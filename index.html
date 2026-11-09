@@ -53,9 +53,19 @@
     <div class="site-header__inner">
       <a class="site-header__logo" href="#hero">
         <span class="visually-hidden">Carol Elizabeth, home</span>
-        <!-- Logo cross (Figma 1:239), filled with currentColor so CSS sets its colour per screen. -->
-        <svg class="site-header__cross" viewBox="0 0 61 61" aria-hidden="true" focusable="false">
-          <path d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z" fill="currentColor"/>
+        <!-- Two marks, one shown at a time (js/header-logo.js swaps them with a spin).
+             Primary: the tan square mark, Landing only (Figma 32:658, 72.5 x 72.5). -->
+        <svg class="site-header__mark site-header__mark--primary" data-js="logo-primary" viewBox="0 0 72.4746 72.4752" aria-hidden="true" focusable="false">
+          <path d="M0 52.7616L0 6.58843L18.2455 9.39085L9.46573 54.2296L0 52.7616Z"/>
+          <path d="M72.4746 19.0911L72.4746 65.8865L54.2291 63.1816L63.0089 17.7386L72.4746 19.0911Z"/>
+          <path d="M19.5846 0L65.8875 2.03207e-06L63.2111 17.7387L18.2464 9.2665L19.5846 0Z"/>
+          <path d="M64.6995 44.0704L26.3542 44.5999L29.0738 26.8612L65.3794 33.8773L64.6995 44.0704Z"/>
+          <path d="M52.892 72.4752L6.58905 72.4752L9.26552 54.2297L54.2302 62.944L52.892 72.4752Z"/>
+        </svg>
+        <!-- Secondary: the pinwheel (Figma 32:314, 61 x 61), filled with currentColor so
+             CSS sets its colour per screen. -->
+        <svg class="site-header__mark site-header__mark--secondary site-header__mark--hidden" data-js="logo-secondary" viewBox="0 0 61 61" aria-hidden="true" focusable="false">
+          <path d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
         </svg>
       </a>
       <nav class="site-nav" aria-label="Main">

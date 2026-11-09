@@ -1,8 +1,10 @@
 /* Site header: logo cross (left) and main nav (right), between the page margins.
    Sizes use the fluid design pixel --u (tokens.css), so it fits any window.
    One fixed header for screens 2-6. js/header-theme.js sets data-theme to the
-   screen behind the header; each theme below sets the cross and nav colours.
-   The cross is inline SVG filled with currentColor, so its colour comes from CSS.
+   screen behind the header; each theme below sets the logo and nav colours.
+   The logo has two marks (js/header-logo.js swaps them): the tan primary mark on
+   the Landing, and the secondary pinwheel everywhere else, filled with
+   currentColor so its colour comes from the theme (Figma FINAL EDITS header marks).
    A scrim behind the header (in the screen's own colour) keeps content that
    scrolls underneath from clashing with the logo and nav. */
 
@@ -12,7 +14,8 @@
   left: 0;
   right: 0;
   z-index: 5;
-  /* Default (no theme yet): the hero's colours. */
+  /* Default (no theme yet): the hero's colours. --header-cross colours the
+     secondary pinwheel mark. */
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
@@ -26,7 +29,7 @@
 }
 
 [data-theme="touchpoints"] {
-  --header-cross: var(--color-pale-teal);
+  --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
 }
@@ -44,14 +47,14 @@
 }
 
 [data-theme="about"] {
-  --header-cross: var(--color-tan);
+  --header-cross: var(--color-mint);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-burgundy);
 }
 
 /* Contact footer: same header colours as About (and About stays the active link). */
 [data-theme="contact"] {
-  --header-cross: var(--color-tan);
+  --header-cross: var(--color-mint);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
 }
@@ -84,16 +87,33 @@
 }
 
 .site-header__logo {
-  display: block;
-  width: calc(61 * var(--u));
-  height: calc(61 * var(--u));
+  display: grid;  /* the two marks share one cell, both at its top-left corner */
+  width: calc(72.475 * var(--u));
+  height: calc(72.475 * var(--u));
   color: var(--header-cross);
 }
 
-.site-header__cross {
+.site-header__mark {
+  grid-area: 1 / 1;
   display: block;
-  width: 100%;
-  height: 100%;
+}
+
+/* Primary: the tan square mark (Figma 32:658), 72.5px. */
+.site-header__mark--primary {
+  width: calc(72.475 * var(--u));
+  height: calc(72.475 * var(--u));
+  fill: var(--color-tan);
+}
+
+/* Secondary: the pinwheel (Figma 32:314), 61px, in the theme colour. */
+.site-header__mark--secondary {
+  width: calc(61 * var(--u));
+  height: calc(61 * var(--u));
+  fill: currentColor;
+}
+
+.site-header__mark--hidden {
+  opacity: 0;
 }
 
 .site-nav {
