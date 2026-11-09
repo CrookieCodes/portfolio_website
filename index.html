@@ -268,7 +268,7 @@
          overlaps the end of the first one: Experiences slides up over the pinned Touchpoints
          (the push-in), is then pinned itself, and Selected Works is shown through twelve
          rising bars. The #work address is an anchor at the end of the blinds. -->
-    <div class="wipe push" data-js="wipe" data-wipe-name="works" data-wipe-theme="work">
+    <div class="wipe wipe--long push" data-js="wipe" data-wipe-name="works" data-wipe-theme="work">
 
     <!-- Screen 4: experiences scene -->
     <section class="frame scene scene--experiences wipe__pinned" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences" data-reveal-wait="experiences">
@@ -369,6 +369,8 @@
           <button class="works__button works__button--sort" type="button" aria-pressed="false" data-js="works-sort reveal" data-reveal-order="4">Sort by Domain <span aria-hidden="true">&gt;</span></button>
         </div>
 
+        <!-- Dims Selected Works while About pushes in over it (js/push-in.js). -->
+        <div class="scene__dim" data-js="push-dim" aria-hidden="true"></div>
         <!-- Announces the card that has just rolled in. -->
         <p class="visually-hidden" aria-live="polite" data-js="works-status"></p>
       </div>
@@ -396,46 +398,50 @@
     <span class="wipe__anchor" id="work" aria-hidden="true"></span>
     </div>
 
-    <!-- Screen 6 (1920 x 1549): About is the top 1080px; the Contact footer
-         below completes the frame. They are siblings so About stays in <main>. -->
-    <section class="frame about" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about">
-      <div class="about__inner">
-        <!-- Portrait: the weave (Figma 1:379) hides the photo (Pic4 1, 1:370). Hover, keyboard
-             focus, a tap or Enter/Space shows it (js/photo-reveal.js). -->
-        <div class="about__portrait" data-js="portrait reveal" role="button" tabindex="0" aria-label="Show portrait photo" aria-pressed="false">
-          <img class="about__weave" src="assets/images/weave-pattern.svg" alt="" width="404" height="561" loading="lazy">
-          <img class="about__photo" src="assets/images/about-photo.webp" alt="Carol Elizabeth smiling, standing on a street at night with string lights and a yellow truck behind her" width="404" height="561" loading="lazy" data-js="portrait-photo">
-        </div>
-        <div>
-          <h2 class="about__heading" id="about-title" data-js="reveal">Hi, I’m <span class="about__name">Carol,</span></h2>
-          <p class="about__text about__text--first" data-js="reveal">I’m a <strong class="about__strong">Service and UX Designer</strong> who builds cohesive experiences that users navigate intuitively across touchpoints.</p>
-          <p class="about__text about__text--second" data-js="reveal"><strong class="about__strong">Grounded in user research and systems thinking,</strong> I treat problems as part of a larger ecosystem and design at multiple scales and in context, rather than in silos. Currently pursuing <strong class="about__strong">Masters in Design from IIT Delhi.</strong></p>
-          <!-- Placeholder until the About page exists. -->
-          <a class="about__button" href="#" aria-disabled="true" data-js="reveal">Learn More &gt;</a>
+    <!-- Screen 6: About section (Figma 32:475, top 1080). Pushes in over Selected Works
+         (css/push.css, js/push-in.js): it starts one screen early, overlapping the pinned
+         Works. Everything sits on a 1920 x 1080 stage scaled with --u. -->
+    <section class="frame about push" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
+      <div class="about__stage">
+        <!-- Figma 32:507: the pink mark, static. Decorative. -->
+        <img class="about__mark" src="assets/images/about-mark.svg" alt="" width="285" height="285" data-js="reveal" data-reveal-order="1">
+        <div class="about__text">
+          <h2 class="about__heading" id="about-title" data-js="reveal" data-reveal-order="2">Hello, I’m <span class="about__name">Carol,</span></h2>
+          <div class="about__bio" data-js="reveal" data-reveal-order="3">
+            <p>I’m a <strong class="about__strong">Service and UX Designer,</strong> creating cohesive experiences across touchpoints. <strong class="about__strong">Grounded in user research and systems thinking,</strong> I treat problems as part of a larger ecosystem and design at multiple scales and in context, rather than in silos. Currently completing my <strong class="about__strong">Master of Design at IIT Delhi.</strong></p>
+            <p class="about__lead">My latest achievements have been:</p>
+          </div>
+          <ul class="about__awards">
+            <li class="about__award" data-js="reveal" data-reveal-order="4"><img class="about__trophy" src="assets/icons/trophy.svg" alt="" width="37" height="37"><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at UX Design Pitch as part of the UX India Conference 2026</span></li>
+            <li class="about__award" data-js="reveal" data-reveal-order="5"><img class="about__trophy" src="assets/icons/trophy.svg" alt="" width="37" height="37"><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at ServDes India Student Service Design Competition 2026</span></li>
+          </ul>
+          <!-- The About page is built in Phase 7; until then this link may 404. -->
+          <a class="about__button" href="about.html" data-js="reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- The footer is the bottom of screen 6, so it keeps the About theme and active link. -->
+  <!-- Footer (Figma 32:475, bottom 469): follows About with a plain scroll. The big cross
+       is stationary. Load: the cross slides in from the left, then the rest rises. -->
   <footer class="contact" id="contact" aria-labelledby="contact-title" data-js="screen" data-screen-theme="contact" data-screen-nav="about">
-    <img class="contact__cross" data-js="footer-cross" src="assets/images/footer-cross.svg" alt="" width="576" height="537" loading="lazy">
+    <img class="contact__cross" src="assets/images/footer-cross.svg" alt="" width="576" height="537" loading="lazy" data-js="reveal" data-reveal-order="1" data-reveal-from="left">
     <div class="contact__inner">
-      <ul class="contact__tags contact__small" aria-label="Disciplines">
+      <ul class="contact__tags" aria-label="Disciplines" data-js="reveal" data-reveal-order="2">
         <li class="contact__tag">Service Design</li>
         <li class="contact__tag">UX Design</li>
         <li class="contact__tag">Systems Design</li>
         <li class="contact__tag">UX Strategy</li>
         <li class="contact__tag">UX Research</li>
       </ul>
-      <h2 class="contact__heading" id="contact-title">Let’s Build something good.</h2>
-      <ul class="contact__links">
+      <h2 class="contact__heading" id="contact-title" data-js="reveal" data-reveal-order="3">Let’s Build something good.</h2>
+      <ul class="contact__links" data-js="reveal" data-reveal-order="4">
         <li><a class="contact__link" href="mailto:beth.carol00@gmail.com"><span class="contact__link-text">beth.carol00@gmail.com</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
         <li><a class="contact__link" href="https://www.linkedin.com/in/carol-elizabeth-351367281/" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">LinkedIn</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
         <li><a class="contact__link" href="https://www.behance.net/carolethomas3" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">Behance</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
         <li><a class="contact__link" href="https://www.instagram.com/caroling_13/" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">Instagram</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
       </ul>
-      <div class="contact__bottom contact__small">
+      <div class="contact__bottom" data-js="reveal" data-reveal-order="5">
         <p>All Rights Reserved by Carol Elizabeth © 2026</p>
         <p class="contact__credit">Photo by <a href="https://unsplash.com/@victorrosario?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">Victor Rosario<span class="visually-hidden"> (opens in a new tab)</span></a> on <a href="https://unsplash.com/photos/people-walking-on-a-sunlit-street-with-long-shadows-wxT0530pcZU?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">Unsplash<span class="visually-hidden"> (opens in a new tab)</span></a></p>
         <p class="contact__location">Delhi, IN</p>

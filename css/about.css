@@ -1,98 +1,109 @@
-/* Screen 6, top part: About (1920 x 1080 of the 1920 x 1549 frame), scaled with --u.
-   Weave image on the left, heading, two paragraphs and a button on the right.
-   The Contact footer (contact.css) follows directly to complete the frame. */
+/* Screen 6, top part: About section (Figma 32:475, the top 1920 x 1080). Burgundy
+   ground; the pink mark on the left; the heading, bio, two achievements and the
+   Learn More button on the right. Everything is placed at its Figma position on a
+   1920 x 1080 stage scaled with --u, centred. The footer (contact.css) follows. */
 
+/* One full window tall (like Works), so it always covers Works when it has slid in;
+   the 1920 x 1080 stage is centred in it. */
 .about {
-  min-height: calc(1080 * var(--u)); /* replaces the fixed frame height; flows, no snap */
+  min-height: 0;
+  height: 100vh;           /* fallback */
+  height: 100svh;
   background-color: var(--color-burgundy);
-  color: var(--color-tan);
+  color: var(--color-about-text);
 }
 
-.about__inner {
-  display: grid;
-  grid-template-columns: calc(404 * var(--u)) calc(931 * var(--u)); /* weave | text */
-  column-gap: calc(98 * var(--u));
-  align-items: start;
-  padding-top: calc(314 * var(--u));
-  padding-left: calc(var(--page-margin) + 123 * var(--u)); /* x 243 at 1920 */
-}
-
-/* Portrait: the weave sits over the photo; the photo dissolves in on hover,
-   focus, tap or Enter/Space (js/photo-reveal.js), and goes back instantly. */
-.about__portrait {
-  position: relative;
-  width: calc(404 * var(--u));
-  height: calc(561 * var(--u));
-  cursor: pointer;
-}
-
-.about__weave {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.about__photo {
+.about__stage {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;   /* no transition here, so hiding is instant */
+  top: 50%;
+  left: 50%;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+  translate: -50% -50%;
 }
 
-.about__photo--shown {
-  opacity: 1;
-  transition: opacity var(--motion-photo-duration) var(--motion-photo-easing);
+/* Figma 32:507: a 284.5 square mark, turned -11.05 degrees, centred at (321.9, 493.5). */
+.about__mark {
+  position: absolute;
+  left: calc((321.93 - 142.26) * var(--u));
+  top: calc((493.54 - 142.26) * var(--u));
+  width: calc(284.522 * var(--u));
+  height: calc(284.525 * var(--u));
+  rotate: -11.05deg;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .about__photo--shown {
-    transition: none;
-  }
+/* Text column: from x 607; the heading's line box starts at y 281. */
+.about__text {
+  position: absolute;
+  left: calc(607 * var(--u));
+  top: calc(281 * var(--u));
+  width: calc(1151 * var(--u));
 }
 
 .about__heading {
-  /* Lifted 11.5px: browsers draw Helvetica lower in its line box than Figma. */
-  margin-top: calc(-11.5 * var(--u));
   color: var(--color-off-white);
   font-weight: var(--weight-medium);
   font-size: var(--fs-about-heading);
   line-height: var(--lh-about-heading);
   letter-spacing: var(--ls-about-heading);
+  white-space: nowrap;
 }
 
 .about__name {
   color: var(--color-mint);
 }
 
-.about__text {
+/* Bio from y 395 (heading 281 + 99 + 15). */
+.about__bio {
+  margin-top: calc(15 * var(--u));
   font-family: var(--font-plex);
   font-size: var(--fs-about-body);
   line-height: var(--lh-about-body);
   letter-spacing: var(--ls-about-body);
 }
 
-.about__text--first {
-  margin-top: calc(65 * var(--u));  /* 53px below the heading's design box */
-}
-
-.about__text--second {
-  margin-top: calc(48 * var(--u));
-}
-
 .about__strong {
-  color: var(--color-white);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semibold);
 }
 
-/* "Learn More >": a link styled as a button. */
+/* "My latest achievements have been:" after an empty 48px line, on a 36px line. */
+.about__lead {
+  margin-top: calc(48 * var(--u));
+  line-height: calc(36 / 28);
+}
+
+/* Achievements: trophy at x 607, text at x 670; rows at y 685 and 750. */
+.about__awards {
+  margin-top: calc(13 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(28 * var(--u));
+  font-family: var(--font-plex);
+  font-size: var(--fs-about-award);
+  line-height: var(--lh-about-award);
+  letter-spacing: -0.01em;
+}
+
+.about__award {
+  display: flex;
+  align-items: center;
+  gap: calc(26 * var(--u));
+  white-space: nowrap;
+}
+
+.about__trophy {
+  flex: none;
+  width: calc(37 * var(--u));
+  height: calc(37 * var(--u));
+}
+
+/* Learn More: 207 x 68 at y 844, mint, 8px radius. */
 .about__button {
   display: inline-flex;
   align-items: center;
   height: calc(68 * var(--u));
-  margin-top: calc(53 * var(--u));
-  padding-inline: calc(21 * var(--u)); /* 207px wide with the Plex label */
+  margin-top: calc(57 * var(--u));
+  padding: 0 calc(21 * var(--u));
   border-radius: var(--radius-button);
   background-color: var(--color-mint);
   color: var(--color-button-text);
@@ -102,4 +113,8 @@
   line-height: var(--lh-button);
   letter-spacing: var(--ls-button);
   text-decoration: none;
+}
+
+.about__button:focus-visible {
+  outline-color: var(--color-white);
 }

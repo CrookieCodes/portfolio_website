@@ -6,6 +6,9 @@
 // numbers first; items with the same number start together, so a group can share a
 // step). Items without an order come after the ordered ones, in DOM order.
 //
+// An item with data-reveal-from="left" slides in from the left (REVEAL.fromLeft
+// design px) instead of rising (the footer cross).
+//
 // A screen with data-reveal-wait="name" waits for the promise passed in as
 // waitFor[name] before it plays (the Landing waits for the splash to finish).
 //
@@ -69,6 +72,10 @@ export function initReveal({ waitFor = {} } = {}) {
     steps.forEach((step, index) => {
       step.forEach((item) => {
         item.style.setProperty('--reveal-index', index);
+        if (item.dataset.revealFrom === 'left') {
+          item.style.setProperty('--reveal-x', -REVEAL.fromLeft);
+          item.style.setProperty('--reveal-y', 0);
+        }
         item.classList.add('reveal--pending');
       });
     });
@@ -81,6 +88,8 @@ export function initReveal({ waitFor = {} } = {}) {
     if (!item.classList.contains('reveal--in')) return false;
     item.classList.remove('reveal--in');
     item.style.removeProperty('--reveal-index');
+    item.style.removeProperty('--reveal-x');
+    item.style.removeProperty('--reveal-y');
     return true;
   }
 

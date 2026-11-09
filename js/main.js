@@ -18,15 +18,13 @@ import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
 import { initWorks } from './works.js';
 import { initReveal } from './reveal.js';
-import { initPhotoReveal } from './photo-reveal.js';
-import { initFooterSpin } from './footer-spin.js';
 
 applyMotionVariables();
 initHeaderTheme();
 initHeaderLogo();
 initScrollCues();
 const wipes = initWipes();
-initPushIn();
+const pushes = initPushIn();
 initEyeTracking();
 initEyeCross();
 initDotFlow();
@@ -38,7 +36,6 @@ initPlaceholderLinks();
 initWorks();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until
 // the blinds have covered the screen, and Experiences' text until the light has
-// swept the scene; Selected Works' until its blinds have covered the screen.
-initReveal({ waitFor: { splash: splashDone, wipe: wipes.touchpoints, experiences: experiencesLit, works: wipes.works } });
-initPhotoReveal();
-initFooterSpin();
+// swept the scene; Selected Works' until its blinds have covered the screen; About's
+// until it has slid in over Works. The footer plays when it scrolls into view.
+initReveal({ waitFor: { splash: splashDone, wipe: wipes.touchpoints, experiences: experiencesLit, works: wipes.works, about: pushes.about } });

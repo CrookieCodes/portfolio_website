@@ -3,7 +3,7 @@
 Updated 2026-11-09. Branch: `phase-6-main-flow` (base `phase-5-work-about`, pushed; phase 6 not pushed yet).
 
 ## Where we are
-Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Selected Works) built with Carol's changes (incl. Experiences -> Works blinds), awaiting review.
+Phase 6 (main flow, FINAL EDITS). Checkpoints 1-6 approved. Checkpoints 7 (About section, footer, Works -> About push-in) and 8 (header on every screen) in progress.
 
 ## Done and approved
 1. Shared pieces: standard load animation (`reveal.js`), scroll cue, header logo swap.
@@ -11,6 +11,7 @@ Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Select
 3. Landing: eyes, "I design for" + keywords (gray, wipe-in label on hover/focus), header hover dot.
 4. Landing -> Touchpoints: blinds up (12 bars), Touchpoints revealed in place through them.
 5. Touchpoints (Figma 32:306, assembly, glyphs, hand colours), Experiences (people first, then photo wipe), push-in slides.
+6. Selected Works: pinwheel + card reel, domain view, image links with cursor label, Experiences -> Works blinds.
 
 ## Decisions by Carol not (fully) in motion.md
 - The interactive Touchpoints wave was dropped. It lives only on the local branch `backup-before-wave-revert` (not pushed).
@@ -30,4 +31,4 @@ Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Select
 - First, cold load of Experiences runs ~0.25 s slow (the street photo loads lazily).
 
 ## Next step
-Carol reviews checkpoint 6. Then checkpoint 7: About section + footer (Figma 32:475).
+Checkpoints 7 and 8, then Carol's review. Phase 7 (about.html) after that.

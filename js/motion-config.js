@@ -94,6 +94,15 @@ export const PUSH = {
                              //           (1 = passed its top edge)
 };
 
+// Push-in, Selected Works -> About (motion.md v2 "Transitions between screens"): the
+// same push-in as Touchpoints -> Experiences, run by the same code with these values.
+export const PUSH_ABOUT = {
+  arriveAt: 0.98,            // PROPOSED: About counts as arrived; its load starts here
+  drift: 12,                 // PROPOSED: Works drifts up by q x 12% of the screen
+  veil: 0.12,                // PROPOSED: ... under a black veil fading to 12% at q = 1
+  headerCover: 1,            // PROPOSED: as PUSH.headerCover
+};
+
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
 export const DOTS = {
   speed: 120,                // STARTER: design px per second along the lines
@@ -140,6 +149,8 @@ export const REVEAL = {
   duration: 600,             // CAROL: each item
   easing: 'ease-out',        // CAROL
   threshold: 0.15,           // STARTER: share of the screen in view before it plays
+  fromLeft: 240,             // STARTER: design px an item with data-reveal-from="left"
+                             //          slides in from (the footer cross)
 };
 
 // Scroll cue "Scroll down for more details" (motion.md v2 "Global", CAROL).
@@ -166,20 +177,6 @@ export const LOGO = {
   spinAngle: 90,             // CAROL: degrees per swap (clockwise going down, back going up)
   spinDuration: 500,         // CAROL: the whole spin; the mark changes at the midpoint
   spinEasing: 'ease-in-out', // STARTER: motion.md gives no easing for the spin
-};
-
-// 6. About photo reveal (motion.md section 6).
-export const PHOTO = {
-  showDuration: 300,         // FIGMA: Dissolve on mouse enter
-  showEasing: 'ease-out',    // FIGMA
-                             // FIGMA: mouse leave changes back instantly (no value needed)
-};
-
-// 6. Footer cross (motion.md section 6).
-export const SPIN = {
-  interval: 25000,           // CAROL: one full turn every 25 s of the footer being in view
-  duration: 1200,            // PROPOSED
-  easing: 'ease-in-out',     // PROPOSED
 };
 
 // Shared cursor label (js/cursor-label.js), e.g. "Click to view project".
@@ -214,6 +211,4 @@ export function applyMotionVariables() {
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);
-  root.setProperty('--motion-photo-duration', `${PHOTO.showDuration}ms`);
-  root.setProperty('--motion-photo-easing', PHOTO.showEasing);
 }

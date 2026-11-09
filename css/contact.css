@@ -1,9 +1,11 @@
-/* Screen 6, bottom part: Contact footer (the last 469px of the 1920 x 1549
-   frame, directly under About), scaled with --u. A large cross bleeds off the
-   left edge; the text column starts 480px inside the left page margin (x 600). */
+/* Screen 6, bottom part: the footer (Figma 32:475, the last 469px of the 1920 x 1549
+   frame, directly under About), scaled with --u. A large stationary cross bleeds off
+   the left edge; the text column starts 480px inside the left page margin (x 600).
+   It follows About with a plain scroll, above the pinned screens. */
 
 .contact {
   position: relative;
+  z-index: 4;          /* above the overlapping blinds and push-in wrappers */
   height: var(--footer-height);
   overflow: hidden;
   background-color: var(--color-teal);
@@ -23,20 +25,16 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: calc(64 * var(--u)) 0 calc(41 * var(--u)) calc(var(--page-margin) + 480 * var(--u)); /* text column at x 600; 41px from the bottom */
+  padding: calc(67 * var(--u)) 0 calc(38 * var(--u)) calc(var(--page-margin) + 480 * var(--u)); /* text column at x 600; tag line at y 67, small print ends 38 from the bottom */
 }
 
-.contact__small {
-  font-weight: var(--weight-light);
-  font-size: var(--fs-footer-small);
-  line-height: var(--lh-footer-small);
-  letter-spacing: var(--ls-footer-small);
-}
-
-/* Tag line: disciplines separated by dots. */
+/* Tag line: disciplines separated by dots (Figma 32:505: regular, uppercase). */
 .contact__tags {
   display: flex;
   gap: calc(16 * var(--u));
+  font-size: var(--fs-footer-small);
+  line-height: var(--lh-footer-small);
+  letter-spacing: var(--ls-footer-small);
   text-transform: uppercase;
 }
 
@@ -55,10 +53,10 @@
 }
 
 .contact__heading {
-  margin-top: calc(19 * var(--u));
+  margin-top: calc(25 * var(--u));  /* y 1196 */
   margin-left: calc(-5 * var(--u)); /* Figma text box starts at x 595, 5px left of the column */
-  color: var(--color-gold-muted);
-  font-weight: var(--weight-thin);
+  color: var(--color-footer-heading);
+  font-weight: var(--weight-light);
   font-size: var(--fs-footer-heading);
   line-height: var(--lh-footer-heading);
   letter-spacing: var(--ls-footer-heading);
@@ -67,7 +65,7 @@
 .contact__links {
   display: flex;
   gap: calc(89 * var(--u)); /* links start at x 1000, 1219, 1436 as in Figma */
-  margin-top: calc(12 * var(--u));
+  margin-top: calc(5 * var(--u));  /* y 1295 */
 }
 
 .contact__link {
@@ -94,6 +92,11 @@
    them (space-between keeps the outer two exactly where they were). */
 .contact__bottom {
   display: flex;
+  color: var(--color-footer-small);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-footer-small);
+  line-height: var(--lh-footer-small);
+  letter-spacing: var(--ls-footer-small);
   justify-content: space-between;
   width: calc(994 * var(--u)); /* x 595 to 1589, as in Figma */
   margin-top: auto;
