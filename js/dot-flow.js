@@ -36,7 +36,7 @@ function nearestLength(path, x, y) {
 export function initDotFlow() {
   const groups = document.querySelectorAll('[data-js="dot-group"]');
   if (groups.length === 0) return;
-  const screen = groups[0].closest('[data-js="screen"]');
+  const screen = groups[0].closest('[data-js~="screen"]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // One entry per route: the path, its length, the end direction, and its dots.
@@ -94,7 +94,9 @@ export function initDotFlow() {
   }
 
   function update() {
-    const run = inView && !document.hidden && !reduceMotion.matches;
+    // data-scene-paused: the screen is in the window but completely covered
+    // (Touchpoints pinned under the Landing before the blinds rise, js/wipe.js).
+    const run = inView && !screen.dataset.scenePaused && !document.hidden && !reduceMotion.matches;
     if (run && !frame) {
       last = 0;
       frame = requestAnimationFrame(tick);
@@ -112,6 +114,7 @@ export function initDotFlow() {
     update();
   });
   document.addEventListener('visibilitychange', update);
+  new MutationObserver(update).observe(screen, { attributeFilter: ['data-scene-paused'] });
   // The 1px inset stops the screen counting as visible when it only touches the
   // window edge (e.g. while the experiences screen fills the window).
   new IntersectionObserver(([entry]) => {

@@ -1,10 +1,11 @@
 // Landing -> Touchpoints "blinds up" (motion.md v2 section 2, CAROL).
 //
-// The Landing is pinned (css/wipe.css) for one screen of scrolling. Over that
-// distance, twelve vertical bars in the Touchpoints colour rise from the bottom of
-// the screen to the top: progress p = 0 shows the Landing, p = 1 a fully covered
-// screen. It is tied to the scroll position, so scrolling back up lowers them again.
-// They always rise bottom to top; never top to bottom.
+// The Landing and Touchpoints are both pinned in the same place (css/wipe.css) for
+// one screen of scrolling, Touchpoints on top. Touchpoints is masked so that it
+// shows only through twelve vertical bars, which rise from the bottom of the screen
+// to the top as the scroll progresses: p = 0 shows the Landing, p = 1 Touchpoints.
+// It is tied to the scroll position, so scrolling back up lowers them again and
+// reveals the Landing. They always rise bottom to top; never top to bottom.
 //
 // Stagger, left to right in a straight line: bar i (0 to bars - 1) starts at
 // p = (i / (bars - 1)) * spread and its local progress is
@@ -12,15 +13,19 @@
 // Its height is smoothstep(q) = q * q * (3 - 2q) of the screen. Bar 0 starts at
 // p = 0 and the last bar lands at p = 1.
 //
+// The bars are mask layers on Touchpoints: they are set up once here, and each
+// frame only updates a custom property per bar (--bar-0 ... --bar-11) with its height.
+//
 // The header keeps the Landing theme until the last bar has landed: at WIPE.swapAt
 // the Landing takes on the Touchpoints theme and logo (js/header-theme.js and
 // js/header-logo.js react to the attributes), and gets them back below it.
-// Touchpoints is marked as hidden from the header (data-screen-hidden) while it is
-// under the Landing, so it cannot take over the header early.
+// Touchpoints is marked data-screen-hidden while it is not fully shown, so it cannot
+// take over the header early, and data-scene-paused while no bar has risen, so its
+// canvas effects rest while it is completely out of sight.
 //
-// At WIPE.coveredAt the Landing is hidden and Touchpoints shows. The first time that
-// happens, the promise returned by initWipe() resolves; js/reveal.js waits on it
-// to play the Touchpoints load animation (once per page load).
+// At WIPE.coveredAt the mask comes off and the Landing is hidden. The first time that
+// happens, the promise returned by initWipe() resolves; js/reveal.js waits on it to
+// play the Touchpoints load animation (once per page load).
 // With reduced motion there are no bars (CSS shows plain screens) and the promise
 // resolves straight away.
 
@@ -31,32 +36,33 @@ const smoothstep = (q) => q * q * (3 - 2 * q);
 
 export function initWipe() {
   const wrapper = document.querySelector('[data-js="wipe"]');
-  const barsBox = wrapper?.querySelector('[data-js="wipe-bars"]');
   const screen = wrapper?.querySelector('[data-js~="screen"]');
-  const next = document.getElementById(wrapper?.dataset.wipeNext ?? '');
-  if (!wrapper || !barsBox || !screen) return Promise.resolve();
+  const next = wrapper?.querySelector('[data-js~="wipe-next"]');
+  if (!wrapper || !screen || !next) return Promise.resolve();
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return Promise.resolve();
 
   // The theme and logo before and after the swap.
   const before = { theme: screen.dataset.screenTheme, logo: screen.dataset.screenLogo };
   const after = { theme: wrapper.dataset.wipeTheme, logo: 'secondary' };
 
-  // Build the bars.
-  const bars = [];
-  for (let index = 0; index < WIPE.bars; index += 1) {
-    const bar = document.createElement('div');
-    bar.className = 'wipe__bar';
-    bar.style.setProperty('--bar-index', index);
-    barsBox.append(bar);
-    bars.push({ element: bar, start: (index / (WIPE.bars - 1)) * WIPE.spread, height: -1 });
-  }
+  // The mask: one solid layer per bar, each 1px wider than its share (so no seams
+  // show), anchored to the bottom, its height read from --bar-i. Set once.
+  const count = WIPE.bars;
+  const indexes = Array.from({ length: count }, (_, index) => index);
+  next.style.setProperty('--wipe-mask-image', indexes.map(() => 'linear-gradient(#000, #000)').join(', '));
+  next.style.setProperty('--wipe-mask-size', indexes.map((index) => `calc(100% / ${count} + 1px) calc(var(--bar-${index}) * 100%)`).join(', '));
+  // 1px past the bottom edge, so rounding never leaves a part-covered bottom row.
+  next.style.setProperty('--wipe-mask-position', indexes.map((index) => `${(index / (count - 1)) * 100}% calc(100% + 1px)`).join(', '));
+
+  const bars = indexes.map((index) => ({ name: `--bar-${index}`, start: (index / (count - 1)) * WIPE.spread, height: -1 }));
 
   let resolveCovered;
   const firstCovered = new Promise((resolve) => { resolveCovered = resolve; });
 
   let lastProgress = -1;
-  let swapped = false;
+  let swapped = null;
   let covered = null;
+  let paused = null;
 
   function update() {
     const box = wrapper.getBoundingClientRect();
@@ -69,7 +75,7 @@ export function initWipe() {
       const height = smoothstep(clamp01((progress - bar.start) / (1 - WIPE.spread)));
       if (height !== bar.height) {
         bar.height = height;
-        bar.element.style.transform = `scaleY(${height})`;
+        next.style.setProperty(bar.name, height);
       }
     });
 
@@ -85,14 +91,23 @@ export function initWipe() {
     if (isCovered !== covered) {
       covered = isCovered;
       wrapper.classList.toggle('wipe--covered', covered);
-      if (next) {
-        if (covered) {
-          delete next.dataset.screenHidden;
-        } else {
-          next.dataset.screenHidden = 'true';
-        }
+      next.classList.toggle('wipe__next--masked', !covered);
+      if (covered) {
+        delete next.dataset.screenHidden;
+        resolveCovered();
+      } else {
+        next.dataset.screenHidden = 'true';
       }
-      if (covered) resolveCovered();
+    }
+
+    const isPaused = progress <= 0;
+    if (isPaused !== paused) {
+      paused = isPaused;
+      if (paused) {
+        next.dataset.scenePaused = 'true';
+      } else {
+        delete next.dataset.scenePaused;
+      }
     }
   }
 

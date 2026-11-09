@@ -80,13 +80,13 @@
     <!-- Screen 2: Landing (Figma 32:656). Everything sits on a 1920 x 1080 stage scaled
          with --u, centred in the window. data-reveal-order sets the load order (js/reveal.js);
          data-reveal-wait="splash" holds it until the splash has gone. -->
-    <!-- Landing -> Touchpoints "blinds up" (js/wipe.js). The wrapper is two screens tall:
-         the Landing stays pinned (sticky) for one screen of scrolling while twelve bars in
-         the Touchpoints colour rise over it from the bottom, tied to the scroll and
-         reversible. Touchpoints sits underneath, ready, and shows once the bars cover the
-         screen. The wrapper carries the #landing address, because the pinned screen itself
-         never moves. -->
-    <div class="wipe" id="landing" data-js="wipe" data-wipe-theme="touchpoints" data-wipe-next="touchpoints">
+    <!-- Landing -> Touchpoints "blinds up" (js/wipe.js). The wrapper is two screens tall.
+         The Landing and Touchpoints are both pinned (sticky) in the same place for one
+         screen of scrolling; Touchpoints is on top, shown only through twelve bars that
+         rise from the bottom, tied to the scroll and reversible. The wrapper carries the
+         #landing address and an anchor at its end carries #touchpoints, because the
+         pinned screens themselves never move. -->
+    <div class="wipe" id="landing" data-js="wipe" data-wipe-theme="touchpoints">
     <section class="frame landing" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
       <div class="landing__stage">
         <!-- The eyes (Figma 32:677), inline so the pupils can follow the cursor. Decorative. -->
@@ -145,13 +145,12 @@
           <p class="scroll-cue" data-js="scroll-cue">Scroll down for more details <span class="scroll-cue__chevron" aria-hidden="true">&gt;</span></p>
         </div>
       </div>
-      <!-- The blinds (twelve bars, built by js/wipe.js), above the Landing's content. -->
-      <div class="wipe__bars" data-js="wipe-bars" aria-hidden="true"></div>
     </section>
-    </div>
 
-    <!-- Screen 3: touchpoints scene -->
-    <section class="frame frame--snap scene scene--touchpoints scene--after-wipe" id="touchpoints" aria-labelledby="touchpoints-title" data-js="screen" data-screen-theme="touchpoints" data-reveal-wait="wipe">
+    <!-- Screen 3: touchpoints scene. Pinned in the same place as the Landing, above it,
+         and shown through twelve rising bars (js/wipe.js masks it), so wherever a bar
+         has risen you see Touchpoints itself. -->
+    <section class="frame scene scene--touchpoints wipe__next" aria-labelledby="touchpoints-title" data-js="screen wipe-next" data-screen-theme="touchpoints" data-reveal-wait="wipe">
       <!-- One composition, scaled as a stage (1920 x 1080 design px, sized with --u):
            the hand must stay on the base square. -->
       <div class="scene__stage">
@@ -255,6 +254,10 @@
         </div>
       </div>
     </section>
+    <!-- The #touchpoints address: the scroll position where the bars have fully risen.
+         (The pinned screen itself never moves, so it cannot be the link target.) -->
+    <span class="wipe__anchor" id="touchpoints" aria-hidden="true"></span>
+    </div>
 
     <!-- Screen 4: experiences scene -->
     <section class="frame frame--snap scene scene--experiences" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences">

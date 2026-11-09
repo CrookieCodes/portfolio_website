@@ -9,7 +9,7 @@ export function initFooterSpin() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const cross = document.querySelector('[data-js="footer-cross"]');
   if (!cross) return;
-  const footer = cross.closest('[data-js="screen"]');
+  const footer = cross.closest('[data-js~="screen"]');
 
   let inView = false;
   let waited = 0;        // ms of visible time since the last spin started
