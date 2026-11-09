@@ -19,7 +19,7 @@
 export function initHeaderTheme() {
   const header = document.querySelector('[data-js="site-header"]');
   const screens = [...document.querySelectorAll('[data-js~="screen"]')];
-  const navLinks = document.querySelectorAll('[data-js="nav-link"]');
+  const navLinks = document.querySelectorAll('[data-js~="nav-link"]');
   if (!header || screens.length === 0) return;
 
   let current = null; // signature of what is applied, to skip repeat work

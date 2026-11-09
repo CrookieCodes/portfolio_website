@@ -16,9 +16,12 @@
 // The bars are mask layers on Touchpoints: they are set up once here, and each
 // frame only updates a custom property per bar (--bar-0 ... --bar-11) with its height.
 //
-// The header keeps the Landing theme until the last bar has landed: at WIPE.swapAt
-// the Landing takes on the Touchpoints theme and logo (js/header-theme.js and
-// js/header-logo.js react to the attributes), and gets them back below it.
+// Header: each item (the logo and each nav link) takes the Touchpoints theme on its
+// own, as soon as the bar(s) beneath it have risen over it (WIPE.headerCover), and
+// gets the Landing theme back when they drop below it. The logo's change spins it
+// to the pinwheel (js/header-logo.js reacts to the Landing's data-screen-logo).
+// At WIPE.swapAt the whole header, band included, takes the Touchpoints theme
+// (js/header-theme.js reacts to the Landing's data-screen-theme).
 // Touchpoints is marked data-screen-hidden while it is not fully shown, so it cannot
 // take over the header early, and data-scene-paused while no bar has risen, so its
 // canvas effects rest while it is completely out of sight.
@@ -56,6 +59,26 @@ export function initWipe() {
 
   const bars = indexes.map((index) => ({ name: `--bar-${index}`, start: (index / (count - 1)) * WIPE.spread, height: -1 }));
 
+  // Header items and where they sit, to know which bars pass over each one.
+  const header = document.querySelector('[data-js="site-header"]');
+  const logoLink = header?.querySelector('.site-header__logo');
+  const items = [...(header?.querySelectorAll('[data-js~="header-item"]') ?? [])]
+    .map((element) => ({ element, isLogo: element === logoLink, covered: null, need: 1, first: 0, last: 0 }));
+
+  // Each item needs the bars under its left-to-right span to rise above the part
+  // of it given by WIPE.headerCover (1 = its top edge).
+  function measureItems() {
+    const width = window.innerWidth / count;
+    items.forEach((item) => {
+      const box = item.element.getBoundingClientRect();
+      const edge = box.bottom - box.height * WIPE.headerCover;
+      item.need = (window.innerHeight - edge) / window.innerHeight;
+      item.first = Math.max(0, Math.floor(box.left / width));
+      item.last = Math.min(count - 1, Math.floor((box.right - 1) / width));
+    });
+  }
+  measureItems();
+
   let resolveCovered;
   const firstCovered = new Promise((resolve) => { resolveCovered = resolve; });
 
@@ -82,10 +105,30 @@ export function initWipe() {
     const shouldSwap = progress >= WIPE.swapAt;
     if (shouldSwap !== swapped) {
       swapped = shouldSwap;
-      const values = swapped ? after : before;
-      screen.dataset.screenTheme = values.theme;
-      screen.dataset.screenLogo = values.logo;
+      screen.dataset.screenTheme = swapped ? after.theme : before.theme;
     }
+
+    // Header items, one by one. Past swapAt the whole header has the new theme, so
+    // the items drop their own.
+    items.forEach((item) => {
+      let isCovered = true;
+      for (let index = item.first; index <= item.last; index += 1) {
+        if (bars[index].height < item.need) isCovered = false;
+      }
+      const own = isCovered && !swapped; // needs its own theme only before swapAt
+      if (own !== item.covered) {
+        item.covered = own;
+        if (own) {
+          item.element.dataset.theme = after.theme;
+        } else {
+          delete item.element.dataset.theme;
+        }
+      }
+      if (item.isLogo) {
+        const logo = isCovered || swapped ? after.logo : before.logo;
+        if (screen.dataset.screenLogo !== logo) screen.dataset.screenLogo = logo;
+      }
+    });
 
     const isCovered = progress >= WIPE.coveredAt;
     if (isCovered !== covered) {
@@ -122,7 +165,8 @@ export function initWipe() {
 
   window.addEventListener('scroll', schedule, { passive: true });
   window.addEventListener('resize', () => {
-    lastProgress = -1; // the screen height changed: recompute
+    lastProgress = -1; // the screen size changed: recompute
+    measureItems();
     schedule();
   });
   update();

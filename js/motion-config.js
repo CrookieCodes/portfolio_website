@@ -33,7 +33,11 @@ export const WIPE = {
                              //           show the Touchpoints screen itself (its ground is #F7F7F7)
   spread: 0.5,               // PROPOSED: share of the scroll over which the bars' starts are spread
                              //           (bar 0 starts at 0, the last at 0.5; each rises over 0.5)
-  swapAt: 0.98,              // PROPOSED: header theme and logo swap once the last bar has landed
+  swapAt: 0.98,              // PROPOSED: the whole header (band included) takes the Touchpoints
+                             //           theme once the last bar has landed
+  headerCover: 1,            // PROPOSED: before that, each header item (logo, each link) swaps on
+                             //           its own once the bar beneath it covers this share of it,
+                             //           measured from its bottom edge (1 = fully covered)
   coveredAt: 0.995,          // PROPOSED: Touchpoints shows and its load animation starts
 };
 

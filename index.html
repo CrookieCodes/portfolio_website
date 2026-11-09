@@ -48,7 +48,7 @@
     <!-- Scrim: a fading band in the screen's colour, behind the logo and nav. -->
     <div class="site-header__scrim" aria-hidden="true"></div>
     <div class="site-header__inner">
-      <a class="site-header__logo" href="#landing">
+      <a class="site-header__logo" href="#landing" data-js="header-item">
         <span class="visually-hidden">Carol Elizabeth, home</span>
         <!-- Two marks, one shown at a time (js/header-logo.js swaps them with a spin).
              Primary: the tan square mark, Landing only (Figma 32:658, 72.5 x 72.5). -->
@@ -67,10 +67,10 @@
       </a>
       <nav class="site-nav" aria-label="Main">
         <ul class="site-nav__list">
-          <li><a class="site-nav__link" href="#about" data-js="nav-link" data-nav="about">About</a></li>
-          <li><a class="site-nav__link" href="#work" data-js="nav-link" data-nav="work">Work</a></li>
-          <li><a class="site-nav__link" href="https://drive.google.com/file/d/1KPKVvLeBTkISWypirfQdeoJSyhkveIig/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-          <li><a class="site-nav__link" href="#contact">Contact</a></li>
+          <li><a class="site-nav__link" href="#about" data-js="nav-link header-item" data-nav="about">About</a></li>
+          <li><a class="site-nav__link" href="#work" data-js="nav-link header-item" data-nav="work">Work</a></li>
+          <li><a class="site-nav__link" data-js="header-item" href="https://drive.google.com/file/d/1KPKVvLeBTkISWypirfQdeoJSyhkveIig/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          <li><a class="site-nav__link" href="#contact" data-js="header-item">Contact</a></li>
         </ul>
       </nav>
     </div>
