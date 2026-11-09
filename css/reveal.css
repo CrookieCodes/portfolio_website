@@ -6,6 +6,7 @@
    separate translate property, so it never fights a hover transform. */
 .reveal--pending {
   opacity: 0;
+  pointer-events: none; /* invisible: it must not take hovers or clicks yet */
   translate: 0 calc(var(--reveal-distance) * var(--u));
 }
 
