@@ -102,11 +102,21 @@ export const ASCII = {
                              //          so every glyph stage is visible
 };
 
-// 5. Selected Works cards (motion.md section 5).
-export const CARDS = {
-  liftDistance: 4,           // PROPOSED: design px the card rises on hover
-  liftDuration: 200,         // PROPOSED
-  liftEasing: 'ease-out',    // PROPOSED
+// 5. Selected Works (motion.md v2 section 5, CAROL): the pinwheel and the card reel.
+export const WORKS = {
+  turnDuration: 900,         // CAROL: the pinwheel's quarter turn (and its colour crossfade)
+  turnEasing: 'ease-in-out', // CAROL
+  rollDuration: 900,         // PROPOSED: the reel rolls one card up, in sync with the turn
+  rollEasing: 'cubic-bezier(0.2, 0.9, 0.25, 1.08)', // PROPOSED: quick start, slow settle, small overshoot
+  rollBlur: 1.5,             // PROPOSED: px of vertical motion blur while rolling
+  rollStretch: 1.02,         // PROPOSED: vertical stretch while rolling
+  rollBlurPeak: 0.35,        // STARTER: when in the roll the blur and stretch peak (0-1)
+  cardDim: 0.6,              // STARTER: brightness of a card arriving or leaving (1 = full)
+  cardShrink: 0.94,          // STARTER: scale of a card arriving or leaving
+  flapDistance: 90,          // STARTER: design px each flap slides in from, when the pinwheel assembles
+  flapDuration: 650,         // STARTER: each flap's slide
+  flapStagger: 60,           // STARTER: between flaps
+  flapEasing: 'cubic-bezier(0.2, 0.9, 0.25, 1.08)', // STARTER: settles with the reel's overshoot
 };
 
 // Standard loading animation, every screen (motion.md v2 "Global", CAROL: simple and
@@ -165,9 +175,8 @@ export function applyMotionVariables() {
   const root = document.documentElement.style;
   root.setProperty('--motion-pupil-lag', `${EYES.pupilLag}ms`);
   root.setProperty('--motion-pupil-easing', EYES.pupilEasing);
-  root.setProperty('--card-lift', String(CARDS.liftDistance));
-  root.setProperty('--motion-card-lift-duration', `${CARDS.liftDuration}ms`);
-  root.setProperty('--motion-card-lift-easing', CARDS.liftEasing);
+  root.setProperty('--motion-works-turn', `${WORKS.turnDuration}ms`);
+  root.setProperty('--motion-works-turn-easing', WORKS.turnEasing);
   root.setProperty('--reveal-distance', String(REVEAL.distance));
   root.setProperty('--motion-reveal-duration', `${REVEAL.duration}ms`);
   root.setProperty('--motion-reveal-stagger', `${REVEAL.stagger}ms`);

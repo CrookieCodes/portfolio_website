@@ -96,6 +96,7 @@ Left: a large pinwheel. Right: a framed panel with a vertical card reel.
 - **Loading:** the pinwheel assembles first (flaps slide in and settle), then the buttons, then the cards. Stagger as global.
 - Transition in from Experiences: push-in slide.
 - Accessibility: reel is a list; the arriving card is announced via `aria-live="polite"` ("Project 2 of 3: Nest"); the buttons are labelled; the off-focus cards are `aria-hidden` and not tabbable. Reduced motion: no blur, no overshoot, instant change.
+- **As built (checkpoint 6):** cards come from `js/projects.js` (Aangan -> service, ux; Nest -> service, product; Petting Zoo -> product, ux: every domain has two projects, so no duplicate cards). Sort by Domain opens the current project's first domain; pressed again, it returns to the full list at its first card. Clicks during a roll are ignored (rolls do not queue). Cards that are not current are `inert` (no Tab, no clicks) and `aria-hidden`. Changing views announces the view first ("Service Design. Project 1 of 2: Aangan", "All projects. ..."). Values in `WORKS` (js/motion-config.js). The Work header has no band (it would hide the grey column).
 
 ## 6. About section + footer (32:475)
 - **About section (index):** burgundy ground; pink glyph mark on the left (the old weave/photo hover is REMOVED, CAROL); "Hello, I'm Carol," (Carol in mint) with the bio, the two achievement lines (trophy icons) and a mint "Learn More >" button. Learn More goes to `about.html`.

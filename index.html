@@ -301,134 +301,87 @@
       </div>
     </section>
 
-    <!-- Screen 5: Selected Works -->
-    <section class="frame works" id="work" aria-labelledby="works-title" data-js="screen" data-screen-theme="work" data-screen-nav="work">
-      <div class="works__inner">
-        <p class="works__overline">2024 - 2026</p>
-        <h2 class="works__title" id="works-title">Selected Works</h2>
-        <hr class="works__divider">
+    <!-- Screen 5: Selected Works (Figma 32:377 default view, 32:417 domain view). A pinwheel on
+         the left, the two buttons, and a vertical reel of project cards in a panel on the
+         right (js/works.js builds the cards from js/projects.js). Everything sits on a 1920
+         wide stage scaled with --u; the panel runs to the bottom of the window. -->
+    <section class="frame works" id="work" aria-labelledby="works-title" data-js="screen" data-screen-theme="work" data-screen-nav="work" data-reveal-wait="works">
+      <div class="works__stage">
+        <!-- The pinwheel (Figma 32:388): turns a quarter, clockwise, with each step. Decorative. -->
+        <svg class="pinwheel" viewBox="0 0 765.639 992.553" aria-hidden="true" focusable="false" data-js="pinwheel">
+          <rect class="pinwheel__stick" x="376.747" y="381.07" width="18" height="614.863" rx="7" transform="rotate(7.91582 376.747 381.07)"/>
+          <!-- The flaps turn about the hub (383.32, 382.32); the stick stays still. -->
+          <g class="pinwheel__flaps" data-js="pinwheel-flaps">
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--one" d="M377.57 10.0696V375.07C288.341 306.218 222.069 235.57 239.57 168.07C257.07 100.57 304.324 65.6402 377.57 10.0696Z"/>
+        <mask id="pinwheel-stroke0_0_6" maskUnits="userSpaceOnUse" x="230.754" y="-0.930385" width="152" height="387" fill="black">
+        <rect fill="white" x="230.754" y="-0.930385" width="152" height="387"/>
+        <path d="M377.57 10.0696V375.07C288.341 306.218 222.069 235.57 239.57 168.07C257.07 100.57 304.324 65.6402 377.57 10.0696Z"/>
+        </mask>
+        <path d="M377.57 375.07V10.0696C304.324 65.6402 257.07 100.57 239.57 168.07C222.069 235.57 288.341 306.218 377.57 375.07Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke0_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--two" d="M755.57 375.07L390.57 375.07C459.421 285.841 530.07 219.569 597.57 237.07C665.07 254.57 699.999 301.824 755.57 375.07Z"/>
+        <mask id="pinwheel-stroke1_0_6" maskUnits="userSpaceOnUse" x="379.57" y="228.254" width="387" height="152" fill="black">
+        <rect fill="white" x="379.57" y="228.254" width="387" height="152"/>
+        <path d="M755.57 375.07L390.57 375.07C459.421 285.841 530.07 219.569 597.57 237.07C665.07 254.57 699.999 301.824 755.57 375.07Z"/>
+        </mask>
+        <path d="M390.57 375.07L755.57 375.07C699.999 301.824 665.07 254.57 597.57 237.07C530.07 219.569 459.421 285.841 390.57 375.07Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke1_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--one" d="M389.07 752.57L389.07 387.57C478.298 456.421 544.57 527.07 527.07 594.57C509.57 662.07 462.315 696.999 389.07 752.57Z"/>
+        <mask id="pinwheel-stroke2_0_6" maskUnits="userSpaceOnUse" x="383.885" y="376.57" width="152" height="387" fill="black">
+        <rect fill="white" x="383.885" y="376.57" width="152" height="387"/>
+        <path d="M389.07 752.57L389.07 387.57C478.298 456.421 544.57 527.07 527.07 594.57C509.57 662.07 462.315 696.999 389.07 752.57Z"/>
+        </mask>
+        <path d="M389.07 387.57L389.07 752.57C462.315 696.999 509.57 662.07 527.07 594.57C544.57 527.07 478.298 456.421 389.07 387.57Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke2_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--two" d="M10.0696 389.07L375.07 389.07C306.218 478.298 235.57 544.57 168.07 527.07C100.57 509.57 65.6402 462.315 10.0696 389.07Z"/>
+        <mask id="pinwheel-stroke3_0_6" maskUnits="userSpaceOnUse" x="-0.930397" y="383.885" width="387" height="152" fill="black">
+        <rect fill="white" x="-0.930397" y="383.885" width="387" height="152"/>
+        <path d="M10.0696 389.07L375.07 389.07C306.218 478.298 235.57 544.57 168.07 527.07C100.57 509.57 65.6402 462.315 10.0696 389.07Z"/>
+        </mask>
+        <path d="M375.07 389.07L10.0696 389.07C65.6402 462.315 100.57 509.57 168.07 527.07C235.57 544.57 306.218 478.298 375.07 389.07Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke3_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--inner" d="M226.07 223.57L213.57 376.57H365.57C299.913 329.101 268.376 298.263 226.07 223.57Z"/>
+        <mask id="pinwheel-stroke4_0_6" maskUnits="userSpaceOnUse" x="207.57" y="206.57" width="174" height="175" fill="black">
+        <rect fill="white" x="207.57" y="206.57" width="174" height="175"/>
+        <path d="M226.07 223.57L213.57 376.57H365.57C299.913 329.101 268.376 298.263 226.07 223.57Z"/>
+        </mask>
+        <path d="M213.57 376.57L226.07 223.57C268.376 298.263 299.913 329.101 365.57 376.57H213.57Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke4_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--inner" d="M542.07 223.57L389.07 211.07L389.07 363.07C436.539 297.413 467.376 265.876 542.07 223.57Z"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--inner" d="M540.571 539.07L553.071 386.07L401.071 386.07C466.728 433.539 498.264 464.376 540.571 539.07Z"/>
+        <mask id="pinwheel-stroke5_0_6" maskUnits="userSpaceOnUse" x="388.071" y="382.07" width="170" height="171" fill="black">
+        <rect fill="white" x="388.071" y="382.07" width="170" height="171"/>
+        <path d="M540.571 539.07L553.071 386.07L401.071 386.07C466.728 433.539 498.264 464.376 540.571 539.07Z"/>
+        </mask>
+        <path d="M553.071 386.07L540.571 539.07C498.264 464.376 466.728 433.539 401.071 386.07L553.071 386.07Z" stroke-width="8" class="pinwheel__edge" mask="url(#pinwheel-stroke5_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--inner" d="M223.57 540.571L376.57 553.071L376.57 401.071C329.101 466.728 298.263 498.264 223.57 540.571Z"/>
+        <mask id="pinwheel-stroke6_0_6" maskUnits="userSpaceOnUse" x="193.57" y="373.071" width="192" height="190" fill="black">
+        <rect fill="white" x="193.57" y="373.071" width="192" height="190"/>
+        <path d="M223.57 540.571L376.57 553.071L376.57 401.071C329.101 466.728 298.263 498.264 223.57 540.571Z"/>
+        </mask>
+        <path d="M376.57 553.071L223.57 540.571C298.263 498.264 329.101 466.728 376.57 401.071L376.57 553.071Z" stroke-width="18" class="pinwheel__edge" mask="url(#pinwheel-stroke6_0_6)"/></g>
+          </g>
+        </svg>
 
-        <!-- Carousel (js/carousel.js): a horizontal strip that snaps to card starts. The arrow
-             button scrolls one set; trackpad, Shift+wheel and the arrow keys (strip focused) work too.
-             The second set repeats the first until more projects exist: those cards are marked
-             data-placeholder-duplicate, hidden from screen readers and skipped by Tab. -->
-        <div class="works__strip">
-          <div class="works__carousel" data-js="carousel" tabindex="0" role="region" aria-label="Projects">
-            <div class="works__track">
-              <article class="card" data-js="reveal">
-                <img class="card__image" src="assets/images/card-aangan.webp" alt="Aangan project cover" width="533" height="300" loading="lazy">
-                <div class="card__body">
-                  <!-- Placeholder until the Aangan project page exists. -->
-                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Aangan</a></h3>
-                  <p class="card__subtitle">Digital Literacy Service for Indian Mothers</p>
-                  <div class="card__footer">
-                    <div class="card__logos">
-                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
-                    </div>
-                    <ul class="card__tags" aria-label="Disciplines">
-                      <li class="card__tag">Service Design</li>
-                      <li class="card__tag">UI/UX Design</li>
-                    </ul>
-                  </div>
-                </div>
-              </article>
-              <article class="card" data-js="reveal">
-                <img class="card__image" src="assets/images/card-nest.webp" alt="Nest project cover" width="533" height="300" loading="lazy">
-                <div class="card__body">
-                  <!-- Placeholder until the Nest project page exists. -->
-                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Nest</a></h3>
-                  <p class="card__subtitle">AC-as-a-Service for Urban India</p>
-                  <div class="card__footer">
-                    <div class="card__logos">
-                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
-                    </div>
-                    <ul class="card__tags" aria-label="Disciplines">
-                      <li class="card__tag card__tag--teal">Service Design</li>
-                      <li class="card__tag card__tag--teal">Behaviour Design</li>
-                    </ul>
-                  </div>
-                </div>
-              </article>
-              <article class="card" data-js="reveal">
-                <img class="card__image" src="assets/images/card-petting-zoo.webp" alt="Petting Zoo project cover" width="533" height="300" loading="lazy">
-                <div class="card__body">
-                  <!-- Placeholder until the Petting Zoo project page exists. -->
-                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true">Petting Zoo</a></h3>
-                  <p class="card__subtitle">Cultural Probe Design</p>
-                  <div class="card__footer">
-                    <div class="card__logos">
-                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
-                    </div>
-                    <ul class="card__tags" aria-label="Disciplines">
-                      <li class="card__tag">Design Experiment</li>
-                      <li class="card__tag">Graphic Design</li>
-                    </ul>
-                  </div>
-                </div>
-              </article>
+        <div class="works__controls">
+          <button class="works__button works__button--next" type="button" data-js="works-next reveal" data-reveal-order="1">Next Project <span aria-hidden="true">&gt;</span></button>
+          <button class="works__button works__button--sort" type="button" aria-pressed="false" data-js="works-sort reveal" data-reveal-order="2">Sort by Domain <span aria-hidden="true">&gt;</span></button>
+        </div>
 
-              <article class="card" data-js="reveal" aria-hidden="true" data-placeholder-duplicate>
-                <img class="card__image" src="assets/images/card-aangan.webp" alt="Aangan project cover" width="533" height="300" loading="lazy">
-                <div class="card__body">
-                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true" tabindex="-1">Aangan</a></h3>
-                  <p class="card__subtitle">Digital Literacy Service for Indian Mothers</p>
-                  <div class="card__footer">
-                    <div class="card__logos">
-                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
-                    </div>
-                    <ul class="card__tags" aria-label="Disciplines">
-                      <li class="card__tag">Service Design</li>
-                      <li class="card__tag">UI/UX Design</li>
-                    </ul>
-                  </div>
-                </div>
-              </article>
-              <article class="card" data-js="reveal" aria-hidden="true" data-placeholder-duplicate>
-                <img class="card__image" src="assets/images/card-nest.webp" alt="Nest project cover" width="533" height="300" loading="lazy">
-                <div class="card__body">
-                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true" tabindex="-1">Nest</a></h3>
-                  <p class="card__subtitle">AC-as-a-Service for Urban India</p>
-                  <div class="card__footer">
-                    <div class="card__logos">
-                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
-                    </div>
-                    <ul class="card__tags" aria-label="Disciplines">
-                      <li class="card__tag card__tag--teal">Service Design</li>
-                      <li class="card__tag card__tag--teal">Behaviour Design</li>
-                    </ul>
-                  </div>
-                </div>
-              </article>
-              <article class="card" data-js="reveal" aria-hidden="true" data-placeholder-duplicate>
-                <img class="card__image" src="assets/images/card-petting-zoo.webp" alt="Petting Zoo project cover" width="533" height="300" loading="lazy">
-                <div class="card__body">
-                  <h3 class="card__title"><a class="card__link" href="#" aria-disabled="true" tabindex="-1">Petting Zoo</a></h3>
-                  <p class="card__subtitle">Cultural Probe Design</p>
-                  <div class="card__footer">
-                    <div class="card__logos">
-                      <img class="card__logo" src="assets/logos/iit-delhi.webp" alt="" width="55" height="55" loading="lazy">
-                      <img class="card__logo" src="assets/logos/department-of-design.webp" alt="" width="66" height="55" loading="lazy">
-                    </div>
-                    <ul class="card__tags" aria-label="Disciplines">
-                      <li class="card__tag">Design Experiment</li>
-                      <li class="card__tag">Graphic Design</li>
-                    </ul>
-                  </div>
-                </div>
-              </article>
+        <div class="works__column">
+          <div class="works__panel">
+            <div class="works__head" data-js="reveal" data-reveal-order="3">
+              <h2 class="works__title" id="works-title" data-js="works-title">Selected Works</h2>
+              <p class="works__years" data-js="works-years">2024 - 2026</p>
+              <!-- Domain view only: cycle Product Design, Service Design, UX Design. -->
+              <div class="works__domain-nav" data-js="works-domain-nav" hidden>
+                <button class="works__domain-button" type="button" aria-label="Previous domain" data-js="works-domain-prev"><span aria-hidden="true">&lt;</span></button>
+                <button class="works__domain-button" type="button" aria-label="Next domain" data-js="works-domain-next"><span aria-hidden="true">&gt;</span></button>
+              </div>
+            </div>
+            <!-- The reel: the current card, with the next one peeking in below. -->
+            <div class="works__viewport" data-js="reveal" data-reveal-order="4">
+              <ul class="works__track" role="list" data-js="works-track" aria-label="Projects"></ul>
             </div>
           </div>
-          <button class="works__arrow" type="button" data-js="carousel-arrow" aria-label="Next projects">
-            <svg class="works__arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M9.5 5.5 16 12l-6.5 6.5"/>
-            </svg>
-          </button>
         </div>
+        <!-- Announces the card that has just rolled in. -->
+        <p class="visually-hidden" aria-live="polite" data-js="works-status"></p>
       </div>
     </section>
     </div>

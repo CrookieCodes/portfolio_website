@@ -3,7 +3,7 @@
 Updated 2026-11-09. Branch: `phase-6-main-flow` (base `phase-5-work-about`, pushed; phase 6 not pushed yet).
 
 ## Where we are
-Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved. Next: checkpoint 6, Selected Works.
+Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Selected Works) built, awaiting review.
 
 ## Done and approved
 1. Shared pieces: standard load animation (`reveal.js`), scroll cue, header logo swap.
@@ -22,7 +22,6 @@ Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved. Next: checkpoint 6, 
 - Keyword hover label and header dot: burgundy #993746 (pink #F2909F on the burgundy About ground).
 
 ## Pending or known issues
-- Selected Works: still the Phase 5 carousel (checkpoint 6 replaces it).
 - About section + footer and the header targets (Resume link, About -> about.html): checkpoints 7 and 8.
 - Direct `#hash` links scroll late, once the page has loaded (Phase 8).
 - Header 70% link colour on the burgundy About ground is 4.29 : 1 (below 4.5).
@@ -30,4 +29,4 @@ Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved. Next: checkpoint 6, 
 - First, cold load of Experiences runs ~0.25 s slow (the street photo loads lazily).
 
 ## Next step
-Checkpoint 6: Selected Works (motion.md section 5, Figma 32:377 and 32:417).
+Carol reviews checkpoint 6. Then checkpoint 7: About section + footer (Figma 32:475).

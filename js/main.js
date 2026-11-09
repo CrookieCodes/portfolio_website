@@ -16,7 +16,7 @@ import { initTouchpointsText } from './touchpoints-text.js';
 import { initExperiencesReveal } from './experiences-reveal.js';
 import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
-import { initCarousel } from './carousel.js';
+import { initWorks } from './works.js';
 import { initReveal } from './reveal.js';
 import { initPhotoReveal } from './photo-reveal.js';
 import { initFooterSpin } from './footer-spin.js';
@@ -35,10 +35,10 @@ const scenes = initScenes();
 const experiencesLit = initExperiencesReveal(scenes.experiences);
 initTouchpointsText();
 initPlaceholderLinks();
-initCarousel();
+const worksReady = initWorks();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until
 // the blinds have covered the screen, and Experiences' text until the light has
-// swept the scene.
-initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered, experiences: experiencesLit } });
+// swept the scene; Selected Works' until its pinwheel has assembled.
+initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered, experiences: experiencesLit, works: worksReady } });
 initPhotoReveal();
 initFooterSpin();

@@ -31,6 +31,14 @@
   --color-glyph-pink: #f28b9d;
   --color-glyph-blue: #4fa8e0;
   --color-glyph-orange: #f5a04a;
+  /* Selected Works (Figma 32:377, 32:417) */
+  --color-works-column: #d9d9d9;  /* grey column behind the card panel */
+  --color-works-panel: #f1f1f1;   /* card panel; button text; pinwheel outlines */
+  --color-works-title: #161616;   /* "Selected Works" / domain title */
+  --color-button-grey: #929292;   /* inactive button */
+  --color-tag-text: #01181a;      /* text on the pale-teal tags */
+  --color-link-dark: #1d1d1d;     /* "View Project >" */
+  --color-pink-soft: #e5abb4;     /* pinwheel flaps, set B */
   --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
   --color-ground-light: #f7f7f7; /* Touchpoints ground (Figma 32:306) */
   --color-heading-dark: #1c1c1c; /* Touchpoints heading (Figma 32:320) */
@@ -140,6 +148,23 @@
      (js/touchpoints-text.js). */
   --touchpoints-text-shift: 0.4;
   --touchpoints-text-gap: 64px;
+
+  /* Selected Works type (design px at 1920, fluid) */
+  --fs-works-title: calc(38 * var(--u));
+  --lh-works-title: 1.105;
+  --fs-works-years: calc(32 * var(--u));
+  --lh-works-years: 1.031;
+  --fs-works-button: calc(24 * var(--u));
+  --lh-works-button: 1.375;
+  --fs-card-heading: calc(29 * var(--u));
+  --lh-card-heading: 1.241;
+  --fs-card-text: calc(21 * var(--u));
+  --lh-card-text: 1.333;
+  --fs-card-tag: calc(15.885 * var(--u));
+  --lh-card-tag: 1.25;
+  --fs-card-link: calc(20 * var(--u));
+  --lh-card-link: 1.65;
+  --fs-works-arrow: calc(30.525 * var(--u));
 
   /* Layout */
   --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */

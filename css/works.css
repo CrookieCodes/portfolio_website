@@ -1,227 +1,312 @@
-/* Screen 5: Selected Works. Overline, title and divider, then the project
-   cards in a horizontal carousel. Fills the window (100svh) and sizes everything with --u; content runs
-   between the page margins. Each card is one click target: the title link stretches
-   over the whole card with ::after, so screen readers hear a short link name. */
+/* Screen 5: Selected Works (Figma 32:377 default view, 32:417 domain view).
+   A pinwheel on the left, two buttons, and a reel of project cards in a panel on the
+   right (js/works.js). Everything is placed at its Figma position on a stage 1920
+   design px wide (--u), centred; the grey column and the card panel run to the
+   bottom of the window. */
 
 .works {
-  min-height: 0;           /* replaces the fixed 1080px frame height */
+  min-height: 0;
   height: 100vh;           /* fallback */
   height: 100svh;
-  background-color: var(--color-paper);
+  background-color: var(--color-ground-light);
   color: var(--color-ink);
 }
 
-.works__inner {
-  padding-top: calc(206 * var(--u)); /* overline box starts at y 206 */
-  padding-inline: var(--page-margin);
+.works__stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: calc(1920 * var(--u));
+  translate: -50% 0;
 }
 
-.works__overline {
+/* --- The pinwheel (Figma 32:388: the SVG box is 765.6 x 992.6 at x 81.9, y 136) --- */
+.pinwheel {
+  position: absolute;
+  left: calc(81.94 * var(--u));
+  top: calc(135.98 * var(--u));
+  width: calc(765.639 * var(--u));
+  height: calc(992.553 * var(--u));
+  overflow: visible;
+  /* Set A (32:377): tan and burgundy. js/works.js switches to set B on every other stop. */
+  --flap-one: var(--color-tan);
+  --flap-two: var(--color-burgundy);
+}
+
+/* Set B (32:417): pink and bronze. */
+.pinwheel--alt {
+  --flap-one: var(--color-pink-soft);
+  --flap-two: var(--color-bronze);
+}
+
+.pinwheel__stick {
+  fill: var(--color-bronze);
+}
+
+/* The flaps turn about the hub where they meet; the stick stays still. */
+.pinwheel__flaps {
+  transform-box: view-box;
+  transform-origin: 383.32px 382.32px;
+}
+
+.pinwheel__flap {
+  transition: fill var(--motion-works-turn) var(--motion-works-turn-easing); /* the crossfade */
+}
+
+.pinwheel__flap--one {
+  fill: var(--flap-one);
+}
+
+.pinwheel__flap--two {
+  fill: var(--flap-two);
+}
+
+.pinwheel__flap--inner {
+  fill: var(--color-teal);
+}
+
+.pinwheel__edge {
+  stroke: var(--color-works-panel);
+}
+
+/* --- The two buttons (Figma: Next Project 183 x 62 at 818, 832; Sort by Domain 213 x 62 at 788, 911) --- */
+.works__controls {
+  position: absolute;
+  left: calc(788 * var(--u));
+  top: calc(832 * var(--u));
+  width: calc(213 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(17 * var(--u));
+}
+
+.works__button {
+  height: calc(62 * var(--u));
+  padding: 0 calc(15 * var(--u));
+  border: 0;
+  border-radius: var(--radius-button);
+  background-color: var(--color-button-grey);
+  color: var(--color-works-panel);
   font-family: var(--font-plex);
-  font-weight: var(--weight-light);
-  font-style: italic;
-  font-size: var(--fs-overline);
-  line-height: var(--lh-overline);
-  letter-spacing: var(--ls-overline);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-works-button);
+  line-height: var(--lh-works-button);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color var(--motion-hover-fade) var(--motion-hover-easing);
+}
+
+/* The active button is burgundy: Next Project by default, Sort by Domain in the domain view. */
+.works__button--active {
+  background-color: var(--color-burgundy);
+}
+
+.works__button:focus-visible {
+  outline-color: var(--color-teal);
+}
+
+/* --- The column and the panel (Figma: column x 1046, 802 wide; panel x 1072, y 166, 750 wide) --- */
+.works__column {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(1046 * var(--u));
+  width: calc(802 * var(--u));
+  background-color: var(--color-works-column);
+}
+
+.works__panel {
+  position: absolute;
+  top: calc(166 * var(--u));
+  bottom: calc(-24 * var(--u));  /* runs on past the bottom of the window */
+  left: calc(26 * var(--u));
+  width: calc(750 * var(--u));
+  border-radius: calc(16 * var(--u));
+  background-color: var(--color-works-panel);
+}
+
+/* Title row: "Selected Works" + years, or the domain title + < >. */
+.works__head {
+  position: absolute;
+  top: calc(42 * var(--u));
+  left: calc(25 * var(--u));
+  right: calc(26 * var(--u));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .works__title {
-  /* Figma puts the title box at y 272; browsers draw Helvetica ~5px lower
-     inside its line box than Figma does, so the box starts 5px higher. */
-  margin-top: calc(1 * var(--u));
-  font-weight: var(--weight-medium);
-  font-size: var(--fs-section-title);
-  line-height: var(--lh-section-title);
-  letter-spacing: var(--ls-section-title);
+  color: var(--color-works-title);
+  font-weight: var(--weight-regular);
+  font-size: var(--fs-works-title);
+  line-height: var(--lh-works-title);
+  letter-spacing: -0.01em;
 }
 
-/* Thin rule under the title, y 347. */
-.works__divider {
-  height: 1px;
-  margin: calc(20 * var(--u)) 0 0;   /* divider at y 347 */
-  border: 0;
-  background-color: var(--color-divider);
+.works__years {
+  font-family: var(--font-plex);
+  font-weight: var(--weight-light);
+  font-style: italic;
+  font-size: var(--fs-works-years);
+  line-height: var(--lh-works-years);
+  letter-spacing: -0.02em;
 }
 
-/* Carousel. The strip reaches a little past each page margin (--strip-room),
-   with the same padding inside, so card focus rings and the hover lift are not
-   clipped; the cards themselves still start on the left margin. */
-.works__strip {
-  --strip-room: max(calc(8 * var(--u)), 0.5rem);
-  position: relative;
-  margin-top: calc(39 * var(--u)); /* cards start at y 387 */
+.works__domain-nav {
+  display: flex;
+  gap: calc(24 * var(--u));
 }
 
-.works__carousel {
-  margin: calc(-1 * var(--strip-room));
-  padding-block: var(--strip-room);
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--strip-room);
-  scrollbar-width: none;  /* the arrow button and swipes do the scrolling */
-}
-
-.works__carousel::-webkit-scrollbar {
+.works__domain-nav[hidden] {
   display: none;
 }
 
-.works__carousel:focus-visible {
-  outline-color: var(--color-teal);
-  outline-offset: 0;
-}
-
-/* The side padding lives on the track (not the strip) so it counts in the
-   scroll width: at the far end the last set lines up with the margin too. */
-.works__track {
-  display: flex;
-  gap: calc(41 * var(--u));
-  width: max-content;
-  padding-inline: var(--strip-room);
-}
-
-/* Arrow button: a deep-teal circle centred in the right page margin and on the
-   cards. When the strip is past its first set it turns to point left. */
-.works__arrow {
-  position: absolute;
-  top: 50%;
-  right: calc(var(--page-margin) / -2);
-  display: grid;
-  place-items: center;
-  width: calc(64 * var(--u));
-  height: calc(64 * var(--u));
+.works__domain-button {
+  width: calc(36.951 * var(--u));
+  height: calc(36.951 * var(--u));
   padding: 0;
   border: 0;
-  border-radius: 50%;
-  background-color: var(--color-teal);
+  background-color: var(--color-burgundy);
   color: var(--color-white);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-works-arrow);
+  line-height: 1;
   cursor: pointer;
-  translate: 50% -50%;
 }
 
-.works__arrow:focus-visible {
+.works__domain-button:focus-visible {
   outline-color: var(--color-teal);
 }
 
-.works__arrow--back {
-  rotate: 180deg;
-}
-
-.works__arrow-icon {
-  width: 45%;
-  height: 45%;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Project card: 533 x 489, image on top, details below. */
-.card {
-  flex: 0 0 calc(533 * var(--u));
-  scroll-snap-align: start;
-  transition: transform var(--motion-card-lift-duration) var(--motion-card-lift-easing);
-  position: relative;
+/* The reel: clipped from the top of the first card (y 277) to the bottom of the panel. */
+.works__viewport {
+  position: absolute;
+  top: calc(111 * var(--u));
+  bottom: 0;
+  left: calc(25 * var(--u));
+  width: calc(699 * var(--u));
   overflow: hidden;
-  border-radius: var(--radius-card);
-  background-color: var(--color-card);
-  color: var(--color-ink-card);
 }
 
-/* Hover: the card lifts slightly (values in js/motion-config.js). */
-.card:hover {
-  transform: translateY(calc(var(--card-lift) * -1 * var(--u)));
+/* Cards are 682 tall with 54 between them (Figma: first card at y 277, the next at
+   1013), so one step of the reel is 736. js/works.js moves the track by whole steps. */
+.works__track {
+  --works-step: calc(736 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(54 * var(--u));
+  transform-origin: 50% 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card:hover {
-    transform: none;
-  }
+/* --- A card (Figma 32:403-414, 32:697) --- */
+.card {
+  height: calc(682 * var(--u));
+  transform-origin: 50% 50%;
 }
 
 .card__image {
+  display: block;
   width: 100%;
-  height: calc(300 * var(--u));
+  height: calc(393 * var(--u));
   object-fit: cover;
 }
 
 .card__body {
-  padding: calc(19 * var(--u)) calc(41 * var(--u)) calc(30 * var(--u)); /* 19px top, 41px sides, 30px bottom */
+  padding: 0 calc(17 * var(--u)) 0 calc(19 * var(--u));
+  color: var(--color-ink-card);
 }
 
 .card__title {
+  margin-top: calc(41 * var(--u));
   font-weight: var(--weight-bold);
-  font-size: var(--fs-card-title);
-  line-height: var(--lh-card-title);
-  letter-spacing: var(--ls-card-title);
+  font-size: var(--fs-card-heading);
+  line-height: var(--lh-card-heading);
+  letter-spacing: -0.02em;
 }
 
-.card__link {
-  text-decoration: none;
-}
-
-/* Keyboard focus rings the whole card, since the whole card is the link. */
-.card__link:focus-visible {
-  outline: none;
-}
-
-.card:has(.card__link:focus-visible) {
-  outline: 0.1875rem solid var(--color-teal);
-  outline-offset: 0.25rem;
-}
-
-/* Stretch the link over the whole card. */
-.card__link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-card);
-}
-
-.card__subtitle {
+.card__text {
+  margin-top: calc(8 * var(--u));
   font-weight: var(--weight-light);
-  font-size: var(--fs-card-subtitle);
-  line-height: var(--lh-card-subtitle);
-  letter-spacing: var(--ls-card-subtitle);
+  font-size: var(--fs-card-text);
+  line-height: var(--lh-card-text);
+  letter-spacing: -0.01em;
 }
 
 .card__footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: calc(21 * var(--u)); /* 21px below the subtitle */
+  align-items: flex-start;
+  margin-top: calc(38 * var(--u));
 }
 
 .card__logos {
   display: flex;
-  gap: calc(14.66 * var(--u)); /* between the two logos */
-  opacity: 0.62;
+  align-items: flex-end;
+  gap: calc(25 * var(--u));
+  margin-top: calc(13.69 * var(--u)); /* logos at y 890.69, tags at 877 */
 }
 
 .card__logo {
-  height: calc(55 * var(--u));
-  width: auto;
+  width: calc(59.964 * var(--u));
+  height: calc(59.964 * var(--u));
+  object-fit: contain;
+}
+
+.card__logo--wide {
+  width: calc(72.062 * var(--u));
+}
+
+/* Figma stretches this mark into a 38 x 69 slot. */
+.card__logo--mark {
+  width: calc(38 * var(--u));
+  height: calc(69 * var(--u));
+  object-fit: fill;
+  margin-left: calc(-11 * var(--u));
+  margin-bottom: calc(-7.7 * var(--u));
+}
+
+.card__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(15 * var(--u));
 }
 
 .card__tags {
   display: flex;
-  gap: calc(8 * var(--u));
+  gap: calc(12 * var(--u));
 }
 
 .card__tag {
   display: flex;
   align-items: center;
-  height: calc(32 * var(--u));
-  padding-inline: calc(12 * var(--u));
-  border-radius: var(--radius-tag);
-  background-color: var(--color-burgundy);
-  color: var(--color-white);
-  font-size: var(--fs-tag);
-  line-height: var(--lh-tag);
-  letter-spacing: var(--ls-tag);
+  height: calc(34 * var(--u));
+  padding: 0 calc(16 * var(--u));
+  border-radius: calc(3.971 * var(--u));
+  background-color: var(--color-pale-teal);
+  color: var(--color-tag-text);
+  font-size: var(--fs-card-tag);
+  line-height: var(--lh-card-tag);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
-.card__tag--teal {
-  background-color: var(--color-teal);
+.card__link {
+  color: var(--color-link-dark);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-card-link);
+  line-height: var(--lh-card-link);
+  letter-spacing: -0.01em;
+  text-decoration-line: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pinwheel__flap,
+  .works__button {
+    transition: none;
+  }
 }

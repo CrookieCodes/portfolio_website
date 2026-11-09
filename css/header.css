@@ -51,7 +51,8 @@
 [data-theme="work"] {
   --header-cross: var(--color-teal);
   --header-nav: var(--color-ink);
-  --header-scrim: var(--color-paper);
+  /* No band: it would hide the top of the grey column (Figma 32:377 has none). */
+  --header-scrim: transparent;
 }
 
 [data-theme="about"] {
