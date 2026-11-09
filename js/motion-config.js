@@ -70,6 +70,12 @@ export const CUE = {
   easing: 'ease-in-out',     // PROPOSED
 };
 
+// Hover feedback: the Landing keyword label and the header link dot (CAROL: about 150 ms).
+export const HOVER = {
+  fade: 150,                 // CAROL: "about 150 ms"
+  easing: 'ease-out',        // STARTER: no easing given
+};
+
 // Header logo swap, primary (Landing) <-> secondary pinwheel (motion.md v2 "Header", CAROL).
 export const LOGO = {
   spinAngle: 90,             // CAROL: degrees per swap (clockwise going down, back going up)
@@ -104,6 +110,8 @@ export function applyMotionVariables() {
   root.setProperty('--motion-reveal-duration', `${REVEAL.duration}ms`);
   root.setProperty('--motion-reveal-stagger', `${REVEAL.stagger}ms`);
   root.setProperty('--motion-reveal-easing', REVEAL.easing);
+  root.setProperty('--motion-hover-fade', `${HOVER.fade}ms`);
+  root.setProperty('--motion-hover-easing', HOVER.easing);
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);

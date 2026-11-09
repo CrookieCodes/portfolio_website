@@ -127,6 +127,7 @@
 }
 
 .site-nav__link {
+  position: relative; /* anchors the dot */
   display: flex;
   align-items: center;
   font-size: var(--fs-nav);
@@ -135,22 +136,54 @@
   text-decoration: none;
 }
 
+/* The dot before a link: 10px, 12px before the text. It sits in the gap between
+   links (absolutely placed), so showing it never moves any text. Hidden by
+   default; the active link shows it in the nav colour, hover and keyboard focus
+   show it in pink. */
+.site-nav__link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 12 * var(--u));
+  width: calc(10 * var(--u));  /* 10px dot */
+  height: calc(10 * var(--u));
+  margin-top: calc(-5 * var(--u));
+  border-radius: 50%;
+  background-color: var(--color-pink);
+  opacity: 0;
+  transition: opacity var(--motion-hover-fade) var(--motion-hover-easing);
+}
+
 /* Focus rings use the nav colour so they show on dark and light screens. */
 .site-header__logo:focus-visible,
 .site-nav__link:focus-visible {
   outline-color: var(--header-nav);
 }
 
-/* Active screen: heavier weight and a leading dot. */
+.site-nav__link:focus-visible::before {
+  opacity: 1;
+}
+
+/* Mouse hover only: on touch screens there is no hover state. */
+@media (hover: hover) {
+  .site-nav__link:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Active screen: heavier weight and the dot in the nav colour (it stays that
+   colour on hover and focus). */
 .site-nav__link--active {
   font-weight: var(--weight-heavy);
 }
 
 .site-nav__link--active::before {
-  content: "";
-  width: calc(10 * var(--u));  /* 10px dot */
-  height: calc(10 * var(--u));
-  margin-right: calc(12 * var(--u));
-  border-radius: 50%;
   background-color: currentColor;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav__link::before {
+    transition: none;
+  }
 }

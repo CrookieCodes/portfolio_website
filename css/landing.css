@@ -112,16 +112,35 @@
   justify-self: end;
 }
 
-/* A burgundy label, 85px tall, with the word underlined in white. */
+/* Each keyword is plain underlined text at rest. On hover (mouse only) and on
+   keyboard focus, the burgundy label from Figma 32:671 fades in behind it: 85px
+   tall, the same padding either way, so the word never moves. */
 .landing__keyword {
   display: block;
   padding: calc(6 * var(--u)) calc(4 * var(--u)) calc(7.6 * var(--u));
-  background-color: var(--color-burgundy);
+  background-color: transparent;
   font-weight: var(--weight-medium);
   font-size: var(--fs-landing-keyword);
   line-height: var(--lh-landing-keyword);
   letter-spacing: var(--ls-landing-keyword);
   text-decoration-line: underline;
+  transition: background-color var(--motion-hover-fade) var(--motion-hover-easing);
+}
+
+.landing__keyword:focus-visible {
+  background-color: var(--color-burgundy);
+}
+
+@media (hover: hover) {
+  .landing__keyword:hover {
+    background-color: var(--color-burgundy);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing__keyword {
+    transition: none;
+  }
 }
 
 /* Scroll cue: the text starts at y 1000, centred. Centred with flex rather than
