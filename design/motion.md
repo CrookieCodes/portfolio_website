@@ -1,68 +1,117 @@
-# Motion spec
+# Motion spec (v2, FINAL EDITS)
 
-Source: Carol's notes, Figma Interaction panel, Interactions_Demo.mp4, inspo.mp4.
-Status tags: **FIGMA** = read from Figma. **CAROL** = stated by Carol. **PROPOSED** = starting value, not yet approved; put every one in a CSS custom property or a single `js/motion-config.js` so it can be tuned in one place. Never hard-code a timing elsewhere.
+Replaces the earlier motion.md. Source of truth for layout: the Figma file `aG0PPre8bqx95SER6BXyaz`, FINAL EDITS frames (x=7389 and x=12374). The original frames (x=3193) are OUT OF DATE; do not build from them.
+
+Tags: **FIGMA** = read from Figma. **CAROL** = stated by Carol. **PROPOSED** = starting value, to be tuned by eye. Every PROPOSED timing, colour and distance lives in `js/motion-config.js` (mirrored to `:root` custom properties where CSS needs it). Never hard-code a timing anywhere else.
+
+## Figma frames
+
+| Screen | Node |
+|---|---|
+| Splash | 32:633 |
+| Landing | 32:656 |
+| Touchpoints ("Service designer") | 32:306 |
+| Experiences ("UX designer") | 32:359 |
+| Selected Works | 32:377 |
+| Selected Works by domain | 32:417 |
+| About section + footer (index) | 32:475 |
+| About Page (`about.html`) | 32:516 |
+| Experience / Education / Conferences | 32:534 |
+| Skills | 32:585 |
 
 ## Global
-- Flow (linear scroll): 1 Splash -> 2 Hero -> 3 Touchpoints -> 4 Experiences -> 5 Selected Works -> 6 About + footer. Scrolling up goes back one screen.
-- Hero eyes are shortcuts: left eye -> 3, right eye -> 4.
-- One fixed header on screens 2-6, always on top, themed per screen. The splash has no header.
-- Every screen fits the browser: `100svh`, `clamp()`/`vw` sizing, no horizontal overflow. Frames at 1920x1080 are the reference ratio only. Check at 1280, 1440, 1536, 1920 wide. Phones deferred.
-- `prefers-reduced-motion: reduce`: no splash sequence (show hero), no headline cycle (static "products."), no ASCII motion (static frame), no spin, instant scroll, carousel unchanged.
-- Palette for all effects: burgundy #993746, deep-teal #0B2F32, bronze #9F723C.
+- **Two pages:** `index.html` (the main flow) and `about.html` (hero, Experience section, Skills section, footer). Shared header, footer, tokens, motion config and effects.
+- **Main flow (scroll):** Splash -> Landing -> Touchpoints -> Experiences -> Selected Works -> About section + footer. Scrolling up goes back one screen.
+- **Transitions between screens (CAROL):**
+  - Landing -> Touchpoints (dark to white): **block-wipe**, see below. This is the only block-wipe.
+  - Touchpoints -> Experiences, and Experiences -> Selected Works (dark to light): **simple push-in slide**. The next screen slides up over the current one, as if the photo is pushed into the space. ~0.8 s, ease-out, scroll-linked, reversible. Reuse the existing scene mechanism if it already does this.
+  - Selected Works -> About section: keep the existing behaviour (plain scroll).
+- **Loading animation (CAROL: simple, consistent everywhere):** when a screen enters view for the first time, its elements slide up 24 px (PROPOSED) and fade in, staggered 90 ms (PROPOSED), 600 ms each, ease-out. Plays once per page load. Reference feel: slide-up and fade, whole screen settled in about 1.5 s. Each screen below lists its own order.
+- **Header:** fixed, always on top, one per page, themed per screen via `data-theme`. Nav: About, Work, Resume, Contact; the active item has a dot. The top scrim from Phase 3 stays.
+  - **Logo (CAROL):** the Landing screen shows the PRIMARY logo (tan square mark). From Touchpoints onwards the header shows the SECONDARY logo (the pinwheel) in a per-screen colour. The swap is a clean spin-and-change: spin 90 degrees over 0.5 s, change the mark at the midpoint (opacity swap), spin back out. Same in reverse when scrolling up. The pinwheel colours per screen are read from each Figma frame (header mark).
+  - The splash has no header.
+- **Scroll cue (CAROL):** the text "Scroll down for more details" with a small chevron. Its opacity pulses between 1 and 0.35 (PROPOSED) on a 1.6 s ease-in-out loop so people notice it. Shared component used on Landing and on the Experience section. Reduced motion: static, full opacity.
+- **Cursor label (CAROL):** one shared component. Small label next to the cursor, black background, white text, 12 px at 1920 wide (scaled with clamp), padding 4px 8px, fades in 150 ms. Used for "Click to view more" (About hero photo). Hidden on touch devices. Reduced motion: shown static near the target.
+- Every screen fits the browser: `100svh`, `clamp()`/`vw`, no horizontal overflow at 1024-2560. Desktop only; phones deferred.
+- **Reduced motion:** no splash sequence (show Landing), static final states for every animation, instant transitions, no pulsing cue, no spin, no blur.
+- **Brighter glyph colours (CAROL):** pink #F28B9D, blue #4FA8E0, orange #F5A04A (PROPOSED hex, tune by eye). Used by every ASCII/glyph effect from now on. The old palette (burgundy, deep-teal, bronze) stays for flat colour use.
 
-## 1. Splash (1:487)
-CAROL sequence:
-1. One logo cross appears at centre. It duplicates and sweeps right to a second position (2 crosses side by side).
-2. The pair duplicates and sweeps up (4 crosses, a 2x2 group).
-3. The central logo (the square with the four corner crosses, 199x198.5 design px) is created.
-4. The whole logo spins once (360deg), expands outwards, and dissolves into the hero.
-Notes: in the old video the crosses only dissolved in; Carol wants the duplicate-and-sweep instead. Build with SVG + CSS/JS transforms.
-Durations: PROPOSED total about 3.2 s: duplicate-sweep 0.6 s each (x2), logo creation 0.5 s, spin 0.8 s, expand+dissolve 0.7 s. Easing: ease-out for sweeps, ease-in-out for the spin.
-Plays once per page load. Skippable by click or key. Hero is in the DOM underneath and is revealed by the dissolve.
+## 1. Splash (32:633)
+Sequence (CAROL), total under 5 s:
+1. Assembly (unchanged from before): cross appears, duplicates and sweeps right (2), duplicates and sweeps up (4 in a 2x2), then the logo is created. ~1.7 s (PROPOSED: sweeps 0.6 s each, creation 0.5 s).
+2. **New:** the logo turns 90 degrees clockwise, pauses, 90 again, pause, 90 again, pause, 90 again, back to the original orientation. Four turns of 0.35 s, ease-in-out, with 0.2 s pauses between (3 pauses): ~2.0 s.
+3. Dissolve into the Landing: 0.6 s. The old expand is removed (earlier feedback: no expanding).
+Total about 4.3 s. Skippable by click, key or scroll. Page underneath is `inert` while it plays. No splash when the URL has a hash. Plays once per load.
 
-## 2. Hero (1:237)
-Headline (FIGMA): cycles "products." -> "services." -> "experiences." -> loops. After delay 1600 ms, Change to, Smart animate, Ease out, 300 ms. Crossfade only the highlighted word, keep the bronze block, let its width animate to the new word. Pause the cycle when the tab is hidden. Screen readers get the static text "I design products, services and experiences." via a visually hidden element; the animated word is `aria-hidden`.
-Eyes (CAROL):
-- Pupils follow the cursor, clamped inside the eye. Smooth follow with a short lag (PROPOSED 120 ms).
-- When the cursor enters an eye, that eye's pupil turns into the burgundy cross (#993746), as in the demo. Cursor becomes a pointer.
-- A small label "Click to Explore" appears next to the cursor while inside the eye: black background, white text, small (PROPOSED 12 px at 1920 wide, scaled with clamp), padding 4px 8px, follows the cursor with a slight offset, fades in 150 ms. Hidden on touch devices and reduced motion keeps it static near the eye.
-- Click or Enter/Space on the eye: left -> #touchpoints, right -> #experiences.
-- Keyboard focus shows the cross state and a visible focus ring; the label is replaced by an accessible name ("Explore touchpoints" / "Explore experiences").
+## 2. Landing (32:656)
+- **Layout:** the pair of eyes centred at the top. Below: "Hey, I'm Carol Elizabeth. I design." Then three always-visible keywords on separate burgundy-highlighted labels: Products, Services, Experiences. Then the scroll cue. Header shows the primary logo.
+- **Eyes:** pupils still follow the cursor (clamped, smooth, ~120 ms lag). The old per-eye click-to-explore behaviour and its label are REMOVED.
+- **Hover (CAROL):** when the cursor is on any of the three keywords, BOTH eyes turn into the pinwheel logo (the burgundy cross state from before is replaced by the pinwheel mark). Leaving restores the pupils. Keyboard focus on a keyword does the same.
+- **Click (CAROL):** each keyword is a link into Selected Works in the domain view for that domain: Products -> Product Design, Services -> Service Design, Experiences -> UX Design. Navigate by smooth scroll to the Works screen and open the domain view.
+- **Loading order:** eyes, then the heading text, then the three keywords (staggered), then the scroll cue.
+- **Landing -> Touchpoints: block-wipe (CAROL, from her Pinterest-style clip).** Stepped rectangular blocks of the new colour (white) fill the screen over about 1 s of scroll, tied to scroll and reversible. Technique (PROPOSED): the Landing is pinned while a grid of cells (16 x 9 on desktop, via CSS grid) covers it; each cell has a threshold between 0 and 1 (diagonal sweep with random jitter, fixed per load); cell is white when scroll progress > threshold. Progress runs over one viewport of scroll. The header logo swap happens at 50%. Feel free to adjust the pattern if something else looks better; keep it stepped and rectangular.
 
-## 3. Touchpoints (1:251)
-Entered by left-eye click or scroll from hero. Scroll is smooth.
-CAROL: the smaller squares flow along the lines from the base square into their respective squares (dots travel along the existing paths). Loop gently while the screen is in view; stop when it leaves view.
-ASCII on squares: each square shows an ASCII effect (see "ASCII effect" below), moving in the same direction as the dots, outward from the central (base) square.
+## 3. Touchpoints (32:306)
+- White background, dark text, header pinwheel in burgundy.
+- **Loading:** heading and bullets slide up and fade in, staggered. Then the diagram assembles piece by piece (CAROL), once, when the screen scrolls into view, ~2-2.5 s total: base square -> the hand/thumb rises in behind it -> lines draw outward (stroke-dashoffset) -> small squares pop in at the line ends (scale 0.6 -> 1) -> dots appear and start flowing along the routes.
+- Dot flow and the glyph (ASCII) effect on the squares stay as built, but with the brighter glyph colours.
+- The thin pink line at the bottom edge of the frame is ignored (a Figma artefact).
 
-## 4. Experiences (1:302)
-Entered by right-eye click or scroll from screen 3.
-CAROL: the same ASCII effect runs across the people silhouettes only: pink (1:311), blue (1:313), brown (1:314). Forget the gradients: the silhouettes are flat shapes filled by the effect (CAROL: on a flat deep-teal ground). The sweep runs top to bottom: one shared front moves straight down from just above the highest figure to below the lowest, so the figures light up in order of their height; then it starts again at the top.
-ASSUMPTION to confirm by eye: pink figure glyphs in burgundy, brown figure in bronze, blue figure in deep-teal lightened is not available in the palette, so use deep-teal glyphs on a dim bronze-tinted ground and check contrast against the photo. If unreadable, fall back to pale teal #A5C4C7 for the blue figure only.
+## 4. Experiences (32:359)
+- Layout unchanged. Header pinwheel in bronze.
+- **Loading order (CAROL, Option A):**
+  1. The photo appears.
+  2. The silhouettes fade in as coloured shapes on the photo (pink, blue, brown, flat shapes from the frame).
+  3. They crossfade into the glyph effect on the deep-teal ground (the glyph effect keeps its top-to-bottom sweep; brighter colours).
+  4. The text "To crafting stories, experiences." and the bullets slide up and fade in.
+- Transition in from Touchpoints is the push-in slide.
 
-## ASCII effect (shared, from inspo.mp4)
-- Grid of cells (reference: about 28 columns across a circle). Cell size scales with the shape being filled.
-- Glyph set: filled circle, diamond, small 4-point star, empty outline circle (for "off" cells). Draw on a `<canvas>` clipped to the target shape (SVG mask or canvas clip path), not as DOM text.
-- Colours: burgundy #993746, deep-teal #0B2F32, bronze #9F723C. Pick per cell randomly from the palette, weighted so the fill reads as the shape's own hue. Keep contrast against each background; tune by eye.
-- Motion: a band sweeps across the shape. Ahead of the band cells are empty outlines, inside the band cells are dense filled circles, behind the band cells thin out into diamonds then stars, then empty again. Reference cycle about 5 s per pass (PROPOSED 5 s).
-- Direction (CAROL): Touchpoints sweeps outward from the base square, the same way as the dots. Experiences sweeps top to bottom: one straight front across all three figures. The band stages and the pass duration are the same for both.
-- Frame rate: cap at 30 fps; pause when off-screen (IntersectionObserver) and when the tab is hidden. Reduced motion: draw one static frame.
+## 5. Selected Works (32:377, 32:417)
+Left: a large pinwheel. Right: a framed panel with a vertical card reel.
+- **Pinwheel (CAROL):** it cannot spin freely. Each step turns it a quarter turn (90 degrees) clockwise, cumulatively, so it keeps repeating. It locks at each stop. Four flaps; the colours of its coloured flaps alternate between two sets on each stop (CAROL: "pink and brown alternately"): set A as in frame 32:377 (tan + burgundy), set B as in frame 32:417 (pink + bronze). Read the exact hex values from Figma. Crossfade the colours during the 0.8 s turn.
+- **Buttons:** "Next Project >" and "Sort by Domain >", both real buttons. In the default view Next Project is burgundy (active) and Sort by Domain grey; in the domain view they swap (frame 32:417).
+- **Reel (CAROL: jackpot-machine slot):** the cards sit in a vertical track clipped by the panel; the next card peeks in below the current one. Next Project rolls the track **bottom to top only**, never top to bottom: ~0.9 s, a quick start, a slow settle with a small overshoot (PROPOSED easing `cubic-bezier(0.2, 0.9, 0.25, 1.08)`), and a slight vertical motion blur and stretch (blur 1.5 px, scaleY 1.02) while moving. The card arriving goes from dimmed and slightly smaller to full size and brightness; the card leaving does the reverse. Wrap around at the end, still rolling upward (clone the first cards after the last, and jump back without animation after the roll ends). The pinwheel's quarter turn runs in sync with the roll.
+- **Domain view (CAROL):** "Sort by Domain" regroups the cards into one domain. A title shows the domain name ("Service Design") with small < > buttons beside it. Domains: **Product Design, Service Design, UX Design.** The < > buttons cycle between domains; each change rolls the new domain's cards up into the reel and the pinwheel turns a quarter and locks. Next Project moves within the current domain. Pressing Sort by Domain again returns to the full list (ASSUMPTION; confirm).
+- **Cards:** the featured card (frame 32:377) has the project image, title, one-line description, institution logos, tags and "View Project >". The smaller card style (Nest, Petting Zoo) is for the cards waiting in the reel. For now reuse the existing three projects and their images, duplicated as needed so the reel and each domain have at least 2 cards (placeholders). Project data lives in one file (`js/projects.js`) with a `domains` array per project. PROPOSED assignment: Aangan -> service, ux; Nest -> service, product; Petting Zoo -> product, ux. Carol to correct.
+- **Loading:** the pinwheel assembles first (flaps slide in and settle), then the buttons, then the cards. Stagger as global.
+- Transition in from Experiences: push-in slide.
+- Accessibility: reel is a list; the arriving card is announced via `aria-live="polite"` ("Project 2 of 3: Nest"); the buttons are labelled; the off-focus cards are `aria-hidden` and not tabbable. Reduced motion: no blur, no overshoot, instant change.
 
-## 5. Selected Works (1:318)
-- Loading animation (CAROL: simple): cards fade up 16 px, stagger 80 ms, 400 ms ease-out, once, when the screen enters view.
-- Horizontal carousel of cards (533x489 design px, 41 px gap). Duplicate the three-project set once so there are six cards for now.
-- Side arrow on the right edge prompts horizontal exploration. Clicking it scrolls to the next set. After the first set it flips to a left arrow (CAROL), and flips back at the start. Arrow is a real button with an accessible name ("Next projects" / "Previous projects").
-- Cards snap into place: `scroll-snap-type: x mandatory` on the carousel only, `scroll-snap-align: start`. No drag-to-scroll (CAROL). Trackpad swipe, shift+wheel, arrow buttons and keyboard (Tab to cards, arrow keys) still work.
-- Cards link to project detail pages. Pages are placeholders for now: link to `#` with `aria-disabled` until real pages exist (CAROL).
-- Hover on a card: PROPOSED lift 4 px, 200 ms ease-out.
+## 6. About section + footer (32:475)
+- **About section (index):** burgundy ground; pink glyph mark on the left (the old weave/photo hover is REMOVED, CAROL); "Hello, I'm Carol," (Carol in mint) with the bio, the two achievement lines (trophy icons) and a mint "Learn More >" button. Learn More goes to `about.html`.
+- **Loading:** the mark, then the heading, the bio, the two achievements one after the other, then the button.
+- **Footer:** deep-teal ground. Tag line "SERVICE DESIGN • UX DESIGN • SYSTEMS DESIGN • UX STRATEGY • UX RESEARCH", then "Let's Build something good.", then the links (email beth.carol00@gmail.com as `mailto:`, LinkedIn, Behance, Instagram), then "All Rights Reserved by Carol Elizabeth © 2026" and "• DELHI, IN". The big tan cross on the left is STATIONARY: the 25 s spin is REMOVED (CAROL).
+- **Footer loading:** the cross slides in from the left, then the tag line, the headline, the links and the small print stagger up.
+- Same footer on `about.html`.
 
-## 6. About + footer (1:369)
-- Loading animation: same as Selected Works (fade up, stagger), once.
-- Photo reveal (FIGMA): the weave pattern (Component 5, 1:379) hides the photo "Pic4 1" (1:370, hidden layer). Mouse enter on the weave: change to Pic4 1, Dissolve, Ease out, 300 ms. Mouse leave: change back, Instant. Keyboard: weave is focusable and focus shows the photo too. Touch: tap toggles.
-- "Learn More >" goes to a placeholder page (CAROL).
-- Footer cross (the large pale-teal cross on the left): spins one full turn every 25 s (CAROL). Spin duration PROPOSED 1.2 s, ease-in-out. Starts the first spin 25 s after the footer first enters view, only runs while the footer is in view, none under reduced motion.
+## 7. About Page (`about.html`, 32:516)
+- Reached from the header About link on `index.html` and from Learn More. The header About item is active here.
+- Burgundy ground; mint secondary logo in the header.
+- Left: the photo inside four white flaps arranged as a pinwheel (rotated rectangles). Right: "Have we met?" (light weight) and "I'm Carol Elizabeth," (mint, bold), then two paragraphs.
+- **Loading (CAROL):** the four flaps and the photo load together (the flaps slide in from their sides and settle while the photo fades in), then the two heading lines slide up, then the paragraphs one after the other.
+- Cursor label on the photo and flaps: "Click to view more" (shared component).
+
+## 8. Experience / Education / Conferences (32:534)
+Second section of `about.html`.
+- **Two ways in (CAROL):** scroll down from the hero, or click the photo and flaps. Both play the same transition.
+- **Transition (CAROL): paper unfold.** From her origami clip: the folded paper opens out hinge by hinge. The four white flaps and the photo are the folded paper; they open outward one after another, hinging on their edges (CSS 3D transforms, `perspective`, `transform-origin` at each hinge edge), the burgundy gives way to a white sheet that becomes the next section's ground. One-shot of ~1.2 s (PROPOSED: 4 flaps x 0.7 s, staggered 130 ms), not scroll-scrubbed. Scroll is locked while it plays. Scrolling up from the top of this section plays it in reverse (folds back). State flag `data-state="hero | unfolded"`.
+- White ground, dark text, header mark dark teal.
+- **Content:** three groups.
+  - Experience: First Consulting Group (Kochi, Kerala), UI/UX Design Intern. Fusie Engineers (Kochi, Kerala), Junior UI/UX Design Intern. Jibu & Thomas Architects (Kochi, Kerala), Architectural Intern.
+  - Education: Indian Institute of Technology, Delhi (New Delhi), Master of Design | CGPA 9.71 | Department Rank 1. TKM College of Engineering (Kollam, Kerala), Bachelor of Architecture | CGPA 8.52. Rajagiri Public School (Kochi, Kerala), CBSE | 95.6%.
+  - Conferences: ServDes India Symposium (Pune, Maharashtra), "Presented Service Design project to a panel of academicians & practitioners". UX India Conference (Bangalore, Karnataka), "Presented as Social Impact project to a panel of investors & tech enthusiasts".
+- **Loading after the unfold:** the Experience and Education headings, then the rows one after the other, then the Conferences heading and entries, then the scroll cue (pulsing) which leads to Skills.
+
+## 9. Skills (32:585)
+Third section of `about.html`, burgundy ground, header mark mint.
+- **Left (CAROL):** the roles graphic, reduced to the simple version. A fixed S-shaped pink curve with five pinwheels at fixed positions on it (colours in order: #9EC1C6, #E08BD6, #DBBE9B, #F28B9D, #A9DAAF). Roles in order: Service Design, UX Design, Systems Design, UX Strategy, UX Research. No camera zoom. The pinwheel shape is the one from the Pinwheel Roles artifact (polygon in Prompt B).
+- **Scroll-driven:** the left column is `position: sticky` for the whole section; progress = scroll through the section. Pinwheels appear and disappear one node to the next as the user scrolls: node N fades/scales in while spinning 90 degrees (the spin as it arrives), shows its role label on the side with the most room, then hands over to node N+1 (N fades down). At the last stretch (~20% of the progress) all five show together with their labels, plus a few extra small pinwheels without labels and a few faint white constellation lines (0.8 px, alpha 0.42, 10 shortest links). Reversible.
+- **Right:** "Skills" with four groups (Service & Systems; Product & Experience Design; AI-Integrated Workflow; Prototyping Tools), then "My Creative Process" and a mint "Download Resume >" button. These load with the standard slide-up stagger as the section enters view.
+- **Download Resume:** the Drive direct-download link `https://drive.google.com/uc?export=download&id=1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144` (file must be shared "Anyone with the link"). The same file is the target of the header Resume item, `rel="noopener noreferrer"`, `target="_blank"`.
+- Ends with the footer.
 
 ## Still unknown (do not invent)
-- Real project detail and Learn More pages.
-- Final glyph/colour contrast on the street photo.
-- Exact splash timings (PROPOSED values above) and hero label size: review in browser, then lock.
+- Exact flap hex values on the Works pinwheel and per-screen header mark colours: read from Figma.
+- Project domain assignments (PROPOSED above), real project pages.
+- Whether Sort by Domain toggles back to the full list.
+- Final glyph colour tuning and splash timings: review in the browser, then lock.
