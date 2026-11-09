@@ -88,57 +88,69 @@
   text-align: center;
 }
 
-/* Keywords: a row from x 245 to 1676, y 778. Products on the left edge, Services
-   centred, Experiences on the right edge. */
+/* Keywords: a row across x 245 to 1676 (Figma 32:670), centred on the page. The
+   three words are spread with equal gaps between them, so they sit evenly. */
 .landing__keywords {
   position: absolute;
   top: calc(778 * var(--u));
   left: calc(245 * var(--u));
   right: calc(244 * var(--u));
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  justify-content: space-between;
 }
 
-/* Each label is as wide as its word, not its column. */
-.landing__keyword-item {
-  justify-self: start;
-}
-
-.landing__keyword-item--centre {
-  justify-self: center;
-}
-
-.landing__keyword-item--end {
-  justify-self: end;
-}
-
-/* Each keyword is plain underlined text at rest. On hover (mouse only) and on
-   keyboard focus, the burgundy label from Figma 32:671 fades in behind it: 85px
-   tall, the same padding either way, so the word never moves. */
+/* At rest: the word in a softer white (HOVER.keywordRest, js/motion-config.js),
+   underlined in the same colour. On hover (mouse only) and keyboard focus the word
+   turns full white and the burgundy label (Figma 32:671) wipes in behind it from
+   the left; leaving wipes it back out to the left.
+   Sizes are Figma's x 0.8 (CAROL): text 48.6px, label 68px tall, padding scaled
+   the same way. The label is a scaled pseudo-element, so nothing else moves. */
 .landing__keyword {
+  position: relative;
+  isolation: isolate; /* keeps the label behind the word but in front of the page */
   display: block;
-  padding: calc(6 * var(--u)) calc(4 * var(--u)) calc(7.6 * var(--u));
-  background-color: transparent;
+  padding: calc(4.8 * var(--u)) calc(3.2 * var(--u)) calc(6.08 * var(--u));
+  color: color-mix(in srgb, var(--color-white) var(--keyword-rest-mix), transparent);
   font-weight: var(--weight-medium);
   font-size: var(--fs-landing-keyword);
   line-height: var(--lh-landing-keyword);
   letter-spacing: var(--ls-landing-keyword);
   text-decoration-line: underline;
-  transition: background-color var(--motion-hover-fade) var(--motion-hover-easing);
+  transition: color var(--motion-wipe) var(--motion-wipe-easing);
+}
+
+.landing__keyword::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-burgundy);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-wipe) var(--motion-wipe-easing);
 }
 
 .landing__keyword:focus-visible {
-  background-color: var(--color-burgundy);
+  color: var(--color-white);
+}
+
+.landing__keyword:focus-visible::before {
+  transform: scaleX(1);
 }
 
 @media (hover: hover) {
   .landing__keyword:hover {
-    background-color: var(--color-burgundy);
+    color: var(--color-white);
+  }
+
+  .landing__keyword:hover::before {
+    transform: scaleX(1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .landing__keyword {
+  .landing__keyword,
+  .landing__keyword::before {
     transition: none;
   }
 }

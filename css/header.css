@@ -19,6 +19,8 @@
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
+  /* Hover/focus dot: pink on dark and burgundy grounds, burgundy on light ones. */
+  --header-dot: var(--color-pink);
 }
 
 /* Themes, one per screen. Attribute selectors keep these to one simple selector each. */
@@ -29,6 +31,8 @@
 }
 
 [data-theme="touchpoints"] {
+  /* Checkpoint 5 turns this ground white (Figma #F7F7F7): then set
+     --header-dot to burgundy here, as on Work. */
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
@@ -41,6 +45,7 @@
 }
 
 [data-theme="work"] {
+  --header-dot: var(--color-burgundy); /* light ground: the pink dot is too faint */
   --header-cross: var(--color-teal);
   --header-nav: var(--color-ink);
   --header-scrim: var(--color-paper);
@@ -126,14 +131,23 @@
   gap: calc(76 * var(--u)); /* 76px between items */
 }
 
+/* At rest each link is slightly softer than the nav colour (HOVER.navRest in
+   js/motion-config.js); hover, keyboard focus and the active link use the full colour. */
 .site-nav__link {
   position: relative; /* anchors the dot */
   display: flex;
   align-items: center;
+  color: color-mix(in srgb, var(--header-nav) var(--nav-rest-mix), transparent);
   font-size: var(--fs-nav);
   line-height: var(--lh-nav);
   letter-spacing: var(--ls-nav);
   text-decoration: none;
+  transition: color var(--motion-hover-fade) var(--motion-hover-easing);
+}
+
+.site-nav__link:focus-visible,
+.site-nav__link--active {
+  color: var(--header-nav);
 }
 
 /* The dot before a link: 10px, 12px before the text. It sits in the gap between
@@ -149,7 +163,7 @@
   height: calc(10 * var(--u));
   margin-top: calc(-5 * var(--u));
   border-radius: 50%;
-  background-color: var(--color-pink);
+  background-color: var(--header-dot);
   opacity: 0;
   transition: opacity var(--motion-hover-fade) var(--motion-hover-easing);
 }
@@ -166,6 +180,10 @@
 
 /* Mouse hover only: on touch screens there is no hover state. */
 @media (hover: hover) {
+  .site-nav__link:hover {
+    color: var(--header-nav);
+  }
+
   .site-nav__link:hover::before {
     opacity: 1;
   }
@@ -183,6 +201,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-nav__link,
   .site-nav__link::before {
     transition: none;
   }

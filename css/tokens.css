@@ -60,7 +60,7 @@
   --fs-landing-title: calc(48 * var(--u));     /* 48px at 1920, fluid (Figma 32:669) */
   --lh-landing-title: 1.0576;
   --ls-landing-title: -0.03em;
-  --fs-landing-keyword: calc(60.723 * var(--u)); /* 60.7px at 1920, fluid (Figma 32:674-676) */
+  --fs-landing-keyword: calc(48.578 * var(--u)); /* 48.6px at 1920, fluid: Figma 32:674-676 (60.723px) x 0.8 (CAROL) */
   --lh-landing-keyword: 1.1758;
   --ls-landing-keyword: -0.03em;
 

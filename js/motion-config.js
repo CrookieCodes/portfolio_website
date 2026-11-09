@@ -70,10 +70,16 @@ export const CUE = {
   easing: 'ease-in-out',     // PROPOSED
 };
 
-// Hover feedback: the Landing keyword label and the header link dot (CAROL: about 150 ms).
+// Hover feedback (CAROL).
 export const HOVER = {
-  fade: 150,                 // CAROL: "about 150 ms"
-  easing: 'ease-out',        // STARTER: no easing given
+  fade: 150,                 // CAROL: "about 150 ms": header link text and dot
+  easing: 'ease-out',        // STARTER: no easing given for the fade
+  wipe: 250,                 // CAROL: "about 250 ms": the keyword label wipes in from the left
+                             //        (and back out); the word fades to white over the same time
+  wipeEasing: 'ease-out',    // CAROL
+  keywordRest: 0.7,          // PROPOSED: keyword text and underline at rest, share of full white
+  navRest: 0.7,              // PROPOSED: header link text at rest, share of full contrast
+                             //           (the active link stays at full contrast)
 };
 
 // Header logo swap, primary (Landing) <-> secondary pinwheel (motion.md v2 "Header", CAROL).
@@ -112,6 +118,10 @@ export function applyMotionVariables() {
   root.setProperty('--motion-reveal-easing', REVEAL.easing);
   root.setProperty('--motion-hover-fade', `${HOVER.fade}ms`);
   root.setProperty('--motion-hover-easing', HOVER.easing);
+  root.setProperty('--motion-wipe', `${HOVER.wipe}ms`);
+  root.setProperty('--motion-wipe-easing', HOVER.wipeEasing);
+  root.setProperty('--keyword-rest-mix', `${HOVER.keywordRest * 100}%`);
+  root.setProperty('--nav-rest-mix', `${HOVER.navRest * 100}%`);
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);
