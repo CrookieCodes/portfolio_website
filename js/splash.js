@@ -3,8 +3,9 @@
 //   1. One cross (bottom-left). It duplicates and sweeps right   -> 2 crosses
 //   2. The pair duplicates and sweeps up                          -> 4 crosses
 //   3. The pale-teal centre of the logo is created (fades in)
-//   4. The whole logo spins once
-//   5. The logo and the teal ground dissolve into the hero underneath (no growing)
+//   4. The logo turns 90 degrees clockwise four times, pausing between turns,
+//      and ends back in its original orientation
+//   5. The logo and the teal ground dissolve into the Landing underneath (no expand)
 //
 // Uses the Web Animations API: each step is an animation with a delay, so the
 // whole sequence is one timeline that can be finished at once when skipped.
@@ -16,6 +17,27 @@
 import { SPLASH } from './motion-config.js';
 
 const SKIP_EVENTS = ['pointerdown', 'keydown', 'wheel'];
+
+// Keyframes for the quarter turns: each turn eases in and out, then the logo holds
+// still for the pause. Offsets are fractions of the whole turning step.
+function turnKeyframes(total) {
+  const frames = [];
+  let time = 0;
+  for (let turn = 0; turn < SPLASH.turns; turn += 1) {
+    const angle = turn * SPLASH.turnAngle;
+    if (turn > 0) {
+      // End of the pause: still at the same angle.
+      time += SPLASH.turnPause;
+      frames.push({ rotate: `${angle}deg`, offset: time / total, easing: SPLASH.turnEasing });
+    } else {
+      frames.push({ rotate: `${angle}deg`, offset: 0, easing: SPLASH.turnEasing });
+    }
+    time += SPLASH.turnDuration;
+    // End of the turn; the pause after it is linear (and motionless).
+    frames.push({ rotate: `${angle + SPLASH.turnAngle}deg`, offset: time / total, easing: 'linear' });
+  }
+  return frames;
+}
 
 export function initSplash() {
   const splash = document.querySelector('[data-js="splash"]');
@@ -49,8 +71,9 @@ export function initSplash() {
   const sweep1At = 0;
   const sweep2At = sweep1At + SPLASH.sweepDuration;
   const createAt = sweep2At + SPLASH.sweepDuration;
-  const spinAt = createAt + SPLASH.createDuration;
-  const dissolveAt = spinAt + SPLASH.spinDuration;
+  const turnsAt = createAt + SPLASH.createDuration;
+  const turnsDuration = SPLASH.turns * SPLASH.turnDuration + (SPLASH.turns - 1) * SPLASH.turnPause;
+  const dissolveAt = turnsAt + turnsDuration;
 
   const timing = (delay, duration, easing) => ({ delay, duration, easing, fill: 'both' });
 
@@ -79,11 +102,8 @@ export function initSplash() {
       [{ opacity: 0 }, { opacity: 1 }],
       timing(createAt, SPLASH.createDuration, SPLASH.createEasing),
     ),
-    // Step 4: one full spin.
-    logo.animate(
-      [{ rotate: '0deg' }, { rotate: '360deg' }],
-      timing(spinAt, SPLASH.spinDuration, SPLASH.spinEasing),
-    ),
+    // Step 4: the quarter turns, as one animation with a keyframe per stop.
+    logo.animate(turnKeyframes(turnsDuration), timing(turnsAt, turnsDuration, 'linear')),
     // Step 5: the whole overlay (logo and teal ground) fades out. No transform.
     splash.animate(
       [{ opacity: 1 }, { opacity: 0 }],
