@@ -88,15 +88,17 @@
   text-align: center;
 }
 
-/* Keywords: a row across x 245 to 1676 (Figma 32:670), centred on the page. The
-   three words are spread with equal gaps between them, so they sit evenly. */
+/* Keywords: a row across x 245 to 1676 (Figma 32:670), centred on the page, split
+   into three equal columns. Each word is centred in its column, so Services sits
+   exactly on the page's centre line and the outer two mirror each other. */
 .landing__keywords {
   position: absolute;
   top: calc(778 * var(--u));
   left: calc(245 * var(--u));
-  right: calc(244 * var(--u));
-  display: flex;
-  justify-content: space-between;
+  right: calc(245 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
 }
 
 /* At rest: the word in a softer white (HOVER.keywordRest, js/motion-config.js),

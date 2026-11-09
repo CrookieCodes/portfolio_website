@@ -19,8 +19,9 @@
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
-  /* Hover/focus dot: pink on dark and burgundy grounds, burgundy on light ones. */
-  --header-dot: var(--color-pink);
+  /* Hover/focus dot: burgundy (CAROL). Pink only on the burgundy About ground,
+     where a burgundy dot would be invisible. */
+  --header-dot: var(--color-burgundy);
 }
 
 /* Themes, one per screen. Attribute selectors keep these to one simple selector each. */
@@ -31,8 +32,6 @@
 }
 
 [data-theme="touchpoints"] {
-  /* Checkpoint 5 turns this ground white (Figma #F7F7F7): then set
-     --header-dot to burgundy here, as on Work. */
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
@@ -45,13 +44,13 @@
 }
 
 [data-theme="work"] {
-  --header-dot: var(--color-burgundy); /* light ground: the pink dot is too faint */
   --header-cross: var(--color-teal);
   --header-nav: var(--color-ink);
   --header-scrim: var(--color-paper);
 }
 
 [data-theme="about"] {
+  --header-dot: var(--color-pink); /* burgundy would vanish on the burgundy ground */
   --header-cross: var(--color-mint);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-burgundy);
