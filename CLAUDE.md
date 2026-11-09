@@ -76,11 +76,11 @@ The folder may still contain the old index.html, style.css and javascript.js. Re
 6 fit-to-browser pass, polish, cross-browser, accessibility; merge to main only after Carol approves
 
 ## Navigation and scroll
-- Screen order is linear: 1 Splash, 2 Hero, 3 Touchpoints, 4 Experiences, 5 Selected Works, 6 About + footer. Scrolling down goes 2 -> 3 -> 4 -> 5 -> 6; scrolling up goes back.
-- The two hero eyes are shortcuts: left eye -> screen 3, right eye -> screen 4. They are real buttons, keyboard accessible.
+- Screen order is linear: 1 Splash, 2 Landing, 3 Touchpoints, 4 Experiences, 5 Selected Works, 6 About + footer. Scrolling down goes 2 -> 3 -> 4 -> 5 -> 6; scrolling up goes back. Transitions are scroll-tied (see design/motion.md): blinds from 2 to 3, push-in slides from 3 to 4 and 4 to 5.
+- The Landing keywords (Products, Services, Experiences) are links to Selected Works in the matching domain view. The eyes are decorative (pupils follow the cursor).
 - One fixed header on screens 2-6 (not the splash), the same markup everywhere. Logo colour, nav colour and the active link change with the screen in view. Set with IntersectionObserver as a data-theme on the header.
-- Smooth scrolling (scroll-behavior: smooth) with gentle snapping on the full-screen scenes (scroll-snap-type: y proximity, never mandatory). Never hijack the scroll wheel. With prefers-reduced-motion, use instant scrolling and no snapping.
-- Screens 3 and 4 get addresses (#touchpoints, #experiences) so the Back button works.
+- Smooth scrolling (scroll-behavior: smooth). No snap points on screens 2 to 5: their transitions are scrubbed by the scroll and snapping pulled slow mouse-wheel scrolling back (Carol, phase 6). If snapping is added anywhere, only proximity, never mandatory. Never hijack the scroll wheel. With prefers-reduced-motion, use instant scrolling and no snapping.
+- Screens 3 and 4 get addresses (#touchpoints, #experiences) so the Back button works. Pinned (sticky) screens never move, so their address may sit on an anchor element instead (#touchpoints).
 - Do not invent animation timings. Use only values in motion.md. Where it says TODO, build the structure without the animation and list what is missing.
 
 ## Definition of done (every phase)

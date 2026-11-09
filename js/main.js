@@ -12,6 +12,7 @@ import { initEyeTracking } from './eye-tracking.js';
 import { initEyeCross } from './eye-cross.js';
 import { initDotFlow } from './dot-flow.js';
 import { initTouchpointsBuild } from './touchpoints-build.js';
+import { initTouchpointsText } from './touchpoints-text.js';
 import { initExperiencesBuild } from './experiences-build.js';
 import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
@@ -32,6 +33,7 @@ initDotFlow();
 initTouchpointsBuild();
 const figuresDone = initExperiencesBuild();
 initScenes();
+initTouchpointsText();
 initPlaceholderLinks();
 initCarousel();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until

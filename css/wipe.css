@@ -38,6 +38,10 @@
    the mask layers once (one full-height bar per layer, 1px wider than its share so
    no seams show) and then only --bar-0 ... --bar-11, each bar's height (0 to 1). */
 .wipe__next--masked {
+  /* A mask hides the screen but does not stop it catching the mouse: without this,
+     the (still invisible) Touchpoints on top would take every hover and click meant
+     for the Landing underneath (keyword hover, the eyes' cross, the keyword links). */
+  pointer-events: none;
   -webkit-mask-image: var(--wipe-mask-image);
   mask-image: var(--wipe-mask-image);
   -webkit-mask-size: var(--wipe-mask-size);

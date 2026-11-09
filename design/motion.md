@@ -24,17 +24,19 @@ Tags: **FIGMA** = read from Figma. **CAROL** = stated by Carol. **PROPOSED** = s
 - **Main flow (scroll):** Splash -> Landing -> Touchpoints -> Experiences -> Selected Works -> About section + footer. Scrolling up goes back one screen.
 - **Transitions between screens (CAROL):**
   - Landing -> Touchpoints (dark to white): **blinds up**, see section 2. Twelve vertical bars in the Touchpoints ground colour rise from the bottom of the screen to the top, staggered left to right, tied to the scroll; the header swaps when the last bar lands, then the Touchpoints load animation plays. This is the only blinds transition.
-  - Touchpoints -> Experiences, and Experiences -> Selected Works (dark to light): **simple push-in slide**. The next screen slides up over the current one, as if the photo is pushed into the space. ~0.8 s, ease-out, scroll-linked, reversible. Reuse the existing scene mechanism if it already does this.
+  - Touchpoints -> Experiences, and Experiences -> Selected Works: **simple push-in slide**. The screen being left stays pinned (sticky) while the next one slides up over it, as if the photo is pushed into the space. Scroll-linked and reversible, so it moves with the scroll and has no duration of its own (the earlier ~0.8 s cannot apply to a scroll-tied slide). A screen that has been fully covered pauses its effects.
+- **Snap points (CAROL):** none on the Landing, Touchpoints, Experiences or Selected Works. Every transition between them is scrubbed by the scroll, and proximity snapping pulled slow mouse-wheel scrolling back to the nearest screen.
   - Selected Works -> About section: keep the existing behaviour (plain scroll).
 - **Loading animation (CAROL: simple, consistent everywhere):** when a screen enters view for the first time, its elements slide up 24 px (PROPOSED) and fade in, staggered 90 ms (PROPOSED), 600 ms each, ease-out. Plays once per page load. Reference feel: slide-up and fade, whole screen settled in about 1.5 s. Each screen below lists its own order.
 - **Header:** fixed, always on top, one per page, themed per screen via `data-theme`. Nav: About, Work, Resume, Contact; the active item has a dot. The top scrim from Phase 3 stays.
   - **Logo (CAROL):** the Landing screen shows the PRIMARY logo (tan square mark). From Touchpoints onwards the header shows the SECONDARY logo (the pinwheel) in a per-screen colour. The swap is a clean spin-and-change: spin 90 degrees over 0.5 s, change the mark at the midpoint (opacity swap), spin back out. Same in reverse when scrolling up. The pinwheel colours per screen are read from each Figma frame (header mark).
   - The splash has no header.
 - **Scroll cue (CAROL):** the text "Scroll down for more details" with a small chevron. Its opacity pulses between 1 and 0.35 (PROPOSED) on a 1.6 s ease-in-out loop so people notice it. Shared component used on Landing and on the Experience section. Reduced motion: static, full opacity.
-- **Cursor label (CAROL):** one shared component. Small label next to the cursor, black background, white text, 12 px at 1920 wide (scaled with clamp), padding 4px 8px, fades in 150 ms. Used for "Click to view more" (About hero photo). Hidden on touch devices. Reduced motion: shown static near the target.
+- **Cursor label (CAROL):** one shared component (text and target are parameters). Small label that follows the cursor with a small offset, black background, white text, 12 px at 1920 wide (scaled with clamp), padding 4px 8px, fades in 150 ms. Used for "Click to view more" (About hero photo). Hidden on touch devices. Keyboard focus and reduced motion: shown static next to the target.
 - Every screen fits the browser: `100svh`, `clamp()`/`vw`, no horizontal overflow at 1024-2560. Desktop only; phones deferred.
 - **Reduced motion:** no splash sequence (show Landing), static final states for every animation, instant transitions, no pulsing cue, no spin, no blur.
-- **Brighter glyph colours (CAROL):** pink #F28B9D, blue #4FA8E0, orange #F5A04A (PROPOSED hex, tune by eye). Used by every ASCII/glyph effect from now on. The old palette (burgundy, deep-teal, bronze) stays for flat colour use.
+- **Brighter glyph colours (CAROL):** pink #F28B9D, blue #4FA8E0, orange #F5A04A (PROPOSED hex, tune by eye), always on a deep-teal #0B2F32 ground (as in Carol's prototype; on the squares' own light gradients the bright glyphs were only 1.0 to 2.1 : 1). Used by every ASCII/glyph effect. The old palette (burgundy, deep-teal, bronze) stays for flat colour use.
+- **Glyph cell size (CAROL):** 8 design px per cell at 1920 wide, scaled with the screen, on every glyph effect (`ASCII.cell`).
 
 ## 1. Splash (32:633)
 Sequence (CAROL, revised: much simpler), 3.5 s in total from the first frame to the Landing fully visible. Only the main square mark ("C" logo); no corner crosses, no duplicate-and-sweep assembly, no other shapes.
@@ -63,9 +65,10 @@ Skippable by click, key or scroll. Page underneath is `inert` while it plays. No
   - Reduced motion: no bars; the Landing and Touchpoints are plain screens, one after the other, and the Touchpoints elements are visible straight away.
 
 ## 3. Touchpoints (32:306)
-- White background, dark text, header pinwheel in burgundy.
-- **Loading:** heading and bullets slide up and fade in, staggered. Then the diagram assembles piece by piece (CAROL), once, when the screen scrolls into view, ~2-2.5 s total: base square -> the hand/thumb rises in behind it -> lines draw outward (stroke-dashoffset) -> small squares pop in at the line ends (scale 0.6 -> 1) -> dots appear and start flowing along the routes.
-- Dot flow and the glyph (ASCII) effect on the squares stay as built, but with the brighter glyph colours.
+- Light ground #F7F7F7, dark text, header pinwheel in burgundy. Lines #0E1819, dots #323232, square gradients and hand colours as in the frame.
+- **Text block (CAROL):** placed as in the frame (lower right, heading second line bold), then shifted right by 40% of the block's own width (`--touchpoints-text-shift`), but never closer than 64 px to the window's right edge (`--touchpoints-text-gap`).
+- **Loading:** heading and bullets slide up and fade in, staggered. Then the diagram assembles piece by piece (CAROL), once, ~2-2.5 s: base square -> the hand/thumb rises in behind it -> lines draw outward (stroke-dashoffset) -> small squares pop in at the line ends (scale 0.6 -> 1) with their glyphs -> dots appear and start flowing along the routes. Step timings in `BUILD` (STARTER).
+- **Dots and glyphs:** once the diagram has assembled, the dots flow along the routes (looping while in view) and the glyph effect on the squares sweeps outward from the base square (looping), in the brighter colours on deep teal. Both pause when off-screen, covered or the tab is hidden.
 - The thin pink line at the bottom edge of the frame is ignored (a Figma artefact).
 
 ## 4. Experiences (32:359)
@@ -75,6 +78,7 @@ Skippable by click, key or scroll. Page underneath is `inert` while it plays. No
   2. The silhouettes fade in as coloured shapes on the photo (pink, blue, brown, flat shapes from the frame).
   3. They crossfade into the glyph effect on the deep-teal ground (the glyph effect keeps its top-to-bottom sweep; brighter colours).
   4. The text "To crafting stories, experiences." and the bullets slide up and fade in.
+  Flat shapes use the frame's gradients (pink #CF5C6D/#612830/#40171D, blue #67BBDA/#285160/#14303A, brown #825825/#140804). Timings in `FIGURES` (STARTER).
 - Transition in from Touchpoints is the push-in slide.
 
 ## 5. Selected Works (32:377, 32:417)

@@ -144,6 +144,12 @@
      screen (screens 3-6 move to it in Phase 6); never hard-code the 120. */
   --page-margin: clamp(2rem, 6.25vw, 7.5rem);
 
+  /* Touchpoints text block (CAROL): shifted right of its Figma place by this share of
+     its own width, but never closer than the gap to the window's right edge
+     (js/touchpoints-text.js). */
+  --touchpoints-text-shift: 0.4;
+  --touchpoints-text-gap: 64px;
+
   /* Layout */
   --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
   --footer-height: calc(469 * var(--u)); /* Contact part of screen 6 (1080 + 469 = 1549 at 1920) */
