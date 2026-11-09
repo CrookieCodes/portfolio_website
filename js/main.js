@@ -6,7 +6,7 @@ import { splashDone } from './splash.js';
 import { initHeaderTheme } from './header-theme.js';
 import { initHeaderLogo } from './header-logo.js';
 import { initScrollCues } from './scroll-cue.js';
-import { initWipe } from './wipe.js';
+import { initWipes } from './wipe.js';
 import { initPushIn } from './push-in.js';
 import { initEyeTracking } from './eye-tracking.js';
 import { initEyeCross } from './eye-cross.js';
@@ -25,7 +25,7 @@ applyMotionVariables();
 initHeaderTheme();
 initHeaderLogo();
 initScrollCues();
-const wipeCovered = initWipe();
+const wipes = initWipes();
 initPushIn();
 initEyeTracking();
 initEyeCross();
@@ -35,10 +35,10 @@ const scenes = initScenes();
 const experiencesLit = initExperiencesReveal(scenes.experiences);
 initTouchpointsText();
 initPlaceholderLinks();
-const worksReady = initWorks();
+initWorks();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until
 // the blinds have covered the screen, and Experiences' text until the light has
-// swept the scene; Selected Works' until it has arrived.
-initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered, experiences: experiencesLit, works: worksReady } });
+// swept the scene; Selected Works' until its blinds have covered the screen.
+initReveal({ waitFor: { splash: splashDone, wipe: wipes.touchpoints, experiences: experiencesLit, works: wipes.works } });
 initPhotoReveal();
 initFooterSpin();

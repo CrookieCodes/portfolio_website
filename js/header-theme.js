@@ -69,8 +69,10 @@ export function initHeaderTheme() {
   window.addEventListener('scroll', scheduleMeasure, { passive: true });
   window.addEventListener('resize', scheduleMeasure);
 
-  // A screen's theme or logo can change while it stays in place (the blinds).
-  new MutationObserver(scheduleMeasure).observe(document.querySelector('main') ?? document.body, {
+  // A screen's theme or logo can change while it stays in place (the blinds). Measured
+  // straight away (before the next paint), so the whole header switches in the same
+  // frame as the header items drop their own themes: no one-frame flash.
+  new MutationObserver(measure).observe(document.querySelector('main') ?? document.body, {
     subtree: true,
     attributeFilter: ['data-screen-theme', 'data-screen-logo', 'data-screen-nav', 'data-screen-hidden'],
   });

@@ -1,4 +1,6 @@
-// Landing -> Touchpoints "blinds up" (motion.md v2 section 2, CAROL).
+// "Blinds up" transitions (motion.md v2, CAROL): Landing -> Touchpoints and
+// Experiences -> Selected Works, the same code with their own values (WIPES).
+// Below, "the Landing" is the screen being left and "Touchpoints" the one arriving.
 //
 // The Landing and Touchpoints are both pinned in the same place (css/wipe.css) for
 // one screen of scrolling, Touchpoints on top. Touchpoints is masked so that it
@@ -32,21 +34,33 @@
 // With reduced motion there are no bars (CSS shows plain screens) and the promise
 // resolves straight away.
 
-import { WIPE } from './motion-config.js';
+import { WIPES } from './motion-config.js';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 const smoothstep = (q) => q * q * (3 - 2 * q);
 
-export function initWipe() {
-  const wrapper = document.querySelector('[data-js="wipe"]');
-  const screen = wrapper?.querySelector('[data-js~="screen"]');
-  const next = wrapper?.querySelector('[data-js~="wipe-next"]');
-  if (!wrapper || !screen || !next) return Promise.resolve();
+// Sets up every blinds transition on the page (each wrapper with data-js="wipe";
+// data-wipe-name picks its values in WIPES, js/motion-config.js). Returns, per name, a
+// promise that resolves the first time that transition has covered the screen.
+export function initWipes() {
+  const promises = {};
+  document.querySelectorAll('[data-js="wipe"]').forEach((wrapper) => {
+    promises[wrapper.dataset.wipeName] = initWipe(wrapper, WIPES[wrapper.dataset.wipeName]);
+  });
+  return promises;
+}
+
+function initWipe(wrapper, WIPE) {
+  const screen = wrapper.querySelector('[data-js~="screen"]');
+  const next = wrapper.querySelector('[data-js~="wipe-next"]');
+  if (!screen || !next || !WIPE) return Promise.resolve();
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return Promise.resolve();
 
-  // The theme and logo before and after the swap.
+  // The theme and logo before and after the swap. Only a screen with the primary
+  // (tan) logo swaps logos; between two pinwheel screens the logo just recolours.
   const before = { theme: screen.dataset.screenTheme, logo: screen.dataset.screenLogo };
   const after = { theme: wrapper.dataset.wipeTheme, logo: 'secondary' };
+  const swapsLogo = before.logo === 'primary';
 
   // The mask: one solid layer per bar, each 1px wider than its share (so no seams
   // show), anchored to the bottom, its height read from --bar-i. Set once.
@@ -86,6 +100,7 @@ export function initWipe() {
   let swapped = null;
   let covered = null;
   let paused = null;
+  let bandOff = null;
 
   function update() {
     // The blinds run over the first screen of scrolling through the wrapper.
@@ -124,11 +139,20 @@ export function initWipe() {
           delete item.element.dataset.theme;
         }
       }
-      if (item.isLogo) {
+      if (item.isLogo && swapsLogo) {
         const logo = isCovered || swapped ? after.logo : before.logo;
         if (screen.dataset.screenLogo !== logo) screen.dataset.screenLogo = logo;
       }
     });
+
+    // While the bars rise, the header band is off, so the bars reach the very top
+    // (css/header.css, [data-band="off"]).
+    const rising = progress > 0 && progress < WIPE.coveredAt;
+    if (rising !== bandOff && header) {
+      bandOff = rising;
+      if (rising) header.dataset.band = 'off';
+      else delete header.dataset.band;
+    }
 
     const isCovered = progress >= WIPE.coveredAt;
     if (isCovered !== covered) {
@@ -137,9 +161,11 @@ export function initWipe() {
       next.classList.toggle('wipe__next--masked', !covered);
       if (covered) {
         delete next.dataset.screenHidden;
+        screen.dataset.sceneCovered = 'true'; // out of sight: its effects can rest
         resolveCovered();
       } else {
         next.dataset.screenHidden = 'true';
+        delete screen.dataset.sceneCovered;
       }
     }
 

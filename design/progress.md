@@ -3,7 +3,7 @@
 Updated 2026-11-09. Branch: `phase-6-main-flow` (base `phase-5-work-about`, pushed; phase 6 not pushed yet).
 
 ## Where we are
-Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Selected Works) built, awaiting review.
+Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Selected Works) built with Carol's changes (incl. Experiences -> Works blinds), awaiting review.
 
 ## Done and approved
 1. Shared pieces: standard load animation (`reveal.js`), scroll cue, header logo swap.
@@ -18,7 +18,8 @@ Phase 6 (main flow, FINAL EDITS). Checkpoints 1-5 approved; checkpoint 6 (Select
 - Glyph cells: 8 design px everywhere (`ASCII.cell`), bright pink/blue/orange on a deep-teal ground.
 - Blinds: header items (logo, each link) swap one by one as the bar beneath covers them; the whole header at 0.98.
 - No snap points on the Landing, Touchpoints, Experiences or Works (they fought slow mouse-wheel scrubbing).
-- Header band off on the Landing and during the Touchpoints -> Experiences push.
+- Header band off on the Landing, during the Touchpoints -> Experiences push and while any blinds rise; the Work theme has no band.
+- Experiences -> Works is a blinds transition too (not a push-in).
 - Keyword hover label and header dot: burgundy #993746 (pink #F2909F on the burgundy About ground).
 
 ## Pending or known issues

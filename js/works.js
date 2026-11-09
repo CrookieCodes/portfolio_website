@@ -18,11 +18,11 @@
 // js/cursor-label.js) that never shows on cards that are not current or during a roll.
 //
 // Loading, once per page load: the grey column, the pinwheel, the buttons, the title
-// row and the cards load with the standard animation, in that order (js/reveal.js
-// waits on the promise returned here).
+// row and the cards load with the standard animation, in that order, once the blinds
+// from Experiences have covered the screen (js/wipe.js, js/reveal.js).
 
 import { PROJECTS, DOMAINS } from './projects.js';
-import { WORKS, PUSH } from './motion-config.js';
+import { WORKS } from './motion-config.js';
 import { createPinwheel } from './pinwheel.js';
 import { attachCursorLabel, hideCursorLabel } from './cursor-label.js';
 
@@ -70,10 +70,10 @@ function buildCard(project) {
 }
 
 export function initWorks() {
-  const screen = document.getElementById('work');
+  const screen = document.querySelector('[data-js~="works"]');
   const track = screen?.querySelector('[data-js="works-track"]');
   const svg = screen?.querySelector('[data-js="pinwheel"]');
-  if (!screen || !track || !svg) return Promise.resolve();
+  if (!screen || !track || !svg) return;
   const q = (name) => screen.querySelector(`[data-js~="${name}"]`);
   const next = q('works-next');
   const sort = q('works-sort');
@@ -207,24 +207,4 @@ export function initWorks() {
   next.classList.add('works__button--active');
   render(list, 0);
 
-  // Loading: js/reveal.js plays the standard load (column, pinwheel, buttons, cards)
-  // once Selected Works has arrived; this promise says when.
-  if (reduceMotion.matches) return Promise.resolve();
-  return new Promise((resolve) => {
-    let done = false;
-    function check() {
-      if (done) return;
-      const top = screen.getBoundingClientRect().top;
-      if (1 - top / window.innerHeight >= PUSH.arriveAt) {
-        done = true;
-        resolve();
-      }
-    }
-    let frame = 0;
-    window.addEventListener('scroll', () => {
-      if (done || frame) return;
-      frame = requestAnimationFrame(() => { frame = 0; check(); });
-    }, { passive: true });
-    check();
-  });
 }

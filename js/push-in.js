@@ -1,5 +1,6 @@
-// Push-in slides (css/push.css). The slide itself is CSS: the screen being left is
-// pinned (sticky) and the next one scrolls up over it. This adds, per scroll frame:
+// Push-in slide, Touchpoints -> Experiences (css/push.css). The slide itself is CSS:
+// Touchpoints is pinned (sticky) and Experiences scrolls up over it. (Experiences ->
+// Selected Works is a blinds transition: js/wipe.js.) This adds, per scroll frame:
 //
 //   - Covered screens: once the next screen has slid all the way over, the one
 //     beneath is marked data-scene-covered, so its canvas effects stop
@@ -19,16 +20,12 @@ import { PUSH } from './motion-config.js';
 export function initPushIn() {
   const touchpoints = document.querySelector('[data-js~="wipe-next"]');
   const experiences = document.getElementById('experiences');
-  const works = document.getElementById('work');
   const dim = touchpoints?.querySelector('[data-js="push-dim"]');
   const header = document.querySelector('[data-js="site-header"]');
-  if (!touchpoints || !experiences || !works) return;
+  if (!touchpoints || !experiences) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const pairs = [
-    { under: touchpoints, over: experiences, covered: null },
-    { under: experiences, over: works, covered: null },
-  ];
+  const pairs = [{ under: touchpoints, over: experiences, covered: null }];
 
   const theme = experiences.dataset.screenTheme;
   const items = [...(header?.querySelectorAll('[data-js~="header-item"]') ?? [])]

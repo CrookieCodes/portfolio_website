@@ -88,8 +88,8 @@
          rise from the bottom, tied to the scroll and reversible. The wrapper carries the
          #landing address and an anchor at its end carries #touchpoints, because the
          pinned screens themselves never move. -->
-    <div class="wipe" id="landing" data-js="wipe" data-wipe-theme="touchpoints">
-    <section class="frame landing" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
+    <div class="wipe wipe--long" id="landing" data-js="wipe" data-wipe-name="touchpoints" data-wipe-theme="touchpoints">
+    <section class="frame landing wipe__pinned" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
       <div class="landing__stage">
         <!-- The eyes (Figma 32:677), inline so the pupils can follow the cursor. Decorative. -->
         <div class="landing__eyes" data-js="reveal" data-reveal-order="1">
@@ -263,13 +263,15 @@
     <span class="wipe__anchor" id="touchpoints" aria-hidden="true"></span>
     </div>
 
-    <!-- Push-in slides (css/push.css, js/push-in.js): Experiences slides up over the pinned
-         Touchpoints, then Selected Works slides up over the pinned Experiences. This
-         container starts one screen early, so it overlaps the end of the wipe wrapper. -->
-    <div class="push" data-js="push">
+    <!-- Experiences -> Selected Works "blinds up" (js/wipe.js, the same code as Landing ->
+         Touchpoints). This wrapper also starts one screen early (css/push.css), so it
+         overlaps the end of the first one: Experiences slides up over the pinned Touchpoints
+         (the push-in), is then pinned itself, and Selected Works is shown through twelve
+         rising bars. The #work address is an anchor at the end of the blinds. -->
+    <div class="wipe push" data-js="wipe" data-wipe-name="works" data-wipe-theme="work">
 
     <!-- Screen 4: experiences scene -->
-    <section class="frame scene scene--experiences push__pinned" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences" data-reveal-wait="experiences">
+    <section class="frame scene scene--experiences wipe__pinned" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences" data-reveal-wait="experiences">
       <!-- Photo and figures share a "cover" stage: it fills the screen like object-fit: cover,
            so the figures stay on the people in the photo at any window shape. -->
       <div class="scene__cover">
@@ -306,7 +308,7 @@
          the left, the two buttons, and a vertical reel of project cards in a panel on the
          right (js/works.js builds the cards from js/projects.js). The pinwheel and buttons sit
          on a 1920 wide stage scaled with --u; the column runs to the bottom of the window. -->
-    <section class="frame works" id="work" aria-labelledby="works-title" data-js="screen" data-screen-theme="work" data-screen-nav="work" data-reveal-wait="works">
+    <section class="frame works wipe__next" aria-labelledby="works-title" data-js="screen wipe-next works" data-screen-theme="work" data-screen-nav="work" data-reveal-wait="works">
       <div class="works__stage">
         <!-- The pinwheel (Figma 32:388), stick included: loads as one piece and turns a quarter,
              clockwise, with each step (js/pinwheel.js). Decorative. -->
@@ -390,6 +392,8 @@
         </div>
       </div>
     </section>
+    <!-- The #work address: where the blinds have fully risen (the pinned screen never moves). -->
+    <span class="wipe__anchor" id="work" aria-hidden="true"></span>
     </div>
 
     <!-- Screen 6 (1920 x 1549): About is the top 1080px; the Contact footer

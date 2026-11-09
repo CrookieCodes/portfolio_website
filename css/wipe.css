@@ -1,4 +1,5 @@
-/* Landing -> Touchpoints "blinds up" (motion.md v2 section 2, CAROL).
+/* "Blinds up" (motion.md v2, CAROL): Landing -> Touchpoints and Experiences -> Selected
+   Works. Below, "the Landing" is the screen being left and "Touchpoints" the arriving one.
    The Landing and Touchpoints are both sticky, so they stay pinned in the same place
    for the first screen of scrolling (Touchpoints is
    pulled up one screen with a negative margin). Touchpoints is on top, but masked:
@@ -10,16 +11,22 @@
    and is scrubbed by the scroll, and snapping pulled every gesture back to one end.
    With reduced motion there are no bars: plain screens, one after the other. */
 
-/* Three screens tall: one screen of blinds, then one more with Touchpoints still
-   pinned while Experiences slides over it (css/push.css), then it scrolls away. */
+/* Two screens tall: one screen of blinds, then the arriving screen scrolls away. */
 .wipe {
   position: relative;
+  height: 200vh;           /* fallback */
+  height: 200svh;
+}
+
+/* Landing -> Touchpoints: three screens tall, so Touchpoints stays pinned for one more
+   screen while Experiences slides over it (css/push.css), then scrolls away. */
+.wipe--long {
   height: 300vh;           /* fallback */
   height: 300svh;
 }
 
-/* The pinned Landing, under Touchpoints. */
-.landing {
+/* The screen being left (the Landing, or Experiences), pinned under the arriving one. */
+.wipe__pinned {
   position: sticky;
   top: 0;
   z-index: 1;
@@ -52,8 +59,9 @@
   mask-repeat: no-repeat;
 }
 
-/* Fully covered: the Landing is out of sight, so it is hidden (and out of the Tab order). */
-.wipe--covered .landing {
+/* Fully covered: the screen being left is out of sight, so it is hidden (and out of the
+   Tab order). */
+.wipe--covered .wipe__pinned {
   visibility: hidden;
 }
 
@@ -66,11 +74,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wipe {
+  .wipe,
+  .wipe--long {
     height: auto;
   }
 
-  .landing,
+  .wipe__pinned,
   .wipe__next {
     position: relative;
   }

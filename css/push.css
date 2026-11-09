@@ -1,15 +1,11 @@
-/* Push-in slides (motion.md v2 "Transitions between screens", CAROL): Touchpoints ->
-   Experiences and Experiences -> Selected Works. The screen being left stays pinned
-   (sticky) while the next one slides up over it, tied to the scroll and reversible.
-   Pure CSS; js/push-in.js only pauses the effects of a screen once it is fully covered.
-   The slide follows the scroll, so it has no duration of its own.
-
-   Layout: the wipe wrapper (css/wipe.css) is three screens tall, so Touchpoints stays
-   pinned for one more screen after the blinds. This container is pulled up one screen
-   to overlap it: Experiences starts sliding in as soon as the blinds are done. Inside
-   it, Experiences is pinned while Selected Works slides over it.
-   No snap points on these screens: snapping fought slow mouse-wheel scrubbing.
-   With reduced motion: plain screens, one after the other, no pinning. */
+/* Push-in, Touchpoints -> Experiences (motion.md "Transitions between screens", CAROL).
+   Touchpoints stays pinned (sticky, css/wipe.css) while Experiences slides up over it,
+   tied to the scroll and reversible; js/push-in.js adds the drift and dimming.
+   Layout: the first blinds wrapper is three screens tall, so Touchpoints stays pinned
+   for one more screen after its blinds. The second blinds wrapper (Experiences ->
+   Selected Works) carries this class: it is pulled up one screen to overlap the first,
+   so Experiences starts sliding in as soon as Touchpoints' blinds are done.
+   No snap points. With reduced motion: plain screens, one after the other. */
 
 .push {
   position: relative;
@@ -18,17 +14,8 @@
   margin-top: -100svh;
 }
 
-.push__pinned {
-  position: sticky;
-  top: 0;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .push {
     margin-top: 0;
-  }
-
-  .push__pinned {
-    position: relative;
   }
 }

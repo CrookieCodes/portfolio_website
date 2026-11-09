@@ -41,6 +41,18 @@ export const WIPE = {
   coveredAt: 0.995,          // PROPOSED: Touchpoints shows and its load animation starts
 };
 
+// 5. Experiences -> Selected Works "blinds up" (CAROL): the same transition, same values.
+export const WIPE_WORKS = {
+  bars: 12,                  // PROPOSED
+  spread: 0.5,               // PROPOSED
+  swapAt: 0.98,              // PROPOSED
+  headerCover: 1,            // PROPOSED
+  coveredAt: 0.995,          // PROPOSED: Selected Works' load animation starts here
+};
+
+// Each blinds wrapper's data-wipe-name -> its values (js/wipe.js).
+export const WIPES = { touchpoints: WIPE, works: WIPE_WORKS };
+
 // 3. Touchpoints diagram assembly (motion.md v2 section 3, CAROL: piece by piece, once,
 // about 2 to 2.5 s in all). The step timings are not in motion.md; these are starting
 // values. Start times are from the moment the heading and bullets have loaded.
