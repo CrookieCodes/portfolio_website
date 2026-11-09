@@ -21,14 +21,15 @@ applyMotionVariables();
 initHeaderTheme();
 initHeaderLogo();
 initScrollCues();
-initWipe();
+const wipeCovered = initWipe();
 initEyeTracking();
 initEyeCross();
 initDotFlow();
 initScenes();
 initPlaceholderLinks();
 initCarousel();
-// The Landing's load animation waits until the splash has gone.
-initReveal({ waitFor: { splash: splashDone } });
+// The Landing's load animation waits until the splash has gone; Touchpoints' waits
+// until the blinds have covered the screen.
+initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered } });
 initPhotoReveal();
 initFooterSpin();

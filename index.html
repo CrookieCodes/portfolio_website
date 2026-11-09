@@ -80,12 +80,13 @@
     <!-- Screen 2: Landing (Figma 32:656). Everything sits on a 1920 x 1080 stage scaled
          with --u, centred in the window. data-reveal-order sets the load order (js/reveal.js);
          data-reveal-wait="splash" holds it until the splash has gone. -->
-    <!-- Landing -> Touchpoints block-wipe (js/wipe.js). The wrapper is two screens tall:
-         the Landing stays pinned (sticky) for one screen of scrolling while a grid of
-         blocks turns white over it, tied to the scroll and reversible. Touchpoints sits
-         underneath, ready, and shows once the wipe is complete. The wrapper carries the
-         #landing address and the snap point, because the sticky screen itself never moves. -->
-    <div class="wipe" id="landing" data-js="wipe" data-wipe-theme="touchpoints">
+    <!-- Landing -> Touchpoints "blinds up" (js/wipe.js). The wrapper is two screens tall:
+         the Landing stays pinned (sticky) for one screen of scrolling while twelve bars in
+         the Touchpoints colour rise over it from the bottom, tied to the scroll and
+         reversible. Touchpoints sits underneath, ready, and shows once the bars cover the
+         screen. The wrapper carries the #landing address, because the pinned screen itself
+         never moves. -->
+    <div class="wipe" id="landing" data-js="wipe" data-wipe-theme="touchpoints" data-wipe-next="touchpoints">
     <section class="frame landing" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
       <div class="landing__stage">
         <!-- The eyes (Figma 32:677), inline so the pupils can follow the cursor. Decorative. -->
@@ -144,24 +145,24 @@
           <p class="scroll-cue" data-js="scroll-cue">Scroll down for more details <span class="scroll-cue__chevron" aria-hidden="true">&gt;</span></p>
         </div>
       </div>
-      <!-- The wipe's blocks (built by js/wipe.js), above the Landing's content. -->
-      <div class="wipe__grid" data-js="wipe-grid" aria-hidden="true"></div>
+      <!-- The blinds (twelve bars, built by js/wipe.js), above the Landing's content. -->
+      <div class="wipe__bars" data-js="wipe-bars" aria-hidden="true"></div>
     </section>
     </div>
 
     <!-- Screen 3: touchpoints scene -->
-    <section class="frame frame--snap scene scene--touchpoints scene--after-wipe" id="touchpoints" aria-labelledby="touchpoints-title" data-js="screen" data-screen-theme="touchpoints">
+    <section class="frame frame--snap scene scene--touchpoints scene--after-wipe" id="touchpoints" aria-labelledby="touchpoints-title" data-js="screen" data-screen-theme="touchpoints" data-reveal-wait="wipe">
       <!-- One composition, scaled as a stage (1920 x 1080 design px, sized with --u):
            the hand must stay on the base square. -->
       <div class="scene__stage">
         <!-- The hand's thumb (Figma 1:253 "Vector 462") sits behind the base square; the rest of
              the hand is in front of it (after the canvas below). Same box and position as the hand. -->
-        <img class="scene__art scene__hand" src="assets/images/hand-thumb.svg" alt="" width="263" height="445">
+        <img class="scene__art scene__hand" src="assets/images/hand-thumb.svg" alt="" width="263" height="445" data-js="reveal" data-reveal-order="5">
         <!-- Touchpoint diagram (Figma 1:270), inline so the dots can travel along the lines.
              Layers: lines, then dots, then squares, so each dot slides under the square it reaches.
              Each route is one path from the base square (held by the hand) out to its square;
              js/dot-flow.js moves the dots along them. -->
-        <svg class="scene__art scene__diagram" viewBox="0 0 1340 727" role="img" aria-label="Diagram of coloured squares joined by thin lines, with a hand holding the central square" data-js="diagram">
+        <svg class="scene__art scene__diagram" viewBox="0 0 1340 727" role="img" aria-label="Diagram of coloured squares joined by thin lines, with a hand holding the central square" data-js="diagram reveal" data-reveal-order="5">
           <defs>
             <linearGradient id="square-brown" x1="156.952" y1="582.643" x2="0" y2="582.643" gradientUnits="userSpaceOnUse">
               <stop class="scene__stop--brown-dark"/>
@@ -236,18 +237,20 @@
           </g>
         </svg>
         <!-- ASCII effect on the squares (js/scenes.js), above the diagram and under the hand. -->
-        <canvas class="scene__art scene__diagram-effect" data-js="ascii-touchpoints" aria-hidden="true"></canvas>
-        <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445">
+        <canvas class="scene__art scene__diagram-effect" data-js="ascii-touchpoints reveal" data-reveal-order="5" aria-hidden="true"></canvas>
+        <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445" data-js="reveal" data-reveal-order="5">
 
         <div class="scene__text scene__text--touchpoints">
-          <h2 id="touchpoints-title" tabindex="-1" data-js="screen-heading">
+          <h2 id="touchpoints-title" tabindex="-1" data-js="screen-heading reveal" data-reveal-order="1">
             <span class="scene__line-1">From assembling</span>
             <span class="scene__line-2">touchpoints,</span>
           </h2>
+          <!-- Load order: heading, the bullets one after another, then the diagram (order 5;
+               its piece-by-piece build arrives in checkpoint 5). -->
           <ul class="scene__list scene__list--touchpoints">
-            <li class="scene__item">UX Research</li>
-            <li class="scene__item">Service Design</li>
-            <li class="scene__item">Systems Design</li>
+            <li class="scene__item" data-js="reveal" data-reveal-order="2">UX Research</li>
+            <li class="scene__item" data-js="reveal" data-reveal-order="3">Service Design</li>
+            <li class="scene__item" data-js="reveal" data-reveal-order="4">Systems Design</li>
           </ul>
         </div>
       </div>

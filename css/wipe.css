@@ -1,53 +1,59 @@
-/* Landing -> Touchpoints block-wipe (motion.md v2 section 2, CAROL).
+/* Landing -> Touchpoints "blinds up" (motion.md v2 section 2, CAROL).
    The wrapper is two screens tall. The Landing inside it is sticky, so it stays put
-   for one screen of scrolling; js/wipe.js turns the blocks of the grid white one by
-   one as the scroll progresses (and back again going up). Touchpoints is pulled up
-   under the Landing (.scene--after-wipe), so when every block is white the Landing
-   is hidden and Touchpoints is already in place.
-   With reduced motion there is no wipe: plain screens, one after the other. */
+   for one screen of scrolling while js/wipe.js raises twelve bars over it, from the
+   bottom, staggered left to right (and lowers them again going up). Touchpoints is
+   pulled up under the Landing (.scene--after-wipe), so once the bars cover the
+   screen the Landing is hidden and Touchpoints is already in place.
+   No snap points on the Landing or Touchpoints: the transition runs between them
+   and is scrubbed by the scroll, and snapping pulled every gesture back to one end.
+   With reduced motion there are no bars: plain screens, one after the other. */
 
-/* No snap points on the Landing or Touchpoints: the wipe runs between them and is
-   scrubbed by the scroll, and snapping pulled every gesture back to one end. */
 .wipe {
   position: relative;
   height: 200vh;           /* fallback */
   height: 200svh;
 }
 
-/* The pinned Landing, above Touchpoints while the wipe runs. */
+/* The pinned Landing, above Touchpoints while the bars rise. */
 .landing {
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-/* Every block covered: the Landing steps aside to show Touchpoints underneath. */
+/* Covered: the Landing steps aside to show Touchpoints underneath. */
 .wipe--covered .landing {
   visibility: hidden;
 }
 
-/* 16 x 9 blocks (WIPE in js/motion-config.js), covering the whole screen. */
-.wipe__grid {
+.wipe__bars {
   position: absolute;
   inset: 0;
   z-index: 2;              /* above the Landing's stage */
-  display: grid;
-  grid-template-columns: repeat(var(--wipe-columns), 1fr);
-  grid-template-rows: repeat(var(--wipe-rows), 1fr);
   pointer-events: none;
 }
 
-/* A block flips in one step: no transition, so the wipe stays stepped. */
-.wipe__cell--on {
-  background-color: var(--color-ground-light);
+/* One bar: the full screen height, scaled up from the bottom edge by js/wipe.js
+   (transform only, so nothing is laid out again while scrolling). Each is 1px wider
+   than its share, overlapping the next one, so no seams show between bars.
+   --bar-index is set per bar. */
+.wipe__bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% / var(--wipe-bars) * var(--bar-index));
+  width: calc(100% / var(--wipe-bars) + 1px);
+  background-color: var(--wipe-color);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  will-change: transform;
 }
 
-/* Touchpoints starts one screen up, under the pinned Landing. It is not a snap
-   point (see .wipe). */
+/* Touchpoints starts one screen up, under the pinned Landing. Not a snap point. */
 .scene--after-wipe {
-  scroll-snap-align: none;
   margin-top: -100vh;      /* fallback */
   margin-top: -100svh;
+  scroll-snap-align: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -59,7 +65,7 @@
     position: relative;
   }
 
-  .wipe__grid {
+  .wipe__bars {
     display: none;
   }
 

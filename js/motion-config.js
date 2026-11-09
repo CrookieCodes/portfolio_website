@@ -26,16 +26,15 @@ export const EYES = {
                              //          pupil reaches the edge of its range (one eye width)
 };
 
-// 2. Landing -> Touchpoints block-wipe (motion.md v2 section 2, CAROL). Tied to scroll,
-// so it has no duration: it runs over one screen of scrolling.
+// 2. Landing -> Touchpoints "blinds up" (motion.md v2 section 2, CAROL). Tied to the
+// scroll, so it has no duration: it runs over one screen of scrolling.
 export const WIPE = {
-  columns: 16,               // PROPOSED: blocks across
-  rows: 9,                   // PROPOSED: blocks down
-  direction: 'up',           // STARTER: vertical sweep (CAROL); 'up' = bottom row first, 'down' = top row first
-  jitter: 0.3,               // STARTER: how ragged the edge is (0 = whole rows flip together)
-  margin: 0.03,              // STARTER: keeps the first block off until 3% and the last one on by 97%
-  swapAt: 0.5,               // CAROL: header theme and logo swap at 50%
-  coveredAt: 0.995,          // STARTER: progress counted as fully covered (sub-pixel scroll positions)
+  bars: 12,                  // PROPOSED: vertical bars, each 1/12 of the screen width
+  spread: 0.5,               // PROPOSED: share of the scroll over which the bars' starts are spread
+                             //           (bar 0 starts at 0, the last at 0.5; each rises over 0.5)
+  swapAt: 0.98,              // PROPOSED: header theme and logo swap once the last bar has landed
+  coveredAt: 0.995,          // PROPOSED: Touchpoints shows and its load animation starts
+  color: 'var(--color-ground-light)', // PROPOSED: the Touchpoints ground token (#F7F7F7)
 };
 
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
@@ -134,8 +133,8 @@ export function applyMotionVariables() {
   root.setProperty('--motion-wipe-easing', HOVER.wipeEasing);
   root.setProperty('--keyword-rest-mix', `${HOVER.keywordRest * 100}%`);
   root.setProperty('--nav-rest-mix', `${HOVER.navRest * 100}%`);
-  root.setProperty('--wipe-columns', String(WIPE.columns));
-  root.setProperty('--wipe-rows', String(WIPE.rows));
+  root.setProperty('--wipe-bars', String(WIPE.bars));
+  root.setProperty('--wipe-color', WIPE.color);
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);

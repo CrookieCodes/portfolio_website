@@ -44,8 +44,8 @@ function boxOf(element) {
 }
 
 function initTouchpoints() {
-  const canvas = document.querySelector('[data-js="ascii-touchpoints"]');
-  const diagram = document.querySelector('[data-js="diagram"]');
+  const canvas = document.querySelector('[data-js~="ascii-touchpoints"]');
+  const diagram = document.querySelector('[data-js~="diagram"]');
   if (!canvas || !diagram) return;
   const shapes = [...diagram.querySelectorAll('[data-square]')].map((rect) => {
     const box = boxOf(rect);
@@ -55,7 +55,7 @@ function initTouchpoints() {
   });
   return createAsciiEffect({
     canvas,
-    screen: canvas.closest('[data-js="screen"]'),
+    screen: canvas.closest('[data-js~="screen"]'),
     width: 1340,
     height: 727,
     direction: 'radial',
@@ -76,7 +76,7 @@ function initExperiences() {
   });
   return createAsciiEffect({
     canvas,
-    screen: canvas.closest('[data-js="screen"]'),
+    screen: canvas.closest('[data-js~="screen"]'),
     width: 1920,
     height: 1080,
     direction: 'down',

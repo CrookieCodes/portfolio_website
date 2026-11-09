@@ -23,7 +23,7 @@ Tags: **FIGMA** = read from Figma. **CAROL** = stated by Carol. **PROPOSED** = s
 - **Two pages:** `index.html` (the main flow) and `about.html` (hero, Experience section, Skills section, footer). Shared header, footer, tokens, motion config and effects.
 - **Main flow (scroll):** Splash -> Landing -> Touchpoints -> Experiences -> Selected Works -> About section + footer. Scrolling up goes back one screen.
 - **Transitions between screens (CAROL):**
-  - Landing -> Touchpoints (dark to white): **block-wipe**, see below. This is the only block-wipe.
+  - Landing -> Touchpoints (dark to white): **blinds up**, see section 2. Twelve vertical bars in the Touchpoints ground colour rise from the bottom of the screen to the top, staggered left to right, tied to the scroll; the header swaps when the last bar lands, then the Touchpoints load animation plays. This is the only blinds transition.
   - Touchpoints -> Experiences, and Experiences -> Selected Works (dark to light): **simple push-in slide**. The next screen slides up over the current one, as if the photo is pushed into the space. ~0.8 s, ease-out, scroll-linked, reversible. Reuse the existing scene mechanism if it already does this.
   - Selected Works -> About section: keep the existing behaviour (plain scroll).
 - **Loading animation (CAROL: simple, consistent everywhere):** when a screen enters view for the first time, its elements slide up 24 px (PROPOSED) and fade in, staggered 90 ms (PROPOSED), 600 ms each, ease-out. Plays once per page load. Reference feel: slide-up and fade, whole screen settled in about 1.5 s. Each screen below lists its own order.
@@ -51,7 +51,14 @@ Skippable by click, key or scroll. Page underneath is `inert` while it plays. No
 - **Hover (CAROL):** when the cursor is on any of the three keywords, BOTH eyes turn into the pinwheel logo (the burgundy cross state from before is replaced by the pinwheel mark). Leaving restores the pupils. Keyboard focus on a keyword does the same.
 - **Click (CAROL):** each keyword is a link into Selected Works in the domain view for that domain: Products -> Product Design, Services -> Service Design, Experiences -> UX Design. Navigate by smooth scroll to the Works screen and open the domain view.
 - **Loading order:** eyes, then the heading text, then the three keywords (staggered), then the scroll cue.
-- **Landing -> Touchpoints: block-wipe (CAROL, from her Pinterest-style clip).** Stepped rectangular blocks of the new colour (#F7F7F7, the Touchpoints ground) fill the screen over one screen of scroll, tied to scroll and reversible. Technique: the Landing is pinned (sticky) while a 16 x 9 CSS grid of cells covers it; each cell has a threshold between 0 and 1 (vertical sweep, CAROL: bottom row first, with random jitter, fixed per load); a cell is white when scroll progress > threshold. Values in `WIPE` (js/motion-config.js). The header theme and logo swap at 50%. No scroll-snap points on the Landing or Touchpoints: snapping pulled every gesture back to one end of the wipe.
+- **Landing -> Touchpoints: blinds up (CAROL, chosen from a prototype).**
+  - Twelve vertical bars, each 1/12 of the screen width, in the Touchpoints ground colour (#F7F7F7). Each is the full screen height and rises from the bottom to the top, never top to bottom.
+  - Scroll-tied and reversible. The Landing stays pinned (sticky, in a 200svh wrapper) while the bars rise over one screen of scrolling. No scroll-snap points on the Landing or Touchpoints (snapping pulled every gesture back to one end).
+  - Stagger left to right in a straight line: bar i (0 to 11) has local progress q = clamp((p - (i / 11) x 0.5) / 0.5) and height smoothstep(q) = q x q x (3 - 2q) of the screen. Bar 0 starts at p = 0, the last bar lands at p = 1. Built as 12 absolutely positioned divs scaled with transform: scaleY() from the bottom, each overlapping the next by 1px so no seams show.
+  - Header: the band, nav and logo keep the Landing theme until the last bar lands. At swapAt (0.98) they switch to the Touchpoints theme and the logo spins from the tan mark to the burgundy pinwheel; scrolling back past it reverses this.
+  - Then the elements load: the Touchpoints elements stay hidden while the bars rise, so the white ground arrives first. At coveredAt (0.995) the standard load animation plays (heading, the bullets one after another, then the diagram assembly). Once per page load (CAROL).
+  - Values in `WIPE` (js/motion-config.js), all PROPOSED: bars 12, spread 0.5, swapAt 0.98, coveredAt 0.995, color = the Touchpoints ground token.
+  - Reduced motion: no bars; the Landing and Touchpoints are plain screens, one after the other, and the Touchpoints elements are visible straight away.
 
 ## 3. Touchpoints (32:306)
 - White background, dark text, header pinwheel in burgundy.

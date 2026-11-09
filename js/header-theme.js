@@ -10,8 +10,11 @@
 // earlier ones (the push-in: the earlier screen is sticky and stays under the header
 // while the next one covers it), so the later one is the one on top.
 //
+// A screen marked data-screen-hidden (Touchpoints while it waits under the pinned
+// Landing, js/wipe.js) is skipped.
+//
 // Measured on scroll (at most once per frame), on resize, and when a screen's
-// data-screen-* attributes change (the block-wipe flips them at its midpoint).
+// data-screen-* attributes change (the blinds flip them when the last bar lands).
 
 export function initHeaderTheme() {
   const header = document.querySelector('[data-js="site-header"]');
@@ -48,6 +51,7 @@ export function initHeaderTheme() {
     let found = null;
     screens.forEach((screen) => {
       const box = screen.getBoundingClientRect();
+      if (screen.dataset.screenHidden) return;
       if (box.top <= line && box.bottom > line) found = screen; // later screens win
     });
     if (found) applyScreen(found);
@@ -65,10 +69,10 @@ export function initHeaderTheme() {
   window.addEventListener('scroll', scheduleMeasure, { passive: true });
   window.addEventListener('resize', scheduleMeasure);
 
-  // A screen's theme or logo can change while it stays in place (the block-wipe).
+  // A screen's theme or logo can change while it stays in place (the blinds).
   new MutationObserver(scheduleMeasure).observe(document.querySelector('main') ?? document.body, {
     subtree: true,
-    attributeFilter: ['data-screen-theme', 'data-screen-logo', 'data-screen-nav'],
+    attributeFilter: ['data-screen-theme', 'data-screen-logo', 'data-screen-nav', 'data-screen-hidden'],
   });
 
   measure();
