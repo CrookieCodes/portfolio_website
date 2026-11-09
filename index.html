@@ -254,6 +254,8 @@
           </ul>
         </div>
       </div>
+      <!-- Dims Touchpoints while Experiences pushes in over it (js/push-in.js). -->
+      <div class="scene__dim" data-js="push-dim" aria-hidden="true"></div>
     </section>
     <!-- The #touchpoints address: the scroll position where the bars have fully risen.
          (The pinned screen itself never moves, so it cannot be the link target.) -->
@@ -270,7 +272,11 @@
       <!-- Photo and figures share a "cover" stage: it fills the screen like object-fit: cover,
            so the figures stay on the people in the photo at any window shape. -->
       <div class="scene__cover">
-        <img class="scene__photo" data-js="photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy">
+        <!-- The photo wipes in from the left behind the glyph people (js/experiences-reveal.js):
+             this wrapper clips it and slides in while the photo inside slides the other way. -->
+        <div class="scene__photo-clip" data-js="photo-clip">
+          <img class="scene__photo" data-js="photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy" decoding="async">
+        </div>
         <!-- The three figures (Figma 32:368 pink, 32:370 blue, 32:371 brown) at their Figma
              positions in the 1920 x 1080 frame. Never shown: their outlines are only the masks
              for the glyph effect on the canvas below (js/scenes.js). -->
@@ -281,13 +287,9 @@
         </svg>
         <canvas class="scene__effect" data-js="ascii-experiences" aria-hidden="true"></canvas>
       </div>
-      <!-- "Light reveals the scene" (js/experiences-reveal.js): a near-black veil over the
-           photo that a soft band of light sweeps away, left to right. Shown only by the
-           script (never without JavaScript or with reduced motion). -->
-      <div class="scene__veil" data-js="veil" aria-hidden="true"></div>
 
       <div class="scene__text scene__text--experiences">
-        <!-- Loads last, once the light has swept the scene (js/experiences-reveal.js). -->
+        <!-- Loads last, once the photo has nearly wiped in (js/experiences-reveal.js). -->
         <h2 id="experiences-title" tabindex="-1" data-js="screen-heading reveal" data-reveal-order="1">
           <span class="scene__line-1">To crafting stories,</span>
           <span class="scene__line-2">experiences.</span>

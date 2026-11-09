@@ -184,6 +184,15 @@
   transform: translate(-50%, -50%);
 }
 
+/* The photo's clip: js/experiences-reveal.js slides it in from the left while the
+   photo inside slides the other way, so the photo itself stays put and is wiped in.
+   Without the script (or with reduced motion) both stay at rest: photo visible. */
+.scene__photo-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
 .scene__photo {
   position: absolute;
   inset: 0;
@@ -201,30 +210,15 @@
   pointer-events: none;
 }
 
-/* "Light reveals the scene" (js/experiences-reveal.js). One element wider than the
-   screen: a soft edge (transparent to near-black, --veil-band of the screen wide),
-   then solid near-black the full screen wide. At the start it is shifted left so the
-   solid part covers the screen; a translate slides it right, off the screen, so the
-   light edge sweeps across. Hidden unless the script switches it on, so without
-   JavaScript (or with reduced motion) the photo simply shows. */
-.scene__veil {
+/* Dims Touchpoints while Experiences pushes in over it: js/push-in.js sets the
+   opacity (up to PUSH.veil). Above everything in Touchpoints, ignores the mouse. */
+.scene__dim {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: calc(100% * (1 + var(--veil-band)));
-  background-image: linear-gradient(
-    to right,
-    transparent,
-    var(--veil-colour) calc(100% * var(--veil-band) / (1 + var(--veil-band))),
-    var(--veil-colour)
-  );
+  inset: 0;
+  z-index: 2;
+  background-color: var(--color-black);
+  opacity: 0;
   pointer-events: none;
-  display: none;
-}
-
-.scene__veil--active {
-  display: block;
 }
 
 /* The ASCII effect canvas covers the photo's frame, so figure positions match it. */

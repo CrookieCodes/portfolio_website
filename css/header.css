@@ -68,6 +68,12 @@
   --header-scrim: var(--color-teal);
 }
 
+/* During a push-in slide (js/push-in.js) the band is off: the header items change
+   one by one as the incoming screen's edge passes them, over whatever is beneath. */
+[data-band="off"] {
+  --header-scrim: transparent;
+}
+
 /* Scrim: a band across the top of the window, behind the logo and nav but above
    every screen (the header is its own stacking layer at z-index 5). Solid down to
    the header's bottom edge (design y 133, past the logo and nav), then fading to

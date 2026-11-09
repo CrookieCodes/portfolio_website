@@ -25,7 +25,7 @@
 //     gated,   // optional: shapes start hidden; show(name, fade) switches each one on
 //   });
 // With `gated`, the effect does not run at all until the first shape is shown, and
-// each shape fades in over its own `fade` ms. With reduced motion every shape shows.
+// each shape's glyphs fade in over its own `fade` ms (its ground is opaque at once). With reduced motion every shape shows.
 // Colours are CSS custom property names (tokens) with weights; each cell picks one at random.
 // `ground` (optional, a token) fills the shape flat under the glyphs, so the shape reads as
 // a solid figure even where nothing is drawn.
@@ -175,7 +175,6 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
     layers.forEach((layer) => {
       const opacity = opacityOf(layer, now);
       if (opacity === 0) return;
-      ctx.globalAlpha = opacity;
       // One path per colour for filled glyphs and one for outlines: few draw calls.
       const fills = new Map();
       const rings = new Map();
@@ -184,11 +183,14 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
         const type = glyphFor((front - cell.distance) / ASCII.bandWidth, cell.threshold);
         addGlyph(type === OUTLINE ? rings.get(cell.colour) : fills.get(cell.colour), type, cell.x, cell.y, layer.size);
       });
+      // The ground is opaque from the moment a shape is shown (it must hide what is
+      // beneath it, e.g. the real people in the Experiences photo); the glyphs fade in.
       if (layer.ground) {
         ctx.fillStyle = layer.ground;
         ctx.fill(layer.path);
       }
       ctx.save();
+      ctx.globalAlpha = opacity;
       ctx.clip(layer.path);
       ctx.lineWidth = Math.max(layer.size * 0.08, 1 / scale); // never thinner than one screen pixel
       colours.forEach((c) => {

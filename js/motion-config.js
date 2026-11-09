@@ -55,23 +55,31 @@ export const BUILD = {
   easing: 'ease-out',                  // STARTER
 };
 
-// 4. Experiences: "light reveals the scene" (motion.md v2 section 4, CAROL's prototype),
-// once per page load, starting when Experiences has arrived (PUSH.arriveAt). Times are
-// ms from that moment.
+// 4. Experiences loading (motion.md v2 section 4, CAROL): the people first, then the
+// photo wipes in behind them from the left, then the text. Once per page load, from the
+// moment Experiences has arrived (PUSH.arriveAt). Times are ms from that moment.
 export const EXPERIENCES_REVEAL = {
-  startDelay: 200,           // PROPOSED: before the band of light starts moving
-  sweepDuration: 1900,       // PROPOSED: the band crosses from the left edge past the right edge
-  bandWidth: 0.23,           // PROPOSED: the band's soft edge, as a share of the screen width
-  veilAlpha: 0.97,           // PROPOSED: the veil ahead of the band, rgba(6, 5, 5, 0.97)
-  figureLag: 250,            // PROPOSED: a person's glyphs switch on this long after the band passes
-  figureFade: 500,           // PROPOSED: ... fading in over this long
-  textAt: 2500,              // PROPOSED: the heading and bullets start their load animation
-  glyphCycle: 4000,          // PROPOSED (added: "about 4 s"): one top-to-bottom glyph sweep on the people
+  ground: '#070606',         // PROPOSED: near-black ground before the photo
+  figureStart: 200,          // PROPOSED: the first person's glyphs switch on
+  figureStagger: 200,        // PROPOSED: then each next person (left to right)
+  figureFade: 500,           // PROPOSED: each person's glyphs fade in over this long
+  photoStart: 900,           // PROPOSED: the photo starts to wipe in from the left edge
+  photoWipe: 1600,           // PROPOSED: ... reaching the right edge after this long
+  photoSettleFrom: 1.06,     // PROPOSED: the photo eases from this scale to 1 as it wipes in
+  photoEasing: 'cubic-bezier(0.22, 1, 0.36, 1)', // STARTER: "ease out, fast start, slow finish"
+  textAt: 2400,              // PROPOSED: the heading and bullets start their load animation
+  glyphCycle: 4000,          // PROPOSED: one top-to-bottom glyph sweep on the people
 };
 
-// Push-in slides (css/push.css): when the incoming screen counts as arrived.
+// Push-in slides (css/push.css, js/push-in.js). q = how far the incoming screen has
+// entered the window: 0 with its top edge at the bottom, 1 when it covers the screen.
 export const PUSH = {
-  arriveAt: 0.98,            // STARTER: share of the screen slid in (0 to 1); not given in motion.md
+  arriveAt: 0.98,            // PROPOSED: the incoming screen counts as arrived
+  drift: 12,                 // PROPOSED: Touchpoints drifts up by q x 12% of the screen
+  veil: 0.12,                // PROPOSED: ... under a black veil fading to 12% at q = 1
+  headerCover: 1,            // PROPOSED: each header item takes the incoming theme once the
+                             //           incoming top edge has covered this share of it
+                             //           (1 = passed its top edge)
 };
 
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
@@ -170,8 +178,6 @@ export function applyMotionVariables() {
   root.setProperty('--motion-wipe-easing', HOVER.wipeEasing);
   root.setProperty('--keyword-rest-mix', `${HOVER.keywordRest * 100}%`);
   root.setProperty('--nav-rest-mix', `${HOVER.navRest * 100}%`);
-  root.setProperty('--veil-band', String(EXPERIENCES_REVEAL.bandWidth));
-  root.setProperty('--veil-colour', `rgba(6, 5, 5, ${EXPERIENCES_REVEAL.veilAlpha})`);
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);
