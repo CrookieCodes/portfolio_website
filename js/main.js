@@ -2,7 +2,7 @@
 // Each feature lives in its own small module and is started here.
 
 import { applyMotionVariables } from './motion-config.js';
-import { initSplash } from './splash.js';
+import { splashDone } from './splash.js';
 import { initHeaderTheme } from './header-theme.js';
 import { initHeaderLogo } from './header-logo.js';
 import { initScrollCues } from './scroll-cue.js';
@@ -35,4 +35,4 @@ initReveal();
 initPhotoReveal();
 initFooterSpin();
 // The headline starts cycling once the splash has revealed the hero.
-initSplash().then(initHeadline);
+splashDone.then(initHeadline);

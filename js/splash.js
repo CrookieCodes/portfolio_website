@@ -1,53 +1,52 @@
-// Splash (motion.md section 1): plays once per page load, then reveals the hero.
+// Splash (motion.md v2 section 1): plays once per page load, then reveals the Landing.
 //
-//   1. One cross (bottom-left). It duplicates and sweeps right   -> 2 crosses
-//   2. The pair duplicates and sweeps up                          -> 4 crosses
-//   3. The pale-teal centre of the logo is created (fades in)
-//   4. The logo turns 90 degrees clockwise four times, pausing between turns,
-//      and ends back in its original orientation
-//   5. The logo and the teal ground dissolve into the Landing underneath (no expand)
+//   1. The square mark fades in at the centre                 (SPLASH.fadeIn)
+//   2. It turns 360 degrees clockwise, then stops             (spinDuration + spinPause)
+//   3. It turns 360 degrees again, then stops                 (spins = 2)
+//   4. The mark and the teal ground dissolve into the Landing (SPLASH.dissolve)
+//   Total 3.5 s.
 //
 // Uses the Web Animations API: each step is an animation with a delay, so the
 // whole sequence is one timeline that can be finished at once when skipped.
 // All durations and easings come from js/motion-config.js.
 //
-// initSplash() returns a promise that resolves when the hero is showing, so
-// other hero animations (the headline cycle) can wait for it.
+// Starts itself: index.html loads this module on its own (async, right after the
+// splash markup), so the sequence begins as soon as this small file arrives instead
+// of waiting for every other script. main.js imports the same module instance and
+// waits on splashDone, a promise that resolves when the Landing is showing.
 
 import { SPLASH } from './motion-config.js';
 
 const SKIP_EVENTS = ['pointerdown', 'keydown', 'wheel'];
 
-// Keyframes for the quarter turns: each turn eases in and out, then the logo holds
-// still for the pause. Offsets are fractions of the whole turning step.
-function turnKeyframes(total) {
-  const frames = [];
+// Keyframes for the turns: each turn eases in and out, then the mark holds still
+// for the pause. Offsets are fractions of the whole turning step.
+function spinKeyframes(total) {
+  const frames = [{ rotate: '0deg', offset: 0, easing: SPLASH.spinEasing }];
   let time = 0;
-  for (let turn = 0; turn < SPLASH.turns; turn += 1) {
-    const angle = turn * SPLASH.turnAngle;
-    if (turn > 0) {
-      // End of the pause: still at the same angle.
-      time += SPLASH.turnPause;
-      frames.push({ rotate: `${angle}deg`, offset: time / total, easing: SPLASH.turnEasing });
-    } else {
-      frames.push({ rotate: `${angle}deg`, offset: 0, easing: SPLASH.turnEasing });
-    }
-    time += SPLASH.turnDuration;
-    // End of the turn; the pause after it is linear (and motionless).
-    frames.push({ rotate: `${angle + SPLASH.turnAngle}deg`, offset: time / total, easing: 'linear' });
+  for (let spin = 1; spin <= SPLASH.spins; spin += 1) {
+    const angle = `${spin * SPLASH.spinAngle}deg`;
+    time += SPLASH.spinDuration;
+    frames.push({ rotate: angle, offset: time / total, easing: 'linear' }); // end of the turn
+    time += SPLASH.spinPause;
+    frames.push({ rotate: angle, offset: time / total, easing: SPLASH.spinEasing }); // end of the stop
   }
   return frames;
 }
 
-export function initSplash() {
+function startSplash() {
   const splash = document.querySelector('[data-js="splash"]');
   if (!splash) return Promise.resolve();
 
-  // The rest of the page, made inert (not focusable, not clickable) while the splash plays.
-  const pageParts = [...document.body.children].filter((el) => el !== splash && el.tagName !== 'SCRIPT');
+  // The rest of the page, made inert (not focusable, not clickable) while the splash
+  // plays. The page may still be loading, so this runs again once it has all arrived.
+  const pageParts = () => [...document.body.children].filter((el) => el !== splash && el.tagName !== 'SCRIPT');
+  let playing = false;
+  const makeInert = () => { if (playing) pageParts().forEach((el) => { el.inert = true; }); };
 
   function reveal() {
-    pageParts.forEach((el) => { el.inert = false; });
+    playing = false;
+    pageParts().forEach((el) => { el.inert = false; });
     splash.remove();
   }
 
@@ -59,55 +58,28 @@ export function initSplash() {
     return Promise.resolve();
   }
 
-  pageParts.forEach((el) => { el.inert = true; });
+  playing = true;
+  makeInert();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', makeInert, { once: true });
 
   const logo = splash.querySelector('[data-js="splash-logo"]');
-  const centre = splash.querySelector('[data-js="splash-centre"]');
-  const bottomRight = splash.querySelector('[data-js="splash-cross-bottom-right"]');
-  const topLeft = splash.querySelector('[data-js="splash-cross-top-left"]');
-  const topRight = splash.querySelector('[data-js="splash-cross-top-right"]');
 
   // Start times of each step, one after the other.
-  const sweep1At = 0;
-  const sweep2At = sweep1At + SPLASH.sweepDuration;
-  const createAt = sweep2At + SPLASH.sweepDuration;
-  const turnsAt = createAt + SPLASH.createDuration;
-  const turnsDuration = SPLASH.turns * SPLASH.turnDuration + (SPLASH.turns - 1) * SPLASH.turnPause;
-  const dissolveAt = turnsAt + turnsDuration;
+  const spinsAt = SPLASH.fadeIn;
+  const spinsDuration = SPLASH.spins * (SPLASH.spinDuration + SPLASH.spinPause);
+  const dissolveAt = spinsAt + spinsDuration;
 
   const timing = (delay, duration, easing) => ({ delay, duration, easing, fill: 'both' });
 
   const animations = [
-    // Step 1: the copy sweeps right.
-    bottomRight.animate(
-      [{ transform: 'translate(-130px, 0)' }, { transform: 'translate(0, 0)' }],
-      timing(sweep1At, SPLASH.sweepDuration, SPLASH.sweepEasing),
-    ),
-    // Step 2: the copies of the pair sweep up. Top-right rides along with step 1 first,
-    // so it is a single two-part animation (keyframe easing applies to each part).
-    topLeft.animate(
-      [{ transform: 'translate(-1px, 130px)' }, { transform: 'translate(0, 0)' }],
-      timing(sweep2At, SPLASH.sweepDuration, SPLASH.sweepEasing),
-    ),
-    topRight.animate(
-      [
-        { transform: 'translate(-130px, 130px)', easing: SPLASH.sweepEasing },
-        { transform: 'translate(0, 130px)', easing: SPLASH.sweepEasing },
-        { transform: 'translate(0, 0)' },
-      ],
-      { delay: sweep1At, duration: SPLASH.sweepDuration * 2, fill: 'both' },
-    ),
-    // Step 3: the centre of the logo is created.
-    centre.animate(
-      [{ opacity: 0 }, { opacity: 1 }],
-      timing(createAt, SPLASH.createDuration, SPLASH.createEasing),
-    ),
-    // Step 4: the quarter turns, as one animation with a keyframe per stop.
-    logo.animate(turnKeyframes(turnsDuration), timing(turnsAt, turnsDuration, 'linear')),
-    // Step 5: the whole overlay (logo and teal ground) fades out. No transform.
+    // Step 1: the mark fades in.
+    logo.animate([{ opacity: 0 }, { opacity: 1 }], timing(0, SPLASH.fadeIn, 'linear')),
+    // Steps 2-3: the turns and stops, as one animation with a keyframe per stop.
+    logo.animate(spinKeyframes(spinsDuration), timing(spinsAt, spinsDuration, 'linear')),
+    // Step 4: the whole overlay (mark and teal ground) fades out. No transform.
     splash.animate(
       [{ opacity: 1 }, { opacity: 0 }],
-      timing(dissolveAt, SPLASH.dissolveDuration, SPLASH.dissolveEasing),
+      timing(dissolveAt, SPLASH.dissolve, SPLASH.dissolveEasing),
     ),
   ];
 
@@ -123,7 +95,7 @@ export function initSplash() {
       resolve();
     }
 
-    // Any click, key press or scroll jumps straight to the end: the hero.
+    // Any click, key press or scroll jumps straight to the end: the Landing.
     function skip() {
       finish();
     }
@@ -134,3 +106,6 @@ export function initSplash() {
     Promise.all(animations.map((animation) => animation.finished)).then(finish, finish);
   });
 }
+
+// Runs once, however many times this module is imported.
+export const splashDone = startSplash();

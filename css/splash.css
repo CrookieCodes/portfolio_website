@@ -1,7 +1,6 @@
-/* Screen 1: splash. A full-window teal overlay above the header and the hero.
+/* Screen 1: splash. A full-window teal overlay above the header and the Landing.
    js/splash.js plays the logo sequence once, then removes the overlay.
-   The rules below are the sequence's starting frame: one visible cross,
-   because the three copies sit exactly on top of the bottom-left cross. */
+   The rule below is the starting frame: the mark is hidden until it fades in. */
 
 .splash {
   position: fixed;
@@ -13,37 +12,12 @@
   background-color: var(--color-teal);
 }
 
+/* The square mark: 128px at 1920 (its size inside the 199px Figma splash logo). */
 .splash__logo {
-  width: calc(199 * var(--u));   /* 199px at 1920 (Figma node is 199 x 198.5) */
-  height: calc(199 * var(--u));
-  overflow: visible;
-}
-
-/* The pale-teal centre of the logo: hidden until it is "created". */
-.splash__centre {
+  width: calc(128 * var(--u));
+  height: calc(128 * var(--u));
   fill: var(--color-pale-teal);
   opacity: 0;
-}
-
-.splash__cross {
-  fill: var(--color-burgundy);
-}
-
-/* Start positions, in SVG units (the logo is 199 units wide).
-   Bottom-right starts on the bottom-left cross (130 units to its left).
-   The top row starts on the bottom row (130 units below its final place);
-   top-right also starts on the bottom-left cross, so it can ride along
-   with the first sweep. */
-.splash__cross--bottom-right {
-  transform: translate(-130px, 0);
-}
-
-.splash__cross--top-left {
-  transform: translate(-1px, 130px);
-}
-
-.splash__cross--top-right {
-  transform: translate(-130px, 130px);
 }
 
 /* No sequence for visitors who prefer reduced motion, or without JavaScript

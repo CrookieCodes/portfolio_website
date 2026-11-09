@@ -26,24 +26,20 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Screen 1: splash. A full-window overlay above everything (js/splash.js plays it once,
-       then removes it to reveal the hero underneath). Decorative, so hidden from screen readers.
-       Logo: Figma Component 6 (11:660). Each copy cross starts on top of the bottom-left cross
-       (see splash.css), then sweeps to its corner: bottom-right first, then the top row. -->
+       then removes it to reveal the Landing underneath). Decorative, so hidden from screen readers.
+       Only the main square mark (the centre of Figma 32:634), cropped to its own box. -->
   <div class="splash" data-js="splash" aria-hidden="true">
-    <svg class="splash__logo" data-js="splash-logo" viewBox="0 0 199 199" focusable="false">
-      <g class="splash__centre" data-js="splash-centre">
-        <path d="M36 129.139V47.6306L68.2085 52.5777L52.7097 131.731L36 129.139Z"/>
-        <path d="M163.938 69.7012L163.938 152.308L131.73 147.533L147.229 67.3137L163.938 69.7012Z"/>
-        <path d="M70.5715 36.0001L152.309 36.0001L147.584 67.3139L68.2091 52.3581L70.5715 36.0001Z"/>
-        <path d="M150.213 113.797L82.5229 114.732L87.3237 83.4178L151.413 95.8031L150.213 113.797Z"/>
-        <path d="M129.369 163.939L47.6313 163.939L52.3561 131.731L131.731 147.114L129.369 163.939Z"/>
-      </g>
-      <path class="splash__cross" d="M2.5 148L0 165H23L18 196L34.5 198.5V176.5L66.5 181.5L69 165H46.5L51.5 132.5L34.5 130V153L2.5 148Z"/>
-      <path class="splash__cross splash__cross--bottom-right" data-js="splash-cross-bottom-right" d="M132.5 148L130 165H153L148 196L164.5 198.5V176.5L196.5 181.5L199 165H176.5L181.5 132.5L164.5 130V153L132.5 148Z"/>
-      <path class="splash__cross splash__cross--top-left" data-js="splash-cross-top-left" d="M3.5 18L1 35H24L19 66L35.5 68.5V46.5L67.5 51.5L70 35H47.5L52.5 2.5L35.5 0V23L3.5 18Z"/>
-      <path class="splash__cross splash__cross--top-right" data-js="splash-cross-top-right" d="M132.5 18L130 35H153L148 66L164.5 68.5V46.5L196.5 51.5L199 35H176.5L181.5 2.5L164.5 0V23L132.5 18Z"/>
+    <svg class="splash__logo" data-js="splash-logo" viewBox="36 36 128 128" focusable="false">
+      <path d="M36 129.139V47.6306L68.2085 52.5777L52.7097 131.731L36 129.139Z"/>
+      <path d="M163.938 69.7012L163.938 152.308L131.73 147.533L147.229 67.3137L163.938 69.7012Z"/>
+      <path d="M70.5715 36.0001L152.309 36.0001L147.584 67.3139L68.2091 52.3581L70.5715 36.0001Z"/>
+      <path d="M150.213 113.797L82.5229 114.732L87.3237 83.4178L151.413 95.8031L150.213 113.797Z"/>
+      <path d="M129.369 163.939L47.6313 163.939L52.3561 131.731L131.731 147.114L129.369 163.939Z"/>
     </svg>
   </div>
+  <!-- The splash starts as soon as its own small script arrives (async: it does not wait
+       for the rest of the page or js/main.js). main.js shares the same module. -->
+  <script type="module" async src="js/splash.js"></script>
 
   <!-- One fixed header for screens 2-6. data-theme is set by js/header-theme.js.
        The splash overlay covers it while it plays. -->

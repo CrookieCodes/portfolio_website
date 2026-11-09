@@ -37,11 +37,13 @@ Tags: **FIGMA** = read from Figma. **CAROL** = stated by Carol. **PROPOSED** = s
 - **Brighter glyph colours (CAROL):** pink #F28B9D, blue #4FA8E0, orange #F5A04A (PROPOSED hex, tune by eye). Used by every ASCII/glyph effect from now on. The old palette (burgundy, deep-teal, bronze) stays for flat colour use.
 
 ## 1. Splash (32:633)
-Sequence (CAROL), total under 5 s:
-1. Assembly (unchanged from before): cross appears, duplicates and sweeps right (2), duplicates and sweeps up (4 in a 2x2), then the logo is created. ~1.7 s (PROPOSED: sweeps 0.6 s each, creation 0.5 s).
-2. **New:** the logo turns 90 degrees clockwise, pauses, 90 again, pause, 90 again, pause, 90 again, back to the original orientation. Four turns of 0.35 s, ease-in-out, with 0.2 s pauses between (3 pauses): ~2.0 s.
-3. Dissolve into the Landing: 0.6 s. The old expand is removed (earlier feedback: no expanding).
-Total about 4.3 s. Skippable by click, key or scroll. Page underneath is `inert` while it plays. No splash when the URL has a hash. Plays once per load.
+Sequence (CAROL, revised: much simpler), 3.5 s in total from the first frame to the Landing fully visible. Only the main square mark ("C" logo); no corner crosses, no duplicate-and-sweep assembly, no other shapes.
+1. The mark fades in at the centre: 0.4 s.
+2. It rotates a full 360 degrees clockwise (0.7 s, ease-in-out), then stops (0.5 s).
+3. It rotates a full 360 degrees again (0.7 s, ease-in-out), then stops (0.5 s).
+4. It dissolves into the Landing: 0.7 s. No expanding.
+Values in `SPLASH` (js/motion-config.js): fadeIn 400, spins 2, spinAngle 360, spinDuration 700, spinPause 500, dissolve 700.
+Skippable by click, key or scroll. Page underneath is `inert` while it plays. No splash when the URL has a hash. Plays once per load. Reduced motion: no splash.
 
 ## 2. Landing (32:656)
 - **Layout:** the pair of eyes centred at the top. Below: "Hey, I'm Carol Elizabeth. I design." Then three always-visible keywords on separate burgundy-highlighted labels: Products, Services, Experiences. Then the scroll cue. Header shows the primary logo.
