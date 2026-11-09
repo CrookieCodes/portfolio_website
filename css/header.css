@@ -33,8 +33,8 @@
 
 [data-theme="touchpoints"] {
   --header-cross: var(--color-burgundy);
-  --header-nav: var(--color-white);
-  --header-scrim: var(--color-teal);
+  --header-nav: var(--color-nav-dark);
+  --header-scrim: var(--color-ground-light);
 }
 
 [data-theme="experiences"] {

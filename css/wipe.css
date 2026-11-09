@@ -1,0 +1,69 @@
+/* Landing -> Touchpoints block-wipe (motion.md v2 section 2, CAROL).
+   The wrapper is two screens tall. The Landing inside it is sticky, so it stays put
+   for one screen of scrolling; js/wipe.js turns the blocks of the grid white one by
+   one as the scroll progresses (and back again going up). Touchpoints is pulled up
+   under the Landing (.scene--after-wipe), so when every block is white the Landing
+   is hidden and Touchpoints is already in place.
+   With reduced motion there is no wipe: plain screens, one after the other. */
+
+/* No snap points on the Landing or Touchpoints: the wipe runs between them and is
+   scrubbed by the scroll, and snapping pulled every gesture back to one end. */
+.wipe {
+  position: relative;
+  height: 200vh;           /* fallback */
+  height: 200svh;
+}
+
+/* The pinned Landing, above Touchpoints while the wipe runs. */
+.landing {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Every block covered: the Landing steps aside to show Touchpoints underneath. */
+.wipe--covered .landing {
+  visibility: hidden;
+}
+
+/* 16 x 9 blocks (WIPE in js/motion-config.js), covering the whole screen. */
+.wipe__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;              /* above the Landing's stage */
+  display: grid;
+  grid-template-columns: repeat(var(--wipe-columns), 1fr);
+  grid-template-rows: repeat(var(--wipe-rows), 1fr);
+  pointer-events: none;
+}
+
+/* A block flips in one step: no transition, so the wipe stays stepped. */
+.wipe__cell--on {
+  background-color: var(--color-ground-light);
+}
+
+/* Touchpoints starts one screen up, under the pinned Landing. It is not a snap
+   point (see .wipe). */
+.scene--after-wipe {
+  scroll-snap-align: none;
+  margin-top: -100vh;      /* fallback */
+  margin-top: -100svh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wipe {
+    height: auto;
+  }
+
+  .landing {
+    position: relative;
+  }
+
+  .wipe__grid {
+    display: none;
+  }
+
+  .scene--after-wipe {
+    margin-top: 0;
+  }
+}

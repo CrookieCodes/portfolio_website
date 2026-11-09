@@ -29,6 +29,9 @@
   --color-black: #000000;
   --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
   --color-ground-light: #f7f7f7; /* Touchpoints ground (Figma 32:306) */
+  --color-heading-dark: #1c1c1c; /* Touchpoints heading (Figma 32:320) */
+  --color-list-dark: #212121;    /* Touchpoints list (Figma 32:321) */
+  --color-nav-dark: #181818;     /* header nav on Touchpoints (Figma 32:315) */
   /* Touchpoint diagram (Figma 1:270): lines, dots and the squares' gradient stops */
   --color-diagram-line: #8c8c8c;
   --color-diagram-dot: #acacac;

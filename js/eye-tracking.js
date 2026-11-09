@@ -15,7 +15,7 @@ const IRIS_REST = { x: 185.5, y: 119.5 }; // where the iris sits in the design (
 const RANGE = { x: 80, y: 45 };           // how far the iris centre may move from the middle
 
 export function initEyeTracking() {
-  const landing = document.getElementById('landing');
+  const landing = document.querySelector('[data-js="eye"]')?.closest('[data-js~="screen"]');
   const eyes = [...document.querySelectorAll('[data-js="eye"]')].map((svg) => ({
     svg,
     look: svg.querySelector('[data-js="eye-look"]'),
