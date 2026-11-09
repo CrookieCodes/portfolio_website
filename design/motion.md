@@ -73,12 +73,14 @@ Skippable by click, key or scroll. Page underneath is `inert` while it plays. No
 
 ## 4. Experiences (32:359)
 - Layout unchanged. Header pinwheel in bronze.
-- **Loading order (CAROL, Option A):**
-  1. The photo appears.
-  2. The silhouettes fade in as coloured shapes on the photo (pink, blue, brown, flat shapes from the frame).
-  3. They crossfade into the glyph effect on the deep-teal ground (the glyph effect keeps its top-to-bottom sweep; brighter colours).
-  4. The text "To crafting stories, experiences." and the bullets slide up and fade in.
-  Flat shapes use the frame's gradients (pink #CF5C6D/#612830/#40171D, blue #67BBDA/#285160/#14303A, brown #825825/#140804). Timings in `FIGURES` (STARTER).
+- **Loading: "light reveals the scene" (CAROL, from her prototype; replaces the old order of photo, flat coloured silhouettes, crossfade, text).** Once per page load, starting when Experiences has arrived (slid in to `PUSH.arriveAt`):
+  1. Arrival under a veil: the photo comes in under a near-black veil, rgba(6, 5, 5, 0.97), so only a dark screen arrives. The veil is aria-hidden and ignores the mouse.
+  2. The light sweeps: after 0.2 s a soft band of light sweeps from left to right over 1.9 s. Behind the band's edge the veil is fully transparent (the photo at full brightness); ahead of it the veil stays at 0.97. The soft edge is 23% of the screen width. Built as one element wider than the screen (soft edge, then solid), moved with a single translate: no mask, no per-frame gradient, no layout changes.
+  3. The people light up: as the band's centre passes the horizontal middle of each person, the glyph effect switches on inside that person's shape 0.25 s later, fading in over 0.5 s, then keeps its top-to-bottom sweep looping (about 4 s per pass), in the brighter pink, blue and orange with 8 px cells on the deep-teal ground. The silhouette shapes are only the masks for the glyphs, never shown as flat shapes. The glyph canvas stays paused until the first person is switched on, and pauses when off-screen or the tab is hidden (30 fps cap).
+  4. The text: 2.5 s after arrival the heading and bullets slide up and fade in with the standard load animation.
+  - Scrolling away and back does not replay it; the end state stays (photo, glyphs on the people, text).
+  - Values in `EXPERIENCES_REVEAL` (js/motion-config.js), all PROPOSED: startDelay 200, sweepDuration 1900, bandWidth 0.23, veilAlpha 0.97, figureLag 250, figureFade 500, textAt 2500, plus glyphCycle 4000 ("about 4 s"). `PUSH.arriveAt` 0.98 (STARTER).
+  - Reduced motion: no veil and no sweep; the photo, one still glyph frame on all the people, and the text show straight away. Without JavaScript the veil is never shown. The heading, bullets and the photo's description stay in the page throughout (only opacity changes).
 - Transition in from Touchpoints is the push-in slide.
 
 ## 5. Selected Works (32:377, 32:417)

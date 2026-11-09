@@ -55,16 +55,23 @@ export const BUILD = {
   easing: 'ease-out',                  // STARTER
 };
 
-// 4. Experiences load order (motion.md v2 section 4, CAROL Option A): the photo, then the
-// figures as flat shapes, then they crossfade into the glyph effect, then the text.
-// Timings are not in motion.md; these are starting values.
-export const FIGURES = {
-  photoDuration: 600,        // STARTER: the photo fades in (the standard load duration)
-  shapesAt: 500,             // STARTER: the flat figures start to fade in
-  shapesDuration: 500,       // STARTER
-  holdDuration: 400,         // STARTER: the flat figures stay a moment
-  crossfadeDuration: 800,    // STARTER: flat figures -> glyphs
-  easing: 'ease-out',        // STARTER
+// 4. Experiences: "light reveals the scene" (motion.md v2 section 4, CAROL's prototype),
+// once per page load, starting when Experiences has arrived (PUSH.arriveAt). Times are
+// ms from that moment.
+export const EXPERIENCES_REVEAL = {
+  startDelay: 200,           // PROPOSED: before the band of light starts moving
+  sweepDuration: 1900,       // PROPOSED: the band crosses from the left edge past the right edge
+  bandWidth: 0.23,           // PROPOSED: the band's soft edge, as a share of the screen width
+  veilAlpha: 0.97,           // PROPOSED: the veil ahead of the band, rgba(6, 5, 5, 0.97)
+  figureLag: 250,            // PROPOSED: a person's glyphs switch on this long after the band passes
+  figureFade: 500,           // PROPOSED: ... fading in over this long
+  textAt: 2500,              // PROPOSED: the heading and bullets start their load animation
+  glyphCycle: 4000,          // PROPOSED (added: "about 4 s"): one top-to-bottom glyph sweep on the people
+};
+
+// Push-in slides (css/push.css): when the incoming screen counts as arrived.
+export const PUSH = {
+  arriveAt: 0.98,            // STARTER: share of the screen slid in (0 to 1); not given in motion.md
 };
 
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
@@ -163,6 +170,8 @@ export function applyMotionVariables() {
   root.setProperty('--motion-wipe-easing', HOVER.wipeEasing);
   root.setProperty('--keyword-rest-mix', `${HOVER.keywordRest * 100}%`);
   root.setProperty('--nav-rest-mix', `${HOVER.navRest * 100}%`);
+  root.setProperty('--veil-band', String(EXPERIENCES_REVEAL.bandWidth));
+  root.setProperty('--veil-colour', `rgba(6, 5, 5, ${EXPERIENCES_REVEAL.veilAlpha})`);
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);

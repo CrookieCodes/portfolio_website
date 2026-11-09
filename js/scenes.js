@@ -8,6 +8,7 @@
 // Cell size: ASCII.cell (8 design px, CAROL).
 
 import { createAsciiEffect } from './ascii-effect.js';
+import { EXPERIENCES_REVEAL } from './motion-config.js';
 
 // Glyph colours: the brighter set (motion.md v2, CAROL), each cell picks one by weight.
 // All glyphs sit on the deep-teal ground (CAROL's prototype): on the squares' own
@@ -68,7 +69,7 @@ function initExperiences() {
     const m = figure.transform.baseVal.consolidate()?.matrix ?? new DOMMatrix();
     const path = new Path2D();
     path.addPath(new Path2D(figure.getAttribute('d')), m);
-    return { path, box: boxOf(figure), colours: FIGURE_COLOURS[figure.dataset.figure], ground: GROUND };
+    return { path, box: boxOf(figure), colours: FIGURE_COLOURS[figure.dataset.figure], ground: GROUND, name: figure.dataset.figure };
   });
   return createAsciiEffect({
     canvas,
@@ -77,6 +78,8 @@ function initExperiences() {
     height: 1080,
     direction: 'down',
     shapes,
+    cycle: EXPERIENCES_REVEAL.glyphCycle,
+    gated: true, // each person lights up as the light passes (js/experiences-reveal.js)
   });
 }
 

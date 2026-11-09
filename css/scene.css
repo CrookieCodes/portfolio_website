@@ -191,27 +191,41 @@
   height: 100%;
 }
 
-/* The figures as flat shapes, over the photo's frame (same 1920 x 1080 units as the
-   canvas). They show while the screen loads, then crossfade into the glyph effect
-   (js/experiences-build.js); at rest (and with reduced motion) only the glyphs show.
-   The script also reads their outlines from here. */
+/* The figures' outlines: only read by the script (the masks for the glyphs), never
+   shown. They keep their geometry (so the script can measure them) but take no space. */
 .scene__shapes {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none; /* decorative, and invisible at rest */
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.scene__stop--figure-pink-top { stop-color: var(--color-figure-pink-top); }
-.scene__stop--figure-pink-mid { stop-color: var(--color-figure-pink-mid); }
-.scene__stop--figure-pink-bottom { stop-color: var(--color-figure-pink-bottom); }
-.scene__stop--figure-blue-top { stop-color: var(--color-figure-blue-top); }
-.scene__stop--figure-blue-mid { stop-color: var(--color-figure-blue-mid); }
-.scene__stop--figure-blue-bottom { stop-color: var(--color-figure-blue-bottom); }
-.scene__stop--figure-brown-top { stop-color: var(--color-figure-brown-top); }
-.scene__stop--figure-brown-bottom { stop-color: var(--color-figure-brown-bottom); }
+/* "Light reveals the scene" (js/experiences-reveal.js). One element wider than the
+   screen: a soft edge (transparent to near-black, --veil-band of the screen wide),
+   then solid near-black the full screen wide. At the start it is shifted left so the
+   solid part covers the screen; a translate slides it right, off the screen, so the
+   light edge sweeps across. Hidden unless the script switches it on, so without
+   JavaScript (or with reduced motion) the photo simply shows. */
+.scene__veil {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% * (1 + var(--veil-band)));
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--veil-colour) calc(100% * var(--veil-band) / (1 + var(--veil-band))),
+    var(--veil-colour)
+  );
+  pointer-events: none;
+  display: none;
+}
+
+.scene__veil--active {
+  display: block;
+}
 
 /* The ASCII effect canvas covers the photo's frame, so figure positions match it. */
 .scene__effect {

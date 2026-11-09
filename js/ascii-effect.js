@@ -20,8 +20,12 @@
 // Usage:
 //   createAsciiEffect({
 //     canvas, screen, width, height, direction: 'radial', origin: { x, y },   // or direction: 'down' (no origin)
-//     shapes: [{ path: Path2D, box: { x, y, w, h }, colours: [['--color-teal', 0.7], ...], ground }],
+//     shapes: [{ path: Path2D, box: { x, y, w, h }, colours: [['--color-teal', 0.7], ...], ground, name }],
+//     cycle,   // optional: ms per pass (default ASCII.passDuration)
+//     gated,   // optional: shapes start hidden; show(name, fade) switches each one on
 //   });
+// With `gated`, the effect does not run at all until the first shape is shown, and
+// each shape fades in over its own `fade` ms. With reduced motion every shape shows.
 // Colours are CSS custom property names (tokens) with weights; each cell picks one at random.
 // `ground` (optional, a token) fills the shape flat under the glyphs, so the shape reads as
 // a solid figure even where nothing is drawn.
@@ -98,7 +102,7 @@ function addGlyph(path, type, x, y, s) {
   }
 }
 
-export function createAsciiEffect({ canvas, screen, width, height, direction = 'radial', origin, shapes }) {
+export function createAsciiEffect({ canvas, screen, width, height, direction = 'radial', origin, shapes, cycle = ASCII.passDuration, gated = false }) {
   const ctx = canvas.getContext('2d');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const tokens = getComputedStyle(document.documentElement);
@@ -130,7 +134,8 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
       }
     }
     const ground = shape.ground ? tokens.getPropertyValue(shape.ground).trim() : null;
-    return { path: shape.path, size, cells, ground };
+    // shownAt: when it was switched on (gated effects); fade: over how long.
+    return { path: shape.path, size, cells, ground, name: shape.name, shownAt: gated ? null : -Infinity, fade: 0 };
   });
   // Distance of each cell along the sweep: from the origin ('radial'), or down from
   // the top edge of the highest cell ('down'), so the front starts just above it.
@@ -156,12 +161,21 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
     scale = box.width / width;
   }
 
+  // A shape's opacity at time `now`: 0 until it is switched on, then fading in.
+  const opacityOf = (layer, now) => {
+    if (layer.shownAt === null || now < layer.shownAt) return 0;
+    return layer.fade > 0 ? Math.min(1, (now - layer.shownAt) / layer.fade) : 1;
+  };
+
   // Draws the effect with the front `front` design px along the sweep.
-  function draw(front) {
+  function draw(front, now = performance.now()) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(scale * ratio, 0, 0, scale * ratio, 0, 0);
     layers.forEach((layer) => {
+      const opacity = opacityOf(layer, now);
+      if (opacity === 0) return;
+      ctx.globalAlpha = opacity;
       // One path per colour for filled glyphs and one for outlines: few draw calls.
       const fills = new Map();
       const rings = new Map();
@@ -185,6 +199,7 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
       });
       ctx.restore();
     });
+    ctx.globalAlpha = 1;
   }
 
   // Time only moves on while running, so a pause resumes where it stopped.
@@ -194,27 +209,31 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
   let frame = 0;
   let inView = false;
 
-  const frontAt = (ms) => ((ms % ASCII.passDuration) / ASCII.passDuration) * travel;
+  const frontAt = (ms) => ((ms % cycle) / cycle) * travel;
 
   function tick(now) {
     if (last) elapsed += now - last;
     last = now;
     if (now - lastDrawn >= 1000 / ASCII.fps - 1) { // 30 fps cap
       lastDrawn = now;
-      draw(frontAt(elapsed));
+      draw(frontAt(elapsed), now);
     }
     frame = requestAnimationFrame(tick);
   }
 
   function drawStill() {
+    layers.forEach((layer) => { layer.shownAt = -Infinity; }); // reduced motion: everything shows
     draw(ASCII.staticAt * travel);
   }
+
+  // Gated effects run only once at least one shape has been switched on.
+  const anyShown = () => layers.some((layer) => layer.shownAt !== null);
 
   function update() {
     // data-scene-paused: the screen is in the window but completely covered
     // (Touchpoints pinned under the Landing before the blinds rise, js/wipe.js).
     // data-scene-covered: another screen has slid over it (js/push-in.js).
-    const run = inView && !screen.dataset.scenePaused && !screen.dataset.sceneCovered && !document.hidden && !reduceMotion.matches;
+    const run = inView && anyShown() && !screen.dataset.scenePaused && !screen.dataset.sceneCovered && !document.hidden && !reduceMotion.matches;
     if (run && !frame) {
       last = 0;
       frame = requestAnimationFrame(tick);
@@ -245,6 +264,16 @@ export function createAsciiEffect({ canvas, screen, width, height, direction = '
     update();
   }, { rootMargin: '-1px 0px' }).observe(screen);
 
+  // Gated effects: switches the named shape on at time `at` (performance.now() time,
+  // default now), fading in over `fade` ms, and starts the effect if it was waiting.
+  function show(name, fade = 0, at = performance.now()) {
+    const layer = layers.find((candidate) => candidate.name === name);
+    if (!layer || layer.shownAt !== null) return;
+    layer.shownAt = at;
+    layer.fade = fade;
+    update();
+  }
+
   // For tests and tuning: how many cells each shape has.
-  return { cellCounts: layers.map((layer) => layer.cells.length) };
+  return { show, cellCounts: layers.map((layer) => layer.cells.length) };
 }

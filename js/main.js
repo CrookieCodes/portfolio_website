@@ -13,7 +13,7 @@ import { initEyeCross } from './eye-cross.js';
 import { initDotFlow } from './dot-flow.js';
 import { initTouchpointsBuild } from './touchpoints-build.js';
 import { initTouchpointsText } from './touchpoints-text.js';
-import { initExperiencesBuild } from './experiences-build.js';
+import { initExperiencesReveal } from './experiences-reveal.js';
 import { initScenes } from './scenes.js';
 import { initPlaceholderLinks } from './placeholder-links.js';
 import { initCarousel } from './carousel.js';
@@ -31,14 +31,14 @@ initEyeTracking();
 initEyeCross();
 initDotFlow();
 initTouchpointsBuild();
-const figuresDone = initExperiencesBuild();
-initScenes();
+const scenes = initScenes();
+const experiencesLit = initExperiencesReveal(scenes.experiences);
 initTouchpointsText();
 initPlaceholderLinks();
 initCarousel();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until
-// the blinds have covered the screen, and Experiences' text until its figures have
-// turned into glyphs.
-initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered, experiences: figuresDone } });
+// the blinds have covered the screen, and Experiences' text until the light has
+// swept the scene.
+initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered, experiences: experiencesLit } });
 initPhotoReveal();
 initFooterSpin();
