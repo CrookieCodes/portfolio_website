@@ -113,10 +113,11 @@ export const WORKS = {
   rollBlurPeak: 0.35,        // STARTER: when in the roll the blur and stretch peak (0-1)
   cardDim: 0.6,              // STARTER: brightness of a card arriving or leaving (1 = full)
   cardShrink: 0.94,          // STARTER: scale of a card arriving or leaving
-  flapDistance: 90,          // STARTER: design px each flap slides in from, when the pinwheel assembles
-  flapDuration: 650,         // STARTER: each flap's slide
-  flapStagger: 60,           // STARTER: between flaps
-  flapEasing: 'cubic-bezier(0.2, 0.9, 0.25, 1.08)', // STARTER: settles with the reel's overshoot
+  // Flap colours (CAROL): the two horizontal flaps are brown or burgundy, alternating
+  // with each step (brown at project 1), the two vertical flaps always light pink.
+  flapBrown: '--color-bronze',   // PROPOSED
+  flapBurgundy: '--color-burgundy', // PROPOSED
+  flapPink: '--color-pink',      // PROPOSED (#F2909F); colours crossfade over turnDuration
 };
 
 // Standard loading animation, every screen (motion.md v2 "Global", CAROL: simple and
@@ -169,12 +170,23 @@ export const SPIN = {
   easing: 'ease-in-out',     // PROPOSED
 };
 
+// Shared cursor label (js/cursor-label.js), e.g. "Click to view project".
+export const LABEL = {
+  fade: 150,                 // PROPOSED: fades in on enter, out on leave
+  easing: 'ease-out',        // STARTER
+  offset: 16,                // STARTER: design px between the cursor and the label
+  fontSize: 12,              // PROPOSED: design px at 1920 wide
+};
+
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
 // read the same numbers as the scripts (e.g. var(--motion-reveal-duration)).
 export function applyMotionVariables() {
   const root = document.documentElement.style;
   root.setProperty('--motion-pupil-lag', `${EYES.pupilLag}ms`);
   root.setProperty('--motion-pupil-easing', EYES.pupilEasing);
+  root.setProperty('--motion-label-fade', `${LABEL.fade}ms`);
+  root.setProperty('--motion-label-easing', LABEL.easing);
+  root.setProperty('--label-font-size', String(LABEL.fontSize));
   root.setProperty('--motion-works-turn', `${WORKS.turnDuration}ms`);
   root.setProperty('--motion-works-turn-easing', WORKS.turnEasing);
   root.setProperty('--reveal-distance', String(REVEAL.distance));

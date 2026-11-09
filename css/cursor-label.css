@@ -1,0 +1,37 @@
+/* Shared cursor label (js/cursor-label.js): black, white text, 12px at 1920 wide
+   (--label-font-size from js/motion-config.js), never smaller than 12px so it stays
+   readable, up to 16px on very large windows. Padding 4px 8px at that size. Placed
+   with translate by the script; fades in over --motion-label-fade. */
+.cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6;  /* above the header */
+  padding: 0.3333em 0.6667em;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-plex);
+  font-size: clamp(0.75rem, calc(var(--label-font-size) * var(--u)), 1rem);
+  line-height: 1.25;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-label-fade) var(--motion-label-easing);
+}
+
+.cursor-label--visible {
+  opacity: 1;
+}
+
+/* Touch screens: no hover, no label (the breathing square is the hint). */
+@media (hover: none) {
+  .cursor-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-label {
+    transition: none;
+  }
+}

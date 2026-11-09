@@ -21,33 +21,38 @@
   translate: -50% 0;
 }
 
-/* --- The pinwheel (Figma 32:388: the SVG box is 765.6 x 992.6 at x 81.9, y 136) --- */
-.pinwheel {
+/* --- The pinwheel (Figma 32:388: the SVG box is 765.6 x 992.6 at x 81.9, y 136) ---
+   The wrapper takes the load animation, so the pinwheel loads as one piece. */
+.works__pinwheel {
   position: absolute;
   left: calc(81.94 * var(--u));
   top: calc(135.98 * var(--u));
   width: calc(765.639 * var(--u));
   height: calc(992.553 * var(--u));
-  overflow: visible;
-  /* Set A (32:377): tan and burgundy. js/works.js switches to set B on every other stop. */
-  --flap-one: var(--color-tan);
-  --flap-two: var(--color-burgundy);
 }
 
-/* Set B (32:417): pink and bronze. */
-.pinwheel--alt {
-  --flap-one: var(--color-pink-soft);
-  --flap-two: var(--color-bronze);
+.pinwheel {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  /* The two pairs of coloured flaps (js/pinwheel.js sets these on every turn): at rest
+     pair one is horizontal (brown) and pair two vertical (light pink). */
+  --flap-one: var(--color-bronze);
+  --flap-two: var(--color-pink);
 }
 
 .pinwheel__stick {
   fill: var(--color-bronze);
 }
 
-/* The flaps turn about the hub where they meet; the stick stays still. */
+/* The flaps turn about the hub where they meet; the stick stays still. Resting
+   position: a quarter turn from Figma's, so pair one is horizontal and points right at
+   the cards (CAROL). */
 .pinwheel__flaps {
   transform-box: view-box;
   transform-origin: 383.32px 382.32px;
+  rotate: 90deg;
 }
 
 .pinwheel__flap {
@@ -108,11 +113,15 @@
 }
 
 /* --- The column and the panel (Figma: column x 1046, 802 wide; panel x 1072, y 166, 750 wide) --- */
+/* Lined up with the header nav, not with the centred stage: in Figma the nav ends at
+   x 1800 (the right page margin) and the column at 1848, 48 past it; the card image
+   then ends at 1796, just inside the nav's right edge. Uses the header's own
+   --page-margin, so it stays lined up at any window width. */
 .works__column {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(1046 * var(--u));
+  right: calc(var(--page-margin) - 48 * var(--u));
   width: calc(802 * var(--u));
   background-color: var(--color-works-column);
 }
@@ -268,13 +277,6 @@
   margin-bottom: calc(-7.7 * var(--u));
 }
 
-.card__side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: calc(15 * var(--u));
-}
-
 .card__tags {
   display: flex;
   gap: calc(12 * var(--u));
@@ -294,14 +296,14 @@
   white-space: nowrap;
 }
 
-.card__link {
-  color: var(--color-link-dark);
-  font-family: var(--font-plex);
-  font-weight: var(--weight-medium);
-  font-size: var(--fs-card-link);
-  line-height: var(--lh-card-link);
-  letter-spacing: -0.01em;
-  text-decoration-line: underline;
+/* The card image is the link to the project (its focus ring sits inside the image). */
+.card__media {
+  display: block;
+}
+
+.card__media:focus-visible {
+  outline-color: var(--color-teal);
+  outline-offset: calc(-6 * var(--u));
 }
 
 @media (prefers-reduced-motion: reduce) {

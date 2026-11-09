@@ -38,7 +38,7 @@ initPlaceholderLinks();
 const worksReady = initWorks();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until
 // the blinds have covered the screen, and Experiences' text until the light has
-// swept the scene; Selected Works' until its pinwheel has assembled.
+// swept the scene; Selected Works' until it has arrived.
 initReveal({ waitFor: { splash: splashDone, wipe: wipeCovered, experiences: experiencesLit, works: worksReady } });
 initPhotoReveal();
 initFooterSpin();

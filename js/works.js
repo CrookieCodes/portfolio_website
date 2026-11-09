@@ -14,13 +14,19 @@
 // ignored. The new card is announced (aria-live). Cards that are not current are
 // hidden from screen readers and from Tab (inert). Reduced motion: instant changes.
 //
-// Loading, once per page load, when Selected Works has arrived (PUSH.arriveAt): the
-// pinwheel assembles, then the buttons, the title row and the cards load with the
-// standard animation (js/reveal.js waits on the promise returned here).
+// Each card's image is its link, with a cursor label ("Click to view project",
+// js/cursor-label.js) that never shows on cards that are not current or during a roll.
+//
+// Loading, once per page load: the grey column, the pinwheel, the buttons, the title
+// row and the cards load with the standard animation, in that order (js/reveal.js
+// waits on the promise returned here).
 
 import { PROJECTS, DOMAINS } from './projects.js';
 import { WORKS, PUSH } from './motion-config.js';
 import { createPinwheel } from './pinwheel.js';
+import { attachCursorLabel, hideCursorLabel } from './cursor-label.js';
+
+const CARD_LABEL = 'Click to view project';
 
 const COPIES = 2; // copies of the first cards after the last, for the wrap-around
 
@@ -33,9 +39,17 @@ function el(tag, className, text) {
 
 function buildCard(project) {
   const card = el('li', 'card');
+  // The image is the link to the project. No project page exists yet, so it is a
+  // placeholder (href "#", aria-disabled; js/placeholder-links.js stops the jump).
+  const media = el('a', 'card__media');
+  media.href = project.url ?? '#';
+  if (!project.url) media.setAttribute('aria-disabled', 'true');
+  media.setAttribute('aria-label', `View project: ${project.title}`);
   const image = el('img', 'card__image');
-  Object.assign(image, { src: project.image.src, alt: project.image.alt, width: project.image.width, height: project.image.height });
+  Object.assign(image, { src: project.image.src, alt: '', width: project.image.width, height: project.image.height });
   image.decoding = 'async';
+  media.append(image);
+  attachCursorLabel(media, CARD_LABEL);
   const body = el('div', 'card__body');
   body.append(el('h3', 'card__title', project.title), el('p', 'card__text', project.description));
   const logos = el('div', 'card__logos');
@@ -48,19 +62,10 @@ function buildCard(project) {
   tags.setAttribute('role', 'list');
   tags.setAttribute('aria-label', 'Disciplines');
   project.tags.forEach((tag) => tags.append(el('li', 'card__tag', tag)));
-  // Placeholder until the project pages exist (js/placeholder-links.js).
-  const link = el('a', 'card__link', 'View Project ');
-  link.href = '#';
-  link.setAttribute('aria-disabled', 'true');
-  const arrow = el('span', '', '>');
-  arrow.setAttribute('aria-hidden', 'true');
-  link.append(arrow);
-  const side = el('div', 'card__side');
-  side.append(tags, link);
   const footer = el('div', 'card__footer');
-  footer.append(logos, side);
+  footer.append(logos, tags);
   body.append(footer);
-  card.append(image, body);
+  card.append(media, body);
   return card;
 }
 
@@ -76,6 +81,7 @@ export function initWorks() {
   const years = q('works-years');
   const domainNav = q('works-domain-nav');
   const status = q('works-status');
+  const viewport = q('works-viewport');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const pinwheel = createPinwheel(svg);
 
@@ -91,6 +97,7 @@ export function initWorks() {
   // Renders `cards` (projects) into the track, plus copies of the first ones, and
   // shows card `at` with no animation. Only card `current` can be read or tabbed to.
   function render(cards, at, current = at) {
+    hideCursorLabel(); // the hovered card may be about to be replaced
     track.replaceChildren(...cards.map(buildCard), ...cards.slice(0, COPIES).map(buildCard));
     track.style.translate = stepOffset(at);
     markCurrent(current);
@@ -112,6 +119,7 @@ export function initWorks() {
   // Rolls the track up from card `from` to card `from + 1`. Resolves when done.
   function roll(from) {
     const to = from + 1;
+    hideCursorLabel();
     pinwheel.turn();
     markCurrent(to);
     if (reduceMotion.matches) {
@@ -135,9 +143,15 @@ export function initWorks() {
     return Promise.all(moves.map((move) => move.finished)).then(() => {}, () => {});
   }
 
+  // While rolling, nothing in the reel takes clicks or shows the label.
+  function setRolling(on) {
+    rolling = on;
+    viewport.inert = on;
+  }
+
   async function nextProject() {
     if (rolling) return;
-    rolling = true;
+    setRolling(true);
     await roll(index);
     index += 1;
     if (index >= list.length) {
@@ -145,7 +159,7 @@ export function initWorks() {
       render(list, 0); // the copy of the first card -> the real first card, no animation
     }
     announce();
-    rolling = false;
+    setRolling(false);
   }
 
   // Switches to the full list (id = null) or a domain. `animate` = roll the new first
@@ -163,11 +177,11 @@ export function initWorks() {
     sort.classList.toggle('works__button--active', Boolean(id));
     sort.setAttribute('aria-pressed', String(Boolean(id)));
     if (animate) {
-      rolling = true;
+      setRolling(true);
       render([leaving, ...list], 0, 0);
       await roll(0);
       render(list, 0);
-      rolling = false;
+      setRolling(false);
     } else {
       render(list, 0);
     }
@@ -193,22 +207,22 @@ export function initWorks() {
   next.classList.add('works__button--active');
   render(list, 0);
 
-  // Loading: the pinwheel assembles once Selected Works has arrived.
+  // Loading: js/reveal.js plays the standard load (column, pinwheel, buttons, cards)
+  // once Selected Works has arrived; this promise says when.
   if (reduceMotion.matches) return Promise.resolve();
-  pinwheel.prepare();
   return new Promise((resolve) => {
-    let played = false;
+    let done = false;
     function check() {
-      if (played) return;
+      if (done) return;
       const top = screen.getBoundingClientRect().top;
       if (1 - top / window.innerHeight >= PUSH.arriveAt) {
-        played = true;
-        pinwheel.assemble().then(resolve);
+        done = true;
+        resolve();
       }
     }
     let frame = 0;
     window.addEventListener('scroll', () => {
-      if (played || frame) return;
+      if (done || frame) return;
       frame = requestAnimationFrame(() => { frame = 0; check(); });
     }, { passive: true });
     check();

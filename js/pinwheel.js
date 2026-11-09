@@ -1,27 +1,35 @@
 // Selected Works pinwheel (motion.md v2 section 5, CAROL). It cannot spin freely:
 // each turn() is a quarter turn clockwise about the hub, and the angle only ever
-// grows (90, 180, 270, 360, 450...), so it keeps going round the same way and locks
-// at each stop. On every stop the coloured flaps switch between set A (tan and
-// burgundy) and set B (pink and bronze): a class swaps the colours and CSS crossfades
-// them over the same time (css/works.css). assemble() slides the flaps in from
-// around the hub. Values: WORKS in js/motion-config.js.
+// grows (90, 180, 270, 360...), so it keeps going round the same way and locks at each
+// stop. It rests a quarter turn from Figma's pose, with flap pair one horizontal.
+//
+// Colours (CAROL): every turn swaps which pair is horizontal. The horizontal pair is
+// brown or burgundy, alternating step by step (brown at project 1); the vertical pair
+// is always light pink. Pair one is the one horizontal on even steps, so it is brown
+// or pink; pair two, burgundy or pink. The colours crossfade over the turn
+// (css/works.css); with reduced motion everything changes at once.
+// Values: WORKS in js/motion-config.js.
 
 import { WORKS } from './motion-config.js';
 
-const HUB = { x: 383.32, y: 382.32 }; // where the flaps meet, in the SVG's units
-
 export function createPinwheel(svg) {
   const flaps = svg.querySelector('[data-js="pinwheel-flaps"]');
-  const pieces = [...svg.querySelectorAll('[data-js="pinwheel-flap"]')];
-  const stick = svg.querySelector('.pinwheel__stick');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let angle = 0;
+  let step = 0;      // turns so far
+  let angle = 90;    // the resting pose (css/works.css)
   let turning = null;
+
+  function paint() {
+    const evenStep = step % 2 === 0;
+    svg.style.setProperty('--flap-one', `var(${evenStep ? WORKS.flapBrown : WORKS.flapPink})`);
+    svg.style.setProperty('--flap-two', `var(${evenStep ? WORKS.flapPink : WORKS.flapBurgundy})`);
+  }
 
   function turn() {
     const from = angle;
     angle += 90;
-    svg.classList.toggle('pinwheel--alt');
+    step += 1;
+    paint();
     turning?.cancel();
     flaps.style.rotate = `${angle}deg`;
     if (reduceMotion.matches) return;
@@ -31,34 +39,6 @@ export function createPinwheel(svg) {
     });
   }
 
-  // Hide the flaps until assemble() (not with reduced motion, and only from script,
-  // so without JavaScript the pinwheel simply shows).
-  function prepare() {
-    if (reduceMotion.matches) return;
-    [stick, ...pieces].forEach((piece) => { piece.style.opacity = '0'; });
-  }
-
-  // Each flap slides in from outward of the hub and settles. Resolves when done.
-  function assemble() {
-    if (reduceMotion.matches) return Promise.resolve();
-    const moves = pieces.map((piece, index) => {
-      const box = piece.getBBox();
-      const dx = box.x + box.width / 2 - HUB.x;
-      const dy = box.y + box.height / 2 - HUB.y;
-      const length = Math.hypot(dx, dy) || 1;
-      const offset = `${(dx / length) * WORKS.flapDistance}px ${(dy / length) * WORKS.flapDistance}px`;
-      piece.style.opacity = '';
-      return piece.animate([{ opacity: 0, translate: offset }, { opacity: 1, translate: '0 0' }], {
-        duration: WORKS.flapDuration,
-        delay: index * WORKS.flapStagger,
-        easing: WORKS.flapEasing,
-        fill: 'backwards',
-      }).finished;
-    });
-    stick.style.opacity = '';
-    moves.push(stick.animate([{ opacity: 0 }, { opacity: 1 }], { duration: WORKS.flapDuration, fill: 'backwards' }).finished);
-    return Promise.all(moves).then(() => {}, () => {});
-  }
-
-  return { turn, prepare, assemble };
+  paint();
+  return { turn };
 }
