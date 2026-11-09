@@ -1,0 +1,136 @@
+/* Screen 2: Landing (Figma 32:656). Eyes centred at the top, the line "Hey, I'm Carol
+   Elizabeth. I design.", three keyword labels and the scroll cue.
+   Fills the window (100svh). Everything sits on a stage the size of the 1920 x 1080
+   design frame, scaled with the fluid design pixel --u (tokens.css) and centred, so
+   the composition keeps its proportions in any window. Items are placed at their
+   Figma coordinates. */
+
+.landing {
+  min-height: 0;           /* replaces the fixed 1080px frame height */
+  height: 100vh;           /* fallback */
+  height: 100svh;
+  background-color: var(--color-teal);
+}
+
+.landing__stage {
+  position: absolute;
+  inset: 0;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+  margin: auto;
+}
+
+/* The pair of eyes: x 539 to 1381 (centred), y 285, 100px apart. */
+.landing__eyes {
+  position: absolute;
+  top: calc(285 * var(--u));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: calc(100 * var(--u));
+}
+
+.landing__eye {
+  display: block;
+  width: calc(371 * var(--u));
+  height: calc(239 * var(--u));
+}
+
+/* Eye parts (inline SVG). Colours from the Figma eye component. */
+.landing__eye-outline {
+  fill: var(--color-eye-outline);
+}
+
+.landing__eye-white {
+  fill: var(--color-white);
+}
+
+.landing__iris-ring {
+  fill: var(--color-bronze);
+}
+
+.landing__pupil {
+  fill: var(--color-eye-pupil);
+}
+
+/* The iris (or the cross) follows the cursor with a short lag. */
+.landing__look {
+  transition: transform var(--motion-pupil-lag) var(--motion-pupil-easing);
+}
+
+/* Keyword hover or keyboard focus: the iris is replaced by the burgundy cross
+   (classes toggled by js/eye-cross.js). */
+.landing__iris--hidden {
+  visibility: hidden;
+}
+
+.landing__eye-cross {
+  fill: var(--color-burgundy);
+  visibility: hidden;
+}
+
+.landing__eye-cross--visible {
+  visibility: visible;
+}
+
+/* "Hey, I'm Carol Elizabeth. I design." starts at y 601, centred. */
+.landing__title {
+  position: absolute;
+  top: calc(601 * var(--u));
+  left: 0;
+  right: 0;
+  font-family: var(--font-plex);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-landing-title);
+  line-height: var(--lh-landing-title);
+  letter-spacing: var(--ls-landing-title);
+  text-align: center;
+}
+
+/* Keywords: a row from x 245 to 1676, y 778. Products on the left edge, Services
+   centred, Experiences on the right edge. */
+.landing__keywords {
+  position: absolute;
+  top: calc(778 * var(--u));
+  left: calc(245 * var(--u));
+  right: calc(244 * var(--u));
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+/* Each label is as wide as its word, not its column. */
+.landing__keyword-item {
+  justify-self: start;
+}
+
+.landing__keyword-item--centre {
+  justify-self: center;
+}
+
+.landing__keyword-item--end {
+  justify-self: end;
+}
+
+/* A burgundy label, 85px tall, with the word underlined in white. */
+.landing__keyword {
+  display: block;
+  padding: calc(6 * var(--u)) calc(4 * var(--u)) calc(7.6 * var(--u));
+  background-color: var(--color-burgundy);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-landing-keyword);
+  line-height: var(--lh-landing-keyword);
+  letter-spacing: var(--ls-landing-keyword);
+  text-decoration-line: underline;
+}
+
+/* Scroll cue: the text starts at y 1000, centred. Centred with flex rather than
+   translate, which the loading animation uses. */
+.landing__cue {
+  position: absolute;
+  top: calc(1000 * var(--u));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}

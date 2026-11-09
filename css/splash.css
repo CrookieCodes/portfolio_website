@@ -21,7 +21,7 @@
 }
 
 /* No sequence for visitors who prefer reduced motion, or without JavaScript
-   (nothing would remove the overlay): the hero shows straight away. */
+   (nothing would remove the overlay): the Landing shows straight away. */
 @media (prefers-reduced-motion: reduce) {
   .splash {
     display: none;

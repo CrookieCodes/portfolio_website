@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/splash.css">
   <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/landing.css">
   <link rel="stylesheet" href="css/scene.css">
   <link rel="stylesheet" href="css/works.css">
   <link rel="stylesheet" href="css/about.css">
@@ -43,11 +43,11 @@
 
   <!-- One fixed header for screens 2-6. data-theme is set by js/header-theme.js.
        The splash overlay covers it while it plays. -->
-  <header class="site-header" data-js="site-header" data-theme="hero">
+  <header class="site-header" data-js="site-header" data-theme="landing">
     <!-- Scrim: a fading band in the screen's colour, behind the logo and nav. -->
     <div class="site-header__scrim" aria-hidden="true"></div>
     <div class="site-header__inner">
-      <a class="site-header__logo" href="#hero">
+      <a class="site-header__logo" href="#landing">
         <span class="visually-hidden">Carol Elizabeth, home</span>
         <!-- Two marks, one shown at a time (js/header-logo.js swaps them with a spin).
              Primary: the tan square mark, Landing only (Figma 32:658, 72.5 x 72.5). -->
@@ -76,69 +76,67 @@
   </header>
 
   <main id="main">
-    <!-- Screen 2: hero -->
-    <section class="frame frame--snap hero" id="hero" aria-labelledby="hero-title" data-js="screen" data-screen-theme="hero" data-screen-logo="primary">
-      <div class="hero__inner">
-        <!-- Screen readers get the whole sentence once; the animated lines are hidden from them.
-             js/headline.js cycles the highlighted word: products. -> services. -> experiences. -->
-        <h1 class="hero__title" id="hero-title">
-          <span class="visually-hidden">Hey, I’m Carol Elizabeth. I design products, services and experiences.</span>
-          <span class="hero__line-1" aria-hidden="true">Hey, I’m Carol Elizabeth.</span>
-          <span class="hero__line-2" aria-hidden="true">I design <span class="hero__highlight" data-js="headline-highlight"><span class="hero__word hero__word--current" data-js="headline-word">products.</span><span class="hero__word" data-js="headline-word">services.</span><span class="hero__word" data-js="headline-word">experiences.</span></span></span>
-        </h1>
-        <div class="hero__eyes">
-          <!-- The eye (Figma 1:248), inline twice so its parts can move and change.
-               Each eye is a shortcut button (js/eye-buttons.js): left to screen 3, right to screen 4. -->
-          <button class="hero__eye-button" type="button" data-js="eye-button" data-target="touchpoints">
-            <svg class="hero__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
-              <clipPath id="eye-white-left">
-                <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
-              </clipPath>
-              <path class="hero__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
-              <path class="hero__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
-              <g clip-path="url(#eye-white-left)">
-                <!-- Moves with the cursor (js/eye-tracking.js). -->
-                <g class="hero__look" data-js="eye-look">
-                  <g class="hero__iris" data-js="eye-iris">
-                    <circle class="hero__iris-ring" cx="161.5" cy="97.5" r="60.5"/>
-                    <circle class="hero__pupil" cx="151" cy="89" r="35"/>
-                  </g>
-                  <!-- Hover/focus state: the logo cross at the iris's size (121), centred on it. -->
-                  <path class="hero__eye-cross" data-js="eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+    <!-- Screen 2: Landing (Figma 32:656). Everything sits on a 1920 x 1080 stage scaled
+         with --u, centred in the window. data-reveal-order sets the load order (js/reveal.js);
+         data-reveal-wait="splash" holds it until the splash has gone. -->
+    <section class="frame frame--snap landing" id="landing" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
+      <div class="landing__stage">
+        <!-- The eyes (Figma 32:677), inline so the pupils can follow the cursor. Decorative. -->
+        <div class="landing__eyes" data-js="reveal" data-reveal-order="1">
+          <svg class="landing__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
+            <clipPath id="eye-white-left">
+              <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            </clipPath>
+            <path class="landing__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
+            <path class="landing__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            <g clip-path="url(#eye-white-left)">
+              <!-- Moves with the cursor (js/eye-tracking.js). -->
+              <g class="landing__look" data-js="eye-look">
+                <g class="landing__iris" data-js="eye-iris">
+                  <circle class="landing__iris-ring" cx="185.5" cy="119.5" r="60.5"/>
+                  <circle class="landing__pupil" cx="186" cy="119" r="35"/>
                 </g>
+                <!-- Keyword hover/focus state (js/eye-cross.js): the logo cross at the iris's size (121), centred on it. -->
+                <path class="landing__eye-cross" data-js="eye-cross" transform="translate(125 59) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
               </g>
-            </svg>
-            <span class="visually-hidden">Explore touchpoints</span>
-          </button>
-          <button class="hero__eye-button" type="button" data-js="eye-button" data-target="experiences">
-            <svg class="hero__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
-              <clipPath id="eye-white-right">
-                <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
-              </clipPath>
-              <path class="hero__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
-              <path class="hero__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
-              <g clip-path="url(#eye-white-right)">
-                <!-- Moves with the cursor (js/eye-tracking.js). -->
-                <g class="hero__look" data-js="eye-look">
-                  <g class="hero__iris" data-js="eye-iris">
-                    <circle class="hero__iris-ring" cx="161.5" cy="97.5" r="60.5"/>
-                    <circle class="hero__pupil" cx="151" cy="89" r="35"/>
-                  </g>
-                  <!-- Hover/focus state: the logo cross at the iris's size (121), centred on it. -->
-                  <path class="hero__eye-cross" data-js="eye-cross" transform="translate(101 37) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+            </g>
+          </svg>
+          <svg class="landing__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
+            <clipPath id="eye-white-right">
+              <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            </clipPath>
+            <path class="landing__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
+            <path class="landing__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            <g clip-path="url(#eye-white-right)">
+              <!-- Moves with the cursor (js/eye-tracking.js). -->
+              <g class="landing__look" data-js="eye-look">
+                <g class="landing__iris" data-js="eye-iris">
+                  <circle class="landing__iris-ring" cx="185.5" cy="119.5" r="60.5"/>
+                  <circle class="landing__pupil" cx="186" cy="119" r="35"/>
                 </g>
+                <!-- Keyword hover/focus state (js/eye-cross.js): the logo cross at the iris's size (121), centred on it. -->
+                <path class="landing__eye-cross" data-js="eye-cross" transform="translate(125 59) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
               </g>
-            </svg>
-            <span class="visually-hidden">Explore experiences</span>
-          </button>
+            </g>
+          </svg>
+        </div>
+
+        <h1 class="landing__title" id="landing-title" data-js="reveal" data-reveal-order="2">Hey, I’m Carol Elizabeth. I design.</h1>
+
+        <!-- Keywords (Figma 32:670): each opens Selected Works. data-domain is the domain
+             view it will open (checkpoint 6); until then the link just scrolls to #work. -->
+        <ul class="landing__keywords">
+          <li class="landing__keyword-item"><a class="landing__keyword" href="#work" data-domain="product" data-js="keyword reveal" data-reveal-order="3">Products</a></li>
+          <li class="landing__keyword-item landing__keyword-item--centre"><a class="landing__keyword" href="#work" data-domain="service" data-js="keyword reveal" data-reveal-order="4">Services</a></li>
+          <li class="landing__keyword-item landing__keyword-item--end"><a class="landing__keyword" href="#work" data-domain="ux" data-js="keyword reveal" data-reveal-order="5">Experiences</a></li>
+        </ul>
+
+        <!-- Shared scroll cue (css/scroll-cue.css). The wrapper takes the load animation,
+             because the cue's own opacity is busy pulsing. -->
+        <div class="landing__cue" data-js="reveal" data-reveal-order="6">
+          <p class="scroll-cue" data-js="scroll-cue">Scroll down for more details <span class="scroll-cue__chevron" aria-hidden="true">&gt;</span></p>
         </div>
       </div>
-      <!-- Follows the mouse while it is over an eye (js/eye-label.js). Screen readers
-           use the buttons' names instead, so this is hidden from them. -->
-      <div class="eye-label" data-js="eye-label" aria-hidden="true">Click to Explore</div>
-      <!-- Shared scroll cue (css/scroll-cue.css). Placed for now; the Landing rebuild
-           (checkpoint 3) sets its final position and load order. -->
-      <p class="scroll-cue scroll-cue--landing" data-js="scroll-cue">Scroll down for more details <span class="scroll-cue__chevron" aria-hidden="true">&gt;</span></p>
     </section>
 
     <!-- Screen 3: touchpoints scene -->

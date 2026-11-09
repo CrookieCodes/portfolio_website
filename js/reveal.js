@@ -6,6 +6,9 @@
 // numbers first; items with the same number start together, so a group can share a
 // step). Items without an order come after the ordered ones, in DOM order.
 //
+// A screen with data-reveal-wait="name" waits for the promise passed in as
+// waitFor[name] before it plays (the Landing waits for the splash to finish).
+//
 // When the last item of a screen has finished, the screen fires a "reveal:done"
 // event, so a screen's own build (the Touchpoints diagram, the Experiences figures)
 // can start after its text. With reduced motion it fires straight away.
@@ -41,7 +44,7 @@ function announceDone(screen) {
   screen.dataset.revealed = 'true'; // for modules that start later and need to check
 }
 
-export function initReveal() {
+export function initReveal({ waitFor = {} } = {}) {
   const items = [...document.querySelectorAll('[data-js~="reveal"]')];
 
   // Group the items by screen.
@@ -106,8 +109,14 @@ export function initReveal() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      play(entry.target);
-      observer.unobserve(entry.target); // once only
+      const screen = entry.target;
+      observer.unobserve(screen); // once only
+      const wait = waitFor[screen.dataset.revealWait];
+      if (wait) {
+        wait.then(() => play(screen));
+      } else {
+        play(screen);
+      }
     });
   }, { threshold: REVEAL.threshold });
 

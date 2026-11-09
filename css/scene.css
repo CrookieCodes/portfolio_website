@@ -1,7 +1,7 @@
 /* Screens 3 and 4: the "From assembling touchpoints, / To crafting stories,
    experiences." scenes. Shared heading and list styles, plus one modifier per scene.
    Both fill the window (100svh) and size everything with the fluid design pixel
-   --u (tokens.css), like the hero. */
+   --u (tokens.css), like the Landing. */
 
 .scene {
   min-height: 0;           /* replaces the fixed 1080px frame height */

@@ -23,8 +23,8 @@
   --color-list: #b5bcbd;
   --color-divider: #5c7375;
   --color-pale-teal: #a5c4c7;    /* logo cross on the touchpoints screen, footer cross */
-  --color-eye-outline: #9fa5a6;  /* hero eyes (Figma 1:248) */
-  --color-eye-pupil: #514b44;    /* hero eyes (Figma 1:248) */
+  --color-eye-outline: #9fa5a6;  /* Landing eyes (Figma 32:678) */
+  --color-eye-pupil: #514b44;    /* Landing eyes (Figma 32:678) */
   --color-black: #000000;
   --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
   --color-ground-light: #f7f7f7; /* Touchpoints ground (Figma 32:306) */
@@ -56,12 +56,12 @@
   --lh-nav: 1.142;
   --ls-nav: -0.01em;
 
-  --fs-hero-1: calc(55.7 * var(--u));   /* 55.7px at 1920, fluid */
-  --lh-hero-1: 0.912;
-  --ls-hero-1: -0.03em;
-  --fs-hero-2: calc(89.1 * var(--u));   /* 89.1px at 1920, fluid */
-  --lh-hero-2: 1.031;
-  --ls-hero-2: -0.03em;
+  --fs-landing-title: calc(48 * var(--u));     /* 48px at 1920, fluid (Figma 32:669) */
+  --lh-landing-title: 1.0576;
+  --ls-landing-title: -0.03em;
+  --fs-landing-keyword: calc(60.723 * var(--u)); /* 60.7px at 1920, fluid (Figma 32:674-676) */
+  --lh-landing-keyword: 1.1758;
+  --ls-landing-keyword: -0.03em;
 
   --fs-scene-1: calc(48 * var(--u));    /* 48px at 1920, fluid */
   --lh-scene-1: 1.25;
@@ -117,7 +117,7 @@
      It follows whichever is tighter, width or height, so a whole screen always fits.
      Clamped: it stops shrinking below 1024 wide (1/1920 * 1024 = 0.533px = 0.0333rem)
      and stops growing above 2560 wide (1.333px = 0.0833rem).
-     Exactly 1px at 1920x1080. Used by the splash, hero and header (Phase 3);
+     Exactly 1px at 1920x1080. Used by the splash, Landing and header (Phase 3);
      the other screens move to it in Phase 6. */
   --u: clamp(0.0333rem, min(100vw / 1920, 100vh / 1080), 0.0833rem);
 

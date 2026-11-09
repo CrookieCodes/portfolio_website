@@ -18,23 +18,12 @@ export const SPLASH = {
   dissolveEasing: 'ease-out',// STARTER: kept from the old splash; no easing given for the new one
 };
 
-// 2. Hero headline cycle (motion.md section 2).
-export const HEADLINE = {
-  delay: 1600,               // FIGMA: time each word stays before changing
-  duration: 300,             // FIGMA: Smart animate
-  easing: 'ease-out',        // FIGMA
-};
-
-// 2. Hero eyes (motion.md section 2).
+// 2. Landing eyes (motion.md v2 section 2).
 export const EYES = {
   pupilLag: 120,             // PROPOSED: smooth follow behind the cursor
   pupilEasing: 'ease-out',   // STARTER: motion.md gives no easing for the follow
   pupilReach: 371,           // STARTER: design px from the eye's centre at which the
                              //          pupil reaches the edge of its range (one eye width)
-  labelFade: 150,            // PROPOSED: "Click to Explore" fades in
-  labelEasing: 'ease-out',   // STARTER: motion.md gives no easing for the fade
-  labelOffset: 16,           // STARTER: design px from the cursor ("slight offset")
-  labelFontSize: 12,         // PROPOSED: design px at 1920 wide
 };
 
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
@@ -103,16 +92,11 @@ export const SPIN = {
 };
 
 // Copy the values CSS needs onto :root as custom properties, so CSS transitions
-// read the same numbers as the scripts (e.g. var(--motion-headline-duration)).
+// read the same numbers as the scripts (e.g. var(--motion-reveal-duration)).
 export function applyMotionVariables() {
   const root = document.documentElement.style;
-  root.setProperty('--motion-headline-duration', `${HEADLINE.duration}ms`);
-  root.setProperty('--motion-headline-easing', HEADLINE.easing);
   root.setProperty('--motion-pupil-lag', `${EYES.pupilLag}ms`);
   root.setProperty('--motion-pupil-easing', EYES.pupilEasing);
-  root.setProperty('--motion-label-fade', `${EYES.labelFade}ms`);
-  root.setProperty('--motion-label-easing', EYES.labelEasing);
-  root.setProperty('--eye-label-font-size', String(EYES.labelFontSize));
   root.setProperty('--card-lift', String(CARDS.liftDistance));
   root.setProperty('--motion-card-lift-duration', `${CARDS.liftDuration}ms`);
   root.setProperty('--motion-card-lift-easing', CARDS.liftEasing);

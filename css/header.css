@@ -14,7 +14,7 @@
   left: 0;
   right: 0;
   z-index: 5;
-  /* Default (no theme yet): the hero's colours. --header-cross colours the
+  /* Default (no theme yet): the Landing's colours. --header-cross colours the
      secondary pinwheel mark. */
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
@@ -22,7 +22,7 @@
 }
 
 /* Themes, one per screen. Attribute selectors keep these to one simple selector each. */
-[data-theme="hero"] {
+[data-theme="landing"] {
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
