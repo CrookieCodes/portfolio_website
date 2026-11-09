@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/works.css">
   <link rel="stylesheet" href="css/about.css">
   <link rel="stylesheet" href="css/contact.css">
+  <link rel="stylesheet" href="css/scroll-cue.css">
   <link rel="stylesheet" href="css/reveal.css">
 
   <script type="module" src="js/main.js"></script>
@@ -70,7 +71,7 @@
 
   <main id="main">
     <!-- Screen 2: hero -->
-    <section class="frame frame--snap hero" id="hero" aria-labelledby="hero-title" data-js="screen" data-screen-theme="hero">
+    <section class="frame frame--snap hero" id="hero" aria-labelledby="hero-title" data-js="screen" data-screen-theme="hero" data-screen-logo="primary">
       <div class="hero__inner">
         <!-- Screen readers get the whole sentence once; the animated lines are hidden from them.
              js/headline.js cycles the highlighted word: products. -> services. -> experiences. -->
@@ -129,6 +130,9 @@
       <!-- Follows the mouse while it is over an eye (js/eye-label.js). Screen readers
            use the buttons' names instead, so this is hidden from them. -->
       <div class="eye-label" data-js="eye-label" aria-hidden="true">Click to Explore</div>
+      <!-- Shared scroll cue (css/scroll-cue.css). Placed for now; the Landing rebuild
+           (checkpoint 3) sets its final position and load order. -->
+      <p class="scroll-cue scroll-cue--landing" data-js="scroll-cue">Scroll down for more details <span class="scroll-cue__chevron" aria-hidden="true">&gt;</span></p>
     </section>
 
     <!-- Screen 3: touchpoints scene -->

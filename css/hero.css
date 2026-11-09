@@ -177,3 +177,14 @@
 .eye-label--visible {
   opacity: 1;
 }
+
+/* Scroll cue (css/scroll-cue.css), centred near the bottom edge: the text starts at
+   y 1000 of 1080 (Figma 32:680), so it sits 53px above the bottom. Centred with
+   flex rather than translate, which the loading animation uses. */
+.scroll-cue--landing {
+  position: absolute;
+  bottom: calc(53 * var(--u));
+  left: 0;
+  right: 0;
+  justify-content: center;
+}

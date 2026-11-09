@@ -1,0 +1,41 @@
+/* Scroll cue (motion.md v2 "Global"): "Scroll down for more details" with a small
+   chevron, pulsing gently so people notice it. Shared: drop the markup into any
+   screen and place it with a modifier (e.g. .scroll-cue--landing).
+   Text and colour from Figma 32:680. The pulse values come from js/motion-config.js
+   (CUE), copied onto :root. js/scroll-cue.js pauses it while it is off-screen. */
+
+.scroll-cue {
+  display: flex;
+  align-items: center;
+  gap: calc(10 * var(--u));
+  color: var(--color-cue);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-cue);
+  line-height: var(--lh-cue);
+  letter-spacing: var(--ls-cue);
+  white-space: nowrap;
+}
+
+/* Figma draws the chevron as a ">" turned to point down. */
+.scroll-cue__chevron {
+  display: inline-block;
+  rotate: 90deg;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue {
+    animation: scroll-cue-pulse var(--motion-cue-period) var(--motion-cue-easing) infinite;
+  }
+}
+
+/* Set by js/scroll-cue.js while the cue is off-screen or the tab is hidden. */
+.scroll-cue--paused {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-cue-pulse {
+  50% {
+    opacity: var(--cue-low-opacity);
+  }
+}

@@ -26,6 +26,8 @@
   --color-eye-outline: #9fa5a6;  /* hero eyes (Figma 1:248) */
   --color-eye-pupil: #514b44;    /* hero eyes (Figma 1:248) */
   --color-black: #000000;
+  --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
+  --color-ground-light: #f7f7f7; /* Touchpoints ground (Figma 32:306) */
   /* Touchpoint diagram (Figma 1:270): lines, dots and the squares' gradient stops */
   --color-diagram-line: #8c8c8c;
   --color-diagram-dot: #acacac;
@@ -106,6 +108,10 @@
   --ls-footer-heading: -0.02em;
   --fs-contact-link: calc(24 * var(--u)); /* 24px at 1920, fluid */
   --lh-contact-link: 1;
+
+  --fs-cue: calc(22.909 * var(--u));     /* 22.9px at 1920, fluid (Figma 32:681) */
+  --lh-cue: 1.1786;
+  --ls-cue: -0.01em;
 
   /* Fluid design pixel: 1 design px of the 1920x1080 frames, scaled to the window.
      It follows whichever is tighter, width or height, so a whole screen always fits.

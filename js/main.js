@@ -4,6 +4,8 @@
 import { applyMotionVariables } from './motion-config.js';
 import { initSplash } from './splash.js';
 import { initHeaderTheme } from './header-theme.js';
+import { initHeaderLogo } from './header-logo.js';
+import { initScrollCues } from './scroll-cue.js';
 import { initEyeButtons } from './eye-buttons.js';
 import { initHeadline } from './headline.js';
 import { initEyeTracking } from './eye-tracking.js';
@@ -19,6 +21,8 @@ import { initFooterSpin } from './footer-spin.js';
 
 applyMotionVariables();
 initHeaderTheme();
+initHeaderLogo();
+initScrollCues();
 initEyeButtons();
 initEyeTracking();
 initEyeCross();
