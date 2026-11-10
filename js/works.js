@@ -61,7 +61,9 @@ function buildCard(project) {
   const tags = el('ul', 'card__tags');
   tags.setAttribute('role', 'list');
   tags.setAttribute('aria-label', 'Disciplines');
-  project.tags.forEach((tag) => tags.append(el('li', 'card__tag', tag)));
+  // Tag fills in turn (Figma 49:322-326): light green, tan, blue-grey.
+  const tones = ['', ' card__tag--tan', ' card__tag--blue'];
+  project.tags.forEach((tag, i) => tags.append(el('li', `card__tag${tones[i % tones.length]}`, tag)));
   const footer = el('div', 'card__footer');
   footer.append(logos, tags);
   body.append(footer);
@@ -173,8 +175,6 @@ export function initWorks() {
     title.textContent = id ? domainTitle(id) : 'Selected Works';
     years.hidden = Boolean(id);
     domainNav.hidden = !id;
-    next.classList.toggle('works__button--active', !id);
-    sort.classList.toggle('works__button--active', Boolean(id));
     sort.setAttribute('aria-pressed', String(Boolean(id)));
     if (animate) {
       setRolling(true);
@@ -204,7 +204,6 @@ export function initWorks() {
     keyword.addEventListener('click', () => showView(keyword.dataset.domain, false));
   });
 
-  next.classList.add('works__button--active');
   render(list, 0);
 
 }

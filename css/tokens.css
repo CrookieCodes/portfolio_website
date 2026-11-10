@@ -46,7 +46,13 @@
   --color-works-column: #d9d9d9;  /* grey column behind the card panel */
   --color-works-panel: #f1f1f1;   /* card panel; button text; pinwheel outlines */
   --color-works-title: #161616;   /* "Selected Works" / domain title */
-  --color-button-grey: #929292;   /* inactive button */
+  --color-button-light: #b7b7b7;  /* Next Project button (Figma 49:312) */
+  --color-button-ink: #242424;    /* Next Project label (Figma 49:314) */
+  /* The Works pinwheel, a fixed painting that only turns (Figma 49:334, at project 1) */
+  --color-pinwheel-flap-a: #dbbe9b; /* top and bottom flaps at rest */
+  --color-pinwheel-flap-b: #af997e; /* left and right flaps at rest */
+  --color-pinwheel-brown: #9f723c;  /* upper-left and lower-right small triangles at rest */
+  --color-pinwheel-stick: #746149;  /* the stick */
   --color-tag-text: #01181a;      /* text on the pale-teal tags */
   --color-link-dark: #1d1d1d;     /* "View Project >" */
   --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
@@ -167,8 +173,8 @@
   --touchpoints-text-gap: 64px;
 
   /* Selected Works type (design px at 1920, fluid) */
-  --fs-works-title: calc(38 * var(--u));
-  --lh-works-title: 1.105;
+  --fs-works-title: calc(43 * var(--u));   /* Figma 49:329 */
+  --lh-works-title: 0.977;                 /* 42px line */
   --fs-works-years: calc(32 * var(--u));
   --lh-works-years: 1.031;
   --fs-works-button: calc(24 * var(--u));
@@ -177,8 +183,8 @@
   --lh-card-heading: 1.241;
   --fs-card-text: calc(21 * var(--u));
   --lh-card-text: 1.333;
-  --fs-card-tag: calc(15.885 * var(--u));
-  --lh-card-tag: 1.25;
+  --fs-card-tag: calc(20 * var(--u));      /* Figma 49:324-326, Helvetica Neue Medium */
+  --lh-card-tag: 0.993;
   --fs-card-link: calc(20 * var(--u));
   --lh-card-link: 1.65;
   --fs-works-arrow: calc(30.525 * var(--u));

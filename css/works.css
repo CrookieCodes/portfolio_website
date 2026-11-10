@@ -1,8 +1,8 @@
-/* Screen 5: Selected Works (Figma 32:377 default view, 32:417 domain view).
-   A pinwheel on the left, two buttons, and a reel of project cards in a panel on the
-   right (js/works.js). Everything is placed at its Figma position on a stage 1920
-   design px wide (--u), centred; the grey column and the card panel run to the
-   bottom of the window. */
+/* Screen 5: Selected Works (Figma 49:291 at project 1, 49:416 after one Next Project;
+   the domain view is still 32:417). A pinwheel on the left, two buttons, and a reel of
+   project cards on the right (js/works.js), each card its own light panel on the grey
+   column. The pinwheel and buttons sit at their Figma positions on a stage 1920 design
+   px wide (--u), centred; the grey column runs to the bottom of the window. */
 
 .works {
   min-height: 0;
@@ -21,12 +21,12 @@
   translate: -50% 0;
 }
 
-/* --- The pinwheel (Figma 32:388: the SVG box is 765.6 x 992.6 at x 81.9, y 136) ---
+/* --- The pinwheel (Figma 49:334: the SVG box is 765.6 x 992.6 at x 109.9, y 125) ---
    The wrapper takes the load animation, so the pinwheel loads as one piece. */
 .works__pinwheel {
   position: absolute;
-  left: calc(81.94 * var(--u));
-  top: calc(135.98 * var(--u));
+  left: calc(109.94 * var(--u));
+  top: calc(124.98 * var(--u));
   width: calc(765.639 * var(--u));
   height: calc(992.553 * var(--u));
 }
@@ -36,38 +36,35 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  /* The two pairs of coloured flaps (js/pinwheel.js sets these on every turn): at rest
-     pair one is horizontal (brown) and pair two vertical (light pink). */
-  --flap-one: var(--color-bronze);
-  --flap-two: var(--color-pink);
 }
 
 .pinwheel__stick {
-  fill: var(--color-bronze);
+  fill: var(--color-pinwheel-stick);
 }
 
-/* The flaps turn about the hub where they meet; the stick stays still. Resting
-   position: a quarter turn from Figma's, so pair one is horizontal and points right at
-   the cards (CAROL). */
+/* A fixed painting (CAROL): the colours never change, the quarter turns alone move
+   them (js/pinwheel.js). The flaps turn about the hub where they meet; the stick stays
+   still. At rest it is in Figma's pose (49:291): top and bottom flaps light tan, left
+   and right flaps darker tan, small triangles brown upper-left and lower-right, teal
+   upper-right and lower-left. One clockwise quarter turn gives Figma 49:416. */
 .pinwheel__flaps {
   transform-box: view-box;
   transform-origin: 383.32px 382.32px;
-  rotate: 90deg;
-}
-
-.pinwheel__flap {
-  transition: fill var(--motion-works-turn) var(--motion-works-turn-easing); /* the crossfade */
 }
 
 .pinwheel__flap--one {
-  fill: var(--flap-one);
+  fill: var(--color-pinwheel-flap-a);
 }
 
 .pinwheel__flap--two {
-  fill: var(--flap-two);
+  fill: var(--color-pinwheel-flap-b);
 }
 
-.pinwheel__flap--inner {
+.pinwheel__flap--brown {
+  fill: var(--color-pinwheel-brown);
+}
+
+.pinwheel__flap--teal {
   fill: var(--color-teal);
 }
 
@@ -75,25 +72,24 @@
   stroke: var(--color-works-panel);
 }
 
-/* --- The two buttons (Figma: Next Project 183 x 62 at 818, 832; Sort by Domain 213 x 62 at 788, 911) --- */
+/* --- The two buttons (Figma 49:291: Next Project 183 x 62 at 714, 868; Sort by Domain
+   213 x 62 at 684, 939; right edges lined up) --- */
 .works__controls {
   position: absolute;
-  left: calc(788 * var(--u));
-  top: calc(832 * var(--u));
+  left: calc(684 * var(--u));
+  top: calc(868 * var(--u));
   width: calc(213 * var(--u));
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: calc(17 * var(--u));
+  gap: calc(9 * var(--u));
 }
 
 .works__button {
   height: calc(62 * var(--u));
-  padding: 0 calc(15 * var(--u));
+  padding: 0;
   border: 0;
   border-radius: var(--radius-button);
-  background-color: var(--color-button-grey);
-  color: var(--color-works-panel);
   font-family: var(--font-plex);
   font-weight: var(--weight-medium);
   font-size: var(--fs-works-button);
@@ -103,48 +99,71 @@
   transition: background-color var(--motion-hover-fade) var(--motion-hover-easing);
 }
 
-/* The active button is burgundy: Next Project by default, Sort by Domain in the domain view. */
-.works__button--active {
-  background-color: var(--color-burgundy);
+/* Fixed colours in both views (Figma 49:291): Next Project light grey with dark text,
+   Sort by Domain deep teal with off-white text. */
+.works__button--next {
+  width: calc(183 * var(--u));
+  background-color: var(--color-button-light);
+  color: var(--color-button-ink);
+}
+
+.works__button--sort {
+  width: calc(213 * var(--u));
+  background-color: var(--color-teal);
+  color: var(--color-off-white);
 }
 
 .works__button:focus-visible {
   outline-color: var(--color-teal);
 }
 
-/* --- The column and the panel (Figma: column x 1046, 802 wide; panel x 1072, y 166, 750 wide) --- */
+/* --- The column and the panels (Figma 49:291: column x 961, 873 wide; first panel x 1003,
+   y 153, 790 x 833; the next card's panel 38 below it) --- */
 /* Lined up with the header nav, not with the centred stage: in Figma the nav ends at
-   x 1800 (the right page margin) and the column at 1848, 48 past it; the card image
-   then ends at 1796, just inside the nav's right edge. Uses the header's own
-   --page-margin, so it stays lined up at any window width. */
+   x 1800 (the right page margin) and the column at 1834, 34 past it. Uses the header's
+   own --page-margin, so it stays lined up at any window width. */
 .works__column {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: calc(var(--page-margin) - 48 * var(--u));
-  width: calc(802 * var(--u));
+  right: calc(var(--page-margin) - 34 * var(--u));
+  width: calc(873 * var(--u));
   background-color: var(--color-works-column);
 }
 
+/* The panel area. In Figma the first panel is the title row (85 tall) on top of the
+   current card's 748 tall panel. Here the title row's light strip is drawn by ::before
+   and each card is its own panel in the reel below it. The strip runs 16px under the
+   reel's top edge, so the current card's rounded top corners sit on light, not grey. */
 .works__panel {
   position: absolute;
-  top: calc(166 * var(--u));
+  top: calc(153 * var(--u));
   bottom: calc(-24 * var(--u));  /* runs on past the bottom of the window */
-  left: calc(26 * var(--u));
-  width: calc(750 * var(--u));
-  border-radius: calc(16 * var(--u));
+  left: calc(42 * var(--u));
+  width: calc(790 * var(--u));
+}
+
+.works__panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(101 * var(--u));
+  border-radius: calc(16 * var(--u)) calc(16 * var(--u)) 0 0;
   background-color: var(--color-works-panel);
 }
 
-/* Title row: "Selected Works" + years, or the domain title + < >. */
+/* Title row: "Selected Works" + years (y 200), or the domain title + < >. Above the reel. */
 .works__head {
   position: absolute;
-  top: calc(42 * var(--u));
-  left: calc(25 * var(--u));
-  right: calc(26 * var(--u));
+  z-index: 1;
+  top: calc(47 * var(--u));
+  left: calc(57 * var(--u));
+  right: calc(49 * var(--u));
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* both texts start at y 200 */
 }
 
 .works__title {
@@ -155,10 +174,11 @@
   letter-spacing: -0.01em;
 }
 
+/* Figma 49:328: IBM Plex Sans Light, upright (no longer italic). */
 .works__years {
+  color: var(--color-ink);
   font-family: var(--font-plex);
   font-weight: var(--weight-light);
-  font-style: italic;
   font-size: var(--fs-works-years);
   line-height: var(--lh-works-years);
   letter-spacing: -0.02em;
@@ -190,46 +210,52 @@
   outline-color: var(--color-teal);
 }
 
-/* The reel: clipped from the top of the first card (y 277) to the bottom of the panel. */
+/* The reel: clipped from the top of the current card's panel (y 238) down. */
 .works__viewport {
   position: absolute;
-  top: calc(111 * var(--u));
+  top: calc(85 * var(--u));
   bottom: 0;
-  left: calc(25 * var(--u));
-  width: calc(699 * var(--u));
+  left: 0;
+  right: 0;
   overflow: hidden;
 }
 
-/* Cards are 682 tall with 54 between them (Figma: first card at y 277, the next at
-   1013), so one step of the reel is 736. js/works.js moves the track by whole steps. */
+/* Card panels are 748 tall with 38 between them (Figma: the first card's panel ends at
+   y 986, the next starts at 1024), so one step of the reel is 786. js/works.js moves
+   the track by whole steps. */
 .works__track {
-  --works-step: calc(736 * var(--u));
+  --works-step: calc(786 * var(--u));
   display: flex;
   flex-direction: column;
-  gap: calc(54 * var(--u));
+  gap: calc(38 * var(--u));
   transform-origin: 50% 0;
 }
 
-/* --- A card (Figma 32:403-414, 32:697) --- */
+/* --- A card (Figma 49:317-327): its own light panel; image 693 x 390 at 48, 32. --- */
 .card {
-  height: calc(682 * var(--u));
+  flex: none;
+  height: calc(748 * var(--u));
+  padding: calc(32 * var(--u)) calc(49 * var(--u)) 0 calc(48 * var(--u));
+  border-radius: calc(16 * var(--u));
+  background-color: var(--color-works-panel);
   transform-origin: 50% 50%;
 }
 
 .card__image {
   display: block;
   width: 100%;
-  height: calc(393 * var(--u));
+  height: calc(390 * var(--u));
   object-fit: cover;
 }
 
+/* The text sits 9px right of the image (x 1060) and the tags end 9px past it (x 1753). */
 .card__body {
-  padding: 0 calc(17 * var(--u)) 0 calc(19 * var(--u));
+  margin: 0 calc(-9 * var(--u)) 0 calc(9 * var(--u));
   color: var(--color-ink-card);
 }
 
 .card__title {
-  margin-top: calc(41 * var(--u));
+  margin-top: calc(21 * var(--u));
   font-weight: var(--weight-bold);
   font-size: var(--fs-card-heading);
   line-height: var(--lh-card-heading);
@@ -237,7 +263,8 @@
 }
 
 .card__text {
-  margin-top: calc(8 * var(--u));
+  max-width: calc(676 * var(--u));
+  margin-top: calc(16 * var(--u));
   font-weight: var(--weight-light);
   font-size: var(--fs-card-text);
   line-height: var(--lh-card-text);
@@ -248,52 +275,65 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: calc(38 * var(--u));
+  margin-top: calc(40 * var(--u)); /* logos and tags from y 857 */
 }
 
+/* Logos (Figma 49:319, 49:320, 49:327): 66 x 66, 80 x 66 and the 41 x 76 Aangan mark,
+   starting at x 1060, 1163 and 1266. */
 .card__logos {
   display: flex;
-  align-items: flex-end;
-  gap: calc(25 * var(--u));
-  margin-top: calc(13.69 * var(--u)); /* logos at y 890.69, tags at 877 */
+  align-items: center;
+  gap: calc(37 * var(--u));
 }
 
 .card__logo {
-  width: calc(59.964 * var(--u));
-  height: calc(59.964 * var(--u));
+  width: calc(66 * var(--u));
+  height: calc(66 * var(--u));
   object-fit: contain;
 }
 
 .card__logo--wide {
-  width: calc(72.062 * var(--u));
+  width: calc(80 * var(--u));
 }
 
-/* Figma stretches this mark into a 38 x 69 slot. */
 .card__logo--mark {
-  width: calc(38 * var(--u));
-  height: calc(69 * var(--u));
-  object-fit: fill;
-  margin-left: calc(-11 * var(--u));
-  margin-bottom: calc(-7.7 * var(--u));
+  width: calc(41 * var(--u));
+  height: calc(76 * var(--u));
+  margin-left: calc(-14 * var(--u)); /* 23px after the wide logo */
+  object-fit: cover;
+  object-position: bottom;
 }
 
+/* Tags (Figma 49:322-326): 156 x 40, two to a row, 7px apart, filled in turn light
+   green, tan and blue-grey. A longer label widens its column rather than overflowing. */
 .card__tags {
-  display: flex;
-  gap: calc(12 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(2, minmax(calc(156 * var(--u)), max-content));
+  gap: calc(7 * var(--u));
 }
 
 .card__tag {
   display: flex;
   align-items: center;
-  height: calc(34 * var(--u));
-  padding: 0 calc(16 * var(--u));
+  justify-content: center;
+  height: calc(40 * var(--u));
+  padding: 0 calc(11 * var(--u));
   border-radius: calc(3.971 * var(--u));
-  background-color: var(--color-pale-teal);
+  background-color: var(--color-mint);
   color: var(--color-tag-text);
+  font-weight: var(--weight-medium);
   font-size: var(--fs-card-tag);
   line-height: var(--lh-card-tag);
   letter-spacing: -0.02em;
   white-space: nowrap;
+}
+
+.card__tag--tan {
+  background-color: var(--color-tan);
+}
+
+.card__tag--blue {
+  background-color: var(--color-pale-teal);
 }
 
 /* The card image is the link to the project (its focus ring sits inside the image). */
@@ -307,7 +347,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pinwheel__flap,
   .works__button {
     transition: none;
   }

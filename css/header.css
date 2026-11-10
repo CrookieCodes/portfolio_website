@@ -57,6 +57,7 @@
 [data-theme="work"] {
   --header-cross: var(--color-teal);
   --header-nav: var(--color-ink);
+  --header-active-dot: var(--color-bronze); /* brown dot on "Work" (Figma 49:299) */
   /* No band: it would hide the top of the grey column (Figma 32:377 has none). */
   --header-scrim: transparent;
 }
@@ -216,14 +217,14 @@
   }
 }
 
-/* Active screen: heavier weight and the dot in the nav colour (it stays that
-   colour on hover and focus). */
+/* Active screen: heavier weight and the dot in the nav colour, or the theme's
+   --header-active-dot (it stays that colour on hover and focus). */
 .site-nav__link--active {
   font-weight: var(--weight-heavy);
 }
 
 .site-nav__link--active::before {
-  background-color: currentColor;
+  background-color: var(--header-active-dot, currentColor);
   opacity: 1;
 }
 

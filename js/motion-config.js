@@ -125,7 +125,7 @@ export const ASCII = {
 
 // 5. Selected Works (motion.md v2 section 5, CAROL): the pinwheel and the card reel.
 export const WORKS = {
-  turnDuration: 900,         // CAROL: the pinwheel's quarter turn (and its colour crossfade)
+  turnDuration: 900,         // CAROL: the pinwheel's quarter turn (also the < > domain buttons)
   turnEasing: 'ease-in-out', // CAROL
   rollDuration: 900,         // PROPOSED: the reel rolls one card up, in sync with the turn
   rollEasing: 'cubic-bezier(0.2, 0.9, 0.25, 1.08)', // PROPOSED: quick start, slow settle, small overshoot
@@ -134,11 +134,8 @@ export const WORKS = {
   rollBlurPeak: 0.35,        // STARTER: when in the roll the blur and stretch peak (0-1)
   cardDim: 0.6,              // STARTER: brightness of a card arriving or leaving (1 = full)
   cardShrink: 0.94,          // STARTER: scale of a card arriving or leaving
-  // Flap colours (CAROL): the two horizontal flaps are brown or burgundy, alternating
-  // with each step (brown at project 1), the two vertical flaps always light pink.
-  flapBrown: '--color-bronze',   // PROPOSED
-  flapBurgundy: '--color-burgundy', // PROPOSED
-  flapPink: '--color-pink',      // PROPOSED (#F2909F); colours crossfade over turnDuration
+  // The pinwheel's colours are fixed (FIGMA 49:291, tokens in css/tokens.css): no colour
+  // rule and no crossfade; the quarter turn alone moves them.
 };
 
 // Standard loading animation, every screen (motion.md v2 "Global", CAROL: simple and
@@ -203,8 +200,6 @@ export function applyMotionVariables() {
   root.setProperty('--motion-label-fade', `${LABEL.fade}ms`);
   root.setProperty('--motion-label-easing', LABEL.easing);
   root.setProperty('--label-font-size', String(LABEL.fontSize));
-  root.setProperty('--motion-works-turn', `${WORKS.turnDuration}ms`);
-  root.setProperty('--motion-works-turn-easing', WORKS.turnEasing);
   root.setProperty('--reveal-distance', String(REVEAL.distance));
   root.setProperty('--motion-reveal-duration', `${REVEAL.duration}ms`);
   root.setProperty('--motion-reveal-stagger', `${REVEAL.stagger}ms`);
