@@ -119,6 +119,10 @@
   text-decoration: none;
 }
 
+.about__button[aria-disabled="true"] {
+  cursor: default; /* no destination yet */
+}
+
 .about__button:focus-visible {
   outline-color: var(--color-wine);
 }

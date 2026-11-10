@@ -50,6 +50,6 @@ Transcribed from the Figma file (page "Landing Page"). Lines marked CONFIRM need
 - Footer: "All Rights Reserved by Carol Elizabeth © 2026" and "● DELHI, IN"
 
 ## Not in the design yet
-- Resume: https://drive.google.com/file/d/1KPKVvLeBTkISWypirfQdeoJSyhkveIig/view?usp=sharing (header link, new tab). Contact scrolls to the footer (#contact).
+- Resume: https://drive.google.com/file/d/1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144/view?usp=sharing (header link, Drive viewer, new tab). Contact jumps to the footer (#contact; target set by NAV.contact in js/site-config.js). Learn More has no destination yet (ABOUT_PAGE_URL).
 - Alt text for the eyes illustration, the touchpoint diagram, the street photograph, each card image and the weave pattern. TODO
 - The street photograph in frame 4 is credited by its Figma layer name to Unsplash (Victor Rosario). Check the licence and credit it if required.

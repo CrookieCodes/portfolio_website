@@ -28,8 +28,8 @@
   --header-cross: var(--color-burgundy);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-teal);
-  /* Hover/focus dot: burgundy (CAROL). Pink only on the burgundy About ground,
-     where a burgundy dot would be invisible. */
+  /* Hover/focus dot (CAROL): pink on the dark themes (Landing, Experiences), burgundy
+     on the light ones (Touchpoints, Work, About). */
   --header-dot: var(--color-burgundy);
 }
 
@@ -40,6 +40,7 @@
   /* No band on the Landing: it is pinned, so nothing scrolls under the header, and
      the blinds must reach the very top of the screen. */
   --header-scrim: transparent;
+  --header-dot: var(--color-pink);
 }
 
 [data-theme="touchpoints"] {
@@ -52,6 +53,7 @@
   --header-cross: var(--color-bronze);
   --header-nav: var(--color-white);
   --header-scrim: var(--color-black); /* opaque, so nothing on the photo shows under the nav */
+  --header-dot: var(--color-pink);
 }
 
 [data-theme="work"] {

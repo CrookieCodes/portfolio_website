@@ -75,10 +75,12 @@
       </a>
       <nav class="site-nav" aria-label="Main">
         <ul class="site-nav__list">
-          <li><a class="site-nav__link" href="about.html" data-js="nav-link header-item" data-nav="about">About</a></li>
+          <!-- About and Contact jump within the page; their targets are set in one place,
+               NAV in js/site-config.js (these hrefs are the no-JavaScript fallback). -->
+          <li><a class="site-nav__link" href="#about" data-js="nav-link header-item" data-nav="about" data-nav-target="about">About</a></li>
           <li><a class="site-nav__link" href="#work" data-js="nav-link header-item" data-nav="work">Work</a></li>
-          <li><a class="site-nav__link" data-js="header-item" href="https://drive.google.com/uc?export=download&amp;id=1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-          <li><a class="site-nav__link" href="#contact" data-js="header-item">Contact</a></li>
+          <li><a class="site-nav__link" data-js="header-item" href="https://drive.google.com/file/d/1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          <li><a class="site-nav__link" href="#contact" data-js="header-item" data-nav-target="contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -413,7 +415,7 @@
         <!-- Figma 47:280: the C mark (the shared mark-c shape), solid wine, static. Decorative. -->
         <svg class="about__mark" aria-hidden="true" focusable="false" data-js="reveal" data-reveal-order="1"><use href="#mark-c"/></svg>
         <div class="about__text">
-          <h2 class="about__heading" id="about-title" data-js="reveal" data-reveal-order="2">Hello, I’m <span class="about__name">Carol,</span></h2>
+          <h2 class="about__heading" id="about-title" tabindex="-1" data-js="reveal" data-reveal-order="2">Hello, I’m <span class="about__name">Carol,</span></h2>
           <div class="about__bio" data-js="reveal" data-reveal-order="3">
             <p>I’m a <strong class="about__strong">Service and UX Designer,</strong> creating cohesive experiences across touchpoints. <strong class="about__strong">Grounded in user research and systems thinking,</strong> I treat problems as part of a larger ecosystem and design at multiple scales and in context, rather than in silos. Currently completing my <strong class="about__strong">Master of Design at IIT Delhi.</strong></p>
             <p class="about__lead">My latest achievements have been:</p>
@@ -422,8 +424,10 @@
             <li class="about__award" data-js="reveal" data-reveal-order="4"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at UX Design Pitch as part of the UX India Conference 2026</span></li>
             <li class="about__award" data-js="reveal" data-reveal-order="5"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at ServDes India Student Service Design Competition 2026</span></li>
           </ul>
-          <!-- The About page is built in Phase 7; until then this link may 404. -->
-          <a class="about__button" href="about.html" data-js="reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>
+          <!-- No destination yet: ABOUT_PAGE_URL in js/site-config.js is empty, so this is a
+               disabled link with no href (nothing happens on click, no # in the address).
+               js/nav.js gives it the href once the constant is set. -->
+          <a class="about__button" role="link" aria-disabled="true" tabindex="0" data-js="learn-more reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>
         </div>
       </div>
     </section>
@@ -453,7 +457,7 @@
         <li class="contact__tag">UX Strategy</li>
         <li class="contact__tag">UX Research</li>
       </ul>
-      <h2 class="contact__heading" id="contact-title" data-js="reveal" data-reveal-order="3"><span class="contact__heading-line">Let’s build something good.</span> <span class="contact__heading-line">Say Hello!</span></h2>
+      <h2 class="contact__heading" id="contact-title" tabindex="-1" data-js="reveal" data-reveal-order="3"><span class="contact__heading-line">Let’s build something good.</span> <span class="contact__heading-line">Say Hello!</span></h2>
       <ul class="contact__links" data-js="reveal" data-reveal-order="4">
         <li><a class="contact__link" href="mailto:beth.carol00@gmail.com"><span class="contact__link-text">beth.carol00@gmail.com</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
         <li><a class="contact__link" href="https://www.linkedin.com/in/carol-elizabeth-351367281/" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">LinkedIn</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
