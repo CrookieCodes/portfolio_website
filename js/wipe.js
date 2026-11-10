@@ -34,7 +34,8 @@
 // With reduced motion there are no bars (CSS shows plain screens) and the promise
 // resolves straight away.
 
-import { WIPES } from './motion-config.js';
+import { WIPES, HOLD } from './motion-config.js';
+import { leaveScreen } from './reveal.js';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 const smoothstep = (q) => q * q * (3 - 2 * q);
@@ -44,13 +45,16 @@ const smoothstep = (q) => q * q * (3 - 2 * q);
 // promise that resolves the first time that transition has covered the screen.
 export function initWipes() {
   const promises = {};
-  document.querySelectorAll('[data-js="wipe"]').forEach((wrapper) => {
+  document.querySelectorAll('[data-js~="wipe"]').forEach((wrapper) => {
     promises[wrapper.dataset.wipeName] = initWipe(wrapper, WIPES[wrapper.dataset.wipeName]);
   });
   return promises;
 }
 
 function initWipe(wrapper, WIPE) {
+  // The hold on the screen being left (data-wipe-hold names its HOLD entry): the blinds
+  // start only after this much scrolling, as a share of the window height.
+  const hold = (HOLD[wrapper.dataset.wipeHold] ?? 0) / 100;
   const screen = wrapper.querySelector('[data-js~="screen"]');
   const next = wrapper.querySelector('[data-js~="wipe-next"]');
   if (!screen || !next || !WIPE) return Promise.resolve();
@@ -101,11 +105,12 @@ function initWipe(wrapper, WIPE) {
   let covered = null;
   let paused = null;
   let bandOff = null;
+  let leaving = false;
 
   function update() {
-    // The blinds run over the first screen of scrolling through the wrapper.
+    // The blinds run over one screen of scrolling, after the hold.
     const box = wrapper.getBoundingClientRect();
-    const progress = clamp01(-box.top / window.innerHeight);
+    const progress = clamp01(-box.top / window.innerHeight - hold);
     if (progress === lastProgress) return;
     lastProgress = progress;
 
@@ -168,6 +173,10 @@ function initWipe(wrapper, WIPE) {
         delete screen.dataset.sceneCovered;
       }
     }
+
+    // The blinds have started: the screen being left must be fully loaded now.
+    if (progress > 0 && !leaving) leaveScreen(screen);
+    leaving = progress > 0;
 
     const isPaused = progress <= 0;
     if (isPaused !== paused) {

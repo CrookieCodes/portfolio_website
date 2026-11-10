@@ -19,6 +19,7 @@
 // pinned (plain scrolling), none of this runs and the promises resolve at once.
 
 import { PUSH, PUSH_ABOUT } from './motion-config.js';
+import { leaveScreen } from './reveal.js';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 
@@ -62,6 +63,10 @@ export function initPushIn() {
     const q = clamp01(1 - top / window.innerHeight);
     if (q === pair.lastQ) return;
     pair.lastQ = q;
+
+    // The push has started: the screen beneath must be fully loaded now.
+    if (q > 0 && !pair.leaving) leaveScreen(pair.under);
+    pair.leaving = q > 0;
 
     const covered = top <= 0;
     if (covered !== pair.covered) {

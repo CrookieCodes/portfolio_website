@@ -15,10 +15,22 @@
 // When the last item of a screen has finished, the screen fires a "reveal:done"
 // event, so a screen's own build (the Touchpoints diagram, the Experiences figures)
 // can start after its text. With reduced motion it fires straight away.
+//
+// Hold zones (HOLD in js/motion-config.js): a screen's load must be complete before the
+// next transition covers it. The transitions (js/wipe.js, js/push-in.js) fire
+// "screen:leave" on the screen being left as soon as they start; if its load is still
+// running, it jumps to the end state, and a load that has not started yet plays
+// instantly.
 
 import { REVEAL } from './motion-config.js';
 
 export const REVEAL_DONE = 'reveal:done';
+export const SCREEN_LEAVE = 'screen:leave';
+
+// Tells a screen that the next transition has started to cover it.
+export function leaveScreen(screen) {
+  screen?.dispatchEvent(new CustomEvent(SCREEN_LEAVE));
+}
 
 // Sort key for one item: its data-reveal-order, or after every ordered item.
 function orderOf(item) {
@@ -93,6 +105,18 @@ export function initReveal({ waitFor = {} } = {}) {
     return true;
   }
 
+  const left = new WeakSet();   // screens a transition has started to leave
+  const finishers = new Map();  // screen -> jumps its running load to the end
+
+  // Shows an item in its end state at once, with no transition.
+  function settleNow(item) {
+    item.style.transition = 'none';
+    item.classList.remove('reveal--pending');
+    item.classList.add('reveal--in');
+    item.getBoundingClientRect(); // apply the end state now, before the transition comes back
+    item.style.removeProperty('transition');
+  }
+
   function play(screen) {
     const group = groups.get(screen);
     let remaining = group.length;
@@ -101,6 +125,15 @@ export function initReveal({ waitFor = {} } = {}) {
       remaining -= 1;
       if (remaining === 0) announceDone(screen);
     };
+    finishers.set(screen, () => group.forEach((item) => {
+      if (!item.classList.contains('reveal--in')) return;
+      settleNow(item);
+      finishOne(item);
+    }));
+    if (left.has(screen)) {
+      group.forEach((item) => { settleNow(item); finishOne(item); });
+      return;
+    }
     // Fallback in case end events never come (e.g. the tab was hidden).
     const longest = (stepCounts.get(screen) - 1) * REVEAL.stagger + REVEAL.duration;
     group.forEach((item) => {
@@ -129,5 +162,11 @@ export function initReveal({ waitFor = {} } = {}) {
     });
   }, { threshold: REVEAL.threshold });
 
-  groups.forEach((group, screen) => observer.observe(screen));
+  groups.forEach((group, screen) => {
+    observer.observe(screen);
+    screen.addEventListener(SCREEN_LEAVE, () => {
+      left.add(screen);
+      finishers.get(screen)?.();
+    });
+  });
 }

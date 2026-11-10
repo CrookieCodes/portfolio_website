@@ -50,6 +50,30 @@ export const WIPE_WORKS = {
   coveredAt: 0.995,          // PROPOSED: Selected Works' load animation starts here
 };
 
+// Hold zones (CAROL): extra scroll distance, in svh (1 = 1% of the window height), where
+// a pinned screen sits complete and still before the next transition starts, so people
+// can read it. Its load animation finishes inside the hold: if the next transition
+// starts before it has, the load completes at once (the screen's "screen:leave" event).
+export const HOLD = {
+  landing: 40,               // PROPOSED: Landing, before the blinds to Touchpoints
+  touchpoints: 60,           // PROPOSED: Touchpoints, before Experiences pushes in
+  experiences: 60,           // PROPOSED: Experiences, before the blinds to Works
+  works: 60,                 // PROPOSED: Selected Works, before About pushes in
+  about: 60,                 // PROPOSED: About, before the footer
+};
+
+// Optional settle (js/settle.js): when someone stops scrolling part-way through a
+// transition, finish it to the nearer end. Never blocks input; any input cancels it.
+// OFF by default: it behaves like proximity snapping, which Carol removed in phase 6
+// because it pulled slow mouse-wheel scrolling back. Turn on to try it.
+export const SETTLE = {
+  enabled: false,            // PROPOSED: off until Carol has tried it
+  idle: 200,                 // PROPOSED: ms without scrolling before it settles
+  from: 0.05,                // PROPOSED: only when a transition is between 5% ...
+  to: 0.95,                  // PROPOSED: ... and 95% played
+  duration: 400,             // PROPOSED: the settling scroll
+};
+
 // Each blinds wrapper's data-wipe-name -> its values (js/wipe.js).
 export const WIPES = { touchpoints: WIPE, works: WIPE_WORKS };
 
@@ -214,5 +238,6 @@ export function applyMotionVariables() {
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);
   root.setProperty('--motion-header-fade', `${HEADER.footerFade}ms`);
+  Object.entries(HOLD).forEach(([name, value]) => root.setProperty(`--hold-${name}`, String(value)));
   root.setProperty('--motion-header-easing', HEADER.footerEasing);
 }

@@ -14,8 +14,34 @@
   margin-top: -100svh;
 }
 
+/* A pinned wrapper for a screen that is not part of a blinds pair (About): the screen is
+   sticky for its own height plus its hold (HOLD in js/motion-config.js), then scrolls
+   away. */
+.pin {
+  --pin-length: calc(100 + var(--pin-hold));
+  height: calc(var(--pin-length) * 1vh);   /* fallback */
+  height: calc(var(--pin-length) * 1svh);
+}
+
+.pin--about {
+  --pin-hold: var(--hold-about, 0);
+}
+
+.pin__item {
+  position: sticky;
+  top: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .push {
     margin-top: 0;
+  }
+
+  .pin {
+    height: auto;
+  }
+
+  .pin__item {
+    position: relative;
   }
 }

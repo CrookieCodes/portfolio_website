@@ -9,9 +9,11 @@
 //   5. the dots appear, then start flowing (js/dot-flow.js waits for data-scene-built)
 // Timings: BUILD in js/motion-config.js. With reduced motion everything is simply
 // there (no build), and the screen is marked built straight away.
+// If Experiences starts to push in before the build has finished (the end of the hold,
+// "screen:leave"), the build jumps to its end state.
 
 import { BUILD } from './motion-config.js';
-import { REVEAL_DONE } from './reveal.js';
+import { REVEAL_DONE, SCREEN_LEAVE } from './reveal.js';
 
 export function initTouchpointsBuild() {
   const diagram = document.querySelector('[data-js~="diagram"]');
@@ -58,11 +60,26 @@ export function initTouchpointsBuild() {
 
   steps.forEach((step) => step.pause());
 
+  let left = false;
+  let built = false;
+  const finish = () => {
+    if (built) return;
+    built = true;
+    steps.forEach((step) => step.finish());
+    done();
+  };
+
   function play() {
+    if (left) { finish(); return; }
     steps.forEach((step) => step.play());
     // The dots start flowing once they have appeared.
-    setTimeout(done, BUILD.dotsAt + BUILD.dotsDuration);
+    setTimeout(() => { built = true; done(); }, BUILD.dotsAt + BUILD.dotsDuration);
   }
+
+  screen.addEventListener(SCREEN_LEAVE, () => {
+    left = true;
+    if (steps[0]?.playState === 'running') finish();
+  });
 
   if (screen.dataset.revealed) {
     play();

@@ -11,18 +11,27 @@
    and is scrubbed by the scroll, and snapping pulled every gesture back to one end.
    With reduced motion there are no bars: plain screens, one after the other. */
 
-/* Two screens tall: one screen of blinds, then the arriving screen scrolls away. */
+/* Lengths (svh): the screen itself (100), the hold on the screen being left
+   (--wipe-hold, HOLD in js/motion-config.js), one screen of blinds (100), the hold on
+   the arriving screen (--wipe-hold-next), then one screen while the next screen pushes
+   in over it (100, css/push.css). The --hold-* values are set by js/motion-config.js. */
 .wipe {
   position: relative;
-  height: 200vh;           /* fallback */
-  height: 200svh;
+  --wipe-length: calc(300 + var(--wipe-hold) + var(--wipe-hold-next));
+  height: calc(var(--wipe-length) * 1vh);   /* fallback */
+  height: calc(var(--wipe-length) * 1svh);
 }
 
-/* Landing -> Touchpoints: three screens tall, so Touchpoints stays pinned for one more
-   screen while Experiences slides over it (css/push.css), then scrolls away. */
-.wipe--long {
-  height: 300vh;           /* fallback */
-  height: 300svh;
+/* Landing -> Touchpoints (then Experiences pushes in over Touchpoints). */
+.wipe--landing {
+  --wipe-hold: var(--hold-landing, 0);
+  --wipe-hold-next: var(--hold-touchpoints, 0);
+}
+
+/* Experiences -> Selected Works (then About pushes in over Works). */
+.wipe--works {
+  --wipe-hold: var(--hold-experiences, 0);
+  --wipe-hold-next: var(--hold-works, 0);
 }
 
 /* The screen being left (the Landing, or Experiences), pinned under the arriving one. */
@@ -65,17 +74,17 @@
   visibility: hidden;
 }
 
-/* The #touchpoints link target: where the bars have fully risen, one screen down. */
+/* The link target (#touchpoints, #work): where the bars have fully risen, after the hold
+   and one screen of blinds. */
 .wipe__anchor {
   position: absolute;
-  top: 100vh;              /* fallback */
-  top: 100svh;
+  top: calc((100 + var(--wipe-hold)) * 1vh);  /* fallback */
+  top: calc((100 + var(--wipe-hold)) * 1svh);
   left: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wipe,
-  .wipe--long {
+  .wipe {
     height: auto;
   }
 

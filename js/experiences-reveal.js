@@ -14,11 +14,14 @@
 //      scale with it, so their shapes stay exactly over the people in the photo.
 //   3. At `textAt` the heading and bullets load (js/reveal.js waits on the promise
 //      returned here).
+// If the blinds to Works start before it has finished (the end of the hold,
+// "screen:leave"), it jumps to its end state and the text loads at once.
 // Scrolling away and back does not replay it. With reduced motion: the end state at
 // once (photo, a still glyph frame on the people, text). Without JavaScript nothing
 // here runs, so the photo and text show and there is no ground.
 
 import { EXPERIENCES_REVEAL as REVEAL, PUSH } from './motion-config.js';
+import { SCREEN_LEAVE } from './reveal.js';
 
 export function initExperiencesReveal(effect) {
   const screen = document.getElementById('experiences');
@@ -51,18 +54,33 @@ export function initExperiencesReveal(effect) {
 
   return new Promise((resolve) => {
     let played = false;
+    let finished = false;
+    const timers = [];
+    const animations = [];
 
     function play() {
       played = true;
       order.forEach(({ name }, index) => {
-        setTimeout(() => effect.show(name, REVEAL.figureFade), REVEAL.figureStart + index * REVEAL.figureStagger);
+        timers.push(setTimeout(() => effect.show(name, REVEAL.figureFade), REVEAL.figureStart + index * REVEAL.figureStagger));
       });
       const timing = { delay: REVEAL.photoStart, duration: REVEAL.photoWipe, easing: REVEAL.photoEasing, fill: 'forwards' };
-      clip.animate([{ translate: clipFrom }, { translate: '0 0' }], timing);
-      photo.animate([photoFrom, { translate: '0 0', scale: '1' }], timing);
-      canvas.animate([{ scale: photoFrom.scale }, { scale: '1' }], timing);
-      setTimeout(resolve, REVEAL.textAt);
+      animations.push(
+        clip.animate([{ translate: clipFrom }, { translate: '0 0' }], timing),
+        photo.animate([photoFrom, { translate: '0 0', scale: '1' }], timing),
+        canvas.animate([{ scale: photoFrom.scale }, { scale: '1' }], timing),
+      );
+      timers.push(setTimeout(() => { finished = true; resolve(); }, REVEAL.textAt));
     }
+
+    // The blinds to Works have started: everything to its end state at once.
+    screen.addEventListener(SCREEN_LEAVE, () => {
+      if (!played || finished) return;
+      finished = true;
+      timers.forEach(clearTimeout);
+      order.forEach(({ name }) => effect.show(name, 0));
+      animations.forEach((animation) => animation.finish());
+      resolve();
+    });
 
     // Arrived: how far Experiences has slid in over the screen before it (0 to 1).
     function check() {

@@ -102,7 +102,7 @@
          rise from the bottom, tied to the scroll and reversible. The wrapper carries the
          #landing address and an anchor at its end carries #touchpoints, because the
          pinned screens themselves never move. -->
-    <div class="wipe wipe--long" id="landing" data-js="wipe" data-wipe-name="touchpoints" data-wipe-theme="touchpoints">
+    <div class="wipe wipe--landing" id="landing" data-js="wipe" data-wipe-name="touchpoints" data-wipe-hold="landing" data-wipe-theme="touchpoints">
     <section class="frame landing wipe__pinned" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
       <div class="landing__stage">
         <!-- The eyes (Figma 32:677), inline so the pupils can follow the cursor. Decorative. -->
@@ -282,7 +282,7 @@
          overlaps the end of the first one: Experiences slides up over the pinned Touchpoints
          (the push-in), is then pinned itself, and Selected Works is shown through twelve
          rising bars. The #work address is an anchor at the end of the blinds. -->
-    <div class="wipe wipe--long push" data-js="wipe" data-wipe-name="works" data-wipe-theme="work">
+    <div class="wipe wipe--works push" data-js="wipe push-from" data-wipe-name="works" data-wipe-hold="experiences" data-wipe-theme="work">
 
     <!-- Screen 4: experiences scene -->
     <section class="frame scene scene--experiences wipe__pinned" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences" data-reveal-wait="experiences">
@@ -407,7 +407,8 @@
     <!-- Screen 6: About section (Figma 32:475, top 1080). Pushes in over Selected Works
          (css/push.css, js/push-in.js): it starts one screen early, overlapping the pinned
          Works. Everything sits on a 1920 x 1080 stage scaled with --u. -->
-    <section class="frame about push" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
+    <div class="push pin pin--about" data-js="push-from">
+    <section class="frame about pin__item" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
       <div class="about__stage">
         <!-- Figma 47:280: the C mark (the shared mark-c shape), solid wine, static. Decorative. -->
         <svg class="about__mark" aria-hidden="true" focusable="false" data-js="reveal" data-reveal-order="1"><use href="#mark-c"/></svg>
@@ -428,6 +429,7 @@
         </div>
       </div>
     </section>
+    </div>
   </main>
 
   <!-- Footer (Figma 49:455): a full-height section on the wine ground, after About with a
