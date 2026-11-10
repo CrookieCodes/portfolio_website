@@ -11,7 +11,8 @@
 // while the next one covers it), so the later one is the one on top.
 //
 // A screen marked data-screen-hidden (Touchpoints while it waits under the pinned
-// Landing, js/wipe.js) is skipped.
+// Landing, js/wipe.js) is skipped, and so is one without data-screen-theme (the footer:
+// the header fades out over it instead, js/header-footer.js).
 //
 // Measured on scroll (at most once per frame), on resize, and when a screen's
 // data-screen-* attributes change (the blinds flip them when the last bar lands).
@@ -51,7 +52,7 @@ export function initHeaderTheme() {
     let found = null;
     screens.forEach((screen) => {
       const box = screen.getBoundingClientRect();
-      if (screen.dataset.screenHidden) return;
+      if (screen.dataset.screenHidden || !screen.dataset.screenTheme) return;
       if (box.top <= line && box.bottom > line) found = screen; // later screens win
     });
     if (found) applyScreen(found);

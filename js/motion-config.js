@@ -149,8 +149,15 @@ export const REVEAL = {
   duration: 600,             // CAROL: each item
   easing: 'ease-out',        // CAROL
   threshold: 0.15,           // STARTER: share of the screen in view before it plays
-  fromLeft: 240,             // STARTER: design px an item with data-reveal-from="left"
-                             //          slides in from (the footer cross)
+  fromRight: 80,             // PROPOSED: design px an item with data-reveal-from="right"
+                             //           slides in from as it fades in (the footer cross)
+};
+
+// Header over the footer (CAROL): the header is not shown over the footer. It fades out
+// once the footer reaches the header band, and back in when scrolling up.
+export const HEADER = {
+  footerFade: 300,           // PROPOSED: the fade out and back in
+  footerEasing: 'ease-out',  // PROPOSED
 };
 
 // Scroll cue "Scroll down for more details" (motion.md v2 "Global", CAROL).
@@ -211,4 +218,6 @@ export function applyMotionVariables() {
   root.setProperty('--cue-low-opacity', String(CUE.lowOpacity));
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);
+  root.setProperty('--motion-header-fade', `${HEADER.footerFade}ms`);
+  root.setProperty('--motion-header-easing', HEADER.footerEasing);
 }

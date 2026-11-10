@@ -20,9 +20,11 @@
   --color-tan: #dbbe9b;
   --color-link: #d7d7d7;
   --color-gold-muted: #af997e;
-  --color-footer-text: #cbcac8;    /* footer tag line (Figma 32:505) */
-  --color-footer-heading: #e1b27a; /* "Let's Build something good." (Figma 32:495) */
-  --color-footer-small: #edcfaa;   /* footer small print (Figma 32:504, 32:506) */
+  --color-footer-text: #cbcac8;    /* footer tag line (Figma 49:523) */
+  --color-footer-heading: #e1b27a; /* "Let's build something good. Say Hello!" (Figma 49:516) */
+  --color-footer-small: #edcfaa;   /* footer small print and the "Click to Return Home" cue (Figma 49:522, 49:524, 54:544) */
+  --color-footer-mark: #ebc0c7;    /* the small C mark in the footer (Figma 49:529) */
+  --color-footer-cross: #613037;   /* the large cross on the footer (Figma 49:521: #5B2E34 at 80% on the wine ground) */
   /* About section on a light ground (Figma 47:251, FINAL EDITS) */
   --color-wine: #783942;           /* About C mark, Learn More, header mark on About, footer ground (Figma 47:251, 49:455) */
   --color-about-heading: #272727;  /* "Hello, I'm" (Figma 47:260); "Carol," is --color-burgundy */
@@ -129,9 +131,14 @@
   --fs-footer-small: calc(20 * var(--u)); /* 20px at 1920, fluid */
   --lh-footer-small: 1.2;
   --ls-footer-small: -0.01em;
-  --fs-footer-heading: calc(86 * var(--u)); /* 86px at 1920, fluid (Figma 32:495) */
-  --lh-footer-heading: 1.093;
+  --fs-footer-tags: calc(23.417 * var(--u)); /* 23.4px at 1920, fluid (Figma 49:523) */
+  --lh-footer-tags: 1.2;
+  --fs-footer-heading: calc(82 * var(--u)); /* 82px at 1920, fluid (Figma 49:516) */
+  --lh-footer-heading: 1.2805;              /* 105px lines */
   --ls-footer-heading: -0.02em;
+  --fs-footer-cue: calc(25 * var(--u));     /* 25px at 1920, fluid (Figma 54:544) */
+  --lh-footer-cue: 0.96;                    /* 24px line */
+  --ls-footer-cue: -0.01em;
   --fs-contact-link: calc(24 * var(--u)); /* 24px at 1920, fluid */
   --lh-contact-link: 1;
 
@@ -178,7 +185,6 @@
 
   /* Layout */
   --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
-  --footer-height: calc(469 * var(--u)); /* Contact part of screen 6 (1080 + 469 = 1549 at 1920) */
   --gutter: 7.5rem;              /* 120px side margins */
 
   /* Radii */

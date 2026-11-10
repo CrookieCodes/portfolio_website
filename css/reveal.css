@@ -7,8 +7,8 @@
 .reveal--pending {
   opacity: 0;
   pointer-events: none; /* invisible: it must not take hovers or clicks yet */
-  /* Up from below by default; an item with data-reveal-from="left" gets
-     --reveal-x / --reveal-y from js/reveal.js and slides in from the left instead. */
+  /* Up from below by default; an item with data-reveal-from="right" gets
+     --reveal-x / --reveal-y from js/reveal.js and slides in from the right instead. */
   translate: calc(var(--reveal-x, 0) * var(--u)) calc(var(--reveal-y, var(--reveal-distance)) * var(--u));
 }
 

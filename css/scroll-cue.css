@@ -2,18 +2,21 @@
    chevron, pulsing gently so people notice it. Shared: drop the markup into any
    screen and place it with a modifier (e.g. .scroll-cue--landing).
    Text and colour from Figma 32:680. The pulse values come from js/motion-config.js
-   (CUE), copied onto :root. js/scroll-cue.js pauses it while it is off-screen. */
+   (CUE), copied onto :root. js/scroll-cue.js pauses it while it is off-screen.
+   A place can restyle the text by setting --cue-color, --cue-font, --cue-weight,
+   --cue-size, --cue-line and --cue-tracking on a parent (the footer's "Click to Return
+   Home" cue does), so the pulse stays the same everywhere. */
 
 .scroll-cue {
   display: flex;
   align-items: center;
   gap: calc(10 * var(--u));
-  color: var(--color-cue);
-  font-family: var(--font-plex);
-  font-weight: var(--weight-light);
-  font-size: var(--fs-cue);
-  line-height: var(--lh-cue);
-  letter-spacing: var(--ls-cue);
+  color: var(--cue-color, var(--color-cue));
+  font-family: var(--cue-font, var(--font-plex));
+  font-weight: var(--cue-weight, var(--weight-light));
+  font-size: var(--cue-size, var(--fs-cue));
+  line-height: var(--cue-line, var(--lh-cue));
+  letter-spacing: var(--cue-tracking, var(--ls-cue));
   white-space: nowrap;
 }
 

@@ -15,8 +15,14 @@
   right: 0;
   z-index: 5;
   /* The header spans the full width, but only the logo and the nav take the mouse:
-     the empty strip between them would otherwise block whatever scrolls under it. */
+     the empty strip between them would otherwise block whatever scrolls under it.
+     --header-pointer turns that off too while the header is hidden. */
   pointer-events: none;
+  --header-pointer: auto;
+  /* Fading back in: visible at once, then the opacity rises. */
+  transition:
+    opacity var(--motion-header-fade) var(--motion-header-easing),
+    visibility 0s;
   /* Default (no theme yet): the Landing's colours. --header-cross colours the
      secondary pinwheel mark. */
   --header-cross: var(--color-burgundy);
@@ -63,11 +69,16 @@
   --header-dot: var(--color-burgundy);
 }
 
-/* Contact footer: same header colours as About (and About stays the active link). */
-[data-theme="contact"] {
-  --header-cross: var(--color-mint);
-  --header-nav: var(--color-white);
-  --header-scrim: var(--color-teal);
+/* Over the footer (js/header-footer.js): faded out, and hidden once faded, so its links
+   cannot be clicked or reached with Tab. Fading out: the opacity falls first, then
+   visibility switches off at the end of the fade. */
+.site-header--hidden {
+  opacity: 0;
+  visibility: hidden;
+  --header-pointer: none;
+  transition:
+    opacity var(--motion-header-fade) var(--motion-header-easing),
+    visibility 0s linear var(--motion-header-fade);
 }
 
 /* During a push-in slide (js/push-in.js) the band is off: the header items change
@@ -106,7 +117,7 @@
 }
 
 .site-header__logo {
-  pointer-events: auto;
+  pointer-events: var(--header-pointer);
   display: grid;  /* the two marks share one cell, both at its top-left corner */
   width: calc(72.475 * var(--u));
   height: calc(72.475 * var(--u));
@@ -137,7 +148,7 @@
 }
 
 .site-nav {
-  pointer-events: auto;
+  pointer-events: var(--header-pointer);
   margin-top: calc(13 * var(--u)); /* nav text sits 13px below the logo's top edge */
   color: var(--header-nav);
 }
@@ -217,6 +228,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header--hidden,
   .site-nav__link,
   .site-nav__link::before {
     transition: none;
