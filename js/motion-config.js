@@ -188,6 +188,20 @@ export const REVEAL = {
                              //           slides in from as it fades in (the footer cross)
 };
 
+// The C mark's own entrance on About and in the footer (CAROL; js/mark-spin.js). When
+// the screen arrives the mark turns in, grows and fades in; the text stagger starts
+// textDelay after it begins; the footer's "< Click to Return Home" cue fades in as the
+// mark settles. Once per page load. Reduced motion: a plain fade over `duration`.
+export const MARK_SPIN = {
+  rotateFrom: -90,           // PROPOSED: degrees the mark turns in from (to its resting tilt)
+  scaleFrom: 0.6,            // PROPOSED: ... and the scale it grows from (opacity 0 -> 1)
+  duration: 900,             // PROPOSED: the whole entrance
+  easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', // PROPOSED: a strong, soft ease-out
+  textDelay: 300,            // PROPOSED: the text stagger starts this long after the mark
+  cueDelay: 600,             // PROPOSED: the mark's cue starts to fade in (the mark is settling)
+  cueDuration: 400,          // PROPOSED: the cue's fade
+};
+
 // Header over the footer (CAROL): the header is not shown over the footer. It fades out
 // once the footer reaches the header band, and back in when scrolling up.
 export const HEADER = {

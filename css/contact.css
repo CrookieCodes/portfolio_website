@@ -62,6 +62,12 @@
   outline-color: var(--color-footer-small);
 }
 
+/* The cue's wrapper takes the fade-in as the mark settles (js/mark-spin.js); the cue
+   inside keeps its own pulse. */
+.contact__cue {
+  display: block;
+}
+
 .contact__mark {
   flex: none;
   width: calc(167.086 * var(--u));

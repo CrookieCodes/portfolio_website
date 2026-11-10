@@ -12,6 +12,10 @@
 // A screen with data-reveal-wait="name" waits for the promise passed in as
 // waitFor[name] before it plays (the Landing waits for the splash to finish).
 //
+// A screen with a C mark (data-js "mark-spin": About, the footer) plays the mark's own
+// entrance first (js/mark-spin.js) and starts the stagger MARK_SPIN.textDelay later.
+// With reduced motion the text is simply visible and the mark fades in.
+//
 // When the last item of a screen has finished, the screen fires a "reveal:done"
 // event, so a screen's own build (the Touchpoints diagram, the Experiences figures)
 // can start after its text. With reduced motion it fires straight away.
@@ -22,7 +26,8 @@
 // running, it jumps to the end state, and a load that has not started yet plays
 // instantly.
 
-import { REVEAL } from './motion-config.js';
+import { REVEAL, MARK_SPIN } from './motion-config.js';
+import { createMarkSpin } from './mark-spin.js';
 
 export const REVEAL_DONE = 'reveal:done';
 export const SCREEN_LEAVE = 'screen:leave';
@@ -61,25 +66,33 @@ function announceDone(screen) {
 
 export function initReveal({ waitFor = {} } = {}) {
   const items = [...document.querySelectorAll('[data-js~="reveal"]')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const screenOf = (element) => element.closest('[data-js~="screen"]');
 
   // Group the items by screen.
   const groups = new Map();
   items.forEach((item) => {
-    const screen = item.closest('[data-js~="screen"]');
+    const screen = screenOf(item);
     if (!screen) return;
     if (!groups.has(screen)) groups.set(screen, []);
     groups.get(screen).push(item);
   });
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Everything is already visible: tell each screen it is done once it is in the page.
-    groups.forEach((group, screen) => queueMicrotask(() => announceDone(screen)));
-    return;
-  }
+  // The C marks with their own entrance (js/mark-spin.js), by screen; each may have a cue
+  // (data-js "mark-cue") in the same screen.
+  const marks = new Map();
+  document.querySelectorAll('[data-js~="mark-spin"]').forEach((mark) => {
+    const screen = screenOf(mark);
+    if (!screen) return;
+    if (!groups.has(screen)) groups.set(screen, []);
+    const cue = screen.querySelector('[data-js~="mark-cue"]');
+    marks.set(screen, [...(marks.get(screen) ?? []), createMarkSpin(mark, cue, reduceMotion)]);
+  });
 
   // Number each item by its step, for the stagger, and hide it ready to rise.
+  // With reduced motion, the text is simply visible (only the marks fade in).
   const stepCounts = new Map();
-  groups.forEach((group, screen) => {
+  if (!reduceMotion) groups.forEach((group, screen) => {
     const steps = stepsOf(group);
     steps.forEach((step, index) => {
       step.forEach((item) => {
@@ -119,33 +132,53 @@ export function initReveal({ waitFor = {} } = {}) {
 
   function play(screen) {
     const group = groups.get(screen);
+    const screenMarks = marks.get(screen) ?? [];
+    if (reduceMotion) {
+      screenMarks.forEach((mark) => mark.play());
+      announceDone(screen);
+      return;
+    }
     let remaining = group.length;
     const finishOne = (item) => {
       if (!cleanUp(item)) return;
       remaining -= 1;
       if (remaining === 0) announceDone(screen);
     };
-    finishers.set(screen, () => group.forEach((item) => {
-      if (!item.classList.contains('reveal--in')) return;
-      settleNow(item);
-      finishOne(item);
-    }));
-    if (left.has(screen)) {
-      group.forEach((item) => { settleNow(item); finishOne(item); });
-      return;
-    }
-    // Fallback in case end events never come (e.g. the tab was hidden).
-    const longest = (stepCounts.get(screen) - 1) * REVEAL.stagger + REVEAL.duration;
-    group.forEach((item) => {
-      item.classList.add('reveal--in');
-      item.classList.remove('reveal--pending');
-      item.addEventListener('transitionend', function done(event) {
-        if (event.target !== item || event.propertyName !== 'opacity') return;
-        item.removeEventListener('transitionend', done);
+    if (remaining === 0) announceDone(screen);
+    let textTimer = 0;
+    // The end state at once: the marks, and every item not finished yet.
+    const finishAll = () => {
+      clearTimeout(textTimer);
+      screenMarks.forEach((mark) => mark.finish());
+      group.forEach((item) => {
+        if (!item.classList.contains('reveal--pending') && !item.classList.contains('reveal--in')) return;
+        settleNow(item);
         finishOne(item);
       });
-      setTimeout(() => finishOne(item), longest + 500);
-    });
+    };
+    finishers.set(screen, finishAll);
+    if (left.has(screen)) {
+      finishAll();
+      return;
+    }
+    // The stagger, after the mark has begun its entrance (if the screen has one).
+    const startText = () => {
+      // Fallback in case end events never come (e.g. the tab was hidden).
+      const longest = (stepCounts.get(screen) - 1) * REVEAL.stagger + REVEAL.duration;
+      group.forEach((item) => {
+        item.classList.add('reveal--in');
+        item.classList.remove('reveal--pending');
+        item.addEventListener('transitionend', function done(event) {
+          if (event.target !== item || event.propertyName !== 'opacity') return;
+          item.removeEventListener('transitionend', done);
+          finishOne(item);
+        });
+        setTimeout(() => finishOne(item), longest + 500);
+      });
+    };
+    screenMarks.forEach((mark) => mark.play());
+    if (screenMarks.length) textTimer = setTimeout(startText, MARK_SPIN.textDelay);
+    else startText();
   }
 
   const observer = new IntersectionObserver((entries) => {

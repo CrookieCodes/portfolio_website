@@ -413,7 +413,8 @@
     <section class="frame about pin__item" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
       <div class="about__stage">
         <!-- Figma 47:280: the C mark (the shared mark-c shape), solid wine, static. Decorative. -->
-        <svg class="about__mark" aria-hidden="true" focusable="false" data-js="reveal" data-reveal-order="1"><use href="#mark-c"/></svg>
+        <!-- Its own entrance: it turns and grows in before the text (js/mark-spin.js). -->
+        <svg class="about__mark" aria-hidden="true" focusable="false" data-js="mark-spin"><use href="#mark-c"/></svg>
         <div class="about__text">
           <h2 class="about__heading" id="about-title" tabindex="-1" data-js="reveal" data-reveal-order="2">Hello, I’m <span class="about__name">Carol,</span></h2>
           <div class="about__bio" data-js="reveal" data-reveal-order="3">
@@ -447,9 +448,11 @@
     <div class="contact__stage">
       <!-- The small C mark and its pulsing cue are one link back to the top (the Landing):
            an instant jump that does not replay the splash (js/nav.js). -->
-      <a class="contact__home" href="#landing" aria-label="Return to home" data-js="home-link reveal" data-reveal-order="1">
-        <svg class="contact__mark" aria-hidden="true" focusable="false"><use href="#mark-c"/></svg>
-        <span class="scroll-cue" data-js="scroll-cue" aria-hidden="true">&lt; Click to Return Home</span>
+      <!-- The mark turns and grows in on arrival and the cue fades in as it settles
+           (js/mark-spin.js); the cue's wrapper takes that fade, the cue itself pulses. -->
+      <a class="contact__home" href="#landing" aria-label="Return to home" data-js="home-link">
+        <svg class="contact__mark" aria-hidden="true" focusable="false" data-js="mark-spin"><use href="#mark-c"/></svg>
+        <span class="contact__cue" data-js="mark-cue"><span class="scroll-cue" data-js="scroll-cue" aria-hidden="true">&lt; Click to Return Home</span></span>
       </a>
       <ul class="contact__tags" aria-label="Disciplines" data-js="reveal" data-reveal-order="2">
         <li class="contact__tag">Service Design</li>
