@@ -131,39 +131,40 @@
   background-color: var(--color-works-column);
 }
 
-/* The panel area. In Figma the first panel is the title row (85 tall) on top of the
-   current card's 748 tall panel. Here the title row's light strip is drawn by ::before
-   and each card is its own panel in the reel below it. The strip runs 16px under the
-   reel's top edge, so the current card's rounded top corners sit on light, not grey. */
-.works__panel {
-  position: absolute;
-  top: calc(153 * var(--u));
-  bottom: calc(-24 * var(--u));  /* runs on past the bottom of the window */
-  left: calc(42 * var(--u));
-  width: calc(790 * var(--u));
-}
-
-.works__panel::before {
-  content: "";
+/* The reel spans the column's full height and fades out over 24px at its top and
+   bottom edges (a mask), so a panel rolling past an edge never shows a hard cut.
+   Panels are 790 wide at x 1003 (42 inside the column); the current one starts at y 153. */
+.works__viewport {
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: calc(101 * var(--u));
-  border-radius: calc(16 * var(--u)) calc(16 * var(--u)) 0 0;
-  background-color: var(--color-works-panel);
+  bottom: 0;
+  left: calc(42 * var(--u));
+  width: calc(790 * var(--u));
+  overflow: hidden;
+  --works-fade: calc(24 * var(--u));
+  -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-black) var(--works-fade), var(--color-black) calc(100% - var(--works-fade)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, var(--color-black) var(--works-fade), var(--color-black) calc(100% - var(--works-fade)), transparent);
 }
 
-/* Title row: "Selected Works" + years (y 200), or the domain title + < >. Above the reel. */
+/* Panels are 833 tall (Figma's first panel, title row included) with 38 between them,
+   so one step of the reel is 871. js/works.js moves the track by whole steps. */
+.works__track {
+  --works-step: calc(871 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(38 * var(--u));
+  margin-top: calc(153 * var(--u));
+  transform-origin: 50% 0;
+}
+
+/* Title row of each panel (y 200): "Selected Works" + years, or the domain title + < >.
+   The text starts 9px right of the image, like the card text. */
 .works__head {
-  position: absolute;
-  z-index: 1;
-  top: calc(47 * var(--u));
-  left: calc(57 * var(--u));
-  right: calc(49 * var(--u));
   display: flex;
   justify-content: space-between;
   align-items: flex-start; /* both texts start at y 200 */
+  height: calc(42 * var(--u));
+  margin-left: calc(9 * var(--u));
 }
 
 .works__title {
@@ -189,10 +190,6 @@
   gap: calc(24 * var(--u));
 }
 
-.works__domain-nav[hidden] {
-  display: none;
-}
-
 .works__domain-button {
   width: calc(36.951 * var(--u));
   height: calc(36.951 * var(--u));
@@ -210,32 +207,12 @@
   outline-color: var(--color-teal);
 }
 
-/* The reel: clipped from the top of the current card's panel (y 238) down. */
-.works__viewport {
-  position: absolute;
-  top: calc(85 * var(--u));
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-}
-
-/* Card panels are 748 tall with 38 between them (Figma: the first card's panel ends at
-   y 986, the next starts at 1024), so one step of the reel is 786. js/works.js moves
-   the track by whole steps. */
-.works__track {
-  --works-step: calc(786 * var(--u));
-  display: flex;
-  flex-direction: column;
-  gap: calc(38 * var(--u));
-  transform-origin: 50% 0;
-}
-
-/* --- A card (Figma 49:317-327): its own light panel; image 693 x 390 at 48, 32. --- */
+/* --- A card (Figma 49:293, 49:317-327): one whole light panel, 790 x 833: the title row
+   at 47, the image (693 x 390) at 48, 117, then the text, logos and tags. --- */
 .card {
   flex: none;
-  height: calc(748 * var(--u));
-  padding: calc(32 * var(--u)) calc(49 * var(--u)) 0 calc(48 * var(--u));
+  height: calc(833 * var(--u));
+  padding: calc(47 * var(--u)) calc(49 * var(--u)) 0 calc(48 * var(--u));
   border-radius: calc(16 * var(--u));
   background-color: var(--color-works-panel);
   transform-origin: 50% 50%;
@@ -339,6 +316,7 @@
 /* The card image is the link to the project (its focus ring sits inside the image). */
 .card__media {
   display: block;
+  margin-top: calc(28 * var(--u)); /* image at y 270 */
 }
 
 .card__media:focus-visible {

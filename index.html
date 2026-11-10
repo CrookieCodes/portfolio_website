@@ -322,7 +322,7 @@
          the left, the two buttons, and a vertical reel of project cards in a panel on the
          right (js/works.js builds the cards from js/projects.js). The pinwheel and buttons sit
          on a 1920 wide stage scaled with --u; the column runs to the bottom of the window. -->
-    <section class="frame works wipe__next" aria-labelledby="works-title" data-js="screen wipe-next works" data-screen-theme="work" data-screen-nav="work" data-reveal-wait="works">
+    <section class="frame works wipe__next" aria-label="Selected Works" data-js="screen wipe-next works" data-screen-theme="work" data-screen-nav="work" data-reveal-wait="works">
       <div class="works__stage">
         <!-- The pinwheel (Figma 49:334), stick included: loads as one piece and turns a quarter,
              clockwise, with each step (js/pinwheel.js). Its colours never change: the turn
@@ -392,20 +392,11 @@
       <!-- The grey column and the card panel: lined up with the header nav (right page margin),
            not with the centred stage. Loads first. -->
       <div class="works__column" data-js="reveal" data-reveal-order="1">
-        <div class="works__panel">
-          <div class="works__head" data-js="reveal" data-reveal-order="5">
-            <h2 class="works__title" id="works-title" data-js="works-title">Selected Works</h2>
-            <p class="works__years" data-js="works-years">2024 - 2026</p>
-            <!-- Domain view only: cycle Product Design, Service Design, UX Design. -->
-            <div class="works__domain-nav" data-js="works-domain-nav" hidden>
-              <button class="works__domain-button" type="button" aria-label="Previous domain" data-js="works-domain-prev"><span aria-hidden="true">&lt;</span></button>
-              <button class="works__domain-button" type="button" aria-label="Next domain" data-js="works-domain-next"><span aria-hidden="true">&gt;</span></button>
-            </div>
-          </div>
-          <!-- The reel: the current card, with the next one peeking in below. -->
-          <div class="works__viewport" data-js="works-viewport reveal" data-reveal-order="6">
-            <ul class="works__track" role="list" data-js="works-track" aria-label="Projects"></ul>
-          </div>
+        <!-- The reel: every card is a whole panel with its own title row ("Selected Works"
+             and the years, or the domain title with < >). The panels roll up as whole units
+             inside the column, whose top and bottom edges fade softly. -->
+        <div class="works__viewport" data-js="works-viewport reveal" data-reveal-order="5">
+          <ul class="works__track" role="list" data-js="works-track" aria-label="Projects"></ul>
         </div>
       </div>
     </section>

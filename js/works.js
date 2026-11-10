@@ -1,8 +1,12 @@
 // Selected Works (motion.md v2 section 5, CAROL): the card reel, the pinwheel, the
 // two buttons and the domain view. Cards are built from js/projects.js.
 //
-// The reel is a vertical track of cards in a clipped panel; the next card peeks in
-// below the current one. Every change rolls the track upward only, never down:
+// The reel is a vertical track of panels in the grey column; the next panel peeks in
+// below the current one. Each panel is one whole card: its own title row ("Selected
+// Works" and the years, or in the domain view the domain title with < >), the image,
+// title, text, logos and tags. Panels roll as whole units, so no title row or card is
+// ever cut mid-roll (the column's edges fade softly, css/works.css).
+// Every change rolls the track upward only, never down:
 //   - Next Project: one card up (in the full list or within the current domain).
 //     At the end it rolls on into copies of the first cards added after the last,
 //     then jumps back to the real first card without animation.
@@ -37,8 +41,35 @@ function el(tag, className, text) {
   return node;
 }
 
-function buildCard(project) {
+function domainTitle(id) {
+  return DOMAINS.find((d) => d.id === id)?.title ?? '';
+}
+
+// The panel's title row for a view: the full list (domain null) or one domain.
+function buildHead(domain) {
+  const head = el('div', 'works__head');
+  if (!domain) {
+    head.append(el('h2', 'works__title', 'Selected Works'), el('p', 'works__years', '2024 - 2026'));
+    return head;
+  }
+  const nav = el('div', 'works__domain-nav');
+  [['works-domain-prev', 'Previous domain', '<'], ['works-domain-next', 'Next domain', '>']].forEach(([js, label, glyph]) => {
+    const button = el('button', 'works__domain-button');
+    button.type = 'button';
+    button.dataset.js = js;
+    button.setAttribute('aria-label', label);
+    const mark = el('span', '', glyph);
+    mark.setAttribute('aria-hidden', 'true');
+    button.append(mark);
+    nav.append(button);
+  });
+  head.append(el('h2', 'works__title', domainTitle(domain)), nav);
+  return head;
+}
+
+function buildCard(project, domain) {
   const card = el('li', 'card');
+  card.append(buildHead(domain));
   // The image is the link to the project. No project page exists yet, so it is a
   // placeholder (href "#", aria-disabled; js/placeholder-links.js stops the jump).
   const media = el('a', 'card__media');
@@ -79,9 +110,6 @@ export function initWorks() {
   const q = (name) => screen.querySelector(`[data-js~="${name}"]`);
   const next = q('works-next');
   const sort = q('works-sort');
-  const title = q('works-title');
-  const years = q('works-years');
-  const domainNav = q('works-domain-nav');
   const status = q('works-status');
   const viewport = q('works-viewport');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -93,14 +121,19 @@ export function initWorks() {
   let rolling = false;
 
   const listFor = (id) => (id ? PROJECTS.filter((project) => project.domains.includes(id)) : PROJECTS);
-  const domainTitle = (id) => DOMAINS.find((d) => d.id === id)?.title ?? '';
   const stepOffset = (step) => `0 calc(var(--works-step) * ${-step})`;
 
   // Renders `cards` (projects) into the track, plus copies of the first ones, and
   // shows card `at` with no animation. Only card `current` can be read or tabbed to.
-  function render(cards, at, current = at) {
+  // `leaving` (optional) is a panel from the previous view, put first with its own title.
+  function render(cards, at, current = at, leaving = null) {
     hideCursorLabel(); // the hovered card may be about to be replaced
-    track.replaceChildren(...cards.map(buildCard), ...cards.slice(0, COPIES).map(buildCard));
+    const build = (project) => buildCard(project, domain);
+    track.replaceChildren(
+      ...(leaving ? [buildCard(leaving.project, leaving.domain)] : []),
+      ...cards.map(build),
+      ...cards.slice(0, COPIES).map(build),
+    );
     track.style.translate = stepOffset(at);
     markCurrent(current);
   }
@@ -168,23 +201,23 @@ export function initWorks() {
   // card in; otherwise (e.g. from a Landing keyword, off-screen) switch instantly.
   async function showView(id, animate = true) {
     if (rolling) return;
-    const leaving = list[index];
+    const leaving = { project: list[index], domain };
+    // A < > button inside the leaving panel had focus: give it back on the new panel.
+    const refocus = document.activeElement?.closest?.('[data-js^="works-domain-"]')?.dataset.js;
     domain = id;
     list = listFor(id);
     index = 0;
-    title.textContent = id ? domainTitle(id) : 'Selected Works';
-    years.hidden = Boolean(id);
-    domainNav.hidden = !id;
     sort.setAttribute('aria-pressed', String(Boolean(id)));
     if (animate) {
       setRolling(true);
-      render([leaving, ...list], 0, 0);
+      render(list, 0, 0, leaving);
       await roll(0);
       render(list, 0);
       setRolling(false);
     } else {
       render(list, 0);
     }
+    if (refocus) track.children[0].querySelector(`[data-js="${refocus}"]`)?.focus();
     announce(id ? `${domainTitle(id)}. ` : 'All projects. ');
   }
 
@@ -196,8 +229,11 @@ export function initWorks() {
   next.addEventListener('click', nextProject);
   // Sort by Domain opens the current project's first domain; pressed again, the full list.
   sort.addEventListener('click', () => showView(domain ? null : list[index].domains[0]));
-  q('works-domain-prev').addEventListener('click', () => cycleDomain(-1));
-  q('works-domain-next').addEventListener('click', () => cycleDomain(1));
+  // The < > buttons live in every domain panel: one listener on the track for all.
+  track.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-js^="works-domain-"]');
+    if (button) cycleDomain(button.dataset.js === 'works-domain-next' ? 1 : -1);
+  });
 
   // Landing keywords (data-domain): open that domain; the link itself scrolls to #work.
   document.querySelectorAll('[data-js~="keyword"][data-domain]').forEach((keyword) => {
