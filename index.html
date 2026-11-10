@@ -28,17 +28,29 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Screen 1: splash. A full-window overlay above everything (js/splash.js plays it once,
-       then removes it to reveal the Landing underneath). Decorative, so hidden from screen readers.
-       Only the main square mark (the centre of Figma 32:634), cropped to its own box. -->
-  <div class="splash" data-js="splash" aria-hidden="true">
-    <svg class="splash__logo" data-js="splash-logo" viewBox="36 36 128 128" focusable="false">
+  <!-- Shared shapes, drawn once and reused with <use href="#...">. Each copy takes its
+       colour from CSS (fill), so one shape can be recoloured per place through tokens.
+       mark-c: the square "C" mark (Figma 32:634, cropped to its own box). Used by the
+       splash, the header's primary logo, the About mark and the footer's home link.
+       trophy: the achievement icon on About (Figma 47:286). -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="mark-c" viewBox="36 36 128 128">
       <path d="M36 129.139V47.6306L68.2085 52.5777L52.7097 131.731L36 129.139Z"/>
       <path d="M163.938 69.7012L163.938 152.308L131.73 147.533L147.229 67.3137L163.938 69.7012Z"/>
       <path d="M70.5715 36.0001L152.309 36.0001L147.584 67.3139L68.2091 52.3581L70.5715 36.0001Z"/>
       <path d="M150.213 113.797L82.5229 114.732L87.3237 83.4178L151.413 95.8031L150.213 113.797Z"/>
       <path d="M129.369 163.939L47.6313 163.939L52.3561 131.731L131.731 147.114L129.369 163.939Z"/>
-    </svg>
+    </symbol>
+    <symbol id="trophy" viewBox="0 0 37 37">
+      <path d="M35.15 3.7H29.6V1.85C29.6 0.8325 28.7675 0 27.75 0H9.25C8.2325 0 7.4 0.8325 7.4 1.85V3.7H1.85C0.8325 3.7 0 4.5325 0 5.55V11.1C0 19.0365 3.3115 23.828 8.8985 24.0315C9.71358 25.4467 10.8309 26.6646 12.1708 27.5984C13.5107 28.5322 15.0401 29.1588 16.65 29.4335V33.3H11.1V37H25.9V33.3H20.35V29.4335C21.9607 29.1612 23.4912 28.5356 24.8314 27.6016C26.1717 26.6676 27.2884 25.4484 28.1015 24.0315C33.67 23.828 37 19.0365 37 11.1V5.55C37 4.5325 36.1675 3.7 35.15 3.7ZM3.7 11.1V7.4H7.4V18.5C7.4 19.018 7.4555 19.536 7.511 20.0355C4.107 18.722 3.7 13.5235 3.7 11.1ZM33.3 11.1C33.3 13.5235 32.893 18.722 29.489 20.0355C29.563 19.536 29.6 19.018 29.6 18.5V7.4H33.3V11.1Z"/>
+    </symbol>
+  </svg>
+
+  <!-- Screen 1: splash. A full-window overlay above everything (js/splash.js plays it once,
+       then removes it to reveal the Landing underneath). Decorative, so hidden from screen readers.
+       Only the main square mark (the shared mark-c shape). -->
+  <div class="splash" data-js="splash" aria-hidden="true">
+    <svg class="splash__logo" data-js="splash-logo" focusable="false"><use href="#mark-c"/></svg>
   </div>
   <!-- The splash starts as soon as its own small script arrives (async: it does not wait
        for the rest of the page or js/main.js). main.js shares the same module. -->
@@ -54,13 +66,7 @@
         <span class="visually-hidden">Carol Elizabeth, home</span>
         <!-- Two marks, one shown at a time (js/header-logo.js swaps them with a spin).
              Primary: the tan square mark, Landing only (Figma 32:658, 72.5 x 72.5). -->
-        <svg class="site-header__mark site-header__mark--primary" data-js="logo-primary" viewBox="0 0 72.4746 72.4752" aria-hidden="true" focusable="false">
-          <path d="M0 52.7616L0 6.58843L18.2455 9.39085L9.46573 54.2296L0 52.7616Z"/>
-          <path d="M72.4746 19.0911L72.4746 65.8865L54.2291 63.1816L63.0089 17.7386L72.4746 19.0911Z"/>
-          <path d="M19.5846 0L65.8875 2.03207e-06L63.2111 17.7387L18.2464 9.2665L19.5846 0Z"/>
-          <path d="M64.6995 44.0704L26.3542 44.5999L29.0738 26.8612L65.3794 33.8773L64.6995 44.0704Z"/>
-          <path d="M52.892 72.4752L6.58905 72.4752L9.26552 54.2297L54.2302 62.944L52.892 72.4752Z"/>
-        </svg>
+        <svg class="site-header__mark site-header__mark--primary" data-js="logo-primary" aria-hidden="true" focusable="false"><use href="#mark-c"/></svg>
         <!-- Secondary: the pinwheel (Figma 32:314, 61 x 61), filled with currentColor so
              CSS sets its colour per screen. -->
         <svg class="site-header__mark site-header__mark--secondary site-header__mark--hidden" data-js="logo-secondary" viewBox="0 0 61 61" aria-hidden="true" focusable="false">
@@ -403,8 +409,8 @@
          Works. Everything sits on a 1920 x 1080 stage scaled with --u. -->
     <section class="frame about push" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
       <div class="about__stage">
-        <!-- Figma 32:507: the pink mark, static. Decorative. -->
-        <img class="about__mark" src="assets/images/about-mark.svg" alt="" width="285" height="285" data-js="reveal" data-reveal-order="1">
+        <!-- Figma 47:280: the C mark (the shared mark-c shape), solid wine, static. Decorative. -->
+        <svg class="about__mark" aria-hidden="true" focusable="false" data-js="reveal" data-reveal-order="1"><use href="#mark-c"/></svg>
         <div class="about__text">
           <h2 class="about__heading" id="about-title" data-js="reveal" data-reveal-order="2">Hello, I’m <span class="about__name">Carol,</span></h2>
           <div class="about__bio" data-js="reveal" data-reveal-order="3">
@@ -412,8 +418,8 @@
             <p class="about__lead">My latest achievements have been:</p>
           </div>
           <ul class="about__awards">
-            <li class="about__award" data-js="reveal" data-reveal-order="4"><img class="about__trophy" src="assets/icons/trophy.svg" alt="" width="37" height="37"><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at UX Design Pitch as part of the UX India Conference 2026</span></li>
-            <li class="about__award" data-js="reveal" data-reveal-order="5"><img class="about__trophy" src="assets/icons/trophy.svg" alt="" width="37" height="37"><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at ServDes India Student Service Design Competition 2026</span></li>
+            <li class="about__award" data-js="reveal" data-reveal-order="4"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at UX Design Pitch as part of the UX India Conference 2026</span></li>
+            <li class="about__award" data-js="reveal" data-reveal-order="5"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at ServDes India Student Service Design Competition 2026</span></li>
           </ul>
           <!-- The About page is built in Phase 7; until then this link may 404. -->
           <a class="about__button" href="about.html" data-js="reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>

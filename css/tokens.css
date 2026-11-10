@@ -23,7 +23,13 @@
   --color-footer-text: #cbcac8;    /* footer tag line (Figma 32:505) */
   --color-footer-heading: #e1b27a; /* "Let's Build something good." (Figma 32:495) */
   --color-footer-small: #edcfaa;   /* footer small print (Figma 32:504, 32:506) */
-  --color-about-text: #fdfdfd;     /* About bio and achievements (Figma 32:485) */
+  /* About section on a light ground (Figma 47:251, FINAL EDITS) */
+  --color-wine: #783942;           /* About C mark, Learn More, header mark on About, footer ground (Figma 47:251, 49:455) */
+  --color-about-heading: #272727;  /* "Hello, I'm" (Figma 47:260); "Carol," is --color-burgundy */
+  --color-about-body: #2c2c2c;     /* bio (Figma 47:261) */
+  --color-about-award: #121212;    /* achievements (Figma 47:262, 47:263) */
+  --color-trophy: #dbb07c;         /* trophy icons (Figma 47:286) */
+  --color-nav-about: #1b1b1b;      /* header nav on About (Figma 47:255) */
   --color-list: #b5bcbd;
   --color-divider: #5c7375;
   --color-pale-teal: #a5c4c7;    /* logo cross on the touchpoints screen, footer cross */

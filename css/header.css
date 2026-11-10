@@ -55,11 +55,12 @@
   --header-scrim: transparent;
 }
 
+/* About on its light ground (Figma 47:251): dark text, wine mark, burgundy hover dot. */
 [data-theme="about"] {
-  --header-dot: var(--color-pink); /* burgundy would vanish on the burgundy ground */
-  --header-cross: var(--color-mint);
-  --header-nav: var(--color-white);
-  --header-scrim: var(--color-burgundy);
+  --header-cross: var(--color-wine);
+  --header-nav: var(--color-nav-about);
+  --header-scrim: var(--color-ground-light);
+  --header-dot: var(--color-burgundy);
 }
 
 /* Contact footer: same header colours as About (and About stays the active link). */
