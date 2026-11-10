@@ -407,6 +407,8 @@
     <!-- Screen 6: About section (Figma 32:475, top 1080). Pushes in over Selected Works
          (css/push.css, js/push-in.js): it starts one screen early, overlapping the pinned
          Works. Everything sits on a 1920 x 1080 stage scaled with --u. -->
+    <!-- About, pinned for its own screen, its hold, and one more screen while the footer
+         slides up over it (css/push.css). -->
     <div class="push pin pin--about" data-js="push-from">
     <section class="frame about pin__item" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
       <div class="about__stage">
@@ -437,7 +439,7 @@
        a 1920 x 1080 stage scaled with --u, centred; the big cross is anchored to the
        window's right edge, so it is always cropped there. Load: the mark and cue, then the
        tag line, headline, links and small print, then the cross fades in from the right. -->
-  <footer class="contact" id="contact" aria-labelledby="contact-title" data-js="screen footer">
+  <footer class="contact push" id="contact" aria-labelledby="contact-title" data-js="screen footer push-from" data-reveal-wait="footer">
     <!-- Figma 49:521: the large cross, darker than the ground, stationary. Decorative. -->
     <svg class="contact__cross" viewBox="0 0 1062 992" aria-hidden="true" focusable="false" data-js="reveal" data-reveal-order="6" data-reveal-from="right">
       <path d="M715.695 477.049H1062L1023.52 730.682L531 653.823V992L277.044 953.571L354 477.049H0L38.4785 215.729L531 292.588V0H789.182L715.695 477.049Z"/>

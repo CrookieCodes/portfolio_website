@@ -18,13 +18,14 @@
    sticky for its own height plus its hold (HOLD in js/motion-config.js), then scrolls
    away. */
 .pin {
-  --pin-length: calc(100 + var(--pin-hold));
+  --pin-length: calc(100 + var(--pin-hold) + var(--pin-after, 0));
   height: calc(var(--pin-length) * 1vh);   /* fallback */
   height: calc(var(--pin-length) * 1svh);
 }
 
 .pin--about {
   --pin-hold: var(--hold-about, 0);
+  --pin-after: 100; /* the footer pushes in over About */
 }
 
 .pin__item {

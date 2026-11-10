@@ -11,6 +11,9 @@
   height: 100svh;
   background-color: var(--color-ground-light);
   color: var(--color-about-body);
+  /* Soft shadow along the top edge as About rises over Works (PUSH_ABOUT.shadow); at
+     rest it lies above the window. */
+  box-shadow: var(--push-shadow-about) var(--color-push-shadow);
 }
 
 .about__stage {
@@ -125,4 +128,11 @@
 
 .about__button:focus-visible {
   outline-color: var(--color-wine);
+}
+
+/* Reduced motion: no push-in, plain screens one after the other, so no edge shadow. */
+@media (prefers-reduced-motion: reduce) {
+  .about {
+    box-shadow: none;
+  }
 }

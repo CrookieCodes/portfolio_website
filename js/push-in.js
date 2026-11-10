@@ -1,6 +1,8 @@
-// Push-in slides (css/push.css): Touchpoints -> Experiences and Selected Works -> About.
-// Both run on this same code, each pair with its own values (PUSH, PUSH_ABOUT in
-// js/motion-config.js). The slide itself is CSS: the screen being left is pinned
+// Push-in slides (css/push.css): Touchpoints -> Experiences, Selected Works -> About and
+// About -> footer. All run on this same code, each pair with its own values (PUSH,
+// PUSH_ABOUT, PUSH_FOOTER in js/motion-config.js). A pair whose incoming screen has no
+// header theme (the footer: the header fades out over it, js/header-footer.js) leaves
+// the header items alone. The slide itself is CSS: the screen being left is pinned
 // (sticky) and the next one scrolls up over it. This adds, per scroll frame and pair:
 //
 //   - Drift and veil (motion.md "Transitions between screens", CAROL): with q = how far
@@ -18,12 +20,12 @@
 // Scrolling back up runs all of it in reverse. With reduced motion the screens are not
 // pinned (plain scrolling), none of this runs and the promises resolve at once.
 
-import { PUSH, PUSH_ABOUT } from './motion-config.js';
+import { PUSH, PUSH_ABOUT, PUSH_FOOTER } from './motion-config.js';
 import { leaveScreen } from './reveal.js';
 
 const clamp01 = (value) => Math.min(1, Math.max(0, value));
 
-// Returns { experiences, about }: promises that resolve when each screen first arrives.
+// Returns { experiences, about, footer }: promises that resolve when each screen first arrives.
 export function initPushIn() {
   const header = document.querySelector('[data-js="site-header"]');
   const headerItems = [...(header?.querySelectorAll('[data-js~="header-item"]') ?? [])];
@@ -32,6 +34,7 @@ export function initPushIn() {
   const pairs = [
     { name: 'experiences', under: document.querySelector('.scene--touchpoints'), over: document.getElementById('experiences'), values: PUSH },
     { name: 'about', under: document.querySelector('[data-js~="works"]'), over: document.getElementById('about'), values: PUSH_ABOUT },
+    { name: 'footer', under: document.getElementById('about'), over: document.querySelector('[data-js~="footer"]'), values: PUSH_FOOTER },
   ].filter((pair) => pair.under && pair.over);
 
   const promises = {};
@@ -90,7 +93,7 @@ export function initPushIn() {
       else delete pair.over.dataset.screenHidden;
     }
 
-    pair.items.forEach((item) => {
+    if (pair.theme) pair.items.forEach((item) => {
       const own = pushing && top <= item.edge;
       if (own === item.own) return;
       item.own = own;

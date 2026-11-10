@@ -43,5 +43,5 @@ initWorks();
 // The Landing's load animation waits until the splash has gone, Touchpoints' until
 // the blinds have covered the screen, and Experiences' text until the light has
 // swept the scene; Selected Works' until its blinds have covered the screen; About's
-// until it has slid in over Works. The footer plays when it scrolls into view.
-initReveal({ waitFor: { splash: splashDone, wipe: wipes.touchpoints, experiences: experiencesLit, works: wipes.works, about: pushes.about } });
+// until it has slid in over Works; the footer's until it has slid in over About.
+initReveal({ waitFor: { splash: splashDone, wipe: wipes.touchpoints, experiences: experiencesLit, works: wipes.works, about: pushes.about, footer: pushes.footer } });

@@ -1,12 +1,13 @@
-/* Footer (Figma 49:455, FINAL EDITS): a full-height section on the wine ground, after
-   About with a plain scroll, above the pinned screens. Everything except the big cross
+/* Footer (Figma 49:455, FINAL EDITS): a full-height section on the wine ground that
+   slides up over the pinned About (the push-in: .push in css/push.css, js/push-in.js),
+   above the pinned screens. Everything except the big cross
    sits at its Figma position on a 1920 x 1080 stage scaled with --u and centred in the
    section. The cross is anchored to the section's right edge instead, so it is always
    cropped by the window there, whatever the window's shape. */
 
 .contact {
   position: relative;
-  z-index: 4;               /* above the overlapping blinds and push-in wrappers */
+  z-index: 4;               /* above the pinned About and the other push-in wrappers */
   display: grid;
   place-items: center;      /* centres the stage */
   min-height: 100vh;        /* fallback */
@@ -14,6 +15,8 @@
   overflow: hidden;         /* crops the cross at the right edge */
   background-color: var(--color-wine);
   color: var(--color-footer-text);
+  /* Soft shadow along the top edge as the footer rises over About (PUSH_FOOTER.shadow). */
+  box-shadow: var(--push-shadow-footer) var(--color-push-shadow);
 }
 
 .contact__stage {
@@ -175,4 +178,11 @@
   height: calc(7 * var(--u));
   border-radius: 50%;
   background-color: currentColor;
+}
+
+/* Reduced motion: no push-in, plain screens one after the other, so no edge shadow. */
+@media (prefers-reduced-motion: reduce) {
+  .contact {
+    box-shadow: none;
+  }
 }

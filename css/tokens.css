@@ -38,6 +38,7 @@
   --color-eye-outline: #9fa5a6;  /* Landing eyes (Figma 32:678) */
   --color-eye-pupil: #514b44;    /* Landing eyes (Figma 32:678) */
   --color-black: #000000;
+  --color-push-shadow: rgb(0 0 0 / 0.08); /* soft shadow on a light screen's rising edge (PUSH_ABOUT, PUSH_FOOTER) */
   /* Glyph effect colours (motion.md v2 "Brighter glyph colours", CAROL; hex PROPOSED) */
   --color-glyph-pink: #f28b9d;
   --color-glyph-blue: #4fa8e0;

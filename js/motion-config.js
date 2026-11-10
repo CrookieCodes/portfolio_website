@@ -120,11 +120,25 @@ export const PUSH = {
 
 // Push-in, Selected Works -> About (motion.md v2 "Transitions between screens"): the
 // same push-in as Touchpoints -> Experiences, run by the same code with these values.
+// Both screens are light, so there is no veil (it turned Works grey); a soft shadow
+// along About's rising top edge separates them instead.
 export const PUSH_ABOUT = {
   arriveAt: 0.98,            // PROPOSED: About counts as arrived; its load starts here
   drift: 12,                 // PROPOSED: Works drifts up by q x 12% of the screen
-  veil: 0.12,                // PROPOSED: ... under a black veil fading to 12% at q = 1
+  veil: 0,                   // CAROL: no veil between two light screens
   headerCover: 1,            // PROPOSED: as PUSH.headerCover
+  shadow: '0 -24px 48px',    // PROPOSED: along the incoming top edge (colour: --color-push-shadow)
+};
+
+// Push-in, About -> footer (CAROL): the footer slides up over the pinned About at scroll
+// speed, About drifting up with it, no veil, the same edge shadow. The header fades out
+// as the footer reaches it (HEADER.footerFade) and the footer's load starts on arrival.
+export const PUSH_FOOTER = {
+  arriveAt: 0.98,            // PROPOSED: the footer counts as arrived; its load starts here
+  drift: 12,                 // PROPOSED: About drifts up by q x 12% of the screen
+  veil: 0,                   // CAROL: no veil
+  headerCover: 1,            // PROPOSED: unused (the header fades out over the footer)
+  shadow: '0 -24px 48px',    // PROPOSED: as PUSH_ABOUT.shadow
 };
 
 // 3. Touchpoints dot flow (motion.md section 3: "loop gently while in view").
@@ -238,6 +252,8 @@ export function applyMotionVariables() {
   root.setProperty('--motion-cue-period', `${CUE.period}ms`);
   root.setProperty('--motion-cue-easing', CUE.easing);
   root.setProperty('--motion-header-fade', `${HEADER.footerFade}ms`);
+  root.setProperty('--push-shadow-about', PUSH_ABOUT.shadow);
+  root.setProperty('--push-shadow-footer', PUSH_FOOTER.shadow);
   Object.entries(HOLD).forEach(([name, value]) => root.setProperty(`--hold-${name}`, String(value)));
   root.setProperty('--motion-header-easing', HEADER.footerEasing);
 }
