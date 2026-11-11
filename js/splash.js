@@ -16,6 +16,7 @@
 // waits on splashDone, a promise that resolves when the Landing is showing.
 
 import { SPLASH } from './motion-config.js';
+import { NARROW_QUERY } from './site-config.js';
 
 const SKIP_EVENTS = ['pointerdown', 'keydown', 'wheel'];
 
@@ -50,10 +51,11 @@ function startSplash() {
     splash.remove();
   }
 
-  // Skip the sequence entirely: reduced motion, or the page was opened at an
-  // address inside the page (e.g. #work, or coming back with the Back button).
+  // Skip the sequence entirely: reduced motion, a narrow window (css/narrow.css), or
+  // the page was opened at an address inside the page (e.g. #work, or the Back button).
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || location.hash) {
+  const narrow = window.matchMedia(NARROW_QUERY).matches; // the notice shows instead
+  if (reduceMotion || location.hash || narrow) {
     reveal();
     return Promise.resolve();
   }

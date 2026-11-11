@@ -40,10 +40,23 @@
   <link rel="stylesheet" href="css/scroll-cue.css">
   <link rel="stylesheet" href="css/cursor-label.css">
   <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/narrow.css">
 
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
+  <!-- Phones and narrow windows (below 1024 px wide, css/narrow.css): the desktop page is
+       not shown and its scripts and splash do not start; this notice is shown instead. -->
+  <section class="narrow" aria-labelledby="narrow-text">
+    <svg class="narrow__mark" aria-hidden="true" focusable="false"><use href="#mark-c"/></svg>
+    <p class="narrow__text" id="narrow-text">This portfolio is best viewed on a desktop or laptop. A mobile version is coming soon.</p>
+    <ul class="narrow__links">
+      <li><a class="narrow__link" href="mailto:beth.carol00@gmail.com">beth.carol00@gmail.com</a></li>
+      <li><a class="narrow__link" href="https://www.linkedin.com/in/carol-elizabeth-351367281/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="narrow__link" href="https://drive.google.com/file/d/1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+    </ul>
+  </section>
+
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Shared shapes, drawn once and reused with <use href="#...">. Each copy takes its
@@ -104,7 +117,7 @@
     </div>
   </header>
 
-  <main id="main">
+  <main class="site-main" id="main">
     <!-- Screen 2: Landing (Figma 32:656). Everything sits on a 1920 x 1080 stage scaled
          with --u, centred in the window. data-reveal-order sets the load order (js/reveal.js);
          data-reveal-wait="splash" holds it until the splash has gone. -->

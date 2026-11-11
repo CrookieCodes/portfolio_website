@@ -11,6 +11,10 @@ export const NAV = {
   contact: 'contact',
 };
 
+// Below this width the desktop experience does not run: css/narrow.css shows a notice
+// instead, and js/main.js and js/splash.js do not start (keep the CSS in step).
+export const NARROW_QUERY = '(max-width: 1023.98px)';
+
 // "Learn More >" in the About section. Empty: no destination yet, so the button is
 // hidden. Set it to 'about.html' once that page exists and the button appears.
 export const ABOUT_PAGE_URL = '';
