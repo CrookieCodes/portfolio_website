@@ -27,6 +27,11 @@ import { initReveal } from './reveal.js';
 
 function startDesktop() {
   applyMotionVariables();
+  // Opened at an address inside the page (/#about, /#work...): jump there now, once the
+  // hold lengths are applied and before the scroll-driven modules start, instead of
+  // waiting for the browser's own smooth scroll after the page has loaded.
+  const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY, behavior: 'instant' });
   initHeaderTheme();
   initHeaderLogo();
   initHeaderFooter();
