@@ -1,0 +1,210 @@
+/* Design tokens: every colour, size and spacing value from design/tokens.md.
+   Sizes are design px at 1920 wide, converted to rem (px / 16).
+   Letter-spacing is in em (design px / font size) so it follows the font size.
+   Line heights are unitless (design line height / font size). */
+
+:root {
+  /* Colours */
+  --color-teal: #0b2f32;
+  --color-burgundy: #993746;
+  --color-bronze: #9f723c;
+  --color-mint: #a9daaf;
+  --color-pink: #f2909f;         /* header hover dot on the dark themes (Landing, Experiences) */
+  --color-paper: #e4e4e4;
+  --color-card: #d0ceca;
+  --color-ink: #1a1a1a;
+  --color-ink-card: #24292b;
+  --color-button-text: #1c1c1c;
+  --color-white: #ffffff;
+  --color-off-white: #efefef;
+  --color-tan: #dbbe9b;
+  --color-link: #d7d7d7;
+  --color-gold-muted: #af997e;
+  --color-footer-text: #cbcac8;    /* footer tag line (Figma 49:523) */
+  --color-footer-heading: #e1b27a; /* "Let's build something good. Say Hello!" (Figma 49:516) */
+  --color-footer-small: #edcfaa;   /* footer small print and the "Click to Return Home" cue (Figma 49:522, 49:524, 54:544) */
+  --color-footer-mark: #ebc0c7;    /* the small C mark in the footer (Figma 49:529) */
+  --color-footer-cross: #613037;   /* the large cross on the footer (Figma 49:521: #5B2E34 at 80% on the wine ground) */
+  /* About section on a light ground (Figma 47:251, FINAL EDITS) */
+  --color-wine: #783942;           /* About C mark, Learn More, header mark on About, footer ground (Figma 47:251, 49:455) */
+  --color-about-heading: #272727;  /* "Hello, I'm" (Figma 47:260); "Carol," is --color-burgundy */
+  --color-about-body: #2c2c2c;     /* bio (Figma 47:261) */
+  --color-about-award: #121212;    /* achievements (Figma 47:262, 47:263) */
+  --color-trophy: #dbb07c;         /* trophy icons (Figma 47:286) */
+  --color-nav-about: #1b1b1b;      /* header nav on About (Figma 47:255) */
+  --color-list: #b5bcbd;
+  --color-divider: #5c7375;
+  --color-pale-teal: #a5c4c7;    /* logo cross on the touchpoints screen, footer cross */
+  --color-eye-outline: #9fa5a6;  /* Landing eyes (Figma 32:678) */
+  --color-eye-pupil: #514b44;    /* Landing eyes (Figma 32:678) */
+  --color-black: #000000;
+  --color-push-shadow: rgb(0 0 0 / 0.08); /* soft shadow on a light screen's rising edge (PUSH_ABOUT, PUSH_FOOTER) */
+  /* Glyph effect colours (motion.md v2 "Brighter glyph colours", CAROL; hex PROPOSED) */
+  --color-glyph-pink: #f28b9d;
+  --color-glyph-blue: #4fa8e0;
+  --color-glyph-orange: #f5a04a;
+  /* Selected Works (Figma 32:377, 32:417) */
+  --color-works-column: #d9d9d9;  /* grey column behind the card panel */
+  --color-works-panel: #f1f1f1;   /* card panel; button text; pinwheel outlines */
+  --color-works-title: #161616;   /* "Selected Works" / domain title */
+  --color-button-light: #b7b7b7;  /* Next Project button (Figma 49:312) */
+  --color-button-ink: #242424;    /* Next Project label (Figma 49:314) */
+  /* The Works pinwheel, a fixed painting that only turns (Figma 49:334, at project 1) */
+  --color-pinwheel-flap-a: #dbbe9b; /* top and bottom flaps at rest */
+  --color-pinwheel-flap-b: #af997e; /* left and right flaps at rest */
+  --color-pinwheel-brown: #9f723c;  /* upper-left and lower-right small triangles at rest */
+  --color-pinwheel-stick: #746149;  /* the stick */
+  --color-tag-text: #01181a;      /* text on the pale-teal tags */
+  --color-link-dark: #1d1d1d;     /* "View Project >" */
+  --color-cue: #e7e7e7;          /* scroll cue text (Figma 32:681) */
+  --color-ground-light: #f7f7f7; /* Touchpoints ground (Figma 32:306) */
+  --color-heading-dark: #1c1c1c; /* Touchpoints heading (Figma 32:320) */
+  --color-list-dark: #212121;    /* Touchpoints list (Figma 32:321) */
+  --color-nav-dark: #181818;     /* header nav on Touchpoints (Figma 32:315) */
+  /* Touchpoint diagram (Figma 32:306, FINAL EDITS): lines, dots and the squares' gradient stops */
+  --color-diagram-line: #0e1819;   /* lines (Figma 32:306) */
+  --color-diagram-dot: #323232;    /* dots, the small squares on the lines (Figma 32:306) */
+  --color-square-brown-dark: #705432;
+  --color-square-brown-light: #ce9c61;
+  --color-square-teal-light: #3e8288;
+  --color-square-teal-dark: #3b4e4f;
+  --color-square-pink-light: #e57f8f;
+  --color-square-pink-dark: #783942;
+
+  /* Font families */
+  --font-helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-plex: "IBM Plex Sans", var(--font-helvetica);
+
+  /* Font weights (Helvetica Neue names → CSS numbers) */
+  --weight-thin: 200;
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-heavy: 800;
+
+  /* Type scale: one size / line-height / letter-spacing set per text role */
+  --fs-nav: calc(26 * var(--u));        /* 26px at 1920, fluid */
+  --lh-nav: 1.142;
+  --ls-nav: -0.01em;
+
+  --fs-landing-title: calc(48 * var(--u));     /* 48px at 1920, fluid (Figma 32:669) */
+  --lh-landing-title: 1.0576;
+  --ls-landing-title: -0.03em;
+  --fs-landing-keyword: calc(48.578 * var(--u)); /* 48.6px at 1920, fluid: Figma 32:674-676 (60.723px) x 0.8 (CAROL) */
+  --lh-landing-keyword: 1.1758;
+  --ls-landing-keyword: -0.03em;
+
+  --fs-scene-1: calc(48 * var(--u));    /* 48px at 1920, fluid */
+  --lh-scene-1: 1.25;
+  --ls-scene-1: -0.02em;
+  --fs-scene-2: calc(64 * var(--u));    /* 64px at 1920, fluid */
+  --lh-scene-2: 0.9375;
+  --ls-scene-2: -0.015em;
+  --fs-scene-list: calc(28.4 * var(--u)); /* 28.4px at 1920, fluid */
+  --lh-scene-list: 1.768;
+  --ls-scene-list: -0.02em;
+
+  --fs-overline: calc(40 * var(--u));    /* 40px at 1920, fluid */
+  --lh-overline: 1.5;
+  --ls-overline: -0.02em;
+  --fs-section-title: calc(54 * var(--u)); /* 54px at 1920, fluid */
+  --lh-section-title: 1.111;
+  --ls-section-title: -0.02em;
+
+  --fs-card-title: calc(30 * var(--u));  /* 30px at 1920, fluid */
+  --lh-card-title: 1.2;
+  --ls-card-title: -0.02em;
+  --fs-card-subtitle: calc(23 * var(--u)); /* 23px at 1920, fluid */
+  --lh-card-subtitle: 1.217;
+  --ls-card-subtitle: -0.01em;
+  --fs-tag: calc(14.8 * var(--u));       /* 14.8px at 1920, fluid */
+  --lh-tag: 1.25;
+  --ls-tag: -0.02em;
+
+  --fs-about-heading: calc(83 * var(--u)); /* 83px at 1920, fluid (Figma 32:484) */
+  --lh-about-heading: 1.193;
+  --ls-about-heading: -0.02em;
+  --fs-about-body: calc(28 * var(--u));  /* 28px at 1920, fluid (Figma 32:485) */
+  --lh-about-body: 1.714;
+  --ls-about-body: -0.01em;
+  --fs-about-award: calc(27 * var(--u)); /* 27px at 1920, fluid (Figma 32:486) */
+  --lh-about-award: 1.111;
+  --fs-button: calc(28 * var(--u));      /* 28px at 1920, fluid */
+  --lh-button: 1.179;
+  --ls-button: -0.01em;
+
+  --fs-footer-small: calc(20 * var(--u)); /* 20px at 1920, fluid */
+  --lh-footer-small: 1.2;
+  --ls-footer-small: -0.01em;
+  --fs-footer-tags: calc(23.417 * var(--u)); /* 23.4px at 1920, fluid (Figma 49:523) */
+  --lh-footer-tags: 1.2;
+  --fs-footer-heading: calc(82 * var(--u)); /* 82px at 1920, fluid (Figma 49:516) */
+  --lh-footer-heading: 1.2805;              /* 105px lines */
+  --ls-footer-heading: -0.02em;
+  --fs-footer-cue: calc(25 * var(--u));     /* 25px at 1920, fluid (Figma 54:544) */
+  --lh-footer-cue: 0.96;                    /* 24px line */
+  --ls-footer-cue: -0.01em;
+  --fs-contact-link: calc(24 * var(--u)); /* 24px at 1920, fluid */
+  --lh-contact-link: 1;
+
+  --fs-cue: calc(22.909 * var(--u));     /* 22.9px at 1920, fluid (Figma 32:681) */
+  --lh-cue: 1.1786;
+  --ls-cue: -0.01em;
+
+  /* Fluid design pixel: 1 design px of the 1920x1080 frames, scaled to the window.
+     It follows whichever is tighter, width or height, so a whole screen always fits.
+     Clamped: it stops shrinking below 1024 wide (1/1920 * 1024 = 0.533px = 0.0333rem)
+     and stops growing above 2560 wide (1.333px = 0.0833rem).
+     Exactly 1px at 1920x1080. Used by the splash, Landing and header (Phase 3);
+     the other screens move to it in Phase 6. */
+  --u: clamp(0.0333rem, min(100vw / 1920, 100vh / 1080), 0.0833rem);
+
+  /* Page margin: the left and right margins of Figma's 3-column grid (120px margin,
+     40px gutter). 120px at 1920 and wider, scaling with the window below that, never
+     under 32px. Content spans the full window between the margins. Use this on every
+     screen (screens 3-6 move to it in Phase 6); never hard-code the 120. */
+  --page-margin: clamp(2rem, 6.25vw, 7.5rem);
+
+  /* Touchpoints text block (CAROL): shifted right of its Figma place by this share of
+     its own width, but never closer than the gap to the window's right edge
+     (js/touchpoints-text.js). */
+  --touchpoints-text-shift: 0.4;
+  --touchpoints-text-gap: 64px;
+
+  /* Selected Works type (design px at 1920, fluid) */
+  --fs-works-title: calc(43 * var(--u));   /* Figma 49:329 */
+  --lh-works-title: 0.977;                 /* 42px line */
+  --fs-works-years: calc(32 * var(--u));
+  --lh-works-years: 1.031;
+  --fs-works-button: calc(24 * var(--u));
+  --lh-works-button: 1.375;
+  --fs-card-heading: calc(29 * var(--u));
+  --lh-card-heading: 1.241;
+  --fs-card-text: calc(21 * var(--u));
+  --lh-card-text: 1.333;
+  --fs-card-tag: calc(20 * var(--u));      /* Figma 49:324-326, Helvetica Neue Medium */
+  --lh-card-tag: 0.993;
+  --fs-card-link: calc(20 * var(--u));
+  --lh-card-link: 1.65;
+  --fs-works-arrow: calc(30.525 * var(--u));
+
+  /* Layout */
+  --frame-height: 67.5rem;       /* 1080px: screens 1 to 5 and the About part of screen 6 */
+  --gutter: 7.5rem;              /* 120px side margins */
+
+  /* Radii */
+  --radius-card: calc(24 * var(--u));    /* 24px at 1920, fluid */
+  --radius-tag: calc(3.7 * var(--u));    /* 3.7px at 1920, fluid */
+  --radius-button: calc(8 * var(--u));   /* 8px at 1920, fluid */
+}
+
+/* Small viewport height (svh) ignores mobile browser bars. Custom properties are not
+   checked when parsed, so a second --u line would not act as a fallback: @supports
+   swaps it in only where svh works, and 100vh above stays the fallback. */
+@supports (height: 100svh) {
+  :root {
+    --u: clamp(0.0333rem, min(100vw / 1920, 100svh / 1080), 0.0833rem);
+  }
+}

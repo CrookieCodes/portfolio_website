@@ -1,0 +1,240 @@
+/* Site header: logo cross (left) and main nav (right), between the page margins.
+   Sizes use the fluid design pixel --u (tokens.css), so it fits any window.
+   One fixed header for screens 2-6. js/header-theme.js sets data-theme to the
+   screen behind the header; each theme below sets the logo and nav colours.
+   The logo has two marks (js/header-logo.js swaps them): the tan primary mark on
+   the Landing, and the secondary pinwheel everywhere else, filled with
+   currentColor so its colour comes from the theme (Figma FINAL EDITS header marks).
+   A scrim behind the header (in the screen's own colour) keeps content that
+   scrolls underneath from clashing with the logo and nav. */
+
+.site-header {
+  position: fixed;
+  top: calc(67 * var(--u));
+  left: 0;
+  right: 0;
+  z-index: 5;
+  /* The header spans the full width, but only the logo and the nav take the mouse:
+     the empty strip between them would otherwise block whatever scrolls under it.
+     --header-pointer turns that off too while the header is hidden. */
+  pointer-events: none;
+  --header-pointer: auto;
+  /* Fading back in: visible at once, then the opacity rises. */
+  transition:
+    opacity var(--motion-header-fade) var(--motion-header-easing),
+    visibility 0s;
+  /* Default (no theme yet): the Landing's colours. --header-cross colours the
+     secondary pinwheel mark. */
+  --header-cross: var(--color-burgundy);
+  --header-nav: var(--color-white);
+  --header-scrim: var(--color-teal);
+  /* Hover/focus dot (CAROL): pink on the dark themes (Landing, Experiences), burgundy
+     on the light ones (Touchpoints, Work, About). */
+  --header-dot: var(--color-burgundy);
+}
+
+/* Themes, one per screen. Attribute selectors keep these to one simple selector each. */
+[data-theme="landing"] {
+  --header-cross: var(--color-burgundy);
+  --header-nav: var(--color-white);
+  /* No band on the Landing: it is pinned, so nothing scrolls under the header, and
+     the blinds must reach the very top of the screen. */
+  --header-scrim: transparent;
+  --header-dot: var(--color-pink);
+}
+
+[data-theme="touchpoints"] {
+  --header-cross: var(--color-burgundy);
+  --header-nav: var(--color-nav-dark);
+  --header-scrim: var(--color-ground-light);
+}
+
+[data-theme="experiences"] {
+  --header-cross: var(--color-bronze);
+  --header-nav: var(--color-white);
+  --header-scrim: var(--color-black); /* opaque, so nothing on the photo shows under the nav */
+  --header-dot: var(--color-pink);
+}
+
+[data-theme="work"] {
+  --header-cross: var(--color-teal);
+  --header-nav: var(--color-ink);
+  --header-active-dot: var(--color-bronze); /* brown dot on "Work" (Figma 49:299) */
+  /* No band: it would hide the top of the grey column (Figma 32:377 has none). */
+  --header-scrim: transparent;
+}
+
+/* About on its light ground (Figma 47:251): dark text, wine mark, burgundy hover dot. */
+[data-theme="about"] {
+  --header-cross: var(--color-wine);
+  --header-nav: var(--color-nav-about);
+  --header-scrim: var(--color-ground-light);
+  --header-dot: var(--color-burgundy);
+}
+
+/* Over the footer (js/header-footer.js): faded out, and hidden once faded, so its links
+   cannot be clicked or reached with Tab. Fading out: the opacity falls first, then
+   visibility switches off at the end of the fade. */
+.site-header--hidden {
+  opacity: 0;
+  visibility: hidden;
+  --header-pointer: none;
+  transition:
+    opacity var(--motion-header-fade) var(--motion-header-easing),
+    visibility 0s linear var(--motion-header-fade);
+}
+
+/* During a push-in slide (js/push-in.js) the band is off: the header items change
+   one by one as the incoming screen's edge passes them, over whatever is beneath. */
+[data-band="off"] {
+  --header-scrim: transparent;
+}
+
+/* Scrim: a band across the top of the window, behind the logo and nav but above
+   every screen (the header is its own stacking layer at z-index 5). Solid down to
+   the header's bottom edge (design y 133, past the logo and nav), then fading to
+   transparent by y 160: just above the Touchpoints diagram (y 167), so the band
+   never covers it. Sized with --u only (no fixed minimum), so it scales with the
+   screens in short windows too. The fade is a mask, so the colour stays a plain
+   background-color that changes with the theme. */
+.site-header__scrim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: calc(160 * var(--u));
+  background-color: var(--header-scrim);
+  -webkit-mask-image: linear-gradient(to bottom, var(--color-black) 83%, transparent);
+  mask-image: linear-gradient(to bottom, var(--color-black) 83%, transparent);
+  pointer-events: none;
+}
+
+/* Full window width between the page margins: logo on the left margin,
+   nav ending on the right margin. */
+.site-header__inner {
+  padding-inline: var(--page-margin);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.site-header__logo {
+  pointer-events: var(--header-pointer);
+  display: grid;  /* the two marks share one cell, both at its top-left corner */
+  width: calc(72.475 * var(--u));
+  height: calc(72.475 * var(--u));
+  color: var(--header-cross);
+}
+
+.site-header__mark {
+  grid-area: 1 / 1;
+  display: block;
+}
+
+/* Primary: the tan square mark (Figma 32:658), 72.5px. */
+.site-header__mark--primary {
+  width: calc(72.475 * var(--u));
+  height: calc(72.475 * var(--u));
+  fill: var(--color-tan);
+}
+
+/* Secondary: the pinwheel (Figma 32:314), 61px, in the theme colour. */
+.site-header__mark--secondary {
+  width: calc(61 * var(--u));
+  height: calc(61 * var(--u));
+  fill: currentColor;
+}
+
+.site-header__mark--hidden {
+  opacity: 0;
+}
+
+.site-nav {
+  pointer-events: var(--header-pointer);
+  margin-top: calc(13 * var(--u)); /* nav text sits 13px below the logo's top edge */
+  color: var(--header-nav);
+}
+
+.site-nav__list {
+  display: flex;
+  gap: calc(76 * var(--u)); /* 76px between items */
+}
+
+/* At rest each link is slightly softer than the nav colour (HOVER.navRest in
+   js/motion-config.js); hover, keyboard focus and the active link use the full colour. */
+.site-nav__link {
+  position: relative; /* anchors the dot */
+  display: flex;
+  align-items: center;
+  color: color-mix(in srgb, var(--header-nav) var(--nav-rest-mix), transparent);
+  font-size: var(--fs-nav);
+  line-height: var(--lh-nav);
+  letter-spacing: var(--ls-nav);
+  text-decoration: none;
+  transition: color var(--motion-hover-fade) var(--motion-hover-easing);
+}
+
+.site-nav__link:focus-visible,
+.site-nav__link--active {
+  color: var(--header-nav);
+}
+
+/* The dot before a link: 10px, 12px before the text. It sits in the gap between
+   links (absolutely placed), so showing it never moves any text. Hidden by
+   default; the active link shows it in the nav colour, hover and keyboard focus
+   show it in pink. */
+.site-nav__link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 12 * var(--u));
+  width: calc(10 * var(--u));  /* 10px dot */
+  height: calc(10 * var(--u));
+  margin-top: calc(-5 * var(--u));
+  border-radius: 50%;
+  background-color: var(--header-dot);
+  opacity: 0;
+  transition: opacity var(--motion-hover-fade) var(--motion-hover-easing);
+}
+
+/* Focus rings use the nav colour so they show on dark and light screens. */
+.site-header__logo:focus-visible,
+.site-nav__link:focus-visible {
+  outline-color: var(--header-nav);
+}
+
+.site-nav__link:focus-visible::before {
+  opacity: 1;
+}
+
+/* Mouse hover only: on touch screens there is no hover state. */
+@media (hover: hover) {
+  .site-nav__link:hover {
+    color: var(--header-nav);
+  }
+
+  .site-nav__link:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Active screen: heavier weight and the dot in the nav colour, or the theme's
+   --header-active-dot (it stays that colour on hover and focus). */
+.site-nav__link--active {
+  font-weight: var(--weight-heavy);
+}
+
+.site-nav__link--active::before {
+  background-color: var(--header-active-dot, currentColor);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header--hidden,
+  .site-nav__link,
+  .site-nav__link::before {
+    transition: none;
+  }
+}

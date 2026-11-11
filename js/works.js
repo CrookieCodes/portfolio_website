@@ -1,0 +1,250 @@
+// Selected Works (motion.md v2 section 5, CAROL): the card reel, the pinwheel, the
+// two buttons and the domain view. Cards are built from js/projects.js.
+//
+// The reel is a vertical track of panels in the grey column; the next panel peeks in
+// below the current one. Each panel is one whole card: its own title row ("Selected
+// Works" and the years, or in the domain view the domain title with < >), the image,
+// title, text, logos and tags. Panels roll as whole units, so no title row or card is
+// ever cut mid-roll (the column's edges fade softly, css/works.css).
+// Every change rolls the track upward only, never down:
+//   - Next Project: one card up (in the full list or within the current domain).
+//     At the end it rolls on into copies of the first cards added after the last,
+//     then jumps back to the real first card without animation.
+//   - Sort by Domain / < > / a Landing keyword: the current card rolls away upward
+//     and the new list's first card rolls in from below.
+// While rolling the track blurs and stretches a little, the arriving card grows from
+// dim and small to full, the leaving card the reverse, and the pinwheel turns a
+// quarter in sync (js/pinwheel.js). Rolls do not queue: a click while one runs is
+// ignored. The new card is announced (aria-live). Cards that are not current are
+// hidden from screen readers and from Tab (inert). Reduced motion: instant changes.
+//
+// Each card's image is its link once the project has a case study (caseStudyUrl in
+// js/projects.js), with the cursor label "Click to view project"; until then it is a
+// plain image whose label reads "Case study coming soon" (js/cursor-label.js). The
+// label never shows on cards that are not current or during a roll.
+//
+// Loading, once per page load: the grey column, the pinwheel, the buttons, the title
+// row and the cards load with the standard animation, in that order, once the blinds
+// from Experiences have covered the screen (js/wipe.js, js/reveal.js).
+
+import { PROJECTS, DOMAINS } from './projects.js';
+import { WORKS } from './motion-config.js';
+import { createPinwheel } from './pinwheel.js';
+import { attachCursorLabel, hideCursorLabel } from './cursor-label.js';
+
+const CARD_LABEL = 'Click to view project';
+const CARD_LABEL_SOON = 'Case study coming soon';
+
+const COPIES = 2; // copies of the first cards after the last, for the wrap-around
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text) node.textContent = text;
+  return node;
+}
+
+function domainTitle(id) {
+  return DOMAINS.find((d) => d.id === id)?.title ?? '';
+}
+
+// The panel's title row for a view: the full list (domain null) or one domain.
+function buildHead(domain) {
+  const head = el('div', 'works__head');
+  if (!domain) {
+    head.append(el('h2', 'works__title', 'Selected Works'), el('p', 'works__years', '2024 - 2026'));
+    return head;
+  }
+  const nav = el('div', 'works__domain-nav');
+  [['works-domain-prev', 'Previous domain', '<'], ['works-domain-next', 'Next domain', '>']].forEach(([js, label, glyph]) => {
+    const button = el('button', 'works__domain-button');
+    button.type = 'button';
+    button.dataset.js = js;
+    button.setAttribute('aria-label', label);
+    const mark = el('span', '', glyph);
+    mark.setAttribute('aria-hidden', 'true');
+    button.append(mark);
+    nav.append(button);
+  });
+  head.append(el('h2', 'works__title', domainTitle(domain)), nav);
+  return head;
+}
+
+function buildCard(project, domain) {
+  const card = el('li', 'card');
+  card.append(buildHead(domain));
+  // With a case study (project.caseStudyUrl), the image is the link to it. Without one
+  // it is a plain image: no link, no focus stop, and the cursor label says so.
+  const url = project.caseStudyUrl;
+  const media = el(url ? 'a' : 'div', 'card__media');
+  if (url) {
+    media.href = url;
+    media.setAttribute('aria-label', `View project: ${project.title}`);
+  }
+  const image = el('img', 'card__image');
+  Object.assign(image, { src: project.image.src, alt: url ? '' : project.image.alt, width: project.image.width, height: project.image.height });
+  image.decoding = 'async';
+  media.append(image);
+  attachCursorLabel(media, url ? CARD_LABEL : CARD_LABEL_SOON);
+  const body = el('div', 'card__body');
+  body.append(el('h3', 'card__title', project.title), el('p', 'card__text', project.description));
+  const logos = el('div', 'card__logos');
+  project.logos.forEach((logo) => {
+    const img = el('img', logo.className);
+    Object.assign(img, { src: logo.src, alt: logo.alt, width: logo.width, height: logo.height });
+    logos.append(img);
+  });
+  const tags = el('ul', 'card__tags');
+  tags.setAttribute('role', 'list');
+  tags.setAttribute('aria-label', 'Disciplines');
+  // Tag fills in turn (Figma 49:322-326): light green, tan, blue-grey.
+  const tones = ['', ' card__tag--tan', ' card__tag--blue'];
+  project.tags.forEach((tag, i) => tags.append(el('li', `card__tag${tones[i % tones.length]}`, tag)));
+  const footer = el('div', 'card__footer');
+  footer.append(logos, tags);
+  body.append(footer);
+  card.append(media, body);
+  return card;
+}
+
+export function initWorks() {
+  const screen = document.querySelector('[data-js~="works"]');
+  const track = screen?.querySelector('[data-js="works-track"]');
+  const svg = screen?.querySelector('[data-js="pinwheel"]');
+  if (!screen || !track || !svg) return;
+  const q = (name) => screen.querySelector(`[data-js~="${name}"]`);
+  const next = q('works-next');
+  const sort = q('works-sort');
+  const status = q('works-status');
+  const viewport = q('works-viewport');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pinwheel = createPinwheel(svg);
+
+  let domain = null;          // null = the full list, else a DOMAINS id
+  let list = PROJECTS;        // the projects in the current view
+  let index = 0;              // the current card
+  let rolling = false;
+
+  const listFor = (id) => (id ? PROJECTS.filter((project) => project.domains.includes(id)) : PROJECTS);
+  const stepOffset = (step) => `0 calc(var(--works-step) * ${-step})`;
+
+  // Renders `cards` (projects) into the track, plus copies of the first ones, and
+  // shows card `at` with no animation. Only card `current` can be read or tabbed to.
+  // `leaving` (optional) is a panel from the previous view, put first with its own title.
+  function render(cards, at, current = at, leaving = null) {
+    hideCursorLabel(); // the hovered card may be about to be replaced
+    const build = (project) => buildCard(project, domain);
+    track.replaceChildren(
+      ...(leaving ? [buildCard(leaving.project, leaving.domain)] : []),
+      ...cards.map(build),
+      ...cards.slice(0, COPIES).map(build),
+    );
+    track.style.translate = stepOffset(at);
+    markCurrent(current);
+  }
+
+  function markCurrent(current) {
+    [...track.children].forEach((card, i) => {
+      const isCurrent = i === current;
+      card.inert = !isCurrent;
+      if (isCurrent) card.removeAttribute('aria-hidden');
+      else card.setAttribute('aria-hidden', 'true');
+    });
+  }
+
+  function announce(prefix = '') {
+    status.textContent = `${prefix}Project ${index + 1} of ${list.length}: ${list[index].name}`;
+  }
+
+  // Rolls the track up from card `from` to card `from + 1`. Resolves when done.
+  function roll(from) {
+    const to = from + 1;
+    hideCursorLabel();
+    pinwheel.turn();
+    markCurrent(to);
+    if (reduceMotion.matches) {
+      track.style.translate = stepOffset(to);
+      return Promise.resolve();
+    }
+    const timing = { duration: WORKS.rollDuration, easing: WORKS.rollEasing };
+    const dim = { filter: `brightness(${WORKS.cardDim})`, scale: `${WORKS.cardShrink}` };
+    const full = { filter: 'brightness(1)', scale: '1' };
+    const moves = [
+      track.animate([{ translate: stepOffset(from) }, { translate: stepOffset(to) }], timing),
+      track.animate([
+        { filter: 'blur(0)', scale: '1 1' },
+        { filter: `blur(${WORKS.rollBlur}px)`, scale: `1 ${WORKS.rollStretch}`, offset: WORKS.rollBlurPeak },
+        { filter: 'blur(0)', scale: '1 1' },
+      ], { duration: WORKS.rollDuration, easing: 'ease-out' }),
+      track.children[to].animate([dim, full], timing),
+      track.children[from].animate([full, dim], timing),
+    ];
+    track.style.translate = stepOffset(to);
+    return Promise.all(moves.map((move) => move.finished)).then(() => {}, () => {});
+  }
+
+  // While rolling, nothing in the reel takes clicks or shows the label.
+  function setRolling(on) {
+    rolling = on;
+    viewport.inert = on;
+  }
+
+  async function nextProject() {
+    if (rolling) return;
+    setRolling(true);
+    await roll(index);
+    index += 1;
+    if (index >= list.length) {
+      index = 0;
+      render(list, 0); // the copy of the first card -> the real first card, no animation
+    }
+    announce();
+    setRolling(false);
+  }
+
+  // Switches to the full list (id = null) or a domain. `animate` = roll the new first
+  // card in; otherwise (e.g. from a Landing keyword, off-screen) switch instantly.
+  async function showView(id, animate = true) {
+    if (rolling) return;
+    const leaving = { project: list[index], domain };
+    // A < > button inside the leaving panel had focus: give it back on the new panel.
+    const refocus = document.activeElement?.closest?.('[data-js^="works-domain-"]')?.dataset.js;
+    domain = id;
+    list = listFor(id);
+    index = 0;
+    sort.setAttribute('aria-pressed', String(Boolean(id)));
+    if (animate) {
+      setRolling(true);
+      render(list, 0, 0, leaving);
+      await roll(0);
+      render(list, 0);
+      setRolling(false);
+    } else {
+      render(list, 0);
+    }
+    if (refocus) track.children[0].querySelector(`[data-js="${refocus}"]`)?.focus();
+    announce(id ? `${domainTitle(id)}. ` : 'All projects. ');
+  }
+
+  function cycleDomain(step) {
+    const at = DOMAINS.findIndex((d) => d.id === domain);
+    showView(DOMAINS[(at + step + DOMAINS.length) % DOMAINS.length].id);
+  }
+
+  next.addEventListener('click', nextProject);
+  // Sort by Domain opens the current project's first domain; pressed again, the full list.
+  sort.addEventListener('click', () => showView(domain ? null : list[index].domains[0]));
+  // The < > buttons live in every domain panel: one listener on the track for all.
+  track.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-js^="works-domain-"]');
+    if (button) cycleDomain(button.dataset.js === 'works-domain-next' ? 1 : -1);
+  });
+
+  // Landing keywords (data-domain): open that domain; the link itself scrolls to #work.
+  document.querySelectorAll('[data-js~="keyword"][data-domain]').forEach((keyword) => {
+    keyword.addEventListener('click', () => showView(keyword.dataset.domain, false));
+  });
+
+  render(list, 0);
+
+}

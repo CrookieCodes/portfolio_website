@@ -1,115 +1,505 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Carol Elizabeth</title>
-    <link rel="icon" type="image/png" href="images/FinalLogo.png" />
-    <link rel="apple-touch-icon" href="images/FinalLogo.png"  />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carol Design Portfolio 2026</title>
+  <meta name="description" content="Carol Elizabeth is a Service and UX Designer completing a Master of Design at IIT Delhi; this portfolio shows her selected service and product design work.">
+  <meta name="theme-color" content="#F7F7F7">
+
+  <!-- Link previews (Open Graph, Twitter/X). The image is 1200 x 630. -->
+  <meta property="og:title" content="Carol Design Portfolio 2026">
+  <meta property="og:description" content="Carol Elizabeth is a Service and UX Designer completing a Master of Design at IIT Delhi; this portfolio shows her selected service and product design work.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://carolelizabeth.netlify.app/">
+  <meta property="og:image" content="https://carolelizabeth.netlify.app/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The burgundy cross mark beside the words Carol Elizabeth, Service and UX Designer">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Favicon: Carol's burgundy cross. favicon.svg is the source; the .ico and .png files
+       were rendered from it (16/32/48 px ico, 180 px apple-touch-icon on white). -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Order matters: tokens first, then fonts and base, then one file per section. -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/splash.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/wipe.css">
+  <link rel="stylesheet" href="css/push.css">
+  <link rel="stylesheet" href="css/scene.css">
+  <link rel="stylesheet" href="css/works.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/contact.css">
+  <link rel="stylesheet" href="css/scroll-cue.css">
+  <link rel="stylesheet" href="css/cursor-label.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/narrow.css">
+
+  <script type="module" src="js/main.js"></script>
 </head>
-
 <body>
-    <div class="header">
-        <div class="site-logo">
-            <a href="index.html">
-                <img src="assets/logo.svg" alt="Personal Monogram" height="80"></a>
-        </div>
-        <ul class="navigation-links">
-            <li><a href="pages/About/">About</a></li>
-            <li><a href="pages/Work/">Work</a></li>
-            <li><a href="pages/Contact/">Contact</a></li>
+  <!-- Phones and narrow windows (below 1024 px wide, css/narrow.css): the desktop page is
+       not shown and its scripts and splash do not start; this notice is shown instead. -->
+  <section class="narrow" aria-labelledby="narrow-text">
+    <svg class="narrow__mark" aria-hidden="true" focusable="false"><use href="#mark-c"/></svg>
+    <p class="narrow__text" id="narrow-text">This portfolio is best viewed on a desktop or laptop. A mobile version is coming soon.</p>
+    <ul class="narrow__links">
+      <li><a class="narrow__link" href="mailto:beth.carol00@gmail.com">beth.carol00@gmail.com</a></li>
+      <li><a class="narrow__link" href="https://www.linkedin.com/in/carol-elizabeth-351367281/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+      <li><a class="narrow__link" href="https://drive.google.com/file/d/1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+    </ul>
+  </section>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Shared shapes, drawn once and reused with <use href="#...">. Each copy takes its
+       colour from CSS (fill), so one shape can be recoloured per place through tokens.
+       mark-c: the square "C" mark (Figma 32:634, cropped to its own box). Used by the
+       splash, the header's primary logo, the About mark and the footer's home link.
+       trophy: the achievement icon on About (Figma 47:286). -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="mark-c" viewBox="36 36 128 128">
+      <path d="M36 129.139V47.6306L68.2085 52.5777L52.7097 131.731L36 129.139Z"/>
+      <path d="M163.938 69.7012L163.938 152.308L131.73 147.533L147.229 67.3137L163.938 69.7012Z"/>
+      <path d="M70.5715 36.0001L152.309 36.0001L147.584 67.3139L68.2091 52.3581L70.5715 36.0001Z"/>
+      <path d="M150.213 113.797L82.5229 114.732L87.3237 83.4178L151.413 95.8031L150.213 113.797Z"/>
+      <path d="M129.369 163.939L47.6313 163.939L52.3561 131.731L131.731 147.114L129.369 163.939Z"/>
+    </symbol>
+    <symbol id="trophy" viewBox="0 0 37 37">
+      <path d="M35.15 3.7H29.6V1.85C29.6 0.8325 28.7675 0 27.75 0H9.25C8.2325 0 7.4 0.8325 7.4 1.85V3.7H1.85C0.8325 3.7 0 4.5325 0 5.55V11.1C0 19.0365 3.3115 23.828 8.8985 24.0315C9.71358 25.4467 10.8309 26.6646 12.1708 27.5984C13.5107 28.5322 15.0401 29.1588 16.65 29.4335V33.3H11.1V37H25.9V33.3H20.35V29.4335C21.9607 29.1612 23.4912 28.5356 24.8314 27.6016C26.1717 26.6676 27.2884 25.4484 28.1015 24.0315C33.67 23.828 37 19.0365 37 11.1V5.55C37 4.5325 36.1675 3.7 35.15 3.7ZM3.7 11.1V7.4H7.4V18.5C7.4 19.018 7.4555 19.536 7.511 20.0355C4.107 18.722 3.7 13.5235 3.7 11.1ZM33.3 11.1C33.3 13.5235 32.893 18.722 29.489 20.0355C29.563 19.536 29.6 19.018 29.6 18.5V7.4H33.3V11.1Z"/>
+    </symbol>
+  </svg>
+
+  <!-- Screen 1: splash. A full-window overlay above everything (js/splash.js plays it once,
+       then removes it to reveal the Landing underneath). Decorative, so hidden from screen readers.
+       Only the main square mark (the shared mark-c shape). -->
+  <div class="splash" data-js="splash" aria-hidden="true">
+    <svg class="splash__logo" data-js="splash-logo" focusable="false"><use href="#mark-c"/></svg>
+  </div>
+  <!-- The splash starts as soon as its own small script arrives (async: it does not wait
+       for the rest of the page or js/main.js). main.js shares the same module. -->
+  <script type="module" async src="js/splash.js"></script>
+
+  <!-- One fixed header for screens 2-6. data-theme is set by js/header-theme.js.
+       The splash overlay covers it while it plays. -->
+  <header class="site-header" data-js="site-header" data-theme="landing">
+    <!-- Scrim: a fading band in the screen's colour, behind the logo and nav. -->
+    <div class="site-header__scrim" aria-hidden="true"></div>
+    <div class="site-header__inner" data-js="header-band">
+      <a class="site-header__logo" href="#landing" data-js="header-item">
+        <span class="visually-hidden">Carol Elizabeth, home</span>
+        <!-- Two marks, one shown at a time (js/header-logo.js swaps them with a spin).
+             Primary: the tan square mark, Landing only (Figma 32:658, 72.5 x 72.5). -->
+        <svg class="site-header__mark site-header__mark--primary" data-js="logo-primary" aria-hidden="true" focusable="false"><use href="#mark-c"/></svg>
+        <!-- Secondary: the pinwheel (Figma 32:314, 61 x 61), filled with currentColor so
+             CSS sets its colour per screen. -->
+        <svg class="site-header__mark site-header__mark--secondary site-header__mark--hidden" data-js="logo-secondary" viewBox="0 0 61 61" aria-hidden="true" focusable="false">
+          <path d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+        </svg>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__list">
+          <!-- About and Contact jump within the page; their targets are set in one place,
+               NAV in js/site-config.js (these hrefs are the no-JavaScript fallback). -->
+          <li><a class="site-nav__link" href="#about" data-js="nav-link header-item" data-nav="about" data-nav-target="about">About</a></li>
+          <li><a class="site-nav__link" href="#work" data-js="nav-link header-item" data-nav="work">Work</a></li>
+          <li><a class="site-nav__link" data-js="header-item" href="https://drive.google.com/file/d/1vKV2FjA22p_7p2cgtlvxRMRCWcCI1144/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+          <li><a class="site-nav__link" href="#contact" data-js="header-item" data-nav-target="contact">Contact</a></li>
         </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="hero-section">
-        <div class="left-hero">
-            <p>Hello! This is <b>Carol Elizabeth,</b><br>a systems-centered service designer who operates across multiple scales to generate holistic user experiences.</p>
-            <button>View Projects</button>
+  <main class="site-main" id="main">
+    <!-- Screen 2: Landing (Figma 32:656). Everything sits on a 1920 x 1080 stage scaled
+         with --u, centred in the window. data-reveal-order sets the load order (js/reveal.js);
+         data-reveal-wait="splash" holds it until the splash has gone. -->
+    <!-- Landing -> Touchpoints "blinds up" (js/wipe.js). The wrapper is three screens tall.
+         The Landing and Touchpoints are both pinned (sticky) in the same place for the
+         first screen of scrolling; Touchpoints is on top, shown only through twelve bars that
+         rise from the bottom, tied to the scroll and reversible. The wrapper carries the
+         #landing address and an anchor at its end carries #touchpoints, because the
+         pinned screens themselves never move. -->
+    <div class="wipe wipe--landing" id="landing" data-js="wipe" data-wipe-name="touchpoints" data-wipe-hold="landing" data-wipe-theme="touchpoints">
+    <section class="frame landing wipe__pinned" aria-labelledby="landing-title" data-js="screen" data-screen-theme="landing" data-screen-logo="primary" data-reveal-wait="splash">
+      <div class="landing__stage">
+        <!-- The eyes (Figma 32:677), inline so the pupils can follow the cursor. Decorative. -->
+        <div class="landing__eyes" data-js="reveal" data-reveal-order="1">
+          <svg class="landing__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
+            <clipPath id="eye-white-left">
+              <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            </clipPath>
+            <path class="landing__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
+            <path class="landing__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            <g clip-path="url(#eye-white-left)">
+              <!-- Moves with the cursor (js/eye-tracking.js). -->
+              <g class="landing__look" data-js="eye-look">
+                <g class="landing__iris" data-js="eye-iris">
+                  <circle class="landing__iris-ring" cx="185.5" cy="119.5" r="60.5"/>
+                  <circle class="landing__pupil" cx="186" cy="119" r="35"/>
+                </g>
+                <!-- Keyword hover/focus state (js/eye-cross.js): the logo cross at the iris's size (121), centred on it. -->
+                <path class="landing__eye-cross" data-js="eye-cross" transform="translate(125 59) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+              </g>
+            </g>
+          </svg>
+          <svg class="landing__eye" viewBox="0 0 371 239" width="371" height="239" aria-hidden="true" focusable="false" data-js="eye">
+            <clipPath id="eye-white-right">
+              <path d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            </clipPath>
+            <path class="landing__eye-outline" d="M185.5 0C94.4364 0 46.6873 43.086 0 120.344C55.5438 205.935 100.62 233.376 185.5 239C274.315 239 320.015 199.825 371 120.344C319.958 38.4992 279.936 0 185.5 0Z"/>
+            <path class="landing__eye-white" d="M206 13C125 13 82.5278 51.3086 41 120C90.4055 196.102 130.5 220.5 206 225.5C285 225.5 325.65 190.668 371 120C325.599 47.2305 290 13 206 13Z"/>
+            <g clip-path="url(#eye-white-right)">
+              <!-- Moves with the cursor (js/eye-tracking.js). -->
+              <g class="landing__look" data-js="eye-look">
+                <g class="landing__iris" data-js="eye-iris">
+                  <circle class="landing__iris-ring" cx="185.5" cy="119.5" r="60.5"/>
+                  <circle class="landing__pupil" cx="186" cy="119" r="35"/>
+                </g>
+                <!-- Keyword hover/focus state (js/eye-cross.js): the logo cross at the iris's size (121), centred on it. -->
+                <path class="landing__eye-cross" data-js="eye-cross" transform="translate(125 59) scale(1.98361)" d="M2.21014 16.0292L0 31.1679H20.3333L15.913 58.7737L30.5 61V41.4088L58.7899 45.8613L61 31.1679H41.1087L45.529 2.22628L30.5 0V20.4818L2.21014 16.0292Z"/>
+              </g>
+            </g>
+          </svg>
         </div>
-    </div>
 
-    <div class="achievements">
-        <h2>Latest Achievements</h2>
-        <ul class="scholastic">
-            <li>Ranked 1st in Department of Design for two consecutive semesters</li>
-            <li>Shortlisted in Top 10 of the ServDes Student Service Design Competition</li>
-            <li>Shortlisted in Top 10 of the UX India Design Pitch</li>
-            <li>Winning Concept and Design at the Havells x GDD Product Ideation and Conceptualization Workshop</li>
-            <li>Awarded 3rd prize in the NewForm Community Webpage Design Challenge (May)</li>
-            <li>Awarded Silver Medal for PMM Pavilion Design Competition organized by IIA Kerala</li>
+        <h1 class="landing__title" id="landing-title" tabindex="-1" data-js="reveal" data-reveal-order="2">Hey, I’m Carol Elizabeth. I design for</h1>
+
+        <!-- Keywords (Figma 32:670): each opens Selected Works. data-domain is the domain
+             view it will open (checkpoint 6); until then the link just scrolls to #work. -->
+        <ul class="landing__keywords">
+          <li class="landing__keyword-item"><a class="landing__keyword" href="#work" data-domain="product" data-js="keyword reveal" data-reveal-order="3">Products</a></li>
+          <li class="landing__keyword-item"><a class="landing__keyword" href="#work" data-domain="service" data-js="keyword reveal" data-reveal-order="4">Services</a></li>
+          <li class="landing__keyword-item"><a class="landing__keyword" href="#work" data-domain="ux" data-js="keyword reveal" data-reveal-order="5">Experiences</a></li>
         </ul>
-    </div>
-    
-    <div class="projects">
-        <h2>Selected Projects</h2>
-        <div class="selection">
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/DiCE 1.jpg" alt="Emergency Department Entry of a Hospital" height="200">
-                </div>
-                <div class="text">
-                    <h3>Capturing Complexity</h3>
-                    <p>Digital Interface Design, Systems Design</p></div>
-            </div>
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/Aangan Deck Cover.jpg" alt="Top view of traditional Kerala house" height="200">
-                </div>
-                <div class="text">
-                    <h3>Aangan: Digital Literacy for mothers facing ENS</h3>
-                    <p>Service Design, User Experience Design</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/Nest 30.jpg" alt="Electronic waste accumulated in a dumpyard" height="200">
-                </div>
-                <div class="text">
-                    <h3>Nest: AC-as-a-Service for Urban India</h3>
-                    <p>Service Design, Behavioural Design</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="rectangle">
-                    <img src="images/Nest 31.jpg" alt="Petting Zoo Probe cards render" height="200">
-                </div>
-                <div class="text">
-                    <h3>Petting Zoo: Can ownership be primed?</h3>
-                    <p>Design Research, Experiment Design</p>
-                </div>
-            </div>
+
+        <!-- Shared scroll cue (css/scroll-cue.css). The wrapper takes the load animation,
+             because the cue's own opacity is busy pulsing. -->
+        <div class="landing__cue" data-js="reveal" data-reveal-order="6">
+          <p class="scroll-cue" data-js="scroll-cue">Scroll down for more details <span class="scroll-cue__chevron" aria-hidden="true">&gt;</span></p>
         </div>
+      </div>
+    </section>
+
+    <!-- Screen 3: touchpoints scene. Pinned in the same place as the Landing, above it,
+         and shown through twelve rising bars (js/wipe.js masks it), so wherever a bar
+         has risen you see Touchpoints itself. -->
+    <section class="frame scene scene--touchpoints wipe__next" aria-labelledby="touchpoints-title" data-js="screen wipe-next" data-screen-theme="touchpoints" data-reveal-wait="wipe">
+      <!-- One composition, scaled as a stage (1920 x 1080 design px, sized with --u):
+           the hand must stay on the base square. -->
+      <div class="scene__stage">
+        <!-- The hand's thumb (Figma 1:253 "Vector 462") sits behind the base square; the rest of
+             the hand is in front of it (after the canvas below). Same box and position as the hand. -->
+        <img class="scene__art scene__hand" src="assets/images/hand-thumb.svg" alt="" width="263" height="445" data-js="build-hand">
+        <!-- Touchpoint diagram (Figma 1:270), inline so the dots can travel along the lines.
+             Layers: lines, then dots, then squares, so each dot slides under the square it reaches.
+             Each route is one path from the base square (held by the hand) out to its square;
+             js/dot-flow.js moves the dots along them. -->
+        <svg class="scene__art scene__diagram" viewBox="0 0 1340 727" role="img" aria-label="Diagram of coloured squares joined by thin lines, with a hand holding the central square" data-js="diagram">
+          <defs>
+            <linearGradient id="square-brown" x1="156.952" y1="582.643" x2="0" y2="582.643" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--brown-dark"/>
+              <stop class="scene__stop--brown-light" offset="1"/>
+            </linearGradient>
+            <linearGradient id="square-teal-right" x1="1340" y1="230.446" x2="1208.58" y2="230.446" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--teal-light"/>
+              <stop class="scene__stop--teal-dark" offset="1"/>
+            </linearGradient>
+            <linearGradient id="square-teal-base" x1="638.682" y1="504.167" x2="638.682" y2="726.358" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--teal-light"/>
+              <stop class="scene__stop--teal-dark" offset="1"/>
+            </linearGradient>
+            <linearGradient id="square-pink-right" x1="950.694" y1="379.835" x2="950.694" y2="291.904" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--pink-light"/>
+              <stop class="scene__stop--pink-dark" offset="1"/>
+            </linearGradient>
+            <linearGradient id="square-pink-left" x1="34.9831" y1="248.41" x2="122.914" y2="248.41" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--pink-light"/>
+              <stop class="scene__stop--pink-dark" offset="1"/>
+            </linearGradient>
+            <linearGradient id="square-teal-small" x1="361.179" y1="374.634" x2="361.179" y2="429.472" gradientUnits="userSpaceOnUse">
+              <stop class="scene__stop--teal-dark"/>
+              <stop class="scene__stop--teal-light" offset="1"/>
+            </linearGradient>
+          </defs>
+          <g class="scene__lines">
+            <!-- to R118, bottom-left (V457, reversed) -->
+            <path id="route-brown" class="scene__line" d="M651.918 583.058C651.918 478.379 651.918 450.632 651.918 301.774C651.918 152.915 460.929 162.843 460.929 301.774C460.929 440.705 460.929 483.309 460.929 483.309C460.929 574.606 413.654 583.058 324.777 583.058H116.296"/>
+            <!-- to R117, right (V455) -->
+            <path id="route-far-right" class="scene__line" d="M722.357 562.388C722.357 562.388 722.357 624.717 722.357 429.472C722.357 234.228 820.944 225.193 1024.92 225.193C1228.89 225.193 1252 225.193 1252 225.193"/>
+            <!-- to R119, left (V456) -->
+            <path id="route-pink-left" class="scene__line" d="M584.315 514.937C584.315 514.937 584.315 646.28 584.315 440.127C584.315 233.974 462.776 252.126 264.266 252.126C65.7551 252.127 134.521 252.127 134.521 252.127"/>
+            <!-- to R114 (V453 up, Ellipse 9 arc, V454 down) -->
+            <path id="route-pink-right" class="scene__line" d="M690.684 511.259V266.376L691.156 266.376C691.156 232.021 704.804 199.074 729.096 174.782C753.388 150.49 786.335 136.843 820.689 136.843C855.043 136.843 887.99 150.49 912.283 174.782C936.575 199.074 950.222 232.021 950.222 266.376L950.694 266.376V294.741"/>
+            <!-- to R116 (V453_2 up, Ellipse 9_2 arc, V454_2 down) -->
+            <path id="route-small-teal" class="scene__line" d="M610.242 534.895V134.478L609.844 134.478C609.844 100.111 596.784 67.1589 573.551 42.8697C550.319 18.582 518.82 4.94549 485.984 4.94549C453.148 4.9455 421.648 18.582 398.416 42.8697C375.183 67.1589 362.124 100.111 362.124 134.478L362.124 388.816"/>
+          </g>
+          <!-- Dots at their Figma positions (10 x 10), grouped by the route they travel. -->
+          <g data-js="dot-group" data-route="route-brown">
+            <rect class="scene__dot" x="195" y="578" width="10" height="10"/>
+            <rect class="scene__dot" x="247" y="578" width="10" height="10"/>
+            <rect class="scene__dot" x="311" y="578" width="10" height="10"/>
+          </g>
+          <g data-js="dot-group" data-route="route-far-right">
+            <rect class="scene__dot" x="717" y="451" width="10" height="10"/>
+            <rect class="scene__dot" x="1076" y="220" width="10" height="10"/>
+            <rect class="scene__dot" x="1133" y="220" width="10" height="10"/>
+          </g>
+          <g data-js="dot-group" data-route="route-pink-left">
+            <rect class="scene__dot" x="579" y="487" width="10" height="10"/>
+            <rect class="scene__dot" x="299" y="247" width="10" height="10"/>
+            <rect class="scene__dot" x="171" y="247" width="10" height="10"/>
+          </g>
+          <g data-js="dot-group" data-route="route-pink-right">
+            <rect class="scene__dot" x="816" y="132" width="10" height="10"/>
+            <rect class="scene__dot" x="946" y="271" width="10" height="10"/>
+          </g>
+          <g data-js="dot-group" data-route="route-small-teal">
+            <rect class="scene__dot" x="605" y="451" width="10" height="10"/>
+            <rect class="scene__dot" x="605" y="365" width="10" height="10"/>
+            <rect class="scene__dot" x="553" y="189" width="10" height="10"/>
+            <rect class="scene__dot" x="481" y="0" width="10" height="10"/>
+          </g>
+          <g data-js="squares">
+            <rect class="scene__square" y="504.167" width="156.952" height="156.952" fill="url(#square-brown)" data-square="brown"/>
+            <rect class="scene__square" x="1208.58" y="164.734" width="131.424" height="131.424" fill="url(#square-teal-right)" data-square="teal-right"/>
+            <rect class="scene__square" x="527.586" y="504.167" width="222.191" height="222.191" fill="url(#square-teal-base)" data-square="teal-base"/>
+            <rect class="scene__square" x="906.729" y="291.904" width="87.931" height="87.931" fill="url(#square-pink-right)" data-square="pink-right"/>
+            <rect class="scene__square" x="34.9831" y="204.445" width="87.931" height="87.931" fill="url(#square-pink-left)" data-square="pink-left"/>
+            <rect class="scene__square" x="333.76" y="374.634" width="54.8387" height="54.8387" fill="url(#square-teal-small)" data-square="teal-small"/>
+          </g>
+        </svg>
+        <!-- ASCII effect on the squares (js/scenes.js), above the diagram and under the hand. -->
+        <canvas class="scene__art scene__diagram-effect" data-js="ascii-touchpoints" aria-hidden="true"></canvas>
+        <img class="scene__art scene__hand" src="assets/images/hand.svg" alt="" width="263" height="445" data-js="build-hand">
+
+        <div class="scene__text scene__text--touchpoints" data-js="touchpoints-text">
+          <h2 id="touchpoints-title" tabindex="-1" data-js="screen-heading reveal" data-reveal-order="1">
+            <span class="scene__line-1">From assembling</span>
+            <span class="scene__line-2 scene__line-2--bold">touchpoints,</span>
+          </h2>
+          <!-- Load order: heading, then the bullets one after another; then the diagram
+               assembles piece by piece (js/touchpoints-build.js). -->
+          <ul class="scene__list scene__list--touchpoints">
+            <li class="scene__item" data-js="reveal" data-reveal-order="2">UX Research</li>
+            <li class="scene__item" data-js="reveal" data-reveal-order="3">Service Design</li>
+            <li class="scene__item" data-js="reveal" data-reveal-order="4">Systems Design</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Dims Touchpoints while Experiences pushes in over it (js/push-in.js). -->
+      <div class="scene__dim" data-js="push-dim" aria-hidden="true"></div>
+    </section>
+    <!-- The #touchpoints address: the scroll position where the bars have fully risen.
+         (The pinned screen itself never moves, so it cannot be the link target.) -->
+    <span class="wipe__anchor" id="touchpoints" aria-hidden="true"></span>
     </div>
 
-<div class="expertise">
-    <h2>Focus and Expertise</h2>
+    <!-- Experiences -> Selected Works "blinds up" (js/wipe.js, the same code as Landing ->
+         Touchpoints). This wrapper also starts one screen early (css/push.css), so it
+         overlaps the end of the first one: Experiences slides up over the pinned Touchpoints
+         (the push-in), is then pinned itself, and Selected Works is shown through twelve
+         rising bars. The #work address is an anchor at the end of the blinds. -->
+    <div class="wipe wipe--works push" data-js="wipe push-from" data-wipe-name="works" data-wipe-hold="experiences" data-wipe-theme="work">
 
-</div>
+    <!-- Screen 4: experiences scene -->
+    <section class="frame scene scene--experiences wipe__pinned" id="experiences" aria-labelledby="experiences-title" data-js="screen" data-screen-theme="experiences" data-reveal-wait="experiences">
+      <!-- Photo and figures share a "cover" stage: it fills the screen like object-fit: cover,
+           so the figures stay on the people in the photo at any window shape. -->
+      <div class="scene__cover">
+        <!-- The photo wipes in from the left behind the glyph people (js/experiences-reveal.js):
+             this wrapper clips it and slides in while the photo inside slides the other way. -->
+        <div class="scene__photo-clip" data-js="photo-clip">
+          <img class="scene__photo" data-js="photo" src="assets/images/street-photo.webp" alt="People walking on a sunlit street with long shadows" width="1920" height="1080" loading="lazy" decoding="async">
+        </div>
+        <!-- The three figures (Figma 32:368 pink, 32:370 blue, 32:371 brown) at their Figma
+             positions in the 1920 x 1080 frame. Never shown: their outlines are only the masks
+             for the glyph effect on the canvas below (js/scenes.js). -->
+        <svg class="scene__shapes" viewBox="0 0 1920 1080" aria-hidden="true" focusable="false" data-js="figures">
+          <path data-js="figure" data-figure="pink" transform="translate(1063 350)" d="M0 326.5V328.5V334L3 341L13.5 350.5L25 362L33.5 365.5H43L46 362V358L46.5 356V348V340L52 322.5L57 315.5L60.5 306.5L62 295V279L63.5 274L71.5 277H78.5L84 274L87 267L88.5 269.5L91 281.5L95.5 291L100.5 300C101.167 307 102.5 321.1 102.5 321.5C102.5 321.9 106.833 334 109 340L119 364.5L117.5 375.5H114.5L111.5 378L110 382.5L111.5 387L121 398.5L127 405H134L142.5 401.5V398L139.5 394.5L138.5 393.5V382.5L134.5 376V364.5V317L131.5 295.5L122 267L128.5 261L136.5 255.5C134.667 244.667 131 222.7 131 221.5V200L131.5 192L136.5 192.5V190L134 187.5V179.5H136L139 184L141.5 183.5L142 179.5L137.5 175L134 172L131 165L133 160.5L136 149L137 141L138 138.5V132L133 112L136.5 108V105.5L129 89.5L122 77.5L113 68L105.5 62L95.5 57.5H86.5L81 53L77 47L75 47.5L72 41.5L75 40L80 39H83.5V37.5L76.5 29.5L72 23.5L70.5 21L68.5 15.5L64.5 10.5L59 4.5L52 1.5L45.5 0L39 1.5L33 6.5L26.5 17.5V27L28 33L31.5 37.5L33 44.5L39 53.5L45.5 57.5L44.5 63.5L34.5 69.5L26 75L16.5 84L11 97L3 127L13 132.5L11 150.5L7.5 161.5L6.5 176L8 214V230L9.5 241L16.5 251L22 256L24.5 255L20 246L18 238.5L18.5 236.5L20.5 238L22 245L24.5 246L25 243L24.5 230.5L23 225L20.5 219.5L21.5 216L26.5 194.5L27.5 202L24.5 227L27.5 232L30.5 248.5L35 267.5V277L30.5 285.5L29.5 301L30.5 318.5V330.5L12.5 319.5H8L3 322.5L0 326.5Z"/>
+          <path data-js="figure" data-figure="blue" transform="translate(730 362.5)" d="M13.5 201V210L16 213L24.5 216H36.5H44.5V235L48.5 238.5L60 243.5L66 269L68.5 275.5L69.5 295.5L73 315L83 337.5L88 334.5L95.5 327.5L98.5 319V317.5L95.5 315L90.5 309.5L88 301.5V295.5L83 290.5L71.5 280.5L71 275.5L73 272L78.5 267.5L84 262L89.5 258.5L94.5 257L100 249.5L105.5 247L116 249.5L128.5 255L129.5 238.5L131.5 236L134 229L137.5 219.5L140 209L141.5 205.5V208.5H144L145.5 205.5V201L146.5 200L147 205.5L146.5 212L144.5 216L147 217.5L152.5 214L159.5 205.5V198.5L157.5 191L154.5 181.5L152.5 169.5L151.5 155L150 144.5L147.5 135V130.5L150 128.5L154.5 124.5L150 109.5L146.5 90.5L142.5 77.5L136 70L130 67L115.5 64H107.5L104.5 59.5V52L105.5 46L109 33.5L109.5 29.5L107.5 22.5L102.5 14L95 7L91.5 6.5L87.5 5L87 2L84.5 0L83 1.5L81 0L80 1.5L81 3.5L79.5 4H77L74.5 3.5L72.5 5.5L74 9L76.5 10.5L72.5 11.5V16L69.5 18.5L66 23.5L67 32L69 36.5V39V41.5L72.5 50L74.5 52L77 54.5L78 61.5L78.5 66L75 69L64 74L59 73.5L55.5 76L49.5 82.5L44.5 92.5L40.5 105H33L27.5 107.5L24.5 110.5L20 123.5L14.5 129.5L4.5 127L0 144L1 161L7 170L11 171L22 163.5H27.5V165.5L22 170L18 175.5L13.5 201Z"/>
+          <path data-js="figure" data-figure="brown" transform="translate(670.5 609.5)" d="M13.5 99L11.5 105.5V108L13.5 115.5L18 124C20 125.667 24.1 129.1 24.5 129.5C24.9 129.9 28 132 29.5 133L27 138.5L25 144.5V150L28.5 153L25 157L20.5 159L12.5 161L8 164.5L0 180L1 185.5V192.5L3 195L8 199.5L11 204.5L12.5 214L15 229.5V251.5L12.5 255L8 266.5L11 271V276L12.5 284.5V294.5L16.5 298.5L15 305L12.5 314.5L15 324.5L24.5 325.5H29.5C30.5 323 32.5 317.8 32.5 317V310.5L29.5 302.5V300L34 308L55.5 348V356L51 372.5H48H44V381.5L48 391.5L58 393L65 385L68 374.5L69.5 361L75.5 367.5L80.5 370L82.5 374.5L89.5 388L96 407L101 419L96 421.5L92.5 428.5L101 435.5L109.5 441L121 435.5V428.5L116 425L112.5 408.5V393V383C111.5 378.667 109.5 369.5 109.5 367.5C109.5 365.5 105.833 358.333 104 355L105 351.5L107.5 340.5L116 309.5L121.5 292.5C122 283.333 123 264.8 123 264V257L125 261.5L136 271L141 291L138.5 300L133.5 323L136 326V340.5V353.5H133.5L129 356V361V367.5L136 377.5L147.5 374.5L154.5 364.5V358.5L159 348L163 339L167.5 326L171.5 311L174.5 301.5L180 297.5L184 280.5L190 269L195 280.5V294L204 314.5L210.5 336V348L216 374.5V390.5L210.5 399L221 407.5L235.5 400.5V394L239 376V358.5V334L229.5 316.5L228 306.5L231.5 290.5L235.5 280.5V266.5L234.5 250V242L244 238.5L245 235.5L242.5 218.5L241 209L237 197.5V190L234.5 182.5L232.5 179V176L233.5 172L232.5 163L234.5 161.5L237 158.5L246.5 140.5L250.5 138L252 134L250.5 128.5L246.5 117L240 96L235 85.5L230 77.5L222 71L209.5 68L204.5 64.5L200.5 61.5V55L204.5 52L209.5 47L210.5 42L209.5 37L205.5 29.5L199 23.5L195.5 22V18.5L192 12L188 7L178.5 3L168.5 0.5L165 0L159.5 2L156.5 5.5L154 10L149 11L144.5 14L139 19L132 24.5L130 28L131 33.5L134 37L141.5 43.5L147 48V50L148 58L150.5 63L154.5 68.5L158 71L154.5 80.5L147.5 86.5L141.5 90.5L135 95.5L131.5 101L128.5 110L126.5 120L119.5 142L117.5 152.5L114 149.5L107.5 142L99 136.5H94.5L91.5 137.5L88.5 136.5L83.5 135L79 133.5L81 130.5L83.5 124.5V117L80 108.5L77 105V102L75.5 95L71.5 87.5L64 82.5L54.5 78H46.5L39 81L36.5 85L34 89L26 90L21 91.5L17 93.5L13.5 99Z"/>
+        </svg>
+        <canvas class="scene__effect" data-js="ascii-experiences" aria-hidden="true"></canvas>
+      </div>
 
-    <div class="footer">
-        <div class="site-details">
-            <div class="monogram">
-                <img src="assets/logo.svg" alt="Personal Monogram" height="160">
-                <p>carol.iitd.mdes.2025@gmail.com</p>
-            </div>
-            <div class="site-map">
-                <ul class="navigation">Navigation
-                    <li><a href="pages/About/">About</a></li>
-                    <li><a href="pages/Work/">Work</a></li>
-                    <li><a href="pages/Contact/">Contact</a></li>
-                </ul>
-                <ul class="navigation">Socials
-                    <li><a href="pages/About/">Behance</a></li>
-                    <li><a href="pages/Work/">LinkedIn</a></li>
-                    <li><a href="pages/Contact/">Instagram</a></li>
-                </ul>
-            </div>
+      <div class="scene__text scene__text--experiences">
+        <!-- Loads last, once the photo has nearly wiped in (js/experiences-reveal.js). -->
+        <h2 id="experiences-title" tabindex="-1" data-js="screen-heading reveal" data-reveal-order="1">
+          <span class="scene__line-1">To crafting stories,</span>
+          <span class="scene__line-2">experiences.</span>
+        </h2>
+        <ul class="scene__list scene__list--experiences">
+          <li class="scene__item" data-js="reveal" data-reveal-order="2">UX Strategy</li>
+          <li class="scene__item" data-js="reveal" data-reveal-order="3">Experience Design</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Screen 5: Selected Works (Figma 32:377 default view, 32:417 domain view). A pinwheel on
+         the left, the two buttons, and a vertical reel of project cards in a panel on the
+         right (js/works.js builds the cards from js/projects.js). The pinwheel and buttons sit
+         on a 1920 wide stage scaled with --u; the column runs to the bottom of the window. -->
+    <section class="frame works wipe__next" aria-label="Selected Works" data-js="screen wipe-next works" data-screen-theme="work" data-screen-nav="work" data-reveal-wait="works">
+      <div class="works__stage">
+        <!-- The pinwheel (Figma 49:334), stick included: loads as one piece and turns a quarter,
+             clockwise, with each step (js/pinwheel.js). Its colours never change: the turn
+             alone moves them. Decorative. -->
+        <div class="works__pinwheel" data-js="reveal" data-reveal-order="2">
+        <svg class="pinwheel" viewBox="0 0 765.639 992.553" aria-hidden="true" focusable="false" data-js="pinwheel">
+          <rect class="pinwheel__stick" x="376.747" y="381.07" width="18" height="614.863" rx="7" transform="rotate(7.91582 376.747 381.07)"/>
+          <!-- The flaps turn about the hub (383.32, 382.32); the stick stays still. -->
+          <g class="pinwheel__flaps" data-js="pinwheel-flaps">
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--one" d="M377.57 10.0696V375.07C288.341 306.218 222.069 235.57 239.57 168.07C257.07 100.57 304.324 65.6402 377.57 10.0696Z"/>
+        <mask id="pinwheel-stroke0_0_6" maskUnits="userSpaceOnUse" x="230.754" y="-0.930385" width="152" height="387" fill="black">
+        <rect fill="white" x="230.754" y="-0.930385" width="152" height="387"/>
+        <path d="M377.57 10.0696V375.07C288.341 306.218 222.069 235.57 239.57 168.07C257.07 100.57 304.324 65.6402 377.57 10.0696Z"/>
+        </mask>
+        <path d="M377.57 375.07V10.0696C304.324 65.6402 257.07 100.57 239.57 168.07C222.069 235.57 288.341 306.218 377.57 375.07Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke0_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--two" d="M755.57 375.07L390.57 375.07C459.421 285.841 530.07 219.569 597.57 237.07C665.07 254.57 699.999 301.824 755.57 375.07Z"/>
+        <mask id="pinwheel-stroke1_0_6" maskUnits="userSpaceOnUse" x="379.57" y="228.254" width="387" height="152" fill="black">
+        <rect fill="white" x="379.57" y="228.254" width="387" height="152"/>
+        <path d="M755.57 375.07L390.57 375.07C459.421 285.841 530.07 219.569 597.57 237.07C665.07 254.57 699.999 301.824 755.57 375.07Z"/>
+        </mask>
+        <path d="M390.57 375.07L755.57 375.07C699.999 301.824 665.07 254.57 597.57 237.07C530.07 219.569 459.421 285.841 390.57 375.07Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke1_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--one" d="M389.07 752.57L389.07 387.57C478.298 456.421 544.57 527.07 527.07 594.57C509.57 662.07 462.315 696.999 389.07 752.57Z"/>
+        <mask id="pinwheel-stroke2_0_6" maskUnits="userSpaceOnUse" x="383.885" y="376.57" width="152" height="387" fill="black">
+        <rect fill="white" x="383.885" y="376.57" width="152" height="387"/>
+        <path d="M389.07 752.57L389.07 387.57C478.298 456.421 544.57 527.07 527.07 594.57C509.57 662.07 462.315 696.999 389.07 752.57Z"/>
+        </mask>
+        <path d="M389.07 387.57L389.07 752.57C462.315 696.999 509.57 662.07 527.07 594.57C544.57 527.07 478.298 456.421 389.07 387.57Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke2_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--two" d="M10.0696 389.07L375.07 389.07C306.218 478.298 235.57 544.57 168.07 527.07C100.57 509.57 65.6402 462.315 10.0696 389.07Z"/>
+        <mask id="pinwheel-stroke3_0_6" maskUnits="userSpaceOnUse" x="-0.930397" y="383.885" width="387" height="152" fill="black">
+        <rect fill="white" x="-0.930397" y="383.885" width="387" height="152"/>
+        <path d="M10.0696 389.07L375.07 389.07C306.218 478.298 235.57 544.57 168.07 527.07C100.57 509.57 65.6402 462.315 10.0696 389.07Z"/>
+        </mask>
+        <path d="M375.07 389.07L10.0696 389.07C65.6402 462.315 100.57 509.57 168.07 527.07C235.57 544.57 306.218 478.298 375.07 389.07Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke3_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--brown" d="M226.07 223.57L213.57 376.57H365.57C299.913 329.101 268.376 298.263 226.07 223.57Z"/>
+        <mask id="pinwheel-stroke4_0_6" maskUnits="userSpaceOnUse" x="207.57" y="206.57" width="174" height="175" fill="black">
+        <rect fill="white" x="207.57" y="206.57" width="174" height="175"/>
+        <path d="M226.07 223.57L213.57 376.57H365.57C299.913 329.101 268.376 298.263 226.07 223.57Z"/>
+        </mask>
+        <path d="M213.57 376.57L226.07 223.57C268.376 298.263 299.913 329.101 365.57 376.57H213.57Z" stroke-width="10" class="pinwheel__edge" mask="url(#pinwheel-stroke4_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--teal" d="M542.07 223.57L389.07 211.07L389.07 363.07C436.539 297.413 467.376 265.876 542.07 223.57Z"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--brown" d="M540.571 539.07L553.071 386.07L401.071 386.07C466.728 433.539 498.264 464.376 540.571 539.07Z"/>
+        <mask id="pinwheel-stroke5_0_6" maskUnits="userSpaceOnUse" x="388.071" y="382.07" width="170" height="171" fill="black">
+        <rect fill="white" x="388.071" y="382.07" width="170" height="171"/>
+        <path d="M540.571 539.07L553.071 386.07L401.071 386.07C466.728 433.539 498.264 464.376 540.571 539.07Z"/>
+        </mask>
+        <path d="M553.071 386.07L540.571 539.07C498.264 464.376 466.728 433.539 401.071 386.07L553.071 386.07Z" stroke-width="8" class="pinwheel__edge" mask="url(#pinwheel-stroke5_0_6)"/></g>
+            <g data-js="pinwheel-flap"><path class="pinwheel__flap pinwheel__flap--teal" d="M223.57 540.571L376.57 553.071L376.57 401.071C329.101 466.728 298.263 498.264 223.57 540.571Z"/>
+        <mask id="pinwheel-stroke6_0_6" maskUnits="userSpaceOnUse" x="193.57" y="373.071" width="192" height="190" fill="black">
+        <rect fill="white" x="193.57" y="373.071" width="192" height="190"/>
+        <path d="M223.57 540.571L376.57 553.071L376.57 401.071C329.101 466.728 298.263 498.264 223.57 540.571Z"/>
+        </mask>
+        <path d="M376.57 553.071L223.57 540.571C298.263 498.264 329.101 466.728 376.57 401.071L376.57 553.071Z" stroke-width="18" class="pinwheel__edge" mask="url(#pinwheel-stroke6_0_6)"/></g>
+          </g>
+        </svg>
         </div>
-        <div class="rights">
-            <p>Designed and Developed by Carol Elizabeth © 2026</p>
+
+        <div class="works__controls">
+          <button class="works__button works__button--next" type="button" data-js="works-next reveal" data-reveal-order="3">Next Project <span aria-hidden="true">&gt;</span></button>
+          <button class="works__button works__button--sort" type="button" aria-pressed="false" data-js="works-sort reveal" data-reveal-order="4">Sort by Domain <span aria-hidden="true">&gt;</span></button>
         </div>
+
+        <!-- Dims Selected Works while About pushes in over it (js/push-in.js). -->
+        <div class="scene__dim" data-js="push-dim" aria-hidden="true"></div>
+        <!-- Announces the card that has just rolled in. -->
+        <p class="visually-hidden" aria-live="polite" data-js="works-status"></p>
+      </div>
+      <!-- The grey column and the card panel: lined up with the header nav (right page margin),
+           not with the centred stage. Loads first. -->
+      <div class="works__column" data-js="reveal" data-reveal-order="1">
+        <!-- The reel: every card is a whole panel with its own title row ("Selected Works"
+             and the years, or the domain title with < >). The panels roll up as whole units
+             inside the column, whose top and bottom edges fade softly. -->
+        <div class="works__viewport" data-js="works-viewport reveal" data-reveal-order="5">
+          <ul class="works__track" role="list" data-js="works-track" aria-label="Projects"></ul>
+        </div>
+      </div>
+    </section>
+    <!-- The #work address: where the blinds have fully risen (the pinned screen never moves). -->
+    <span class="wipe__anchor" id="work" aria-hidden="true"></span>
     </div>
+
+    <!-- Screen 6: About section (Figma 32:475, top 1080). Pushes in over Selected Works
+         (css/push.css, js/push-in.js): it starts one screen early, overlapping the pinned
+         Works. Everything sits on a 1920 x 1080 stage scaled with --u. -->
+    <!-- About, pinned for its own screen, its hold, and one more screen while the footer
+         slides up over it (css/push.css). -->
+    <div class="push pin pin--about" data-js="push-from">
+    <section class="frame about pin__item" id="about" aria-labelledby="about-title" data-js="screen" data-screen-theme="about" data-screen-nav="about" data-reveal-wait="about">
+      <div class="about__stage">
+        <!-- Figma 47:280: the C mark (the shared mark-c shape), solid wine, static. Decorative. -->
+        <!-- Its own entrance: it turns and grows in before the text (js/mark-spin.js). -->
+        <svg class="about__mark" aria-hidden="true" focusable="false" data-js="mark-spin"><use href="#mark-c"/></svg>
+        <div class="about__text">
+          <h2 class="about__heading" id="about-title" tabindex="-1" data-js="reveal" data-reveal-order="2">Hello, I’m <span class="about__name">Carol,</span></h2>
+          <div class="about__bio" data-js="reveal" data-reveal-order="3">
+            <p>I’m a <strong class="about__strong">Service and UX Designer,</strong> creating cohesive experiences across touchpoints. <strong class="about__strong">Grounded in user research and systems thinking,</strong> I treat problems as part of a larger ecosystem and design at multiple scales and in context, rather than in silos. Currently completing my <strong class="about__strong">Master of Design at IIT Delhi.</strong></p>
+            <p class="about__lead">My latest achievements have been:</p>
+          </div>
+          <ul class="about__awards">
+            <li class="about__award" data-js="reveal" data-reveal-order="4"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at UX Design Pitch as part of the UX India Conference 2026</span></li>
+            <li class="about__award" data-js="reveal" data-reveal-order="5"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at ServDes India Student Service Design Competition 2026</span></li>
+          </ul>
+          <!-- Hidden while ABOUT_PAGE_URL in js/site-config.js is empty (no dead button).
+               js/nav.js gives it the href and shows it once the constant is set. -->
+          <a class="about__button" hidden data-js="learn-more reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <!-- Footer (Figma 49:455): a full-height section on the wine ground, after About with a
+       plain scroll. The header fades out over it (js/header-footer.js). Everything sits on
+       a 1920 x 1080 stage scaled with --u, centred; the big cross is anchored to the
+       window's right edge, so it is always cropped there. Load: the mark and cue, then the
+       tag line, headline, links and small print, then the cross fades in from the right. -->
+  <footer class="contact push" id="contact" aria-labelledby="contact-title" data-js="screen footer push-from" data-reveal-wait="footer">
+    <!-- Figma 49:521: the large cross, darker than the ground, stationary. Decorative. -->
+    <svg class="contact__cross" viewBox="0 0 1062 992" aria-hidden="true" focusable="false" data-js="reveal" data-reveal-order="6" data-reveal-from="right">
+      <path d="M715.695 477.049H1062L1023.52 730.682L531 653.823V992L277.044 953.571L354 477.049H0L38.4785 215.729L531 292.588V0H789.182L715.695 477.049Z"/>
+    </svg>
+    <div class="contact__stage">
+      <!-- The small C mark and its pulsing cue are one link back to the top (the Landing):
+           an instant jump that does not replay the splash (js/nav.js). -->
+      <!-- The mark turns and grows in on arrival and the cue fades in as it settles
+           (js/mark-spin.js); the cue's wrapper takes that fade, the cue itself pulses. -->
+      <a class="contact__home" href="#landing" aria-label="Return to home" data-js="home-link">
+        <svg class="contact__mark" aria-hidden="true" focusable="false" data-js="mark-spin"><use href="#mark-c"/></svg>
+        <span class="contact__cue" data-js="mark-cue"><span class="scroll-cue" data-js="scroll-cue" aria-hidden="true">&lt; Click to Return Home</span></span>
+      </a>
+      <ul class="contact__tags" aria-label="Disciplines" data-js="reveal" data-reveal-order="2">
+        <li class="contact__tag">Service Design</li>
+        <li class="contact__tag">UX Design</li>
+        <li class="contact__tag">Systems Design</li>
+        <li class="contact__tag">UX Strategy</li>
+        <li class="contact__tag">UX Research</li>
+      </ul>
+      <h2 class="contact__heading" id="contact-title" tabindex="-1" data-js="reveal" data-reveal-order="3"><span class="contact__heading-line">Let’s build something good.</span> <span class="contact__heading-line">Say Hello!</span></h2>
+      <ul class="contact__links" data-js="reveal" data-reveal-order="4">
+        <li><a class="contact__link" href="mailto:beth.carol00@gmail.com"><span class="contact__link-text">beth.carol00@gmail.com</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+        <li><a class="contact__link" href="https://www.linkedin.com/in/carol-elizabeth-351367281/" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">LinkedIn</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+        <li><a class="contact__link" href="https://www.behance.net/carolethomas3" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">Behance</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+        <li><a class="contact__link" href="https://www.instagram.com/caroling_13/" target="_blank" rel="noopener noreferrer"><span class="contact__link-text">Instagram</span><span class="visually-hidden"> (opens in a new tab)</span><img class="contact__arrow" src="assets/icons/arrow-link.svg" alt="" width="24" height="24"></a></li>
+      </ul>
+      <!-- Small print: copyright left, location right (Figma 49:522, 49:524). The Unsplash
+           credit stays, centred, because the Experiences street photo is still used. -->
+      <div class="contact__bottom" data-js="reveal" data-reveal-order="5">
+        <p>All Rights Reserved by Carol Elizabeth © 2026</p>
+        <p class="contact__credit">Photo by <a href="https://unsplash.com/@victorrosario?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">Victor Rosario<span class="visually-hidden"> (opens in a new tab)</span></a> on <a href="https://unsplash.com/photos/people-walking-on-a-sunlit-street-with-long-shadows-wxT0530pcZU?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">Unsplash<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+        <p class="contact__location">Delhi, IN</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

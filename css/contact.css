@@ -1,0 +1,194 @@
+/* Footer (Figma 49:455, FINAL EDITS): a full-height section on the wine ground that
+   slides up over the pinned About (the push-in: .push in css/push.css, js/push-in.js),
+   above the pinned screens. Everything except the big cross
+   sits at its Figma position on a 1920 x 1080 stage scaled with --u and centred in the
+   section. The cross is anchored to the section's right edge instead, so it is always
+   cropped by the window there, whatever the window's shape. */
+
+.contact {
+  position: relative;
+  z-index: 4;               /* above the pinned About and the other push-in wrappers */
+  display: grid;
+  place-items: center;      /* centres the stage */
+  min-height: 100vh;        /* fallback */
+  min-height: 100svh;
+  overflow: hidden;         /* crops the cross at the right edge */
+  background-color: var(--color-wine);
+  color: var(--color-footer-text);
+  /* Soft shadow along the top edge as the footer rises over About (PUSH_FOOTER.shadow). */
+  box-shadow: var(--push-shadow-footer) var(--color-push-shadow);
+}
+
+.contact__stage {
+  position: relative;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+}
+
+/* Figma 49:521: 1062 x 992 at x 986, y -102 in the frame, i.e. 128 design px past the
+   right edge and 102 above the stage top. Stationary. Loads last, fading in with a small
+   slide from the right (data-reveal-from="right", js/reveal.js). */
+.contact__cross {
+  position: absolute;
+  right: calc(-128 * var(--u));
+  top: calc(50% - 642 * var(--u)); /* stage top (50% - 540) minus 102 */
+  width: calc(1062 * var(--u));
+  height: calc(992 * var(--u));
+  fill: var(--color-footer-cross);
+  pointer-events: none;
+}
+
+/* The small C mark and the "< Click to Return Home" cue: one link back to the Landing.
+   Mark: 167 square, turned -11.05 degrees, centred at (236, 299) (Figma 49:529).
+   Cue: Helvetica Neue Light 25px at x 360, centred on the mark (Figma 54:544). It is the
+   shared pulsing cue (css/scroll-cue.css), restyled through its custom properties. */
+.contact__home {
+  position: absolute;
+  left: calc(152.46 * var(--u));
+  top: calc(215.46 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(40.45 * var(--u));
+  text-decoration: none;
+  --cue-color: var(--color-footer-small);
+  --cue-font: var(--font-helvetica);
+  --cue-weight: var(--weight-light);
+  --cue-size: var(--fs-footer-cue);
+  --cue-line: var(--lh-footer-cue);
+  --cue-tracking: var(--ls-footer-cue);
+}
+
+.contact__home:focus-visible {
+  outline-color: var(--color-footer-small);
+}
+
+/* The cue's wrapper takes the fade-in as the mark settles (js/mark-spin.js); the cue
+   inside keeps its own pulse. */
+.contact__cue {
+  display: block;
+}
+
+.contact__mark {
+  flex: none;
+  width: calc(167.086 * var(--u));
+  height: calc(167.086 * var(--u));
+  rotate: -11.05deg;
+  fill: var(--color-footer-mark);
+}
+
+/* Tag line at y 497: disciplines separated by dots (Figma 49:523: regular, uppercase). */
+.contact__tags {
+  position: absolute;
+  left: calc(170 * var(--u));
+  top: calc(497 * var(--u));
+  display: flex;
+  gap: calc(15 * var(--u));
+  font-size: var(--fs-footer-tags);
+  line-height: var(--lh-footer-tags);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.contact__tag {
+  display: flex;
+  align-items: center;
+  gap: calc(15 * var(--u));
+}
+
+.contact__tag:not(:first-child)::before {
+  content: "";
+  width: calc(8 * var(--u));  /* 8px dot */
+  height: calc(8 * var(--u));
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Headline at y 580, two lines (Figma 49:516: Helvetica Neue Medium 82/105, gold). */
+.contact__heading {
+  position: absolute;
+  left: calc(170 * var(--u));
+  top: calc(580 * var(--u));
+  color: var(--color-footer-heading);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-footer-heading);
+  line-height: var(--lh-footer-heading);
+  letter-spacing: var(--ls-footer-heading);
+  white-space: nowrap;
+}
+
+.contact__heading-line {
+  display: block;
+}
+
+/* Links at y 843, each starting where Figma has it (x 170, 557, 771, 986), so the
+   columns are fixed widths; the arrow sits 32px after the text (Figma 49:517-520). */
+.contact__links {
+  position: absolute;
+  left: calc(170 * var(--u));
+  top: calc(843 * var(--u));
+  display: grid;
+  grid-template-columns: calc(387 * var(--u)) calc(214 * var(--u)) calc(215 * var(--u)) auto;
+}
+
+.contact__link {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(32 * var(--u)); /* text to arrow */
+  color: var(--color-link);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-semibold);
+  font-size: var(--fs-contact-link);
+  line-height: var(--lh-contact-link);
+}
+
+.contact__link:focus-visible {
+  outline-color: var(--color-footer-small);
+}
+
+.contact__link-text {
+  text-decoration: underline;
+}
+
+.contact__arrow {
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+}
+
+/* Small print at y 985: copyright from x 170, location ending at x 1783, photo credit
+   centred between them. */
+.contact__bottom {
+  position: absolute;
+  left: calc(170 * var(--u));
+  top: calc(985 * var(--u));
+  width: calc(1613 * var(--u));
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-footer-small);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-footer-small);
+  line-height: var(--lh-footer-small);
+  letter-spacing: var(--ls-footer-small);
+}
+
+.contact__location {
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--u));
+  text-transform: uppercase;
+}
+
+.contact__location::before {
+  content: "";
+  width: calc(7 * var(--u));
+  height: calc(7 * var(--u));
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Reduced motion: no push-in, plain screens one after the other, so no edge shadow. */
+@media (prefers-reduced-motion: reduce) {
+  .contact {
+    box-shadow: none;
+  }
+}

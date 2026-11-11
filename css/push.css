@@ -1,0 +1,48 @@
+/* Push-in, Touchpoints -> Experiences (motion.md "Transitions between screens", CAROL).
+   Touchpoints stays pinned (sticky, css/wipe.css) while Experiences slides up over it,
+   tied to the scroll and reversible; js/push-in.js adds the drift and dimming.
+   Layout: the first blinds wrapper is three screens tall, so Touchpoints stays pinned
+   for one more screen after its blinds. The second blinds wrapper (Experiences ->
+   Selected Works) carries this class: it is pulled up one screen to overlap the first,
+   so Experiences starts sliding in as soon as Touchpoints' blinds are done.
+   No snap points. With reduced motion: plain screens, one after the other. */
+
+.push {
+  position: relative;
+  z-index: 3;              /* above the pinned Touchpoints (z-index 2) */
+  margin-top: -100vh;      /* fallback */
+  margin-top: -100svh;
+}
+
+/* A pinned wrapper for a screen that is not part of a blinds pair (About): the screen is
+   sticky for its own height plus its hold (HOLD in js/motion-config.js), then scrolls
+   away. */
+.pin {
+  --pin-length: calc(100 + var(--pin-hold) + var(--pin-after, 0));
+  height: calc(var(--pin-length) * 1vh);   /* fallback */
+  height: calc(var(--pin-length) * 1svh);
+}
+
+.pin--about {
+  --pin-hold: var(--hold-about, 0);
+  --pin-after: 100; /* the footer pushes in over About */
+}
+
+.pin__item {
+  position: sticky;
+  top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .push {
+    margin-top: 0;
+  }
+
+  .pin {
+    height: auto;
+  }
+
+  .pin__item {
+    position: relative;
+  }
+}

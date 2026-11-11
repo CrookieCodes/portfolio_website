@@ -1,0 +1,110 @@
+/* Base: a small reset, page defaults and shared helpers. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling for anchor jumps, and gentle (proximity) snapping to the
+   full-screen scenes. Only when the visitor has not asked for reduced motion:
+   otherwise jumps are instant and there is no snapping. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-teal);
+  color: var(--color-white);
+  font-family: var(--font-helvetica);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  /* Bleeding art (footer cross) must never cause sideways scrolling. */
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+/* Keyboard focus: a clear ring on every interactive element. */
+:focus-visible {
+  outline: 0.1875rem solid var(--color-mint);
+  outline-offset: 0.25rem;
+}
+
+/* Hidden visually, still read by screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The sprite of shared shapes (index.html): defines symbols only, takes no space. */
+.sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Skip link: off-screen until focused. Fixed, so focusing it never scrolls
+   the page back to the splash. */
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--color-mint);
+  color: var(--color-button-text);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* A full-width screen. Each screen sets its own height (100svh, or a height in
+   --u for About); content sits between the page margins. */
+.frame {
+  position: relative;
+  min-height: var(--frame-height);
+  overflow: hidden;
+}
+
+/* Snap point, for a screen that should snap. None of the main-flow screens use it
+   now: their transitions are scrubbed by the scroll, and snapping pulled slow
+   mouse-wheel scrolling back (phase 6). */
+.frame--snap {
+  scroll-snap-align: start;
+}

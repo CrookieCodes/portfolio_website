@@ -1,0 +1,169 @@
+/* Screen 2: Landing (Figma 32:656). Eyes centred at the top, the line "Hey, I'm Carol
+   Elizabeth. I design.", three keyword labels and the scroll cue.
+   Fills the window (100svh). Everything sits on a stage the size of the 1920 x 1080
+   design frame, scaled with the fluid design pixel --u (tokens.css) and centred, so
+   the composition keeps its proportions in any window. Items are placed at their
+   Figma coordinates. */
+
+.landing {
+  min-height: 0;           /* replaces the fixed 1080px frame height */
+  height: 100vh;           /* fallback */
+  height: 100svh;
+  background-color: var(--color-teal);
+}
+
+.landing__stage {
+  position: absolute;
+  inset: 0;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+  margin: auto;
+}
+
+/* The pair of eyes: x 539 to 1381 (centred), y 285, 100px apart. */
+.landing__eyes {
+  position: absolute;
+  top: calc(285 * var(--u));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: calc(100 * var(--u));
+}
+
+.landing__eye {
+  display: block;
+  width: calc(371 * var(--u));
+  height: calc(239 * var(--u));
+}
+
+/* Eye parts (inline SVG). Colours from the Figma eye component. */
+.landing__eye-outline {
+  fill: var(--color-eye-outline);
+}
+
+.landing__eye-white {
+  fill: var(--color-white);
+}
+
+.landing__iris-ring {
+  fill: var(--color-bronze);
+}
+
+.landing__pupil {
+  fill: var(--color-eye-pupil);
+}
+
+/* The iris (or the cross) follows the cursor with a short lag. */
+.landing__look {
+  transition: transform var(--motion-pupil-lag) var(--motion-pupil-easing);
+}
+
+/* Keyword hover or keyboard focus: the iris is replaced by the burgundy cross
+   (classes toggled by js/eye-cross.js). */
+.landing__iris--hidden {
+  visibility: hidden;
+}
+
+.landing__eye-cross {
+  fill: var(--color-burgundy);
+  visibility: hidden;
+}
+
+.landing__eye-cross--visible {
+  visibility: visible;
+}
+
+/* "Hey, I'm Carol Elizabeth. I design." starts at y 601, centred. */
+.landing__title {
+  position: absolute;
+  top: calc(601 * var(--u));
+  left: 0;
+  right: 0;
+  font-family: var(--font-plex);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-landing-title);
+  line-height: var(--lh-landing-title);
+  letter-spacing: var(--ls-landing-title);
+  text-align: center;
+}
+
+/* Keywords: a row across x 245 to 1676 (Figma 32:670), centred on the page, split
+   into three equal columns. Each word is centred in its column, so Services sits
+   exactly on the page's centre line and the outer two mirror each other. */
+.landing__keywords {
+  position: absolute;
+  top: calc(778 * var(--u));
+  left: calc(245 * var(--u));
+  right: calc(245 * var(--u));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
+
+/* At rest: the word in a softer white (HOVER.keywordRest, js/motion-config.js),
+   underlined in the same colour. On hover (mouse only) and keyboard focus the word
+   turns full white and the burgundy label (Figma 32:671) wipes in behind it from
+   the left; leaving wipes it back out to the left.
+   Sizes are Figma's x 0.8 (CAROL): text 48.6px, label 68px tall, padding scaled
+   the same way. The label is a scaled pseudo-element, so nothing else moves. */
+.landing__keyword {
+  position: relative;
+  isolation: isolate; /* keeps the label behind the word but in front of the page */
+  display: block;
+  padding: calc(4.8 * var(--u)) calc(3.2 * var(--u)) calc(6.08 * var(--u));
+  color: color-mix(in srgb, var(--color-white) var(--keyword-rest-mix), transparent);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-landing-keyword);
+  line-height: var(--lh-landing-keyword);
+  letter-spacing: var(--ls-landing-keyword);
+  text-decoration-line: underline;
+  transition: color var(--motion-wipe) var(--motion-wipe-easing);
+}
+
+.landing__keyword::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-burgundy);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-wipe) var(--motion-wipe-easing);
+}
+
+.landing__keyword:focus-visible {
+  color: var(--color-white);
+}
+
+.landing__keyword:focus-visible::before {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) {
+  .landing__keyword:hover {
+    color: var(--color-white);
+  }
+
+  .landing__keyword:hover::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing__keyword,
+  .landing__keyword::before {
+    transition: none;
+  }
+}
+
+/* Scroll cue: the text starts at y 1000, centred. Centred with flex rather than
+   translate, which the loading animation uses. */
+.landing__cue {
+  position: absolute;
+  top: calc(1000 * var(--u));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}

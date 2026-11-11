@@ -1,0 +1,105 @@
+/* "Blinds up" (motion.md v2, CAROL): Landing -> Touchpoints and Experiences -> Selected
+   Works. Below, "the Landing" is the screen being left and "Touchpoints" the arriving one.
+   The Landing and Touchpoints are both sticky, so they stay pinned in the same place
+   for the first screen of scrolling (Touchpoints is
+   pulled up one screen with a negative margin). Touchpoints is on top, but masked:
+   it shows only through twelve vertical bars that js/wipe.js raises from the bottom
+   as the scroll progresses (and lowers again going up). So the white that arrives is
+   Touchpoints itself, in place: there is never a separate white screen.
+   After the wipe, both scroll away together and the page carries on.
+   No snap points on the Landing or Touchpoints: the transition runs between them
+   and is scrubbed by the scroll, and snapping pulled every gesture back to one end.
+   With reduced motion there are no bars: plain screens, one after the other. */
+
+/* Lengths (svh): the screen itself (100), the hold on the screen being left
+   (--wipe-hold, HOLD in js/motion-config.js), one screen of blinds (100), the hold on
+   the arriving screen (--wipe-hold-next), then one screen while the next screen pushes
+   in over it (100, css/push.css). The --hold-* values are set by js/motion-config.js. */
+.wipe {
+  position: relative;
+  --wipe-length: calc(300 + var(--wipe-hold) + var(--wipe-hold-next));
+  height: calc(var(--wipe-length) * 1vh);   /* fallback */
+  height: calc(var(--wipe-length) * 1svh);
+}
+
+/* Landing -> Touchpoints (then Experiences pushes in over Touchpoints). */
+.wipe--landing {
+  --wipe-hold: var(--hold-landing, 0);
+  --wipe-hold-next: var(--hold-touchpoints, 0);
+}
+
+/* Experiences -> Selected Works (then About pushes in over Works). */
+.wipe--works {
+  --wipe-hold: var(--hold-experiences, 0);
+  --wipe-hold-next: var(--hold-works, 0);
+}
+
+/* The screen being left (the Landing, or Experiences), pinned under the arriving one. */
+.wipe__pinned {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Touchpoints, pinned in the same place, above the Landing. */
+.wipe__next {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-top: -100vh;      /* fallback */
+  margin-top: -100svh;
+}
+
+/* While the bars are rising, Touchpoints shows only through them. js/wipe.js sets
+   the mask layers once (one full-height bar per layer, 1px wider than its share so
+   no seams show) and then only --bar-0 ... --bar-11, each bar's height (0 to 1). */
+.wipe__next--masked {
+  /* A mask hides the screen but does not stop it catching the mouse: without this,
+     the (still invisible) Touchpoints on top would take every hover and click meant
+     for the Landing underneath (keyword hover, the eyes' cross, the keyword links). */
+  pointer-events: none;
+  -webkit-mask-image: var(--wipe-mask-image);
+  mask-image: var(--wipe-mask-image);
+  -webkit-mask-size: var(--wipe-mask-size);
+  mask-size: var(--wipe-mask-size);
+  -webkit-mask-position: var(--wipe-mask-position);
+  mask-position: var(--wipe-mask-position);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Fully covered: the screen being left is out of sight, so it is hidden (and out of the
+   Tab order). */
+.wipe--covered .wipe__pinned {
+  visibility: hidden;
+}
+
+/* The link target (#touchpoints, #work): where the bars have fully risen, after the hold
+   and one screen of blinds. */
+.wipe__anchor {
+  position: absolute;
+  top: calc((100 + var(--wipe-hold)) * 1vh);  /* fallback */
+  top: calc((100 + var(--wipe-hold)) * 1svh);
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wipe {
+    height: auto;
+  }
+
+  .wipe__pinned,
+  .wipe__next {
+    position: relative;
+  }
+
+  .wipe__next {
+    margin-top: 0;
+  }
+
+  .wipe__anchor {
+    top: 100%;
+    margin-top: -100vh;
+    margin-top: -100svh;
+  }
+}

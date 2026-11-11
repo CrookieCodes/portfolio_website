@@ -1,0 +1,140 @@
+/* Screen 6, top part: About section (Figma 47:251, FINAL EDITS, the top 1920 x 1080).
+   Light ground; the wine C mark on the left; the heading, bio, two achievements and
+   the Learn More button on the right. Everything is placed at its Figma position on a
+   1920 x 1080 stage scaled with --u, centred. The footer (contact.css) follows. */
+
+/* One full window tall (like Works), so it always covers Works when it has slid in;
+   the 1920 x 1080 stage is centred in it. */
+.about {
+  min-height: 0;
+  height: 100vh;           /* fallback */
+  height: 100svh;
+  background-color: var(--color-ground-light);
+  color: var(--color-about-body);
+  /* Soft shadow along the top edge as About rises over Works (PUSH_ABOUT.shadow); at
+     rest it lies above the window. */
+  box-shadow: var(--push-shadow-about) var(--color-push-shadow);
+}
+
+.about__stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+  translate: -50% -50%;
+}
+
+/* Figma 47:280: a 284.5 square mark, turned -11.05 degrees, centred at (321.9, 493.5).
+   The shared mark-c shape, filled with the wine token. */
+.about__mark {
+  position: absolute;
+  left: calc((321.93 - 142.26) * var(--u));
+  top: calc((493.54 - 142.26) * var(--u));
+  width: calc(284.522 * var(--u));
+  height: calc(284.525 * var(--u));
+  rotate: -11.05deg;
+  fill: var(--color-wine);
+}
+
+/* Text column: from x 607, 1193 wide; the heading's line box starts at y 281. */
+.about__text {
+  position: absolute;
+  left: calc(607 * var(--u));
+  top: calc(281 * var(--u));
+  width: calc(1193 * var(--u));
+}
+
+.about__heading {
+  color: var(--color-about-heading);
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-about-heading);
+  line-height: var(--lh-about-heading);
+  letter-spacing: var(--ls-about-heading);
+  white-space: nowrap;
+}
+
+.about__name {
+  color: var(--color-burgundy);
+}
+
+/* Bio from y 395 (heading 281 + 99 + 15). */
+.about__bio {
+  margin-top: calc(15 * var(--u));
+  font-family: var(--font-plex);
+  font-size: var(--fs-about-body);
+  line-height: var(--lh-about-body);
+  letter-spacing: var(--ls-about-body);
+}
+
+.about__strong {
+  font-weight: var(--weight-semibold);
+}
+
+/* "My latest achievements have been:" after an empty 48px line, on a 36px line. */
+.about__lead {
+  margin-top: calc(48 * var(--u));
+  line-height: calc(36 / 28);
+}
+
+/* Achievements: trophy at x 607, text at x 670; trophies at y 647 and 712. */
+.about__awards {
+  margin-top: calc(24 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(28 * var(--u));
+  font-family: var(--font-plex);
+  color: var(--color-about-award);
+  font-size: var(--fs-about-award);
+  line-height: var(--lh-about-award);
+  letter-spacing: -0.01em;
+}
+
+.about__award {
+  display: flex;
+  align-items: center;
+  gap: calc(26 * var(--u));
+  white-space: nowrap;
+}
+
+.about__trophy {
+  flex: none;
+  width: calc(37 * var(--u));
+  height: calc(37 * var(--u));
+  fill: var(--color-trophy);
+}
+
+/* Learn More: 207 x 68 at y 802, wine with white text, 8px radius. */
+.about__button {
+  display: inline-flex;
+  align-items: center;
+  height: calc(68 * var(--u));
+  margin-top: calc(53 * var(--u));
+  padding: 0 calc(21 * var(--u));
+  border-radius: var(--radius-button);
+  background-color: var(--color-wine);
+  color: var(--color-white);
+  font-family: var(--font-plex);
+  font-weight: var(--weight-semibold);
+  font-size: var(--fs-button);
+  line-height: var(--lh-button);
+  letter-spacing: var(--ls-button);
+  text-decoration: none;
+}
+
+/* Hidden until ABOUT_PAGE_URL is set (js/nav.js): the display above would override the
+   hidden attribute's own display: none. */
+.about__button[hidden] {
+  display: none;
+}
+
+.about__button:focus-visible {
+  outline-color: var(--color-wine);
+}
+
+/* Reduced motion: no push-in, plain screens one after the other, so no edge shadow. */
+@media (prefers-reduced-motion: reduce) {
+  .about {
+    box-shadow: none;
+  }
+}

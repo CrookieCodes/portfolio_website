@@ -1,0 +1,248 @@
+/* Screens 3 and 4: the "From assembling touchpoints, / To crafting stories,
+   experiences." scenes. Shared heading and list styles, plus one modifier per scene.
+   Both fill the window (100svh) and size everything with the fluid design pixel
+   --u (tokens.css), like the Landing. */
+
+.scene {
+  min-height: 0;           /* replaces the fixed 1080px frame height */
+  height: 100vh;           /* fallback */
+  height: 100svh;
+  background-color: var(--color-teal);
+}
+
+.scene__text {
+  position: relative;
+  z-index: 1;
+}
+
+.scene__line-1 {
+  display: block;
+  font-weight: var(--weight-light);
+  font-size: var(--fs-scene-1);
+  line-height: var(--lh-scene-1);
+  letter-spacing: var(--ls-scene-1);
+}
+
+.scene__line-2 {
+  display: block;
+  font-weight: var(--weight-medium);
+  font-size: var(--fs-scene-2);
+  line-height: var(--lh-scene-2);
+  letter-spacing: var(--ls-scene-2);
+}
+
+/* Bold (CAROL). Figma sets this line in Helvetica Neue Medium (500); without
+   Helvetica Neue the fallback font has no 500, so it would show as regular. */
+.scene__line-2--bold {
+  font-weight: var(--weight-bold);
+}
+
+.scene__list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(5.55 * var(--u)); /* items are 55.75px apart: 50.2px line + 5.55px */
+  color: var(--color-list);
+  font-weight: var(--weight-light);
+  font-size: var(--fs-scene-list);
+  line-height: var(--lh-scene-list);
+  letter-spacing: var(--ls-scene-list);
+}
+
+.scene__item {
+  display: flex;
+  align-items: center;
+  gap: calc(16 * var(--u));
+}
+
+.scene__item::before {
+  content: "";
+  flex: none;
+  width: calc(12 * var(--u));  /* 12px dot */
+  height: calc(12 * var(--u));
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.scene__art {
+  position: absolute;
+  height: auto;  /* keep the aspect ratio when the width scales (the HTML height attribute is the design size) */
+}
+
+/* Screen 3: touchpoints, on the light ground (Figma 32:306) with dark text. */
+.scene--touchpoints {
+  background-color: var(--color-ground-light);
+  color: var(--color-heading-dark);
+}
+
+/* Screen 3: touchpoints. One composition (diagram, hand, text) on a stage the
+   size of the 1920 x 1080 design frame, scaled with --u. Centred, and sitting on
+   the bottom edge so the frame still cuts off the hand; on windows taller than
+   16:9 the extra space goes above the diagram. Everything inside is placed at
+   its Figma coordinates. */
+.scene__stage {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: calc(1920 * var(--u));
+  height: calc(1080 * var(--u));
+  transform: translateX(-50%);
+}
+
+/* Text block (Figma 32:320, 32:321): heading from x 1353, y 671; two 60px lines,
+   then the list from y 807. */
+.scene__text--touchpoints {
+  position: absolute;
+  left: calc(1353 * var(--u));
+  top: calc(671 * var(--u));
+}
+
+.scene__list--touchpoints {
+  margin-top: calc(16 * var(--u));  /* list starts at y 807 (671 + 120 + 16) */
+  color: var(--color-list-dark);
+}
+
+.scene__diagram {
+  left: calc(280 * var(--u));
+  top: calc(168 * var(--u));
+  width: calc(1340 * var(--u));
+  height: calc(727 * var(--u));
+  overflow: visible;
+}
+
+/* The ASCII effect canvas: exactly over the diagram, in the same design units. */
+.scene__diagram-effect {
+  left: calc(280 * var(--u));
+  top: calc(168 * var(--u));
+  width: calc(1340 * var(--u));
+  height: calc(727 * var(--u));
+  pointer-events: none;
+}
+
+/* Diagram parts (inline SVG). Colours from Figma 1:270, as tokens. */
+.scene__line {
+  fill: none;
+  stroke: var(--color-diagram-line);
+  stroke-width: 1.89099;
+}
+
+.scene__dot {
+  fill: var(--color-diagram-dot);
+}
+
+/* Squares grow from their own centre while the diagram assembles (js/touchpoints-build.js). */
+.scene__square {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.scene__stop--brown-dark {
+  stop-color: var(--color-square-brown-dark);
+}
+
+.scene__stop--brown-light {
+  stop-color: var(--color-square-brown-light);
+}
+
+.scene__stop--teal-light {
+  stop-color: var(--color-square-teal-light);
+}
+
+.scene__stop--teal-dark {
+  stop-color: var(--color-square-teal-dark);
+}
+
+.scene__stop--pink-light {
+  stop-color: var(--color-square-pink-light);
+}
+
+.scene__stop--pink-dark {
+  stop-color: var(--color-square-pink-dark);
+}
+
+.scene__hand {
+  left: calc(941 * var(--u));
+  top: calc(709 * var(--u));     /* Figma 32:307; 445px tall, so the frame clips its bottom */
+  width: calc(263.1 * var(--u));
+}
+
+/* Screen 4: experiences. The street photograph covers the screen; the ASCII effect
+   draws three figures over the people in it; text block bottom-right. */
+.scene--experiences {
+  background-color: var(--color-bronze);
+}
+
+/* The photo's 16:9 frame, scaled to cover the screen (like object-fit: cover) and
+   centred. The section clips what overflows. The effect canvas fills this frame, so
+   the figures (in 1920 x 1080 design px) move and scale with the photo. */
+.scene__cover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, calc(100vh * 16 / 9));
+  width: max(100%, calc(100svh * 16 / 9));
+  aspect-ratio: 16 / 9;
+  transform: translate(-50%, -50%);
+}
+
+/* The photo's clip: js/experiences-reveal.js slides it in from the left while the
+   photo inside slides the other way, so the photo itself stays put and is wiped in.
+   Without the script (or with reduced motion) both stay at rest: photo visible. */
+.scene__photo-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.scene__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The figures' outlines: only read by the script (the masks for the glyphs), never
+   shown. They keep their geometry (so the script can measure them) but take no space. */
+.scene__shapes {
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Dims Touchpoints while Experiences pushes in over it: js/push-in.js sets the
+   opacity (up to PUSH.veil). Above everything in Touchpoints, ignores the mouse. */
+.scene__dim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-color: var(--color-black);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The ASCII effect canvas covers the photo's frame, so figure positions match it. */
+.scene__effect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Anchored to the bottom-right: ends 125px inside the right page margin (x 1675
+   at 1920) and starts at y 796, measured from the bottom so it stays near the
+   bottom edge on taller windows. */
+.scene__text--experiences {
+  position: absolute;
+  right: calc(var(--page-margin) + 125 * var(--u));
+  bottom: calc(100.8 * var(--u));
+  text-align: right;
+}
+
+.scene__list--experiences {
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: calc(28 * var(--u));
+  margin-top: calc(13 * var(--u));  /* list line starts at y 929 */
+}

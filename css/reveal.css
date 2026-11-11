@@ -1,0 +1,20 @@
+/* Loading animation (js/reveal.js): items fade up into place, one after another.
+   Loaded after every other stylesheet so its transition wins over an item's own
+   (a card's hover transition) while it plays.
+   The script adds these classes only when motion is allowed, so without
+   JavaScript, or with reduced motion, everything is simply visible. It uses the
+   separate translate property, so it never fights a hover transform. */
+.reveal--pending {
+  opacity: 0;
+  pointer-events: none; /* invisible: it must not take hovers or clicks yet */
+  /* Up from below by default; an item with data-reveal-from="right" gets
+     --reveal-x / --reveal-y from js/reveal.js and slides in from the right instead. */
+  translate: calc(var(--reveal-x, 0) * var(--u)) calc(var(--reveal-y, var(--reveal-distance)) * var(--u));
+}
+
+.reveal--in {
+  transition:
+    opacity var(--motion-reveal-duration) var(--motion-reveal-easing),
+    translate var(--motion-reveal-duration) var(--motion-reveal-easing);
+  transition-delay: calc(var(--reveal-index) * var(--motion-reveal-stagger));
+}
