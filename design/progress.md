@@ -1,9 +1,19 @@
 # Progress (handoff note)
 
-Updated 2026-11-10. Branch: `phase-6-main-flow` (not pushed yet).
+Updated 2026-11-11. Branch: `phase-6-main-flow`, pushed; pull request "Launch: portfolio v2" into main.
 
 ## Where we are
 **Phase 6 is complete** after the final corrections from the FINAL EDITS frames (About 47:251, Footer 49:455, Selected Works 49:291 and 49:416). Phase 7 (`about.html`) has not started.
+
+## Launched (launch-lite, 2026-11-11)
+The main page goes live on https://carolelizabeth.netlify.app/ when Carol merges the pull request "Launch: portfolio v2" (phase-6-main-flow into main; it carries phases 1 to 6). Netlify deploys main; no CLI.
+- Cards: `caseStudyUrl` per project in js/projects.js, empty. While empty the card image is a plain image (descriptive alt text, no link, no focus stop) and its cursor label reads "Case study coming soon".
+- Learn More is hidden while `ABOUT_PAGE_URL` (js/site-config.js) is empty.
+- Head: meta description, Open Graph and Twitter tags, theme-color #F7F7F7; preview image assets/og-image.png (1200 x 630, rendered with headless Chrome; replace freely, keep the name).
+- Alt text on every meaningful image; decorative ones alt="" or aria-hidden. The third logo on the Aangan card (assets/logos/aangan-mark.webp) has empty alt until Carol names it.
+- Below 1024 px wide: a full-screen notice (css/narrow.css, `NARROW_QUERY`) instead of the desktop page, with email, LinkedIn and Resume links.
+- netlify.toml (redirect rules only) answers 404 for internal files: /design, /review, CLAUDE.md, README.md, .gitignore, .mcp.json, .claude, netlify.toml. New 404.html.
+- Opening the page at a #hash (/#about, /#work) now lands there at once.
 
 ## Done and approved
 1. Shared pieces: standard load animation (`reveal.js`), scroll cue, header logo swap.
@@ -33,13 +43,13 @@ Updated 2026-11-10. Branch: `phase-6-main-flow` (not pushed yet).
 - Header hover dot: pink #F2909F on the dark themes (Landing, Experiences), burgundy #993746 on the light ones.
 
 ## Known issues
-- Direct `#hash` links (opening the page at `#work`, `#about`...) scroll late, once the page has loaded. The in-page jumps (About, Contact, Return home) are instant and not affected.
-- Project links are placeholders (`#`, marked unavailable): no project pages yet.
-- Desktop only; phones are deferred.
+- **To come:** about.html (Phase 7) and the case study pages. Until then Learn More is hidden and the project cards have no links (`caseStudyUrl` empty).
+- **Desktop only:** below 1024 px wide a notice is shown instead; a mobile version is to come.
 - The Helvetica Neue Medium font file is missing: Medium text (About heading, footer headline) falls back to the system's Helvetica/Arial weight.
-- The About bio copy is longer than Figma's ("multiple scales and in context... silos"), so it wraps to four lines instead of three; spacing below follows Figma.
+- The About bio copy is longer than Figma's, so it wraps to four lines instead of three.
 - First, cold load of Experiences runs ~0.25 s slow (the street photo loads lazily).
-- The title and favicon tags are written into index.html. A static site with no build step cannot share head markup between pages without JavaScript; decide how `about.html` gets them in Phase 7.
+- The title, favicon and preview tags are written into index.html. A static site with no build step cannot share head markup between pages without JavaScript; decide how about.html gets them in Phase 7.
+- The four older pull requests (#1 to #4, phases 1 to 5) are still open; their work is all inside the launch pull request.
 
 ## Next step
-Carol's review of Phase 6, then merge. Phase 7 (`about.html`) after that.
+Carol merges "Launch: portfolio v2"; Netlify deploys main. Then Phase 7 (`about.html`) and the case studies.
