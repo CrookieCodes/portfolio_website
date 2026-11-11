@@ -18,8 +18,10 @@
 // ignored. The new card is announced (aria-live). Cards that are not current are
 // hidden from screen readers and from Tab (inert). Reduced motion: instant changes.
 //
-// Each card's image is its link, with a cursor label ("Click to view project",
-// js/cursor-label.js) that never shows on cards that are not current or during a roll.
+// Each card's image is its link once the project has a case study (caseStudyUrl in
+// js/projects.js), with the cursor label "Click to view project"; until then it is a
+// plain image whose label reads "Case study coming soon" (js/cursor-label.js). The
+// label never shows on cards that are not current or during a roll.
 //
 // Loading, once per page load: the grey column, the pinwheel, the buttons, the title
 // row and the cards load with the standard animation, in that order, once the blinds
@@ -31,6 +33,7 @@ import { createPinwheel } from './pinwheel.js';
 import { attachCursorLabel, hideCursorLabel } from './cursor-label.js';
 
 const CARD_LABEL = 'Click to view project';
+const CARD_LABEL_SOON = 'Case study coming soon';
 
 const COPIES = 2; // copies of the first cards after the last, for the wrap-around
 
@@ -70,23 +73,25 @@ function buildHead(domain) {
 function buildCard(project, domain) {
   const card = el('li', 'card');
   card.append(buildHead(domain));
-  // The image is the link to the project. No project page exists yet, so it is a
-  // placeholder (href "#", aria-disabled; js/placeholder-links.js stops the jump).
-  const media = el('a', 'card__media');
-  media.href = project.url ?? '#';
-  if (!project.url) media.setAttribute('aria-disabled', 'true');
-  media.setAttribute('aria-label', `View project: ${project.title}`);
+  // With a case study (project.caseStudyUrl), the image is the link to it. Without one
+  // it is a plain image: no link, no focus stop, and the cursor label says so.
+  const url = project.caseStudyUrl;
+  const media = el(url ? 'a' : 'div', 'card__media');
+  if (url) {
+    media.href = url;
+    media.setAttribute('aria-label', `View project: ${project.title}`);
+  }
   const image = el('img', 'card__image');
-  Object.assign(image, { src: project.image.src, alt: '', width: project.image.width, height: project.image.height });
+  Object.assign(image, { src: project.image.src, alt: url ? '' : project.image.alt, width: project.image.width, height: project.image.height });
   image.decoding = 'async';
   media.append(image);
-  attachCursorLabel(media, CARD_LABEL);
+  attachCursorLabel(media, url ? CARD_LABEL : CARD_LABEL_SOON);
   const body = el('div', 'card__body');
   body.append(el('h3', 'card__title', project.title), el('p', 'card__text', project.description));
   const logos = el('div', 'card__logos');
   project.logos.forEach((logo) => {
     const img = el('img', logo.className);
-    Object.assign(img, { src: logo.src, alt: '', width: logo.width, height: logo.height });
+    Object.assign(img, { src: logo.src, alt: logo.alt, width: logo.width, height: logo.height });
     logos.append(img);
   });
   const tags = el('ul', 'card__tags');

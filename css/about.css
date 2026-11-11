@@ -122,8 +122,10 @@
   text-decoration: none;
 }
 
-.about__button[aria-disabled="true"] {
-  cursor: default; /* no destination yet */
+/* Hidden until ABOUT_PAGE_URL is set (js/nav.js): the display above would override the
+   hidden attribute's own display: none. */
+.about__button[hidden] {
+  display: none;
 }
 
 .about__button:focus-visible {

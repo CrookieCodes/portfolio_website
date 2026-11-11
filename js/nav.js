@@ -2,7 +2,7 @@
 //   - Header About -> the About section (NAV.about); About's load plays on arrival.
 //   - Header Contact -> the footer for now (NAV.contact).
 //   - Footer "Return to home" -> the top of the page (the Landing).
-//   - "Learn More >" -> ABOUT_PAGE_URL, or nothing while that is empty.
+//   - "Learn More >" -> ABOUT_PAGE_URL; hidden while that is empty.
 //
 // The page uses smooth scrolling for anchor links (css/base.css), but a smooth scroll
 // from the footer back to the top would run every scroll-tied transition on the way.
@@ -45,13 +45,11 @@ export function initNav() {
     });
   });
 
-  // Learn More: a real link once ABOUT_PAGE_URL is set; until then it stays disabled.
+  // Learn More: shown as a real link once ABOUT_PAGE_URL is set; hidden until then.
   document.querySelectorAll('[data-js~="learn-more"]').forEach((button) => {
     if (!ABOUT_PAGE_URL) return;
     button.href = ABOUT_PAGE_URL;
-    button.removeAttribute('role');
-    button.removeAttribute('aria-disabled');
-    button.removeAttribute('tabindex');
+    button.hidden = false;
   });
 
   // Footer: the C mark and "< Click to Return Home" -> the Landing, at the very top.

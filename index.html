@@ -425,10 +425,9 @@
             <li class="about__award" data-js="reveal" data-reveal-order="4"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at UX Design Pitch as part of the UX India Conference 2026</span></li>
             <li class="about__award" data-js="reveal" data-reveal-order="5"><svg class="about__trophy" aria-hidden="true" focusable="false"><use href="#trophy"/></svg><span><strong class="about__strong">Shortlisted as Finalist (Top 10)</strong> at ServDes India Student Service Design Competition 2026</span></li>
           </ul>
-          <!-- No destination yet: ABOUT_PAGE_URL in js/site-config.js is empty, so this is a
-               disabled link with no href (nothing happens on click, no # in the address).
-               js/nav.js gives it the href once the constant is set. -->
-          <a class="about__button" role="link" aria-disabled="true" tabindex="0" data-js="learn-more reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>
+          <!-- Hidden while ABOUT_PAGE_URL in js/site-config.js is empty (no dead button).
+               js/nav.js gives it the href and shows it once the constant is set. -->
+          <a class="about__button" hidden data-js="learn-more reveal" data-reveal-order="6">Learn More&nbsp;<span aria-hidden="true">&gt;</span></a>
         </div>
       </div>
     </section>

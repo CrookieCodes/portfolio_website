@@ -65,7 +65,8 @@ function announceDone(screen) {
 }
 
 export function initReveal({ waitFor = {} } = {}) {
-  const items = [...document.querySelectorAll('[data-js~="reveal"]')];
+  // Hidden items (e.g. Learn More with no destination yet) are left out of the stagger.
+  const items = [...document.querySelectorAll('[data-js~="reveal"]')].filter((item) => !item.hidden);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const screenOf = (element) => element.closest('[data-js~="screen"]');
 

@@ -11,7 +11,6 @@ export const NAV = {
   contact: 'contact',
 };
 
-// "Learn More >" in the About section. Empty: no destination yet, so the button does
-// nothing (no page jump, no # in the address, no 404). Set it to 'about.html' once that
-// page exists.
+// "Learn More >" in the About section. Empty: no destination yet, so the button is
+// hidden. Set it to 'about.html' once that page exists and the button appears.
 export const ABOUT_PAGE_URL = '';
