@@ -1,8 +1,8 @@
 // Selected Works data (motion.md v2 section 5). One entry per project; js/works.js
 // builds the cards from it. `domains` says which domain views a project is in.
-// caseStudyUrl: the project's case study page. Empty until it exists: the card image is
-// then not a link, and its cursor label reads "Case study coming soon" (js/works.js).
-// Set it (e.g. 'case-studies/aangan.html') and the card image becomes the link.
+// caseStudyUrl: the project's case study, on Behance. The card image links to it and
+// opens it in a new tab, with the cursor label "View on Behance" (js/works.js). Left
+// empty, the image is not a link and its label reads "Case study coming soon".
 //
 // Domain assignment (PROPOSED in motion.md, Carol to correct):
 //   Aangan -> service, ux;  Nest -> service, product;  Petting Zoo -> product, ux.
@@ -25,7 +25,7 @@ export const PROJECTS = [
     name: 'Aangan', // for announcements
     title: 'Aangan - A Service Design for Indian Mothers', // Figma 32:404
     description: 'Service Design for Indian Mothers facing Empty Nest Syndrome (ENS), a full service system including service blueprint, dual mobile app prototypes and a self-sustaining CSR-funded business model.', // Figma 32:403
-    caseStudyUrl: '',
+    caseStudyUrl: 'https://www.behance.net/gallery/253310759/Aangan-Digital-Literacy-Service-for-Indian-Mothers',
     image: { src: 'assets/images/card-aangan.webp', alt: 'Aangan project cover: an aerial view of a courtyard house with a tiled roof, framed by a patterned border, with the title "aangan, A Service Design Project for Urban Indian Mothers"', width: 533, height: 300 },
     // The third mark (Figma 32:414, "image 118") is only on the Aangan card. Its alt text
     // is empty until Carol names the organisation it stands for.
@@ -38,7 +38,7 @@ export const PROJECTS = [
     name: 'Nest',
     title: 'Nest',
     description: 'AC-as-a-Service for Urban India',
-    caseStudyUrl: '',
+    caseStudyUrl: 'https://www.behance.net/gallery/249553153/Nest-AC-as-a-Service',
     image: { src: 'assets/images/card-nest.webp', alt: 'Nest project cover: a pile of discarded electronics, an old television, boxes and bicycles, with the title "nest, Consumer Research, Service Design"', width: 533, height: 300 },
     logos: SCHOOL_LOGOS,
     tags: ['Service Design', 'Behaviour Design'],
@@ -49,7 +49,7 @@ export const PROJECTS = [
     name: 'Petting Zoo',
     title: 'Petting Zoo',
     description: 'Cultural Probe Design',
-    caseStudyUrl: '',
+    caseStudyUrl: 'https://www.behance.net/gallery/249553887/The-Petting-Zoo',
     image: { src: 'assets/images/card-petting-zoo.webp', alt: 'The Petting Zoo project cover: scattered activity and reflection cards with animal illustrations, with the title "the Petting Zoo, Design Probe, Research Experiment"', width: 533, height: 300 },
     logos: SCHOOL_LOGOS,
     tags: ['Design Experiment', 'Graphic Design'],

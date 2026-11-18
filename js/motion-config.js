@@ -235,7 +235,7 @@ export const LOGO = {
   spinEasing: 'ease-in-out', // STARTER: motion.md gives no easing for the spin
 };
 
-// Shared cursor label (js/cursor-label.js), e.g. "Click to view project".
+// Shared cursor label (js/cursor-label.js), e.g. "View on Behance".
 export const LABEL = {
   fade: 150,                 // PROPOSED: fades in on enter, out on leave
   easing: 'ease-out',        // STARTER
