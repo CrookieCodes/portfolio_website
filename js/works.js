@@ -19,9 +19,10 @@
 // hidden from screen readers and from Tab (inert). Reduced motion: instant changes.
 //
 // Each card's image is its link once the project has a case study (caseStudyUrl in
-// js/projects.js), with the cursor label "Click to view project"; until then it is a
-// plain image whose label reads "Case study coming soon" (js/cursor-label.js). The
-// label never shows on cards that are not current or during a roll.
+// js/projects.js), opening it in a new tab, with the cursor label "View on Behance";
+// without one it is a plain image whose label reads "Case study coming soon"
+// (js/cursor-label.js). The label never shows on cards that are not current or during
+// a roll.
 //
 // Loading, once per page load: the grey column, the pinwheel, the buttons, the title
 // row and the cards load with the standard animation, in that order, once the blinds
@@ -32,7 +33,7 @@ import { WORKS } from './motion-config.js';
 import { createPinwheel } from './pinwheel.js';
 import { attachCursorLabel, hideCursorLabel } from './cursor-label.js';
 
-const CARD_LABEL = 'Click to view project';
+const CARD_LABEL = 'View on Behance';
 const CARD_LABEL_SOON = 'Case study coming soon';
 
 const COPIES = 2; // copies of the first cards after the last, for the wrap-around
@@ -73,13 +74,16 @@ function buildHead(domain) {
 function buildCard(project, domain) {
   const card = el('li', 'card');
   card.append(buildHead(domain));
-  // With a case study (project.caseStudyUrl), the image is the link to it. Without one
+  // With a case study (project.caseStudyUrl, on Behance), the image is the link to it,
+  // opening in a new tab; its name says so for screen readers. Without one
   // it is a plain image: no link, no focus stop, and the cursor label says so.
   const url = project.caseStudyUrl;
   const media = el(url ? 'a' : 'div', 'card__media');
   if (url) {
     media.href = url;
-    media.setAttribute('aria-label', `View project: ${project.title}`);
+    media.target = '_blank';
+    media.rel = 'noopener noreferrer';
+    media.setAttribute('aria-label', `View ${project.name} on Behance (opens in a new tab)`);
   }
   const image = el('img', 'card__image');
   Object.assign(image, { src: project.image.src, alt: url ? '' : project.image.alt, width: project.image.width, height: project.image.height });
